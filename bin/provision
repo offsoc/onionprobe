@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+#
+# Helper script using during development
+#
+
+# Parameters
+DIRNAME="`dirname $0`"
+BASE="$DIRNAME/.."
+DEPENDENCIES="python3-prometheus-client python3-stem python3-cryptography python3-bs4 python3-yaml python3-pytest tor"
+TORRC="/etc/tor/torrc"
+
+# Install dependencies
+sudo apt install -y $DEPENDENCIES
+
+# Configure Tor
+if ! grep "^ControlPort" $TORRC; then
+
+  control_pass="$(grep "^control_password" $DIRNAME/../onionprobe.yaml | cut -d "'" -f 2)"
+  hashed_pass="`tor --hash-password $control_pass`"
+
+  echo "ControlPort 9051"                   | sudo tee -a $TORRC > /dev/null
+  echo "HashedControlPassword $hashed_pass" | sudo tee -a $TORRC > /dev/null
+
+  sudo service tor restart
+fi

@@ -1,0 +1,255 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+#
+# Onionprobe test/monitor tool.
+#
+# Copyright (C) 2022 Silvio Rhatto <rhatto@torproject.org>
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published
+# by the Free Software Foundation, either version 3 of the License,
+# or any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# Dependencies
+import argparse
+import os
+import time
+import random
+
+try:
+    import stem.control
+except ImportError:
+    print("Please install stem library first!")
+    raise ImportError
+
+try:
+    import yaml
+except ImportError:
+    print("Please install pyaml first!")
+    raise ImportError
+
+# Defaults
+defaults = {
+        'loop'            : False,
+        'sleep'           : 60,
+        'interval'        : 60,
+        'control_port'    : 9051,
+        'control_password': False,
+        'new_circuit'     : False,
+        'randomize'       : True,
+        'endpoints'       : {
+            'www.torproject.org': {
+                'address' : '2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion',
+                'protocol': 'http',
+                'port'    : '80',
+                },
+            }
+        }
+
+class Onionprobe:
+    """Tests/monitor Tor Onion Services"""
+
+    def __init__(self, args):
+        self.args = args
+        self.data = []
+
+        # Config file handling
+        if args.config is not None:
+            if os.path.exists(args.config):
+                with open(args.config, 'r') as config:
+                    self.config = yaml.load(config, yaml.CLoader)
+            else:
+                raise FileNotFoundError('No such file ' + args.config)
+        else:
+            self.config = {}
+
+        # Initializes the random number generator
+        random.seed()
+
+    def initialize(self):
+        """Initialization procedures"""
+
+        control_port     = self.get_config('control_port')
+        control_password = self.get_config('control_password')
+
+        if control_password is False:
+            import getpass
+            control_password = getpass.getpass("Controller password: ")
+
+        try:
+            self. controller = stem.control.Controller.from_port(port=control_port)
+        except stem.SocketError as exc:
+            self.debug("Unable to connect to tor on port 9051: %s" % exc)
+            return False
+
+        try:
+            self.controller.authenticate(password=control_password)
+        except stem.connection.PasswordAuthFailed:
+            self.debug("Unable to authenticate, password is incorrect")
+            return False
+
+        # Stream management
+        # See https://stem.torproject.org/tutorials/to_russia_with_love.html
+        if self.get_config('new_circuit'):
+            self.controller.set_conf('__LeaveStreamsUnattached', '1')
+            self.controller.add_event_listener(self.new_circuit, stem.control.EventType.STREAM)
+            self.circuit_id = None
+
+    def debug(self, *args, **kwargs):
+        """Helper debug function"""
+
+        print(*args, **kwargs)
+
+    def get_config(self, item):
+        """Helper to get config or use default value"""
+
+        if item in self.config:
+            return self.config[item]
+
+        return defaults[item]
+
+    def wait(self, value):
+        """Helper to wait some time"""
+
+        # Randomize if needed
+        if self.get_config('randomize'):
+            value = random.random() * value
+
+        # Sleep
+        self.debug('Waiting {} seconds...'.format(str(round(value))))
+        time.sleep(value)
+
+    def run(self):
+        """Main loop"""
+
+        # Check if should loop
+        if self.get_config('loop'):
+            while True:
+                # Call for a round
+                self.round()
+
+                # Then wait
+                self.wait(self.get_config('sleep'))
+
+        else:
+            # Single pass, only one round
+            self.round()
+
+    def round(self):
+        """Process a round of tests"""
+
+        # Shuffle the deck
+        endpoints = sorted(self.get_config('endpoints'))
+        endpoints = random.sample(endpoints, k=len(endpoints))
+
+        # Probe each endpoint
+        for endpoint in endpoints:
+            self.probe(endpoint)
+
+            # FIXME: do not wait in if this is the last endpoint
+            self.wait(self.get_config('interval'))
+
+    def probe(self, endpoint):
+        """Probe an unique endpoint"""
+
+        self.debug("Processing {}...".format(endpoint))
+
+        endpoints = self.get_config('endpoints')
+        config    = endpoints[endpoint]
+
+        # Ensure we always begin with a cleared cache
+        # This allows to discover issues with published descriptors
+        self.controller.clear_cache()
+
+        # FIXME: Ensure we use a new circuit every time
+        # Needs to close all other circuits?
+        # Needs to setup a 'controler' circuit?
+        #circuit = self.controller.new_circuit()
+
+        # Get Onion Service descriptor
+        self.get_descriptor(config)
+
+    def new_circuit(self, stream):
+        """Setup a fresh circuit for new streams"""
+
+        self.debug('Building new circuit...')
+
+        # Remove the old circuit
+        if self.circuit_id is not None:
+            self.debug('Removing old circuit {}...'.format(self.circuit_id))
+            self.controller.close_circuit(self.circuit_id)
+
+        # Create new circuit
+        self.circuit_id = self.controller.new_circuit(await_build=True)
+
+        self.debug(self.circuit_id)
+
+        # See https://stem.torproject.org/tutorials/to_russia_with_love.html
+        if stream.status == 'NEW':
+            self.debug('Setting up new circuit {}...'.format(self.circuit_id))
+            self.controller.attach_stream(stream.id, self.circuit_id)
+
+    def get_descriptor(self, config):
+        """Get Onion Service descriptor"""
+
+        # FIXME: try to get the descriptor from multiple servers
+        descriptor = self.controller.get_hidden_service_descriptor(config['address'])
+
+        # See https://github.com/torproject/stem/issues/96
+        #     https://stem.torproject.org/api/control.html#stem.control.Controller.get_hidden_service_descriptor
+        #     https://gitlab.torproject.org/legacy/trac/-/issues/25417
+        from stem.descriptor.hidden_service import HiddenServiceDescriptorV3
+        descriptor = HiddenServiceDescriptorV3.from_str(str(descriptor))
+
+        # Decrypt the inner layer
+        inner = descriptor.decrypt(config['address'])
+
+        # Get introduction points
+        # See https://stem.torproject.org/api/descriptor/hidden_service.html#stem.descriptor.hidden_service.IntroductionPointV3
+        #for introduction_point in inner.introduction_points:
+        #    self.debug(introduction_point.link_specifiers)
+
+        self.debug(inner)
+
+    def close(self):
+        self.controller.close()
+
+if __name__ == "__main__":
+    """Process from CLI"""
+
+    epilog = """Examples:
+
+      onionprobe -c config.yaml
+    """
+
+    description = 'Test and monitor onion services'
+    parser      = argparse.ArgumentParser(
+                    description=description,
+                    epilog=epilog,
+                    formatter_class=argparse.RawDescriptionHelpFormatter,
+                  )
+
+    parser.add_argument('-c', '--config', help='Read options from configuration file')
+
+    args = parser.parse_args()
+
+    # Dispatch
+    try:
+        probe = Onionprobe(args)
+
+        if probe.initialize() is not False:
+            probe.run()
+
+        probe.close()
+
+    except (FileNotFoundError, KeyboardInterrupt) as e:
+        print(e)
+        exit(1)
