@@ -5,7 +5,9 @@ Onionprobe is a tool for testing and monitoring the status of
 
 ## Specs
 
-Thanks @irl for the idea/specs and @hiro for suggestions:
+Thanks @irl for the idea/specs and @hiro for suggestions.
+
+### Basic
 
 * [x] Take a list of onions to check and make sure that you can always fetch
       descriptors rather than just using cached descriptors etc.
@@ -22,6 +24,20 @@ Thanks @irl for the idea/specs and @hiro for suggestions:
 * [x] Need to know about "does the site have useful content?"
       Regex for content inside the page: allow configuring a regex per path for
       what should be found in the returned content/headers.
+
+### Enhancements
+
+* [ ] Enhanced logging/reporting.
+* [ ] Multitasking: multiple threads/workers continuously probing endpoints
+      with a centralized reporting data structure. This helps splitting
+      data gathering from presentation logic, especially with the Prometheus
+      exporter.
+* [ ] Dockerfile (and optionally a Docker Compose).
+* [ ] Python packaging (`requirements.txt` or other format).
+* [ ] Documentation.
+
+### Prometheus integration
+
 * [ ] Exports Prometheus metrics for the connection to the onion service, and
       extra metrics per path on the status code for each path returned by the server.
 * [ ] Try to get the descriptor from multiple (if not all) HSDirs where it
@@ -30,6 +46,11 @@ Thanks @irl for the idea/specs and @hiro for suggestions:
       just expose the metrics rather than having Prometheus scraping individual
       targets on Prometheus' schedule.
 * [ ] Add in additional timing metrics wherever appropriate.
+
+### Misc features
+
+* [ ] Optionally launch it's [own Tor process](https://stem.torproject.org/api/process.html)
+      like in [this example](https://stem.torproject.org/tutorials/to_russia_with_love.html#using-pycurl).
 
 ## References
 
