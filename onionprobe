@@ -38,9 +38,9 @@ except ImportError:
     raise ImportError
 
 try:
-    import pycurl
+    import requests
 except ImportError:
-    print("Please install pycurl first!")
+    print("Please install requests first!")
     raise ImportError
 
 # Defaults
@@ -48,6 +48,7 @@ defaults = {
         'loop'            : False,
         'sleep'           : 60,
         'interval'        : 60,
+        'tor_address'     : '127.0.0.1',
         'socks_port'      : 9050,
         'control_port'    : 9051,
         'control_password': False,
@@ -58,6 +59,8 @@ defaults = {
                 'address' : '2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion',
                 'protocol': 'http',
                 'port'    : '80',
+                'path'    : '/',
+                'match'   : 'Tor Project',
                 },
             }
         }
@@ -85,6 +88,7 @@ class Onionprobe:
     def initialize(self):
         """Initialization procedures"""
 
+        control_address  = self.get_config('tor_address')
         control_port     = self.get_config('control_port')
         control_password = self.get_config('control_password')
 
@@ -93,7 +97,10 @@ class Onionprobe:
             control_password = getpass.getpass("Controller password: ")
 
         try:
-            self. controller = stem.control.Controller.from_port(port=control_port)
+            self.controller = stem.control.Controller.from_port(
+                    address=control_address,
+                    port=control_port)
+
         except stem.SocketError as exc:
             self.debug("Unable to connect to tor on port 9051: %s" % exc)
             return False
@@ -177,46 +184,78 @@ class Onionprobe:
         # This allows to discover issues with published descriptors
         self.controller.clear_cache()
 
-        # FIXME: Ensure we use a new circuit every time
+        # Ensure we use a new circuit every time
         # Needs to close all other circuits?
         # Needs to setup a 'controler' circuit?
+        # Replaced by event listener at the initialize() method
         #circuit = self.controller.new_circuit()
 
         # Get Onion Service descriptor
         self.get_descriptor(config)
 
         # Query
-        result = self.query(config['address'])
+        url    = self.build_url(config)
+        result = self.query(url)
 
         if result is not False:
             self.debug(result)
         else:
             self.debug('Error querying {}'.format(config['address']))
 
+    def build_url(self, config):
+        url = config['address']
+
+        if 'protocol' in config:
+            url = config['protocol'] + '://' + url
+
+        if 'port' in config:
+            url += ':' + config['port']
+
+        if 'path' in config:
+            url += config['path']
+
+        return url
+
     def query(self, url):
-      """
-      Uses pycurl to fetch an endpoint using the proxy on the SOCKS_PORT.
-      Based on https://stem.torproject.org/tutorials/to_russia_with_love.html
-      """
+        """Fetches endpoint from URL"""
 
-      output = io.BytesIO()
-      query  = pycurl.Curl()
+        tor_address = self.get_config('tor_address')
+        socks_port  = self.get_config('socks_port')
+        proxies     = {
+                'http' : 'socks5h://{}:{}'.format(tor_address, socks_port),
+                'https': 'socks5h://{}:{}'.format(tor_address, socks_port),
+                }
 
-      query.setopt(pycurl.URL, url)
-      query.setopt(pycurl.PROXY, 'localhost')
-      query.setopt(pycurl.PROXYPORT, self.get_config('socks_port'))
-      query.setopt(pycurl.PROXYTYPE, pycurl.PROXYTYPE_SOCKS5_HOSTNAME)
-      query.setopt(pycurl.WRITEFUNCTION, output.write)
+        try:
+            result = requests.get(url, proxies=proxies)
 
-      try:
-        query.perform()
+        except e:
+            self.debug(e)
+            return False
 
-        return output.getvalue()
+        #except requests.RequestException as e:
+        #    return False
 
-      except pycurl.error as exc:
-        self.debug("Unable to reach %s (%s)" % (url, exc))
+        #except requests.ConnectionError as e:
+        #    return False
 
-        return False
+        #except requests.HTTPError as e:
+        #    return False
+
+        #except requests.ToManyRedirects as e:
+        #    return False
+
+        #except requests.ConnectionTimeout as e:
+        #    return False
+
+        #except requests.ReadTimeout as e:
+        #    return False
+
+        #except requests.Timeout as e:
+        #    return False
+
+        else:
+            return result
 
     def new_circuit(self, stream):
         """Setup a fresh circuit for new streams"""

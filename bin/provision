@@ -6,7 +6,8 @@
 # Parameters
 DIRNAME="`dirname $0`"
 BASE="$DIRNAME/.."
-DEPENDENCIES="python3-prometheus-client python3-stem python3-cryptography python3-bs4 python3-yaml python3-pytest python3-pycurl tor"
+DEPENDENCIES="python3-prometheus-client python3-stem python3-cryptography python3-bs4 python3-yaml python3-pytest python3-requests python3-socks"
+DEPENDENCIES="$DEPENDENCIES tor"
 TORRC="/etc/tor/torrc"
 
 # Install dependencies

@@ -1,6 +1,9 @@
 ---
 # Sample config file for Onionprobe
 
+# Tor listening address
+tor_address: '127.0.0.1'
+
 # Tor SOCKS port
 socks_port: 9050
 
