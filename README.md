@@ -14,13 +14,13 @@ Thanks @irl for the idea/specs and @hiro for suggestions:
 * [x] Looping support: goes through the list of onions in a loop, testing one
       at a time continuously.
 * [x] Flush descriptor caches so testing happens like if a fresh client.
-* [ ] Support for HTTP status codes.
-* [ ] Page load latency.
-* [ ] Need to know about "does the site have useful content?": ability to
-      fetch a set of paths from each onion.
+* [x] Support for HTTP status codes.
+* [x] Page load latency.
+* [x] Ability to fetch a set of paths from each onion.
       Customisable by test path: not all our sites have content at the root,
       but do not bootstrap every time if that can be avoided.
-* [ ] Regex for content inside the page: allow configuring a regex per path for
+* [ ] Need to know about "does the site have useful content?"
+      Regex for content inside the page: allow configuring a regex per path for
       what should be found in the returned content/headers.
 * [ ] Exports Prometheus metrics for the connection to the onion service, and
       extra metrics per path on the status code for each path returned by the server.

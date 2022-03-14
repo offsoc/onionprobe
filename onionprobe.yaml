@@ -306,3 +306,6 @@ endpoints:
     address: '2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion'
     protocol: 'http'
     port: '80'
+    paths:
+      - path: '/'
+        match: 'Tor Project'

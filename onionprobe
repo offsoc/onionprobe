@@ -63,8 +63,12 @@ defaults = {
                 'address' : '2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion',
                 'protocol': 'http',
                 'port'    : '80',
-                'path'    : '/',
-                'match'   : 'Tor Project',
+                'paths'   : [
+                        {
+                            'path'    : '/',
+                            'match'   : 'Tor Project',
+                        },
+                    ],
                 },
             }
         }
@@ -252,22 +256,39 @@ class Onionprobe:
 
             return False
 
-        # Query
-        url    = self.build_url(config)
-        result = self.query(url)
+        # Ensure at least a single path
+        if 'paths' not in config:
+            config['paths'] = [
+                        {
+                            'path': '/',
+                            'match': None,
+                        },
+                    ]
 
-        if result is not False:
-            return result
-        else:
-            self.debug('Error querying {}'.format(config['address']))
+        results = {}
 
-            return False
+        # Query each path
+        for path in config['paths']:
+            url    = self.build_url(config, path['path'])
+            result = self.query(url)
+
+            if result is not False:
+                #return result
+                results[path['path']] = result
+
+            else:
+                self.debug('Error querying {}'.format(config['address']))
+
+                #return False
+                results[path['path']] = False
+
+        return results
 
     #
     # Endpoint handling logic
     #
 
-    def build_url(self, config):
+    def build_url(self, config, path = None):
         url = config['address']
 
         if 'protocol' in config:
@@ -276,8 +297,10 @@ class Onionprobe:
         if 'port' in config:
             url += ':' + config['port']
 
-        if 'path' in config:
-            url += config['path']
+        #if 'path' in config:
+        #    url += config['path']
+        if path is not None:
+            url += path
 
         return url
 
