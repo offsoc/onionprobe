@@ -25,6 +25,8 @@ import time
 import random
 import io
 
+from datetime import datetime
+
 try:
     import stem
     import stem.control
@@ -167,6 +169,14 @@ class Onionprobe:
         self.debug('Waiting {} seconds...'.format(str(round(value))))
         time.sleep(value)
 
+    def elapsed(self, init_time, verbose):
+        elapsed = str((datetime.now() - init_time))
+
+        if verbose:
+            self.debug("Elapsed time: " + elapsed)
+
+        return elapsed
+
     #
     # Main application logic
     #
@@ -274,6 +284,9 @@ class Onionprobe:
     def query(self, url):
         """Fetches endpoint from URL"""
 
+        self.debug('Querying {}...'.format(url))
+
+        init_time   = datetime.now()
         tor_address = self.get_config('tor_address')
         socks_port  = self.get_config('socks_port')
         proxies     = {
@@ -282,7 +295,8 @@ class Onionprobe:
                 }
 
         try:
-            result = requests.get(url, proxies=proxies)
+            result  = requests.get(url, proxies=proxies)
+            elapsed = self.elapsed(init_time, True)
 
         except e:
             self.debug(e)
@@ -310,6 +324,8 @@ class Onionprobe:
         #    return False
 
         else:
+            self.debug('Status code is {}'.format(result.status_code))
+
             return result
 
     #
@@ -336,6 +352,10 @@ class Onionprobe:
 
     def get_descriptor(self, config):
         """Get Onion Service descriptor"""
+
+        self.debug('Getting descriptor for {}...'.format(config['address']))
+
+        init_time = datetime.now()
 
         # Get the descriptor
         try:
@@ -368,6 +388,8 @@ class Onionprobe:
         # See https://stem.torproject.org/api/descriptor/hidden_service.html#stem.descriptor.hidden_service.IntroductionPointV3
         #for introduction_point in inner.introduction_points:
         #    self.debug(introduction_point.link_specifiers)
+
+        elapsed = self.elapsed(init_time, True)
 
         # Return the inner layer
         return inner
