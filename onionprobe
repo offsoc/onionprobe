@@ -23,6 +23,7 @@ import argparse
 import os
 import time
 import random
+import io
 
 try:
     import stem.control
@@ -36,11 +37,18 @@ except ImportError:
     print("Please install pyaml first!")
     raise ImportError
 
+try:
+    import pycurl
+except ImportError:
+    print("Please install pycurl first!")
+    raise ImportError
+
 # Defaults
 defaults = {
         'loop'            : False,
         'sleep'           : 60,
         'interval'        : 60,
+        'socks_port'      : 9050,
         'control_port'    : 9051,
         'control_password': False,
         'new_circuit'     : False,
@@ -176,6 +184,39 @@ class Onionprobe:
 
         # Get Onion Service descriptor
         self.get_descriptor(config)
+
+        # Query
+        result = self.query(config['address'])
+
+        if result is not False:
+            self.debug(result)
+        else:
+            self.debug('Error querying {}'.format(config['address']))
+
+    def query(self, url):
+      """
+      Uses pycurl to fetch an endpoint using the proxy on the SOCKS_PORT.
+      Based on https://stem.torproject.org/tutorials/to_russia_with_love.html
+      """
+
+      output = io.BytesIO()
+      query  = pycurl.Curl()
+
+      query.setopt(pycurl.URL, url)
+      query.setopt(pycurl.PROXY, 'localhost')
+      query.setopt(pycurl.PROXYPORT, self.get_config('socks_port'))
+      query.setopt(pycurl.PROXYTYPE, pycurl.PROXYTYPE_SOCKS5_HOSTNAME)
+      query.setopt(pycurl.WRITEFUNCTION, output.write)
+
+      try:
+        query.perform()
+
+        return output.getvalue()
+
+      except pycurl.error as exc:
+        self.debug("Unable to reach %s (%s)" % (url, exc))
+
+        return False
 
     def new_circuit(self, stream):
         """Setup a fresh circuit for new streams"""

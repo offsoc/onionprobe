@@ -1,6 +1,9 @@
 ---
 # Sample config file for Onionprobe
 
+# Tor SOCKS port
+socks_port: 9050
+
 # Tor control port
 control_port: 9051
 
