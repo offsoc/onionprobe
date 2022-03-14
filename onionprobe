@@ -247,8 +247,10 @@ if __name__ == "__main__":
 
         if probe.initialize() is not False:
             probe.run()
-
-        probe.close()
+            probe.close()
+        else:
+            print('Error: could not initialize')
+            exit(1)
 
     except (FileNotFoundError, KeyboardInterrupt) as e:
         print(e)
