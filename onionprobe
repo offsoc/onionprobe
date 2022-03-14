@@ -98,10 +98,6 @@ class Onionprobe:
         control_port     = self.get_config('control_port')
         control_password = self.get_config('control_password')
 
-        if control_password is False:
-            import getpass
-            control_password = getpass.getpass("Controller password: ")
-
         try:
             self.controller = stem.control.Controller.from_port(
                     address=control_address,
@@ -111,11 +107,30 @@ class Onionprobe:
             self.debug("Unable to connect to tor on port 9051: %s" % exc)
             return False
 
-        try:
-            self.controller.authenticate(password=control_password)
-        except stem.connection.PasswordAuthFailed:
-            self.debug("Unable to authenticate, password is incorrect")
-            return False
+        if control_password is False:
+            # First try to authenticate without a password
+            try:
+                self.controller.authenticate()
+
+            # Then fallback to ask for a password
+            except stem.connection.MissingPassword:
+                import getpass
+                control_password = getpass.getpass("Controller password: ")
+
+                try:
+                    self.controller.authenticate(password=control_password)
+                except stem.connection.PasswordAuthFailed:
+                    self.debug("Unable to authenticate, password is incorrect")
+
+                    return False
+
+        else:
+            try:
+                self.controller.authenticate(password=control_password)
+            except stem.connection.PasswordAuthFailed:
+                self.debug("Unable to authenticate, password is incorrect")
+
+                return False
 
         # Stream management
         # See https://stem.torproject.org/tutorials/to_russia_with_love.html
