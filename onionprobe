@@ -26,6 +26,7 @@ import random
 import io
 
 try:
+    import stem
     import stem.control
 except ImportError:
     print("Please install stem library first!")
@@ -194,7 +195,7 @@ class Onionprobe:
 
         # Probe each endpoint
         for key, endpoint in enumerate(endpoints):
-            self.probe(endpoint)
+            result = self.probe(endpoint)
 
             # Wait if not last endpoint
             if key != len(endpoints) - 1:
@@ -219,16 +220,23 @@ class Onionprobe:
         #circuit = self.controller.new_circuit()
 
         # Get Onion Service descriptor
-        self.get_descriptor(config)
+        descriptor = self.get_descriptor(config)
+
+        if descriptor is False:
+            self.log('Error getting the descriptor')
+
+            return False
 
         # Query
         url    = self.build_url(config)
         result = self.query(url)
 
         if result is not False:
-            self.debug(result)
+            return result
         else:
             self.debug('Error querying {}'.format(config['address']))
+
+            return False
 
     #
     # Endpoint handling logic
@@ -306,8 +314,6 @@ class Onionprobe:
         # Create new circuit
         self.circuit_id = self.controller.new_circuit(await_build=True)
 
-        self.debug(self.circuit_id)
-
         # See https://stem.torproject.org/tutorials/to_russia_with_love.html
         if stream.status == 'NEW':
             self.debug('Setting up new circuit {}...'.format(self.circuit_id))
@@ -317,7 +323,20 @@ class Onionprobe:
         """Get Onion Service descriptor"""
 
         # Get the descriptor
-        descriptor = self.controller.get_hidden_service_descriptor(config['address'])
+        try:
+            descriptor = self.controller.get_hidden_service_descriptor(config['address'])
+
+        except stem.DescriptorUnavailable as e:
+            return False
+
+        except stem.Timeout as e:
+            return False
+
+        except stem.ControllerError as e:
+            return False
+
+        except ValueError as e:
+            return False
 
         # Ensure it's converted to the v3 format
         #
@@ -335,7 +354,12 @@ class Onionprobe:
         #for introduction_point in inner.introduction_points:
         #    self.debug(introduction_point.link_specifiers)
 
-        self.debug(inner)
+        # Return the inner layer
+        return inner
+
+    #
+    # Cleansing methods
+    #
 
     def close(self):
         self.controller.close()
