@@ -39,3 +39,8 @@ Also thanks hiro for suggestions. Idea initiated during a conversation:
     12:23 +<hiro> if you use the prometheus exporter with python one could
                   just use request and beautiful soup to check that the page is returning what
                   one expects
+
+## Tasks
+
+* [ ] Try to get the descriptor from multiple (if not all) HSDirs where it
+      should be available.

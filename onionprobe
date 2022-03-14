@@ -53,6 +53,7 @@ defaults = {
         'control_port'    : 9051,
         'control_password': False,
         'new_circuit'     : False,
+        'shuffle'         : True,
         'randomize'       : True,
         'endpoints'       : {
             'www.torproject.org': {
@@ -67,6 +68,10 @@ defaults = {
 
 class Onionprobe:
     """Tests/monitor Tor Onion Services"""
+
+    #
+    # Initialization logic
+    #
 
     def __init__(self, args):
         self.args = args
@@ -118,6 +123,10 @@ class Onionprobe:
             self.controller.add_event_listener(self.new_circuit, stem.control.EventType.STREAM)
             self.circuit_id = None
 
+    #
+    # Helper methods
+    #
+
     def debug(self, *args, **kwargs):
         """Helper debug function"""
 
@@ -142,8 +151,17 @@ class Onionprobe:
         self.debug('Waiting {} seconds...'.format(str(round(value))))
         time.sleep(value)
 
+    #
+    # Main application logic
+    #
+
     def run(self):
-        """Main loop"""
+        """
+        Main application loop
+
+        Checks if should be run indefinitely.
+        Then dispatch to a round of probes.
+        """
 
         # Check if should loop
         if self.get_config('loop'):
@@ -159,18 +177,28 @@ class Onionprobe:
             self.round()
 
     def round(self):
-        """Process a round of tests"""
+        """
+        Process a round of tests
+
+        Each round is composed of the entire set of the endpoints
+        which is optionally shuffled.
+
+        Each probe is then tested.
+        """
 
         # Shuffle the deck
         endpoints = sorted(self.get_config('endpoints'))
-        endpoints = random.sample(endpoints, k=len(endpoints))
+
+        if self.get_config('shuffle'):
+            endpoints = random.sample(endpoints, k=len(endpoints))
 
         # Probe each endpoint
-        for endpoint in endpoints:
+        for key, endpoint in enumerate(endpoints):
             self.probe(endpoint)
 
-            # FIXME: do not wait in if this is the last endpoint
-            self.wait(self.get_config('interval'))
+            # Wait if not last endpoint
+            if key != len(endpoints) - 1:
+                self.wait(self.get_config('interval'))
 
     def probe(self, endpoint):
         """Probe an unique endpoint"""
@@ -201,6 +229,10 @@ class Onionprobe:
             self.debug(result)
         else:
             self.debug('Error querying {}'.format(config['address']))
+
+    #
+    # Endpoint handling logic
+    #
 
     def build_url(self, config):
         url = config['address']
@@ -257,6 +289,10 @@ class Onionprobe:
         else:
             return result
 
+    #
+    # Tor related logic
+    #
+
     def new_circuit(self, stream):
         """Setup a fresh circuit for new streams"""
 
@@ -280,9 +316,11 @@ class Onionprobe:
     def get_descriptor(self, config):
         """Get Onion Service descriptor"""
 
-        # FIXME: try to get the descriptor from multiple servers
+        # Get the descriptor
         descriptor = self.controller.get_hidden_service_descriptor(config['address'])
 
+        # Ensure it's converted to the v3 format
+        #
         # See https://github.com/torproject/stem/issues/96
         #     https://stem.torproject.org/api/control.html#stem.control.Controller.get_hidden_service_descriptor
         #     https://gitlab.torproject.org/legacy/trac/-/issues/25417
