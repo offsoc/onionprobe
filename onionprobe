@@ -65,8 +65,8 @@ defaults = {
                 'port'    : '80',
                 'paths'   : [
                         {
-                            'path'    : '/',
-                            'match'   : 'Tor Project',
+                            'path'   : '/',
+                            'pattern': 'Tor Project',
                         },
                     ],
                 },
@@ -260,8 +260,8 @@ class Onionprobe:
         if 'paths' not in config:
             config['paths'] = [
                         {
-                            'path': '/',
-                            'match': None,
+                            'path'   : '/',
+                            'pattern': None,
                         },
                     ]
 
@@ -273,13 +273,29 @@ class Onionprobe:
             result = self.query(url)
 
             if result is not False:
-                #return result
-                results[path['path']] = result
+                # Check for a match
+                if path['pattern'] is not None:
+                    import re
+                    pattern = re.compile(path['pattern'])
+                    match   = pattern.search(result.text)
+
+                    self.debug('Looking for pattern {}...'.format(path['pattern']))
+
+                    if match is not None:
+                        self.debug('Match found')
+
+                        results[path['path']] = result
+                    else:
+                        self.debug('Match not found')
+
+                        results[path['path']] = False
+
+                else:
+                    results[path['path']] = result
 
             else:
                 self.debug('Error querying {}'.format(config['address']))
 
-                #return False
                 results[path['path']] = False
 
         return results

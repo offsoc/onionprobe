@@ -307,5 +307,5 @@ endpoints:
     protocol: 'http'
     port: '80'
     paths:
-      - path: '/'
-        match: 'Tor Project'
+      - path   : '/'
+        pattern: 'Tor Project'

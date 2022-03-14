@@ -19,7 +19,7 @@ Thanks @irl for the idea/specs and @hiro for suggestions:
 * [x] Ability to fetch a set of paths from each onion.
       Customisable by test path: not all our sites have content at the root,
       but do not bootstrap every time if that can be avoided.
-* [ ] Need to know about "does the site have useful content?"
+* [x] Need to know about "does the site have useful content?"
       Regex for content inside the page: allow configuring a regex per path for
       what should be found in the returned content/headers.
 * [ ] Exports Prometheus metrics for the connection to the onion service, and
