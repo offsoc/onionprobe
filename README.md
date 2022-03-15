@@ -67,3 +67,11 @@ References and inspirations:
 * If using the prometheus exporter with python, try to just use request and
   beautiful soup to check that the page is returning what one expects.
 * Use the existing blackbox_exporter timing metrics as a model.
+
+## Alternatives
+
+* [OnionScan](https://onionscan.org/)
+* [BrassHornCommunications/OnionWatch: A GoLang daemon for notifying Tor Relay and Hidden Service admins of status changes](https://github.com/BrassHornCommunications/OnionWatch)
+* [systemli/prometheus-onion-service-exporter: Prometheus Exporter for Tor Onion Services](https://github.com/systemli/prometheus-onion-service-exporter)
+* [prometheus/blackbox_exporter: Blackbox prober exporter](https://github.com/prometheus/blackbox_exporter), which could be configured using `proxy_url`
+  pointing to a [Privoxy](http://www.privoxy.org/) instance relaying traffic to `tor` daemon.
