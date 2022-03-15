@@ -7,7 +7,7 @@ Onionprobe is a tool for testing and monitoring the status of
 
 ## Specs
 
-Thanks @irl for the idea/specs and @hiro for suggestions.
+Thanks @irl for the idea/specs/tasks and @hiro for suggestions.
 
 ### Basic
 
@@ -27,17 +27,6 @@ Thanks @irl for the idea/specs and @hiro for suggestions.
       Regex for content inside the page: allow configuring a regex per path for
       what should be found in the returned content/headers.
 
-### Enhancements
-
-* [ ] Enhanced logging/reporting.
-* [ ] Multitasking: multiple threads/workers continuously probing endpoints
-      with a centralized reporting data structure. This helps splitting
-      data gathering from presentation logic, especially with the Prometheus
-      exporter.
-* [ ] Dockerfile (and optionally a Docker Compose).
-* [ ] Python packaging (`requirements.txt` or other format).
-* [ ] Documentation.
-
 ### Prometheus integration
 
 * [ ] Exports Prometheus metrics for the connection to the onion service, and
@@ -49,10 +38,27 @@ Thanks @irl for the idea/specs and @hiro for suggestions.
       targets on Prometheus' schedule.
 * [ ] Add in additional timing metrics wherever appropriate.
 
-### Misc features
+### Enhancements
 
-* [ ] Optionally launch it's [own Tor process](https://stem.torproject.org/api/process.html)
+* [x] Dockerfile (and optionally a Docker Compose).
+* [ ] Enhanced logging/reporting.
+* [ ] Python packaging (`requirements.txt` or other format).
+* [ ] Documentation.
+* [ ] Tests.
+
+### Bonus
+
+* [x] Optionally launch it's [own Tor process](https://stem.torproject.org/api/process.html)
       like in [this example](https://stem.torproject.org/tutorials/to_russia_with_love.html#using-pycurl).
+* [ ] `ControlSocket` support using `stem.control.Controller.from_socket_file()`.
+* [ ] Built-in `HashedControlPort` generation see discussion
+      [here](https://tor.stackexchange.com/questions/6448/how-does-the-tor-hash-password-option-work#12068).
+* [ ] Multitasking: multiple threads/workers continuously probing endpoints
+      with a centralized reporting data structure. This helps splitting
+      data gathering from presentation logic, especially with the Prometheus
+      exporter. Not a requirement for Prometheus, since the [official client](https://github.com/prometheus/client_python)
+      already [uses](https://github.com/prometheus/client_python/blob/789b24a47148f63109626958fe2eb1ad9231f9c3/prometheus_client/exposition.py#L142)
+      a [threaded socketserver](https://docs.python.org/3.8/library/socketserver.html#socketserver.ThreadingMixIn).
 
 ## References
 

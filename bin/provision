@@ -5,7 +5,7 @@
 
 # Parameters
 DIRNAME="`dirname $0`"
-BASE="$DIRNAME/.."
+BASEPATH="$DIRNAME/.."
 DEPENDENCIES="python3-prometheus-client python3-stem python3-cryptography python3-bs4 python3-yaml python3-pytest python3-requests python3-socks"
 DEPENDENCIES="$DEPENDENCIES tor"
 TORRC="/etc/tor/torrc"
@@ -16,11 +16,18 @@ sudo apt install -y $DEPENDENCIES
 # Configure Tor
 if ! grep "^ControlPort" $TORRC; then
 
-  control_pass="$(grep "^control_password" $DIRNAME/../onionprobe.yaml | cut -d "'" -f 2)"
+  control_pass="$(grep "^control_password" $BASEPATH/onionprobe.yaml | cut -d "'" -f 2)"
   hashed_pass="`tor --hash-password $control_pass`"
 
-  echo "ControlPort 9051"                   | sudo tee -a $TORRC > /dev/null
+  echo "SocksPort   19050"                  | sudo tee -a $TORRC > /dev/null
+  echo "ControlPort 19051"                  | sudo tee -a $TORRC > /dev/null
   echo "HashedControlPassword $hashed_pass" | sudo tee -a $TORRC > /dev/null
 
   sudo service tor restart
 fi
+
+# Docker and docker-compose from distribution
+sudo apt-get install -y docker.io docker-compose
+
+# Put the regular user into docker group
+sudo usermod -a -G docker $(whoami)

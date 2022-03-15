@@ -1,21 +1,33 @@
 ---
 # Sample config file for Onionprobe
 
+# Whether to launch it's own Tor daemon
+launch_tor: true,
+
 # Tor listening address
+#tor_address: 'tor'
 tor_address: '127.0.0.1'
 
 # Tor SOCKS port
-socks_port: 9050
+#
+# Use a non-default Tor SOCKS port to avoid conflict with any existing
+# system-wide Tor process listening at TCP port 9050.
+#socks_port: 9050
+socks_port: 19050
 
 # Tor control port
-control_port: 9051
+#
+# Use a non-default Tor control port to avoid conflict with any existing
+# system-wide Tor process listening at TCP port 9051.
+#control_port: 9051
+control_port: 19051
 
 # Tor control password
 # To not use the following value in production, as this is just an example
 #
 # Set to false for password prompt
 #control_password: false
-control_password: 'hackedpasswdbSkUMOr2vIlL5u2YEMA1YpwKj08'
+#control_password: 'hackedpasswdbSkUMOr2vIlL5u2YEMA1YpwKj08'
 
 # Whether to run continuously
 loop: true

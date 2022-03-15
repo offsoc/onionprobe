@@ -24,12 +24,14 @@ import os
 import time
 import random
 import io
+import shutil
 
 from datetime import datetime
 
 try:
     import stem
     import stem.control
+    import stem.process
 except ImportError:
     print("Please install stem library first!")
     raise ImportError
@@ -48,16 +50,17 @@ except ImportError:
 
 # Defaults
 defaults = {
-        'loop'            : False,
-        'sleep'           : 60,
-        'interval'        : 60,
+        'launch_tor'      : True,
         'tor_address'     : '127.0.0.1',
-        'socks_port'      : 9050,
-        'control_port'    : 9051,
+        'socks_port'      : 19050,
+        'control_port'    : 19051,
         'control_password': False,
-        'new_circuit'     : False,
+        'loop'            : False,
         'shuffle'         : True,
         'randomize'       : True,
+        'new_circuit'     : False,
+        'interval'        : 60,
+        'sleep'           : 60,
         'endpoints'       : {
             'www.torproject.org': {
                 'address' : '2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion',
@@ -100,9 +103,21 @@ class Onionprobe:
     def initialize(self):
         """Initialization procedures"""
 
-        control_address  = self.get_config('tor_address')
-        control_port     = self.get_config('control_port')
-        control_password = self.get_config('control_password')
+        control_address = self.get_config('tor_address')
+        control_port    = self.get_config('control_port')
+
+        # Ensure control_address is an IP address, which is the
+        # only type currently supported by stem
+        #
+        # Right now only IPv4 is supported
+        import socket
+        control_address = socket.gethostbyname(control_address)
+
+        if self.get_config('launch_tor'):
+            if self.launch_tor() is False:
+                self.debug('Error initializing Tor')
+
+                return False
 
         try:
             self.controller = stem.control.Controller.from_port(
@@ -112,6 +127,10 @@ class Onionprobe:
         except stem.SocketError as exc:
             self.debug("Unable to connect to tor on port 9051: %s" % exc)
             return False
+
+        # Evaluate control password only after we're sure that a Tor
+        # process is running in the case that 'launch_tor' is True
+        control_password = self.get_config('control_password')
 
         if control_password is False:
             # First try to authenticate without a password
@@ -154,11 +173,17 @@ class Onionprobe:
 
         print(*args, **kwargs)
 
-    def get_config(self, item):
+    def get_config(self, item, default = None):
         """Helper to get config or use default value"""
 
         if item in self.config:
             return self.config[item]
+
+        # Optionally override the default with an argument provided
+        elif default is not None:
+            self.config[item] = default
+
+            return default
 
         return defaults[item]
 
@@ -238,6 +263,19 @@ class Onionprobe:
         endpoints = self.get_config('endpoints')
         config    = endpoints[endpoint]
 
+        # Check if the addres is valid
+        from stem.util.tor_tools import is_valid_hidden_service_address
+
+        if 'address' not in config:
+            self.debug('No address set for {}'.format(endpoint))
+
+            return False
+
+        elif is_valid_hidden_service_address(config['address'][0:-6], 3) is False:
+            self.debug('Invalid onion service address set for {}: {}'.format(endpoint, config['address']))
+
+            return False
+
         # Ensure we always begin with a cleared cache
         # This allows to discover issues with published descriptors
         self.controller.clear_cache()
@@ -252,7 +290,7 @@ class Onionprobe:
         descriptor = self.get_descriptor(config)
 
         if descriptor is False:
-            self.log('Error getting the descriptor')
+            self.debug('Error getting the descriptor')
 
             return False
 
@@ -371,6 +409,67 @@ class Onionprobe:
     # Tor related logic
     #
 
+    def gen_control_password(self):
+        """Generates a random password"""
+
+        import secrets
+
+        return secrets.token_urlsafe(random.randrange(22, 32))
+
+    def hash_password(self, password):
+        """Produce a hashed password in the format used by HashedControlPassword"""
+
+        import subprocess
+
+        tor    = shutil.which('tor')
+        result = subprocess.check_output([tor, '--hash-password', password], text=True)
+
+        return result
+
+    def launch_tor(self):
+        """
+        Launch a built-in Tor process
+
+        See https://stem.torproject.org/tutorials/to_russia_with_love.html
+            https://stem.torproject.org/api/process.html
+
+        """
+
+        if shutil.which('tor') is None:
+            self.debug('Cannot find the tor executable. Is it installed?')
+
+            return False
+
+        from stem.util import term
+
+        def print_bootstrap_lines(line):
+            if "Bootstrapped " in line:
+                self.debug(term.format(line))
+
+        try:
+            self.debug('Initializing Tor process...')
+
+            tor_address      = self.get_config('tor_address')
+            control_password = self.get_config('control_password', self.gen_control_password())
+            self.tor         = stem.process.launch_tor_with_config(
+                    config = {
+                        'SocksPort'            : tor_address + ':' + str(self.get_config('socks_port')),
+                        'ControlPort'          : tor_address + ':' + str(self.get_config('control_port')),
+
+                        # This does not work when running inside a container
+                        'HashedControlPassword': self.hash_password(control_password),
+
+                        #'Log'                 : [
+                        #    'NOTICE stdout',
+                        #    ],
+                        },
+                        init_msg_handler = print_bootstrap_lines,
+                    )
+
+        except OSError as e:
+            print(e)
+            return False
+
     def new_circuit(self, stream):
         """Setup a fresh circuit for new streams"""
 
@@ -439,6 +538,10 @@ class Onionprobe:
 
     def close(self):
         self.controller.close()
+
+        # Terminate built-in Tor
+        if 'tor' in dir(self):
+            self.tor.kill()
 
 if __name__ == "__main__":
     """Process from CLI"""
