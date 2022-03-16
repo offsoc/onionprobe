@@ -142,6 +142,7 @@ class Onionprobe:
 
             logging.basicConfig(level=level)
 
+            # See https://stem.torproject.org/api/util/log.html
             stem_logger = stem.util.log.get_logger()
 
             stem_logger.setLevel(level)
