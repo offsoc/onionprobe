@@ -63,6 +63,7 @@ Thanks:
 * [ ] HTTPS certificate validation check/exception.
 * [ ] Built-in `HashedControlPort` generation to not leak password information to command as `tor --hash-password` does.
       See discussion [here](https://tor.stackexchange.com/questions/6448/how-does-the-tor-hash-password-option-work#12068).
+* [ ] Architecture should be extensible to allow for different reporting options (stdout, Prometheus etc).
 * [ ] Multitasking: multiple threads/workers continuously probing endpoints
       with a centralized reporting data structure. This helps splitting
       data gathering from presentation logic, especially with the Prometheus
