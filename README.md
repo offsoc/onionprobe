@@ -5,9 +5,14 @@
 Onionprobe is a tool for testing and monitoring the status of
 [Tor Onion Services](https://community.torproject.org/onion-services/).
 
-## Specs
+## Acknowledgements
 
-Thanks @irl for the idea/specs/tasks and @hiro for suggestions.
+Thanks:
+
+* @irl for the idea/specs/tasks.
+* @hiro for suggestions.
+
+## Tasks
 
 ### Basic
 
