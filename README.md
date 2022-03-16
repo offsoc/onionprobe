@@ -5,12 +5,54 @@
 Onionprobe is a tool for testing and monitoring the status of
 [Tor Onion Services](https://community.torproject.org/onion-services/).
 
-## Acknowledgements
+It can run a single time or continuously to probe a set of onion services
+endpoints and paths, optionally exporting to [Prometheus](https://prometheus.io).
 
-Thanks:
+## Requirements
 
-* @irl for the idea/specs/tasks.
-* @hiro for suggestions.
+Onionprobe requires the following software:
+
+* [Python 3](https://www.python.org)
+* [Stem Tor Control library](https://stem.torproject.org)
+* [Prometheus Python client](https://github.com/prometheus/client_python)
+* [PyYAML](https://pyyaml.org)
+* [Requests](https://docs.python-requests.org)
+* [PySocks](https://github.com/Anorov/PySocks)
+* [Tor daemon](https://gitlab.torproject.org/tpo/core/tor)
+
+On [Debian](https://debian.org), they can be installed using
+
+    sudo apt install python3 python3-prometheus-client \
+                     python3-stem python3-cryptography \
+                     python3-yaml python3-requests     \
+                     python3-socks tor
+
+## Installation
+
+Just clone the repository
+
+    git clone https://gitlab.torproject.org/rhatto/onionprobe
+    cd onionprobe
+
+## Usage
+
+Right now Onionprobe works only with a configuration file.
+A [sample config](onionprobe.yaml] is provided:
+
+    ./onionprobe -c onionprobe.yaml
+
+## Testing
+
+Onionprobe comes with a working test environment with the [sample
+configuration](onionprobe.yaml] and based on [Docker
+Compose](https://docs.docker.com/compose/), which can be started using
+
+    docker-compose up -d
+
+Then point your browser to:
+
+* The built-in Prometheus dashboard: https://localhost:9090
+* The built-in Onionprobe Prometheus exporter: https://localhost:9091
 
 ## Tasks
 
@@ -31,11 +73,14 @@ Thanks:
 * [x] Need to know about "does the site have useful content?"
       Regex for content inside the page: allow configuring a regex per path for
       what should be found in the returned content/headers.
+* [x] Documentation.
 
 ### Prometheus integration
 
 * [x] Exports Prometheus metrics for the connection to the onion service, and
       extra metrics per path on the status code for each path returned by the server.
+      If using the prometheus exporter with python, consider to just use request and
+      beautiful soup to check that the page is returning what one expects.
 * [ ] Try to get the descriptor from multiple (if not all) HSDirs where it
       should be available.
 * [ ] To get the timings right, the tool should take care of the test frequency and
@@ -54,7 +99,7 @@ Thanks:
 * [ ] More command line options.
 * [ ] Refactor into smaller modules.
 * [ ] Python packaging (`requirements.txt` or other format).
-* [ ] Documentation.
+* [ ] Better documentation.
 * [ ] Tests.
 
 ### Bonus
@@ -73,13 +118,12 @@ Thanks:
       already [uses](https://github.com/prometheus/client_python/blob/789b24a47148f63109626958fe2eb1ad9231f9c3/prometheus_client/exposition.py#L142)
       a [threaded socketserver](https://docs.python.org/3.8/library/socketserver.html#socketserver.ThreadingMixIn).
 
-## References
+## Acknowledgements
 
-References and inspirations:
+Thanks:
 
-* If using the prometheus exporter with python, try to just use request and
-  beautiful soup to check that the page is returning what one expects.
-* Use the existing blackbox_exporter timing metrics as a model.
+* @irl for the idea/specs/tasks.
+* @hiro for suggestions.
 
 ## Alternatives
 

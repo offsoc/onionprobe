@@ -6,7 +6,8 @@
 # Parameters
 DIRNAME="`dirname $0`"
 BASEPATH="$DIRNAME/.."
-DEPENDENCIES="python3-prometheus-client python3-stem python3-cryptography python3-bs4 python3-yaml python3-pytest python3-requests python3-socks"
+DEPENDENCIES="python3-prometheus-client python3-stem python3-cryptography python3-yaml python3-requests python3-socks"
+#DEPENDENCIES="python3-bs4 python3-pytest"
 DEPENDENCIES="$DEPENDENCIES tor"
 TORRC="/etc/tor/torrc"
 
