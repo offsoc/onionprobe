@@ -47,6 +47,8 @@ Thanks:
 
 * [x] Dockerfile (and optionally a Docker Compose).
 * [ ] Enhanced logging/reporting.
+* [ ] More command line options.
+* [ ] Refactor into smaller modules.
 * [ ] Python packaging (`requirements.txt` or other format).
 * [ ] Documentation.
 * [ ] Tests.
