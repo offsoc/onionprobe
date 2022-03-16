@@ -101,6 +101,7 @@ Then point your browser to:
 * [ ] Python packaging (`requirements.txt` or other format).
 * [ ] Better documentation.
 * [ ] Tests.
+* [ ] Move the repository to the [network health group](https://gitlab.torproject.org/tpo/network-health).
 
 ### Bonus
 
