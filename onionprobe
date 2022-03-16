@@ -387,11 +387,11 @@ class Onionprobe:
                     self.log('Looking for pattern {}...'.format(path['pattern']))
 
                     if match is not None:
-                        self.log('Match found')
+                        self.log('Match found: "%s"' % (path['pattern']))
 
                         results[path['path']] = result
                     else:
-                        self.log('Match not found')
+                        self.log('Match not found: "%s"' % (path['pattern']))
 
                         results[path['path']] = False
 
