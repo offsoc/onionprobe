@@ -9,4 +9,4 @@ scrape_configs:
   - job_name: 'onionprobe'
 
     static_configs:
-      - targets: ['onionprobe:9090']
+      - targets: ['onionprobe:9091']
