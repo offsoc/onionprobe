@@ -50,18 +50,20 @@ except ImportError:
 
 # Defaults
 defaults = {
-        'launch_tor'      : True,
-        'tor_address'     : '127.0.0.1',
-        'socks_port'      : 19050,
-        'control_port'    : 19051,
-        'control_password': False,
-        'loop'            : False,
-        'shuffle'         : True,
-        'randomize'       : True,
-        'new_circuit'     : False,
-        'interval'        : 60,
-        'sleep'           : 60,
-        'endpoints'       : {
+        'launch_tor'              : True,
+        'tor_address'             : '127.0.0.1',
+        'socks_port'              : 19050,
+        'control_port'            : 19051,
+        'control_password'        : False,
+        'loop'                    : False,
+        'prometheus_exporter'     : False,
+        'prometheus_exporter_port': 9090,
+        'shuffle'                 : True,
+        'randomize'               : True,
+        'new_circuit'             : False,
+        'interval'                : 60,
+        'sleep'                   : 60,
+        'endpoints'               : {
             'www.torproject.org': {
                 'address' : '2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion',
                 'protocol': 'http',
@@ -77,7 +79,7 @@ defaults = {
         }
 
 class Onionprobe:
-    """Tests/monitor Tor Onion Services"""
+    """Test/monitor Tor Onion Services"""
 
     #
     # Initialization logic
@@ -97,11 +99,35 @@ class Onionprobe:
         else:
             self.config = {}
 
+    def initialize(self):
+        """Initialization procedures"""
+
         # Initializes the random number generator
         random.seed()
 
-    def initialize(self):
-        """Initialization procedures"""
+        if self.initialize_tor() is False:
+            return False
+
+        if self.initialize_tor_auth() is False:
+            return False
+
+        # Stream management
+        # See https://stem.torproject.org/tutorials/to_russia_with_love.html
+        if self.get_config('new_circuit'):
+            self.controller.set_conf('__LeaveStreamsUnattached', '1')
+            self.controller.add_event_listener(self.new_circuit, stem.control.EventType.STREAM)
+            self.circuit_id = None
+
+        # Prometheus
+        if self.get_config('prometheus_exporter'):
+            # Enforce continuous run
+            self.config['loop'] = True
+
+            if self.initialize_prometheus_exporter() is False:
+                return False
+
+    def initialize_tor(self):
+        """Initialize Tor control connection"""
 
         control_address = self.get_config('tor_address')
         control_port    = self.get_config('control_port')
@@ -126,6 +152,14 @@ class Onionprobe:
 
         except stem.SocketError as exc:
             self.debug("Unable to connect to tor on port 9051: %s" % exc)
+            return False
+
+    def initialize_tor_auth(self):
+        """Initialize an authenticated Tor control connection"""
+
+        if 'controller' not in dir(self):
+            self.debug("Unable to find a Tor control connection")
+
             return False
 
         # Evaluate control password only after we're sure that a Tor
@@ -157,12 +191,15 @@ class Onionprobe:
 
                 return False
 
-        # Stream management
-        # See https://stem.torproject.org/tutorials/to_russia_with_love.html
-        if self.get_config('new_circuit'):
-            self.controller.set_conf('__LeaveStreamsUnattached', '1')
-            self.controller.add_event_listener(self.new_circuit, stem.control.EventType.STREAM)
-            self.circuit_id = None
+    def initialize_prometheus_exporter(self):
+        """Initialize the Prometheus Exporter"""
+
+        from prometheus_client import start_http_server
+
+        port = self.get_config('prometheus_exporter_port')
+
+        self.debug('Initializing Prometheus HTTP exporter server at port %s...' % (port))
+        start_http_server(port)
 
     #
     # Helper methods
@@ -245,6 +282,10 @@ class Onionprobe:
         endpoints = sorted(self.get_config('endpoints'))
 
         if self.get_config('shuffle'):
+            # Reinitializes the random number generator to avoid predictable
+            # results if running countinuously for long periods.
+            random.seed()
+
             endpoints = random.sample(endpoints, k=len(endpoints))
 
         # Probe each endpoint

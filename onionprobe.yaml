@@ -32,6 +32,13 @@ control_port: 19051
 # Whether to run continuously
 loop: true
 
+# Whether to enable Prometheus exporter functionality
+# Setting it to true automatically enables countinuos run (loop)
+prometheus_exporter: true
+
+# Prometheus exporter port
+prometheus_exporter_port: 9090
+
 # Whether to shuffle list to scramble the ordering of the probe and keep
 # the endpoint list to be guessed by a third party.
 #
