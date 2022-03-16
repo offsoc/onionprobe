@@ -60,7 +60,7 @@ Thanks:
       like in [this example](https://stem.torproject.org/tutorials/to_russia_with_love.html#using-pycurl).
 * [ ] `ControlSocket` support using `stem.control.Controller.from_socket_file()`.
 * [ ] HTTPS certificate validation check/exception.
-* [ ] Built-in `HashedControlPort` generation to not leak password information to command as `tor --hash-password does`.
+* [ ] Built-in `HashedControlPort` generation to not leak password information to command as `tor --hash-password` does.
       See discussion [here](https://tor.stackexchange.com/questions/6448/how-does-the-tor-hash-password-option-work#12068).
 * [ ] Multitasking: multiple threads/workers continuously probing endpoints
       with a centralized reporting data structure. This helps splitting
