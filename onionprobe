@@ -245,19 +245,19 @@ class Onionprobe:
                 'onion_service_latency': Gauge(
                         'onion_service_latency',
                         'Register Onion Service connection latency',
-                        ['address', 'protocol', 'port', 'path']
+                        ['name', 'address', 'protocol', 'port', 'path']
                     ),
 
                 'onion_service_status_code': Gauge(
                         'onion_service_status_code',
                         'Register Onion Service connection status code',
-                        ['address', 'protocol', 'port', 'path']
+                        ['name', 'address', 'protocol', 'port', 'path']
                     ),
 
                 'onion_service_descriptor_latency': Gauge(
                         'onion_service_descriptor_latency',
                         'Register Onion Service connection latency',
-                        ['address']
+                        ['name', 'address']
                     ),
                 }
 
@@ -389,7 +389,7 @@ class Onionprobe:
         #circuit = self.controller.new_circuit()
 
         # Get Onion Service descriptor
-        descriptor = self.get_descriptor(config)
+        descriptor = self.get_descriptor(endpoint, config)
 
         if descriptor is False:
             self.log('Error getting the descriptor', 'error')
@@ -409,7 +409,7 @@ class Onionprobe:
 
         # Query each path
         for path in config['paths']:
-            result = self.query(config, path['path'])
+            result = self.query(endpoint, config, path['path'])
 
             if result is not False:
                 # Check for a match
@@ -459,7 +459,7 @@ class Onionprobe:
 
         return url
 
-    def query(self, config, path):
+    def query(self, endpoint, config, path):
         """Fetches endpoint from URL"""
 
         url = self.build_url(config, path)
@@ -479,6 +479,7 @@ class Onionprobe:
             elapsed = self.elapsed(init_time, True)
 
             self.metrics['onion_service_latency'].labels(
+                        name=endpoint,
                         address=config['address'],
                         protocol=config['protocol'],
                         port=config['port'],
@@ -514,6 +515,7 @@ class Onionprobe:
             self.log('Status code is {}'.format(result.status_code))
 
             self.metrics['onion_service_status_code'].labels(
+                        name=endpoint,
                         address=config['address'],
                         protocol=config['protocol'],
                         port=config['port'],
@@ -603,7 +605,7 @@ class Onionprobe:
             self.log('Setting up new circuit {}...'.format(self.circuit_id), 'debug')
             self.controller.attach_stream(stream.id, self.circuit_id)
 
-    def get_descriptor(self, config):
+    def get_descriptor(self, endpoint, config):
         """Get Onion Service descriptor"""
 
         self.log('Getting descriptor for {}...'.format(config['address']))
@@ -644,7 +646,10 @@ class Onionprobe:
 
         elapsed = self.elapsed(init_time, True)
 
-        self.metrics['onion_service_descriptor_latency'].labels(address=config['address']).set(elapsed)
+        self.metrics['onion_service_descriptor_latency'].labels(
+                    name=endpoint,
+                    address=config['address'],
+                ).set(elapsed)
 
         # Return the inner layer
         return inner
