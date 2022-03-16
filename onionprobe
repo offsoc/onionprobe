@@ -27,7 +27,7 @@ import io
 import shutil
 import logging
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 try:
     import stem
@@ -60,7 +60,7 @@ defaults = {
         'control_password'        : False,
         'loop'                    : False,
         'prometheus_exporter'     : False,
-        'prometheus_exporter_port': 9090,
+        'prometheus_exporter_port': 9091,
         'shuffle'                 : True,
         'randomize'               : True,
         'new_circuit'             : False,
@@ -132,6 +132,8 @@ class Onionprobe:
             if self.initialize_prometheus_exporter() is False:
                 return False
 
+        self.initialize_metrics()
+
     def initialize_logging(self):
         """Initialize logging"""
 
@@ -178,6 +180,7 @@ class Onionprobe:
 
         except stem.SocketError as exc:
             self.log("Unable to connect to tor on port 9051: %s" % exc, "critical")
+
             return False
 
     def initialize_tor_auth(self):
@@ -227,6 +230,37 @@ class Onionprobe:
         self.log('Initializing Prometheus HTTP exporter server at port %s...' % (port))
         start_http_server(port)
 
+    def initialize_metrics(self):
+        """Initialize the metrics subsystem"""
+
+        # Use Prometheus metrics even if the exported is not in use
+        from prometheus_client import Counter, Gauge
+
+        self.metrics = {
+                'onionprobe_wait': Gauge(
+                        'onionprobe_wait',
+                        'How long onionprobe waited between two probes',
+                    ),
+
+                'onion_service_latency': Gauge(
+                        'onion_service_latency',
+                        'Register Onion Service connection latency',
+                        ['address', 'protocol', 'port', 'path']
+                    ),
+
+                'onion_service_status_code': Gauge(
+                        'onion_service_status_code',
+                        'Register Onion Service connection status code',
+                        ['address', 'protocol', 'port', 'path']
+                    ),
+
+                'onion_service_descriptor_latency': Gauge(
+                        'onion_service_descriptor_latency',
+                        'Register Onion Service connection latency',
+                        ['address']
+                    ),
+                }
+
     #
     # Helper methods
     #
@@ -259,15 +293,16 @@ class Onionprobe:
 
         # Sleep
         self.log('Waiting {} seconds...'.format(str(round(value))))
+        self.metrics['onionprobe_wait'].set(value)
         time.sleep(value)
 
     def elapsed(self, init_time, verbose):
-        elapsed = str((datetime.now() - init_time))
+        elapsed = (datetime.now() - init_time)
 
         if verbose:
-            self.log("Elapsed time: " + elapsed)
+            self.log("Elapsed time: " + str(elapsed))
 
-        return elapsed
+        return timedelta.total_seconds(elapsed)
 
     #
     # Main application logic
@@ -374,8 +409,7 @@ class Onionprobe:
 
         # Query each path
         for path in config['paths']:
-            url    = self.build_url(config, path['path'])
-            result = self.query(url)
+            result = self.query(config, path['path'])
 
             if result is not False:
                 # Check for a match
@@ -425,8 +459,10 @@ class Onionprobe:
 
         return url
 
-    def query(self, url):
+    def query(self, config, path):
         """Fetches endpoint from URL"""
+
+        url = self.build_url(config, path)
 
         self.log('Querying {}...'.format(url))
 
@@ -441,6 +477,13 @@ class Onionprobe:
         try:
             result  = requests.get(url, proxies=proxies)
             elapsed = self.elapsed(init_time, True)
+
+            self.metrics['onion_service_latency'].labels(
+                        address=config['address'],
+                        protocol=config['protocol'],
+                        port=config['port'],
+                        path=path,
+                    ).set(elapsed)
 
         except requests.exceptions.RequestException as e:
             self.log(e, 'error')
@@ -469,6 +512,13 @@ class Onionprobe:
 
         else:
             self.log('Status code is {}'.format(result.status_code))
+
+            self.metrics['onion_service_status_code'].labels(
+                        address=config['address'],
+                        protocol=config['protocol'],
+                        port=config['port'],
+                        path=path,
+                    ).set(result.status_code)
 
             return result
 
@@ -593,6 +643,8 @@ class Onionprobe:
         #    self.log(introduction_point.link_specifiers, 'debug')
 
         elapsed = self.elapsed(init_time, True)
+
+        self.metrics['onion_service_descriptor_latency'].labels(address=config['address']).set(elapsed)
 
         # Return the inner layer
         return inner

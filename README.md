@@ -34,7 +34,7 @@ Thanks:
 
 ### Prometheus integration
 
-* [ ] Exports Prometheus metrics for the connection to the onion service, and
+* [x] Exports Prometheus metrics for the connection to the onion service, and
       extra metrics per path on the status code for each path returned by the server.
 * [ ] Try to get the descriptor from multiple (if not all) HSDirs where it
       should be available.
@@ -42,6 +42,7 @@ Thanks:
       just expose the metrics rather than having Prometheus scraping individual
       targets on Prometheus' schedule.
 * [ ] Add in additional timing metrics wherever appropriate.
+* [ ] Authentication (if not done by a frontend proxy).
 
 ### Enhancements
 
