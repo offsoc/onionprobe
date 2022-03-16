@@ -375,7 +375,7 @@ class Onionprobe:
             result  = requests.get(url, proxies=proxies)
             elapsed = self.elapsed(init_time, True)
 
-        except e:
+        except requests.exceptions.RequestException as e:
             self.debug(e)
             return False
 

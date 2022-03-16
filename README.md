@@ -46,7 +46,8 @@ Thanks:
 ### Enhancements
 
 * [x] Dockerfile (and optionally a Docker Compose).
-* [ ] Enhanced logging/reporting.
+* [ ] Better logging/reporting.
+* [ ] Better exception handling.
 * [ ] More command line options.
 * [ ] Refactor into smaller modules.
 * [ ] Python packaging (`requirements.txt` or other format).
