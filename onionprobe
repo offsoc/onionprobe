@@ -33,6 +33,7 @@ try:
     import stem
     import stem.control
     import stem.process
+    import stem.util
 except ImportError:
     print("Please install stem library first!")
     raise ImportError
@@ -140,6 +141,10 @@ class Onionprobe:
             level = getattr(logging, log_level)
 
             logging.basicConfig(level=level)
+
+            stem_logger = stem.util.log.get_logger()
+
+            stem_logger.setLevel(level)
 
         else:
             logging.error("Invalid log level %s" % (log_level))
