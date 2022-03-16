@@ -48,6 +48,7 @@ Thanks:
 * [x] Dockerfile (and optionally a Docker Compose).
 * [ ] Better logging/reporting.
 * [ ] Better exception handling.
+* [ ] Max retries before throwing an error for getting descriptors and querying the endpoint.
 * [ ] More command line options.
 * [ ] Refactor into smaller modules.
 * [ ] Python packaging (`requirements.txt` or other format).
