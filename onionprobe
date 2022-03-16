@@ -25,6 +25,7 @@ import time
 import random
 import io
 import shutil
+import logging
 
 from datetime import datetime
 
@@ -50,6 +51,7 @@ except ImportError:
 
 # Defaults
 defaults = {
+        'log_level'               : 'info',
         'launch_tor'              : True,
         'tor_address'             : '127.0.0.1',
         'socks_port'              : 19050,
@@ -105,6 +107,9 @@ class Onionprobe:
         # Initializes the random number generator
         random.seed()
 
+        if self.initialize_logging() is False:
+            return False
+
         if self.initialize_tor() is False:
             return False
 
@@ -126,6 +131,21 @@ class Onionprobe:
             if self.initialize_prometheus_exporter() is False:
                 return False
 
+    def initialize_logging(self):
+        """Initialize logging"""
+
+        log_level = self.get_config('log_level').upper()
+
+        if log_level in dir(logging):
+            level = getattr(logging, log_level)
+
+            logging.basicConfig(level=level)
+
+        else:
+            logging.error("Invalid log level %s" % (log_level))
+
+            return False
+
     def initialize_tor(self):
         """Initialize Tor control connection"""
 
@@ -141,7 +161,7 @@ class Onionprobe:
 
         if self.get_config('launch_tor'):
             if self.launch_tor() is False:
-                self.debug('Error initializing Tor')
+                self.log("Error initializing Tor", "critical")
 
                 return False
 
@@ -151,14 +171,14 @@ class Onionprobe:
                     port=control_port)
 
         except stem.SocketError as exc:
-            self.debug("Unable to connect to tor on port 9051: %s" % exc)
+            self.log("Unable to connect to tor on port 9051: %s" % exc, "critical")
             return False
 
     def initialize_tor_auth(self):
         """Initialize an authenticated Tor control connection"""
 
         if 'controller' not in dir(self):
-            self.debug("Unable to find a Tor control connection")
+            self.log("Unable to find a Tor control connection", "critical")
 
             return False
 
@@ -179,7 +199,7 @@ class Onionprobe:
                 try:
                     self.controller.authenticate(password=control_password)
                 except stem.connection.PasswordAuthFailed:
-                    self.debug("Unable to authenticate, password is incorrect")
+                    self.log("Unable to authenticate, password is incorrect", "critical")
 
                     return False
 
@@ -187,7 +207,7 @@ class Onionprobe:
             try:
                 self.controller.authenticate(password=control_password)
             except stem.connection.PasswordAuthFailed:
-                self.debug("Unable to authenticate, password is incorrect")
+                self.log("Unable to authenticate, password is incorrect", "critical")
 
                 return False
 
@@ -198,17 +218,17 @@ class Onionprobe:
 
         port = self.get_config('prometheus_exporter_port')
 
-        self.debug('Initializing Prometheus HTTP exporter server at port %s...' % (port))
+        self.log('Initializing Prometheus HTTP exporter server at port %s...' % (port))
         start_http_server(port)
 
     #
     # Helper methods
     #
 
-    def debug(self, *args, **kwargs):
-        """Helper debug function"""
+    def log(self, message, level='info'):
+        """Helper log function"""
 
-        print(*args, **kwargs)
+        getattr(logging, level)(message)
 
     def get_config(self, item, default = None):
         """Helper to get config or use default value"""
@@ -232,14 +252,14 @@ class Onionprobe:
             value = random.random() * value
 
         # Sleep
-        self.debug('Waiting {} seconds...'.format(str(round(value))))
+        self.log('Waiting {} seconds...'.format(str(round(value))))
         time.sleep(value)
 
     def elapsed(self, init_time, verbose):
         elapsed = str((datetime.now() - init_time))
 
         if verbose:
-            self.debug("Elapsed time: " + elapsed)
+            self.log("Elapsed time: " + elapsed)
 
         return elapsed
 
@@ -299,7 +319,7 @@ class Onionprobe:
     def probe(self, endpoint):
         """Probe an unique endpoint"""
 
-        self.debug("Processing {}...".format(endpoint))
+        self.log("Processing {}...".format(endpoint))
 
         endpoints = self.get_config('endpoints')
         config    = endpoints[endpoint]
@@ -308,12 +328,12 @@ class Onionprobe:
         from stem.util.tor_tools import is_valid_hidden_service_address
 
         if 'address' not in config:
-            self.debug('No address set for {}'.format(endpoint))
+            self.log('No address set for {}'.format(endpoint), 'error')
 
             return False
 
         elif is_valid_hidden_service_address(config['address'][0:-6], 3) is False:
-            self.debug('Invalid onion service address set for {}: {}'.format(endpoint, config['address']))
+            self.log('Invalid onion service address set for {}: {}'.format(endpoint, config['address']), 'error')
 
             return False
 
@@ -331,7 +351,7 @@ class Onionprobe:
         descriptor = self.get_descriptor(config)
 
         if descriptor is False:
-            self.debug('Error getting the descriptor')
+            self.log('Error getting the descriptor', 'error')
 
             return False
 
@@ -358,14 +378,14 @@ class Onionprobe:
                     pattern = re.compile(path['pattern'])
                     match   = pattern.search(result.text)
 
-                    self.debug('Looking for pattern {}...'.format(path['pattern']))
+                    self.log('Looking for pattern {}...'.format(path['pattern']))
 
                     if match is not None:
-                        self.debug('Match found')
+                        self.log('Match found')
 
                         results[path['path']] = result
                     else:
-                        self.debug('Match not found')
+                        self.log('Match not found')
 
                         results[path['path']] = False
 
@@ -373,7 +393,7 @@ class Onionprobe:
                     results[path['path']] = result
 
             else:
-                self.debug('Error querying {}'.format(config['address']))
+                self.log('Error querying {}'.format(config['address']), 'error')
 
                 results[path['path']] = False
 
@@ -402,7 +422,7 @@ class Onionprobe:
     def query(self, url):
         """Fetches endpoint from URL"""
 
-        self.debug('Querying {}...'.format(url))
+        self.log('Querying {}...'.format(url))
 
         init_time   = datetime.now()
         tor_address = self.get_config('tor_address')
@@ -417,7 +437,7 @@ class Onionprobe:
             elapsed = self.elapsed(init_time, True)
 
         except requests.exceptions.RequestException as e:
-            self.debug(e)
+            self.log(e, 'error')
             return False
 
         #except requests.RequestException as e:
@@ -442,7 +462,7 @@ class Onionprobe:
         #    return False
 
         else:
-            self.debug('Status code is {}'.format(result.status_code))
+            self.log('Status code is {}'.format(result.status_code))
 
             return result
 
@@ -477,7 +497,7 @@ class Onionprobe:
         """
 
         if shutil.which('tor') is None:
-            self.debug('Cannot find the tor executable. Is it installed?')
+            self.log('Cannot find the tor executable. Is it installed?', 'critical')
 
             return False
 
@@ -485,10 +505,10 @@ class Onionprobe:
 
         def print_bootstrap_lines(line):
             if "Bootstrapped " in line:
-                self.debug(term.format(line))
+                self.log(term.format(line), 'debug')
 
         try:
-            self.debug('Initializing Tor process...')
+            self.log('Initializing Tor process...')
 
             tor_address      = self.get_config('tor_address')
             control_password = self.get_config('control_password', self.gen_control_password())
@@ -512,11 +532,11 @@ class Onionprobe:
     def new_circuit(self, stream):
         """Setup a fresh circuit for new streams"""
 
-        self.debug('Building new circuit...')
+        self.log('Building new circuit...', 'debug')
 
         # Remove the old circuit
         if self.circuit_id is not None:
-            self.debug('Removing old circuit {}...'.format(self.circuit_id))
+            self.log('Removing old circuit {}...'.format(self.circuit_id), 'debug')
             self.controller.close_circuit(self.circuit_id)
 
         # Create new circuit
@@ -524,13 +544,13 @@ class Onionprobe:
 
         # See https://stem.torproject.org/tutorials/to_russia_with_love.html
         if stream.status == 'NEW':
-            self.debug('Setting up new circuit {}...'.format(self.circuit_id))
+            self.log('Setting up new circuit {}...'.format(self.circuit_id), 'debug')
             self.controller.attach_stream(stream.id, self.circuit_id)
 
     def get_descriptor(self, config):
         """Get Onion Service descriptor"""
 
-        self.debug('Getting descriptor for {}...'.format(config['address']))
+        self.log('Getting descriptor for {}...'.format(config['address']))
 
         init_time = datetime.now()
 
@@ -564,7 +584,7 @@ class Onionprobe:
         # Get introduction points
         # See https://stem.torproject.org/api/descriptor/hidden_service.html#stem.descriptor.hidden_service.IntroductionPointV3
         #for introduction_point in inner.introduction_points:
-        #    self.debug(introduction_point.link_specifiers)
+        #    self.log(introduction_point.link_specifiers, 'debug')
 
         elapsed = self.elapsed(init_time, True)
 

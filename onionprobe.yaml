@@ -1,6 +1,9 @@
 ---
 # Sample config file for Onionprobe
 
+# Log level: debug, info, warning, error or critical
+log_level: 'info'
+
 # Whether to launch it's own Tor daemon
 launch_tor: true,
 

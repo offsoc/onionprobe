@@ -46,7 +46,8 @@ Thanks:
 ### Enhancements
 
 * [x] Dockerfile (and optionally a Docker Compose).
-* [ ] Better logging/reporting.
+* [x] Better logging.
+* [ ] Better reporting.
 * [ ] Better exception handling.
 * [ ] Max retries before throwing an error for getting descriptors and querying the endpoint.
 * [ ] More command line options.
