@@ -47,7 +47,7 @@ Onionprobe comes with a working test environment with the [sample
 configuration](onionprobe.yaml] and based on [Docker
 Compose](https://docs.docker.com/compose/), which can be started using
 
-    docker-compose up -d
+    docker-compose up
 
 Then point your browser to:
 
