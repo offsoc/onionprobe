@@ -96,6 +96,7 @@ Then point your browser to:
 * [x] Better logging.
 * [ ] Better reporting.
 * [ ] Better exception handling.
+* [ ] Non-http endpoints (regular TCP).
 * [ ] Max retries before throwing an error for getting descriptors and querying the endpoint.
 * [ ] More command line options.
 * [ ] Refactor into smaller modules.
