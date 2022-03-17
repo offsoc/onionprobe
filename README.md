@@ -101,6 +101,7 @@ Then point your browser to:
 * [ ] More command line options.
 * [ ] Refactor into smaller modules.
 * [ ] Python packaging (`requirements.txt` or other format).
+* [ ] Docstrings.
 * [ ] Better documentation.
 * [ ] Tests.
 * [ ] Move the repository to the [network health group](https://gitlab.torproject.org/tpo/network-health)?
