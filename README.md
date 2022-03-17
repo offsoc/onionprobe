@@ -86,8 +86,9 @@ Then point your browser to:
 * [ ] To get the timings right, the tool should take care of the test frequency and
       just expose the metrics rather than having Prometheus scraping individual
       targets on Prometheus' schedule.
-* [ ] Add in additional timing metrics wherever appropriate.
+* [ ] Add in additional metrics wherever appropriate.
 * [ ] Authentication (if not done by a frontend proxy).
+* [ ] Review metrics names and types (use "elapsed" instead of "latency" etc).
 
 ### Enhancements
 
@@ -101,7 +102,8 @@ Then point your browser to:
 * [ ] Python packaging (`requirements.txt` or other format).
 * [ ] Better documentation.
 * [ ] Tests.
-* [ ] Move the repository to the [network health group](https://gitlab.torproject.org/tpo/network-health).
+* [ ] Move the repository to the [network health group](https://gitlab.torproject.org/tpo/network-health)?
+* [ ] Custom actions/hooks/triggers.
 
 ### Bonus
 
