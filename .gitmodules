@@ -1,0 +1,3 @@
+[submodule "vendor/onion-tex"]
+	path = vendor/onion-tex
+	url = https://gitlab.torproject.org/ahf/onion-tex
