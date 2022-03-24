@@ -31,7 +31,7 @@ On [Debian](https://debian.org), they can be installed using
 
 Just clone the repository
 
-    git clone https://gitlab.torproject.org/rhatto/onionprobe
+    git clone https://gitlab.torproject.org/tpo/onion-services/onionprobe
     cd onionprobe
 
 ## Usage
