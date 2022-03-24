@@ -10,7 +10,7 @@ This file was superseded by [demoday.tex](demoday.tex).
 
 * What: Monitors Onion Services from "the outside".
 * Goal: Be a generic monitoring tool for Onion Services.
-* Where: Currently at https://gitlab.torproject.org/rhatto/onionprobe/
+* Where: https://gitlab.torproject.org/tpo/onion-services/onionprobe/
 * Status: WARNING: alpha stage! It's only about a week old!
 
 # Current features
