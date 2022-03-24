@@ -94,6 +94,7 @@ Then point your browser to:
 
 * [x] Dockerfile (and optionally a Docker Compose).
 * [x] Better logging.
+* [x] Move the repository to the [Onion Services Gitlab group](https://gitlab.torproject.org/tpo/onion-services).
 * [ ] Better reporting.
 * [ ] Better exception handling.
 * [ ] Non-http endpoints (regular TCP).
@@ -104,7 +105,6 @@ Then point your browser to:
 * [ ] Docstrings.
 * [ ] Better documentation.
 * [ ] Tests.
-* [ ] Move the repository to the [network health group](https://gitlab.torproject.org/tpo/network-health)?
 * [ ] Custom actions/hooks/triggers.
 
 ### Bonus
