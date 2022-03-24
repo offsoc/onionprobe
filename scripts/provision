@@ -9,6 +9,7 @@ BASEPATH="$DIRNAME/.."
 DEPENDENCIES="python3-prometheus-client python3-stem python3-cryptography python3-yaml python3-requests python3-socks"
 #DEPENDENCIES="python3-bs4 python3-pytest"
 DEPENDENCIES="$DEPENDENCIES tor"
+DEPENDENCIES_DOCS="pandoc latexmk texlive-latex-extra texlive-fonts-extra"
 TORRC="/etc/tor/torrc"
 
 # Install dependencies
@@ -34,4 +35,5 @@ sudo apt-get install -y docker.io docker-compose
 sudo usermod -a -G docker $(whoami)
 
 # Docs
-sudo apt-get install -y pandoc latexmk texlive-latex-extra texlive-fonts-extra
+# Not automatically installed because some texlive packages uses a lot of diskspace
+#sudo apt-get install -y $DEPENDENCIES_DOCS
