@@ -82,7 +82,12 @@ Then point your browser to:
       If using the prometheus exporter with python, consider to just use request and
       beautiful soup to check that the page is returning what one expects.
 * [ ] Try to get the descriptor from multiple (if not all) HSDirs where it
-      should be available.
+      should be available. Check the [control-spec](https://gitlab.torproject.org/tpo/core/torspec/-/blob/main/control-spec.txt)
+      for `HSFETCH` command and the `HS_DESC` event ([using SETEVENTS](https://stem.torproject.org/tutorials/down_the_rabbit_hole.html)).
+      Relevant issues:
+    * [When an onion service lookup has failed at the first k HSDirs we tried, what are the chances it will still succeed?](https://gitlab.torproject.org/tpo/network-health/analysis/-/issues/28)
+    * [Write a hidden service hsdir health measurer](https://gitlab.torproject.org/tpo/network-health/metrics/analysis/-/issues/13209)
+    * [What's the average number of hsdir fetches before we get the hsdesc?](https://gitlab.torproject.org/tpo/core/tor/-/issues/13208)
 * [ ] To get the timings right, the tool should take care of the test frequency and
       just expose the metrics rather than having Prometheus scraping individual
       targets on Prometheus' schedule.
@@ -131,6 +136,7 @@ Thanks:
 
 * @irl for the idea/specs/tasks.
 * @hiro for suggestions.
+* @arma and @juga for references.
 
 ## Alternatives
 
@@ -139,3 +145,13 @@ Thanks:
 * [systemli/prometheus-onion-service-exporter: Prometheus Exporter for Tor Onion Services](https://github.com/systemli/prometheus-onion-service-exporter)
 * [prometheus/blackbox_exporter: Blackbox prober exporter](https://github.com/prometheus/blackbox_exporter), which could be configured using `proxy_url`
   pointing to a [Privoxy](http://www.privoxy.org/) instance relaying traffic to `tor` daemon.
+
+## References
+
+Related software and libraries with useful routines:
+
+* [onbasca](https://gitlab.torproject.org/tpo/network-health/onbasca)
+* [sbws](https://gitlab.torproject.org/tpo/network-health/sbws)
+* [Stem](https://stem.torproject.org/)
+* [txtorcon](https://txtorcon.readthedocs.io/en/latest/)
+* [Onionbalance](https://onionbalance.readthedocs.io/en/latest/)
