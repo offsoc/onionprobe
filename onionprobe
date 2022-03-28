@@ -849,6 +849,8 @@ if __name__ == "__main__":
             print('Error: could not initialize')
             exit(1)
 
-    except (FileNotFoundError, KeyboardInterrupt) as e:
-        print(e)
+    #except (FileNotFoundError, KeyboardInterrupt) as e:
+    except Exception as e:
+        probe.log(e, 'error')
+        probe.close()
         exit(1)
