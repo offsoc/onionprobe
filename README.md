@@ -117,7 +117,7 @@ Then point your browser to:
 
 * [x] Optionally launch it's [own Tor process](https://stem.torproject.org/api/process.html)
       like in [this example](https://stem.torproject.org/tutorials/to_russia_with_love.html#using-pycurl).
-* [ ] Script that compiles configuration from [real-world-onion-sites](https://github.com/alecmuffett/real-world-onion-sites) repository.
+* [x] Script that compiles configuration from [real-world-onion-sites](https://github.com/alecmuffett/real-world-onion-sites) repository.
 * [ ] Script that compiles configuration from [the SecureDrop API](https://securedrop.org/api/v1/directory/).
 * [ ] `ControlSocket` support using `stem.control.Controller.from_socket_file()`.
 * [ ] HTTPS certificate validation check/exception.
