@@ -248,6 +248,12 @@ class Onionprobe:
                         ['name', 'address', 'protocol', 'port', 'path']
                     ),
 
+                'onion_service_reachable': Gauge(
+                        'onion_service_reachable',
+                        'Register if the Onion Service is reachable',
+                        ['name', 'address', 'protocol', 'port', 'path']
+                    ),
+
                 'onion_service_status_code': Gauge(
                         'onion_service_status_code',
                         'Register Onion Service connection status code',
@@ -256,7 +262,13 @@ class Onionprobe:
 
                 'onion_service_descriptor_latency': Gauge(
                         'onion_service_descriptor_latency',
-                        'Register Onion Service connection latency',
+                        'Register Onion Service latency to get the descriptor',
+                        ['name', 'address']
+                    ),
+
+                'onion_service_descriptor_reachable': Gauge(
+                        'onion_service_descriptor_reachable',
+                        'Register if the Onion Service descriptor is available',
                         ['name', 'address']
                     ),
                 }
@@ -486,8 +498,25 @@ class Onionprobe:
                         path=path,
                     ).set(elapsed)
 
+            self.metrics['onion_service_reachable'].labels(
+                        name=endpoint,
+                        address=config['address'],
+                        protocol=config['protocol'],
+                        port=config['port'],
+                        path=path,
+                    ).set(1)
+
         except requests.exceptions.RequestException as e:
             self.log(e, 'error')
+
+            self.metrics['onion_service_reachable'].labels(
+                        name=endpoint,
+                        address=config['address'],
+                        protocol=config['protocol'],
+                        port=config['port'],
+                        path=path,
+                    ).set(0)
+
             return False
 
         #except requests.RequestException as e:
@@ -617,6 +646,11 @@ class Onionprobe:
             descriptor = self.controller.get_hidden_service_descriptor(config['address'])
 
         except stem.DescriptorUnavailable as e:
+            self.metrics['onion_service_descriptor_reachable'].labels(
+                        name=endpoint,
+                        address=config['address'],
+                    ).set(0)
+
             return False
 
         except stem.Timeout as e:
@@ -650,6 +684,11 @@ class Onionprobe:
                     name=endpoint,
                     address=config['address'],
                 ).set(elapsed)
+
+        self.metrics['onion_service_descriptor_reachable'].labels(
+                    name=endpoint,
+                    address=config['address'],
+                ).set(1)
 
         # Return the inner layer
         return inner
