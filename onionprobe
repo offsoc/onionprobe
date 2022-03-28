@@ -237,41 +237,98 @@ class Onionprobe:
         from prometheus_client import Counter, Gauge
 
         self.metrics = {
-                'onionprobe_wait': Gauge(
-                        'onionprobe_wait',
-                        'How long onionprobe waited between two probes',
-                    ),
+            #
+            # Probing gauges
+            #
 
-                'onion_service_latency': Gauge(
-                        'onion_service_latency',
-                        'Register Onion Service connection latency',
-                        ['name', 'address', 'protocol', 'port', 'path']
-                    ),
+            'onionprobe_wait': Gauge(
+                    'onionprobe_wait',
+                    'How long onionprobe waited between two probes',
+                ),
 
-                'onion_service_reachable': Gauge(
-                        'onion_service_reachable',
-                        'Register if the Onion Service is reachable',
-                        ['name', 'address', 'protocol', 'port', 'path']
-                    ),
+            'onion_service_latency': Gauge(
+                    'onion_service_latency',
+                    'Register Onion Service connection latency',
+                    ['name', 'address', 'protocol', 'port', 'path']
+                ),
 
-                'onion_service_status_code': Gauge(
-                        'onion_service_status_code',
-                        'Register Onion Service connection status code',
-                        ['name', 'address', 'protocol', 'port', 'path']
-                    ),
+            'onion_service_reachable': Gauge(
+                    'onion_service_reachable',
+                    'Register if the Onion Service is reachable',
+                    ['name', 'address', 'protocol', 'port', 'path']
+                ),
 
-                'onion_service_descriptor_latency': Gauge(
-                        'onion_service_descriptor_latency',
-                        'Register Onion Service latency to get the descriptor',
-                        ['name', 'address']
-                    ),
+            'onion_service_status_code': Gauge(
+                    'onion_service_status_code',
+                    'Register Onion Service connection status code',
+                    ['name', 'address', 'protocol', 'port', 'path']
+                ),
 
-                'onion_service_descriptor_reachable': Gauge(
-                        'onion_service_descriptor_reachable',
-                        'Register if the Onion Service descriptor is available',
-                        ['name', 'address']
-                    ),
-                }
+            'onion_service_descriptor_latency': Gauge(
+                    'onion_service_descriptor_latency',
+                    'Register Onion Service latency to get the descriptor',
+                    ['name', 'address']
+                ),
+
+            'onion_service_descriptor_reachable': Gauge(
+                    'onion_service_descriptor_reachable',
+                    'Register if the Onion Service descriptor is available',
+                    ['name', 'address']
+                ),
+
+            #
+            # Requests exception counter
+            #
+
+            # Counter for requests.RequestException
+            'onion_service_request_exception': Counter(
+                    'onion_service_request_exception',
+                    'Onion Service general exception error',
+                    ['name', 'address', 'protocol', 'port', 'path']
+                ),
+
+            # Counter for requests.ConnectionError
+            'onion_service_connection_error': Counter(
+                    'onion_service_connection_error',
+                    'Onion Service connection error',
+                    ['name', 'address', 'protocol', 'port', 'path']
+                ),
+
+            # Counter for requests.HTTPError
+            'onion_service_http_error': Counter(
+                    'onion_service_http_error',
+                    'Onion Service HTTP error',
+                    ['name', 'address', 'protocol', 'port', 'path']
+                ),
+
+            # Counter for requests.TooManyRedirects
+            'onion_service_too_many_redirects': Counter(
+                    'onion_service_too_many_redirects',
+                    'Onion Service too many redirects',
+                    ['name', 'address', 'protocol', 'port', 'path']
+                ),
+
+            # Counter for requests.ConnectionTimeout
+            'onion_service_connection_timeout': Counter(
+                    'onion_service_connection_timeout',
+                    'Onion Service connection timeout',
+                    ['name', 'address', 'protocol', 'port', 'path']
+                ),
+
+            # Counter for requests.ReadTimeout
+            'onion_service_read_timeuot': Counter(
+                    'onion_service_read_timeout',
+                    'Onion Service read timeout',
+                    ['name', 'address', 'protocol', 'port', 'path']
+                ),
+
+            # Counter for requests.Timeout
+            'onion_service_timeout': Counter(
+                    'onion_service_timeout',
+                    'Onion Service timeout',
+                    ['name', 'address', 'protocol', 'port', 'path']
+                ),
+            }
 
     #
     # Helper methods
@@ -478,6 +535,8 @@ class Onionprobe:
 
         self.log('Querying {}...'.format(url))
 
+        result      = False
+        exception   = None
         init_time   = datetime.now()
         tor_address = self.get_config('tor_address')
         socks_port  = self.get_config('socks_port')
@@ -498,47 +557,49 @@ class Onionprobe:
                         path=path,
                     ).set(elapsed)
 
-            self.metrics['onion_service_reachable'].labels(
-                        name=endpoint,
-                        address=config['address'],
-                        protocol=config['protocol'],
-                        port=config['port'],
-                        path=path,
-                    ).set(1)
-
         except requests.exceptions.RequestException as e:
+            result    = False
+            exception = 'request_exception'
+
             self.log(e, 'error')
 
-            self.metrics['onion_service_reachable'].labels(
-                        name=endpoint,
-                        address=config['address'],
-                        protocol=config['protocol'],
-                        port=config['port'],
-                        path=path,
-                    ).set(0)
+        except requests.exceptions.ConnectionError as e:
+            result    = False
+            exception = 'connection_error'
 
-            return False
+            self.log(e, 'error')
 
-        #except requests.RequestException as e:
-        #    return False
+        except requests.exceptions.HTTPError as e:
+            result    = False
+            exception = 'http_error'
 
-        #except requests.ConnectionError as e:
-        #    return False
+            self.log(e, 'error')
 
-        #except requests.HTTPError as e:
-        #    return False
+        except requests.exceptions.TooManyRedirects as e:
+            result    = False
+            exception = 'too_many_redirects'
 
-        #except requests.ToManyRedirects as e:
-        #    return False
+            self.log(e, 'error')
 
-        #except requests.ConnectionTimeout as e:
-        #    return False
+        # Requests that produced this error are safe to retry, but we are not
+        # doing that right now
+        except requests.exceptions.ConnectionTimeout as e:
+            result    = False
+            exception = 'connection_timeout'
 
-        #except requests.ReadTimeout as e:
-        #    return False
+            self.log(e, 'error')
 
-        #except requests.Timeout as e:
-        #    return False
+        except requests.exceptions.ReadTimeout as e:
+            result    = False
+            exception = 'connection_read_timeout'
+
+            self.log(e, 'error')
+
+        except requests.exceptions.Timeout as e:
+            result    = False
+            exception = 'timeout'
+
+            self.log(e, 'error')
 
         else:
             self.log('Status code is {}'.format(result.status_code))
@@ -550,6 +611,26 @@ class Onionprobe:
                         port=config['port'],
                         path=path,
                     ).set(result.status_code)
+
+        finally:
+            reachable = 0 if result is False else 1
+
+            self.metrics['onion_service_reachable'].labels(
+                        name=endpoint,
+                        address=config['address'],
+                        protocol=config['protocol'],
+                        port=config['port'],
+                        path=path,
+                    ).set(reachable)
+
+            if exception is not None:
+                self.metrics['onion_service_' + exception].labels(
+                            name=endpoint,
+                            address=config['address'],
+                            protocol=config['protocol'],
+                            port=config['port'],
+                            path=path,
+                        ).inc()
 
             return result
 
