@@ -293,6 +293,22 @@ class Onionprobe:
                 ),
 
             #
+            # Probing counters
+            #
+
+            'onion_service_fetch_error_counter': Counter(
+                    'onion_service_fetch_error_counter',
+                    'Register if the Onion Service descriptor is available',
+                    ['name', 'address']
+                ),
+
+            'onion_service_descriptor_fetch_error_counter': Counter(
+                    'onion_service_descriptor_fetch_error_counter',
+                    'Register if the Onion Service descriptor is available',
+                    ['name', 'address', 'protocol', 'port', 'path']
+                ),
+
+            #
             # Requests exception counter
             #
 
@@ -653,6 +669,14 @@ class Onionprobe:
                             path=path,
                         ).inc()
 
+                self.metrics['onion_service_fetch_error_counter'].labels(
+                            name=endpoint,
+                            address=config['address'],
+                            protocol=config['protocol'],
+                            port=config['port'],
+                            path=path,
+                        ).inc()
+
             return result
 
     #
@@ -765,6 +789,11 @@ class Onionprobe:
                         name=endpoint,
                         address=config['address'],
                     ).set(0)
+
+            self.metrics['onion_service_descriptor_fetch_error_counter'].labels(
+                        name=endpoint,
+                        address=config['address'],
+                    ).inc()
 
             return False
 
