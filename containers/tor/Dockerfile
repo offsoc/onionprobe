@@ -11,7 +11,7 @@ RUN apt-get update && \
     tor \
     && rm -rf /var/lib/apt/lists/*
 
-COPY torrc.sample ${APP_BASE}/${APP}/torrc
+COPY configs/torrc.sample ${APP_BASE}/${APP}/torrc
 
 RUN chown -R debian-tor. ${APP_BASE}/${APP}/torrc
 
