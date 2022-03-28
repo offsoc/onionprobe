@@ -503,7 +503,7 @@ class Onionprobe:
 
             if result is not False:
                 # Check for a match
-                if path['pattern'] is not None:
+                if 'pattern' in path and path['pattern'] is not None:
                     import re
                     pattern = re.compile(path['pattern'])
                     match   = pattern.search(result.text)
@@ -540,7 +540,7 @@ class Onionprobe:
             url = config['protocol'] + '://' + url
 
         if 'port' in config:
-            url += ':' + config['port']
+            url += ':' + str(config['port'])
 
         #if 'path' in config:
         #    url += config['path']
