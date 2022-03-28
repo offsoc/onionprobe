@@ -96,7 +96,7 @@ class Onionprobe:
         self.data = []
 
         # Environment variable handling
-        if 'ONIONPROBE_CONFIG' in os.environ:
+        if 'ONIONPROBE_CONFIG' in os.environ and os.environ['ONIONPROBE_CONFIG'] != '':
             args.config = os.environ['ONIONPROBE_CONFIG']
 
         # Config file handling

@@ -37,14 +37,14 @@ Just clone the repository
 ## Usage
 
 Right now Onionprobe works only with a configuration file.
-A [sample config](onionprobe.yaml] is provided:
+A [sample config](configs/tor.yaml] is provided:
 
-    ./onionprobe -c onionprobe.yaml
+    ./onionprobe -c configs/tor.yaml
 
 ## Testing
 
 Onionprobe comes with a working test environment with the [sample
-configuration](onionprobe.yaml] and based on [Docker
+configuration](configs/tor.yaml] and based on [Docker
 Compose](https://docs.docker.com/compose/), which can be started using
 
     docker-compose up

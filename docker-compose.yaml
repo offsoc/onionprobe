@@ -6,7 +6,7 @@ services:
     image: docker.io/prom/prometheus
     restart: always
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml
     ports:
       - 9090:9090
 

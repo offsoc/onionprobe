@@ -15,4 +15,4 @@ COPY . ${APP_BASE}/${APP}
 
 USER debian-tor
 
-ENTRYPOINT [ "/srv/onionprobe/onionprobe", "-c", "/srv/onionprobe/onionprobe.yaml" ]
+ENTRYPOINT [ "/srv/onionprobe/onionprobe", "-c", "/srv/onionprobe/configs/tor.yaml" ]
