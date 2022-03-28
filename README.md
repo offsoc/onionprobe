@@ -98,6 +98,7 @@ Then point your browser to:
 ### Enhancements
 
 * [x] Dockerfile (and optionally a Docker Compose).
+* [x] Environment variable controlling the configuration file to use.
 * [x] Better logging.
 * [x] Move the repository to the [Onion Services Gitlab group](https://gitlab.torproject.org/tpo/onion-services).
 * [x] Better exception handling.

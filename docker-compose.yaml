@@ -34,5 +34,7 @@ services:
       - .:/srv/onionprobe
     ports:
       - 9091:9091
+    environment:
+      ONIONPROBE_CONFIG: ${ONIONPROBE_CONFIG}
     #depends_on:
     #  - tor
