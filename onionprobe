@@ -463,7 +463,7 @@ class Onionprobe:
 
             return False
 
-        elif is_valid_hidden_service_address(config['address'][0:-6], 3) is False:
+        elif is_valid_hidden_service_address(self.get_pubkey_from_address(config['address']), 3) is False:
             self.log('Invalid onion service address set for {}: {}'.format(endpoint, config['address']), 'error')
 
             return False
@@ -737,16 +737,28 @@ class Onionprobe:
             self.log('Setting up new circuit {}...'.format(self.circuit_id), 'debug')
             self.controller.attach_stream(stream.id, self.circuit_id)
 
+    def get_pubkey_from_address(self, address):
+        """
+        Extract .onion pubkey from the address
+
+        Leaves out the .onion domain suffix and any existing subdomains.
+        """
+
+        pubkey = address[0:-6].split('.')[-1]
+
+        return pubkey
+
     def get_descriptor(self, endpoint, config):
         """Get Onion Service descriptor"""
 
         self.log('Getting descriptor for {}...'.format(config['address']))
 
+        pubkey    = self.get_pubkey_from_address(config['address'])
         init_time = datetime.now()
 
         # Get the descriptor
         try:
-            descriptor = self.controller.get_hidden_service_descriptor(config['address'])
+            descriptor = self.controller.get_hidden_service_descriptor(pubkey)
 
         except stem.DescriptorUnavailable as e:
             self.metrics['onion_service_descriptor_reachable'].labels(
@@ -774,7 +786,7 @@ class Onionprobe:
         descriptor = HiddenServiceDescriptorV3.from_str(str(descriptor))
 
         # Decrypt the inner layer
-        inner = descriptor.decrypt(config['address'])
+        inner = descriptor.decrypt(pubkey)
 
         # Get introduction points
         # See https://stem.torproject.org/api/descriptor/hidden_service.html#stem.descriptor.hidden_service.IntroductionPointV3
