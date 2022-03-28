@@ -100,8 +100,8 @@ Then point your browser to:
 * [x] Dockerfile (and optionally a Docker Compose).
 * [x] Better logging.
 * [x] Move the repository to the [Onion Services Gitlab group](https://gitlab.torproject.org/tpo/onion-services).
+* [x] Better exception handling.
 * [ ] Better reporting.
-* [ ] Better exception handling.
 * [ ] Non-http endpoints (regular TCP).
 * [ ] Max retries before throwing an error for getting descriptors and querying the endpoint.
 * [ ] More command line options.

@@ -711,7 +711,8 @@ class Onionprobe:
                     )
 
         except OSError as e:
-            print(e)
+            self.log(e, 'error')
+
             return False
 
     def new_circuit(self, stream):
