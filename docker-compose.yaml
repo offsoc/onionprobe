@@ -39,6 +39,6 @@ services:
     ports:
       - 9091:9091
     environment:
-      ONIONPROBE_CONFIG: ${ONIONPROBE_CONFIG}
+      ONIONPROBE_CONFIG: ${ONIONPROBE_CONFIG:-/srv/onionprobe/configs/tor.yaml}
     #depends_on:
     #  - tor

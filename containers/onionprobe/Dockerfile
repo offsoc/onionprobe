@@ -3,6 +3,7 @@ FROM debian:stable
 ENV APP="onionprobe"
 ENV APP_BASE="/srv/"
 ENV SHELL="/bin/bash"
+ENV ONIONPROBE_CONFIG="/srv/onionprobe/configs/tor.yaml"
 
 RUN apt-get update && \
     apt-get install -y \
@@ -15,4 +16,4 @@ COPY . ${APP_BASE}/${APP}
 
 USER debian-tor
 
-ENTRYPOINT [ "/srv/onionprobe/onionprobe", "-c", "/srv/onionprobe/configs/tor.yaml" ]
+ENTRYPOINT exec /srv/onionprobe/onionprobe -c ${ONIONPROBE_CONFIG}
