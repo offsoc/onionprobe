@@ -10,8 +10,12 @@ services:
     ports:
       - 9090:9090
 
-  # This service currently is shipper with a hardcoded HashedControlPassword,
-  # so please use it only fort testing purposes and not in production
+  # This service is currently not in use since Onionprobe already handles it's
+  # own Tor process.
+  #
+  # This service container is also shipped with a hardcoded
+  # HashedControlPassword, so please use it only fort testing purposes but not
+  # in production.
   #tor:
   #  image: "rhatto/tor:1.0"
   #  build:
