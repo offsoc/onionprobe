@@ -81,6 +81,7 @@ Then point your browser to:
       extra metrics per path on the status code for each path returned by the server.
       If using the prometheus exporter with python, consider to just use request and
       beautiful soup to check that the page is returning what one expects.
+* [x] Add in additional metrics wherever appropriate.
 * [ ] Try to get the descriptor from multiple (if not all) HSDirs where it
       should be available. Check the [control-spec](https://gitlab.torproject.org/tpo/core/torspec/-/blob/main/control-spec.txt)
       for `HSFETCH` command and the `HS_DESC` event ([using SETEVENTS](https://stem.torproject.org/tutorials/down_the_rabbit_hole.html)).
@@ -91,7 +92,6 @@ Then point your browser to:
 * [ ] To get the timings right, the tool should take care of the test frequency and
       just expose the metrics rather than having Prometheus scraping individual
       targets on Prometheus' schedule.
-* [ ] Add in additional metrics wherever appropriate.
 * [ ] Authentication (if not done by a frontend proxy).
 * [ ] Review metrics names and types (use "elapsed" instead of "latency" etc).
 
