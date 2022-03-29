@@ -21,7 +21,7 @@
 
 # Dependencies
 import os
-import csv
+import json
 import urllib.parse
 
 from io import StringIO
@@ -41,12 +41,11 @@ except ImportError:
 # Parameters
 basepath  = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir) + os.sep
 databases = {
-        'real-world-onion-sites' : 'https://github.com/alecmuffett/real-world-onion-sites/raw/master/master.csv',
-        #'securedrop'            : 'https://github.com/alecmuffett/real-world-onion-sites/raw/master/securedrop-api.csv',
+        'securedrop': 'https://securedrop.org/api/v1/directory/?format=json',
         }
 
-class RealWorldOnionSites:
-    """Handles the 'Real-World Onion Sites' database"""
+class SecureDropSites:
+    """Handles the Secure Drop API database"""
 
     def __init__(self):
         default_config = os.path.join(basepath, 'configs', 'tor.yaml')
@@ -59,20 +58,27 @@ class RealWorldOnionSites:
         for database in databases:
             try:
                 result    = requests.get(databases[database])
-                data      = csv.DictReader(StringIO(result.text))
+                data      = json.load(StringIO(result.text))
                 endpoints = {}
 
                 for item in data:
-                    url      = urllib.parse.urlparse(item['onion_url'])
-                    address  = url.netloc
-                    protocol = url.scheme if url.scheme != '' else 'http'
-                    port     = 80 if protocol == 'http' else 443
+                    #url      = urllib.parse.urlparse(item['onion_address'])
+                    #address  = url.netloc
+                    #protocol = url.scheme if url.scheme != '' else 'http'
+                    #port     = 80 if protocol == 'http' else 443
+                    #paths    = [{
+                    #    'path': url.path if url.path != '' else '/',
+                    #    }]
+                    address  = item['onion_address']
+                    protocol = 'http'
+                    port     = 80
                     paths    = [{
-                        'path': url.path if url.path != '' else '/',
+                        'path': '',
                         }]
 
-                    if item['site_name'] not in endpoints:
-                        endpoints[item['site_name']] = {
+                    if item['title'] not in endpoints:
+                        #endpoints[item['onion_name']] = {
+                        endpoints[item['title']] = {
                                 'address' : address,
                                 'protocol': protocol,
                                 'port'    : port,
@@ -98,6 +104,6 @@ class RealWorldOnionSites:
 if __name__ == "__main__":
     """Process from CLI"""
 
-    instance = RealWorldOnionSites()
+    instance = SecureDropSites()
 
     instance.build_onionprobe_config()
