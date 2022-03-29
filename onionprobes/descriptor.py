@@ -21,6 +21,12 @@
 # Dependencies
 import logging
 
+try:
+    import stem
+except ImportError:
+    print("Please install stem library first!")
+    raise ImportError
+
 class OnionprobeDescriptor:
     """
     Onionprobe class with Tor descriptor-related methods.

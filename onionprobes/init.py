@@ -29,6 +29,12 @@ except ImportError:
     print("Please install pyaml first!")
     raise ImportError
 
+try:
+    import stem.control
+except ImportError:
+    print("Please install stem library first!")
+    raise ImportError
+
 class OnionprobeInit:
     #
     # Initialization logic

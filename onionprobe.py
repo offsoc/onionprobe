@@ -21,17 +21,17 @@
 # Dependencies
 import argparse
 import random
-import io
 
-from onionprobes.time       import OnionprobeTime
 from onionprobes.init       import OnionprobeInit
 from onionprobes.config     import OnionprobeConfig
 from onionprobes.logger     import OnionprobeLogger
+from onionprobes.time       import OnionprobeTime
 from onionprobes.tor        import OnionprobeTor
 from onionprobes.descriptor import OnionprobeDescriptor
 from onionprobes.metrics    import OnionprobeMetrics
 from onionprobes.prober     import OnionprobeProber
 from onionprobes.http       import OnionprobeHTTP
+from onionprobes.teardown   import OnionprobeTeardown
 
 class Onionprobe(
         # Inherit from subsystems
@@ -44,6 +44,7 @@ class Onionprobe(
         OnionprobeMetrics,
         OnionprobeProber,
         OnionprobeHTTP,
+        OnionprobeTeardown,
         ):
     """
     Onionprobe class to test and monitor Tor Onion Services
@@ -107,26 +108,6 @@ class Onionprobe(
             # Wait if not last endpoint
             if key != len(endpoints) - 1:
                 self.wait(self.get_config('interval'))
-
-    #
-    # Cleansing methods
-    #
-
-    def close(self):
-        """
-        Onionprobe teardown procedure.
-
-        Change the internal metrics state to running.
-
-        Stops the built-in Tor daemon.
-        """
-
-        self.metrics['onionprobe_state'].state('stopping')
-        self.controller.close()
-
-        # Terminate built-in Tor
-        if 'tor' in dir(self):
-            self.tor.kill()
 
 if __name__ == "__main__":
     """Process from CLI"""
