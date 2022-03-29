@@ -23,8 +23,8 @@ import os
 import json
 import urllib.parse
 
-from io      import StringIO
-from configs import OnionprobeConfigCompiler, basepath
+from io     import StringIO
+from config import OnionprobeConfigCompiler, basepath
 
 try:
     import requests

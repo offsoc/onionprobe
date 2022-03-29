@@ -27,8 +27,77 @@ except ImportError:
     print("Please install pyaml first!")
     raise ImportError
 
+# The Onionprobe version string
+# Uses Semantic Versioning 2.0.0
+# See https://semver.org
+onionprobe_version = '0.0.1'
+
 # The base path for this project
 basepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir) + os.sep
+
+# Default configuration
+defaults = {
+        'log_level'               : 'info',
+        'launch_tor'              : True,
+        'tor_address'             : '127.0.0.1',
+        'socks_port'              : 19050,
+        'control_port'            : 19051,
+        'control_password'        : False,
+        'loop'                    : False,
+        'prometheus_exporter'     : False,
+        'prometheus_exporter_port': 9091,
+        'shuffle'                 : True,
+        'randomize'               : True,
+        'new_circuit'             : False,
+        'interval'                : 60,
+        'sleep'                   : 60,
+        'endpoints'               : {
+            'www.torproject.org': {
+                'address' : '2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion',
+                'protocol': 'http',
+                'port'    : '80',
+                'paths'   : [
+                        {
+                            'path'   : '/',
+                            'pattern': 'Tor Project',
+                        },
+                    ],
+                },
+            }
+        }
+
+class OnionprobeConfig:
+    """
+    Onionprobe class with configuration-related methods.
+    """
+
+    def get_config(self, item, default = None):
+        """
+        Helper to get instance configuration
+
+        Retrieve a config parameter from the self.config object or use a
+        default value as fallback
+
+        :type  item: str
+        :param item: Configuration item name
+
+        :param default: Default config value to be used as a fallback if there's
+                        no self.config[item] available.
+                        Defaults to None
+
+        :return: The configuration parameter value or the default fallback value.
+        """
+
+        if item in self.config:
+            return self.config[item]
+
+        # Optionally override the default with an argument provided
+        elif default is not None:
+            self.config[item] = default
+
+            return default
+
+        return defaults[item]
 
 class OnionprobeConfigCompiler:
     """Base class to build Onionprobe configs from external sources of Onion Services"""

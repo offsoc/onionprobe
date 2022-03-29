@@ -24,8 +24,8 @@ import os
 import csv
 import urllib.parse
 
-from io      import StringIO
-from configs import OnionprobeConfigCompiler, basepath
+from io     import StringIO
+from config import OnionprobeConfigCompiler, basepath
 
 try:
     import requests
