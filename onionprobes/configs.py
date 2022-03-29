@@ -27,20 +27,74 @@ except ImportError:
     print("Please install pyaml first!")
     raise ImportError
 
+# The base path for this project
 basepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir) + os.sep
 
 class OnionprobeConfigCompiler:
-    """Build an Onionprobe config from an external source of .onion sites"""
+    """Base class to build Onionprobe configs from external sources of Onion Services"""
 
     def __init__(self, databases):
+        """
+        Constructor for the OnionprobeConfigCompiler class.
+
+        Loads the default Onionprobe configuration to be used as a template.
+
+        Keeps the dictionary of Onion Services databases as a class attribute.
+
+        :type  databases: dict
+        :param databases: Dictionary of data sources to fetch .onion sites.
+                          Format is { 'database_name': 'database_url' }
+        """
+
+        # Save the databases of Onion Services
         self.databases = databases
+
+        # Determine the default configuration file
         default_config = os.path.join(basepath, 'configs', 'tor.yaml')
 
+        # Load the default configuration file as a template
         if os.path.exists(default_config):
             with open(default_config, 'r') as config:
                 self.config = yaml.load(config, yaml.CLoader)
 
+    def build_endpoints_config(self, database):
+        """
+        Build the Onion Service endpoints dictionary.
+
+        This method is only a placeholder.
+
+        By default this method returns an empty dictionary as it's meant to be
+        overriden by specific implementations inheriting from the
+        OnionprobeConfigCompiler base class and where custom logic for
+        extracting .onion endpoints from external databases should be located.
+
+        :type database : str
+        :param database: A database name from the databases dictionary. This
+                         parameter allows accesing the URL of the external
+                         database from the self.databases class attribute.
+
+        :rtype: dict
+        :return: Onion Service endpoints in the format accepted by Onionprobe.
+        """
+
+        return dict()
+
     def build_onionprobe_config(self):
+        """
+        Build an Onionprobe config.
+
+        Writes an Onionprobe-compatible configuration file for each database
+        listed in self.databases attribute.
+
+        The Onion Service endpoints are generated from the
+        build_endpoints_config() methods. To be effective, it's required that
+        classes inheriting from this base class to implement the
+        build_endpoints_configs() method.
+
+        The filenames ared derived from the database names (each key from the
+        self.databases attribute).
+        """
+
         for database in self.databases:
             try:
                 # Build list of endpoints

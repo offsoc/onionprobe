@@ -32,20 +32,43 @@ except ImportError:
     print("Please install requests first!")
     raise ImportError
 
-# Parameters
+# The list of external databases handled by this implementation
 databases = {
         'securedrop': 'https://securedrop.org/api/v1/directory/?format=json',
         }
 
 class SecureDropSites(OnionprobeConfigCompiler):
-    """Handles the Secure Drop API database"""
+    """
+    Handles the Secure Drop API database
+
+    Inherits from the OnionprobeConfigCompiler class, implementing
+    custom procedures.
+    """
 
     def build_endpoints_config(self, database):
+        """
+        Overrides OnionprobeConfigCompiler.build_endpoints_config()
+        method with custom logic.
+
+        :type database : str
+        :param database: A database name from the databases dictionary.
+
+        :rtype: dict
+        :return: Onion Service endpoints in the format accepted by Onionprobe.
+
+        """
+
+        # Get the Onion Service database from a remote API
         result    = requests.get(self.databases[database])
         data      = json.load(StringIO(result.text))
         endpoints = {}
 
+        # Parse the database and convert it to the Onionprobe endpoints format
         for item in data:
+            # Complete parsing
+            # Does not work right now since the 'onion_address' field is not
+            # RFC 1808 compliant.
+            # See https://docs.python.org/3/library/urllib.parse.html#urllib.parse.urlparse
             #url      = urllib.parse.urlparse(item['onion_address'])
             #address  = url.netloc
             #protocol = url.scheme if url.scheme != '' else 'http'
@@ -53,6 +76,8 @@ class SecureDropSites(OnionprobeConfigCompiler):
             #paths    = [{
             #    'path': url.path if url.path != '' else '/',
             #    }]
+
+            # Simpler parsing, assuming HTTP on port 80 and default path
             address  = item['onion_address']
             protocol = 'http'
             port     = 80
@@ -60,7 +85,9 @@ class SecureDropSites(OnionprobeConfigCompiler):
                 'path': '',
                 }]
 
+            # Append to the endpoints dictionary
             if item['title'] not in endpoints:
+                # We can index either by the project title or by it's Onion Name
                 #endpoints[item['onion_name']] = {
                 endpoints[item['title']] = {
                         'address' : address,

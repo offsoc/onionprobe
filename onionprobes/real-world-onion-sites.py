@@ -33,20 +33,39 @@ except ImportError:
     print("Please install requests first!")
     raise ImportError
 
-# Parameters
+# The list of external databases handled by this implementation
 databases = {
         'real-world-onion-sites' : 'https://github.com/alecmuffett/real-world-onion-sites/raw/master/master.csv',
         #'securedrop'            : 'https://github.com/alecmuffett/real-world-onion-sites/raw/master/securedrop-api.csv',
         }
 
 class RealWorldOnionSites(OnionprobeConfigCompiler):
-    """Handles the 'Real-World Onion Sites' database"""
+    """
+    Handles the 'Real-World Onion Sites' database
+
+    Inherits from the OnionprobeConfigCompiler class, implementing
+    custom procedures.
+    """
 
     def build_endpoints_config(self, database):
+        """
+        Overrides OnionprobeConfigCompiler.build_endpoints_config()
+        method with custom logic.
+
+        :type database : str
+        :param database: A database name from the databases dictionary.
+
+        :rtype: dict
+        :return: Onion Service endpoints in the format accepted by Onionprobe.
+
+        """
+
+        # Get the Onion Service database from a remote CSV file
         result    = requests.get(self.databases[database])
         data      = csv.DictReader(StringIO(result.text))
         endpoints = {}
 
+        # Parse the database and convert it to the Onionprobe endpoints format
         for item in data:
             url      = urllib.parse.urlparse(item['onion_url'])
             address  = url.netloc
@@ -56,6 +75,7 @@ class RealWorldOnionSites(OnionprobeConfigCompiler):
                 'path': url.path if url.path != '' else '/',
                 }]
 
+            # Append to the endpoints dictionary
             if item['site_name'] not in endpoints:
                 endpoints[item['site_name']] = {
                         'address' : address,

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Helper script using during development
+# Helper script to setuo a development environment
 #
 
 # Parameters

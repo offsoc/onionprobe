@@ -44,6 +44,7 @@
 * [x] Environment variable controlling the configuration file to use.
 * [x] Better logging.
 * [x] Move the repository to the [Onion Services Gitlab group](https://gitlab.torproject.org/tpo/onion-services).
+* [x] Docstrings.
 * [x] Better exception handling.
 * [ ] Better reporting.
 * [ ] Non-http endpoints (regular TCP).
@@ -51,7 +52,6 @@
 * [ ] More command line options.
 * [ ] Refactor into smaller modules.
 * [ ] Python packaging (`requirements.txt` or other format).
-* [ ] Docstrings.
 * [ ] Better documentation.
 * [ ] Tests.
 * [ ] Custom actions/hooks/triggers.

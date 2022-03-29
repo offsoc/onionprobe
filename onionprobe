@@ -50,10 +50,12 @@ except ImportError:
     print("Please install requests first!")
     raise ImportError
 
-# Parameters
+# The Onionprobe version string
+# Uses Semantic Versioning 2.0.0
+# See https://semver.org
 onionprobe_version = '0.0.1'
 
-# Defaults
+# Default configuration
 defaults = {
         'log_level'               : 'info',
         'launch_tor'              : True,
@@ -85,13 +87,24 @@ defaults = {
         }
 
 class Onionprobe:
-    """Test/monitor Tor Onion Services"""
+    """
+    Onionprobe class to test and monitor Tor Onion Services
+    """
 
     #
     # Initialization logic
     #
 
     def __init__(self, args):
+        """
+        Onionprobe class constructor.
+
+        Setup instance configuration.
+
+        :type  args: dict
+        :param args: Instance arguments.
+        """
+
         self.args = args
         self.data = []
 
@@ -110,17 +123,28 @@ class Onionprobe:
             self.config = {}
 
     def initialize(self):
-        """Initialization procedures"""
+        """
+        Onionprobe initialization procedures
+
+        Initializes all Onionprobe subsystems, like the random number generator,
+        logging, metrics and a Tor daemon instance.
+
+        :rtype: bol
+        :return: True if initialization is successful, False on error
+        """
 
         # Initializes the random number generator
         random.seed()
 
+        # Initializes logging
         if self.initialize_logging() is False:
             return False
 
+        # Initializes the Tor daemon
         if self.initialize_tor() is False:
             return False
 
+        # Authenticate with the Tor daemon
         if self.initialize_tor_auth() is False:
             return False
 
@@ -129,9 +153,10 @@ class Onionprobe:
         if self.get_config('new_circuit'):
             self.controller.set_conf('__LeaveStreamsUnattached', '1')
             self.controller.add_event_listener(self.new_circuit, stem.control.EventType.STREAM)
+
             self.circuit_id = None
 
-        # Prometheus
+        # Initialize the Prometheus exporter
         if self.get_config('prometheus_exporter'):
             # Enforce continuous run
             self.config['loop'] = True
@@ -139,10 +164,18 @@ class Onionprobe:
             if self.initialize_prometheus_exporter() is False:
                 return False
 
+        # Initialize metrics
         self.initialize_metrics()
 
+        return True
+
     def initialize_logging(self):
-        """Initialize logging"""
+        """
+        Initialize Onionprobe's logging subsystem
+
+        :rtype: bol
+        :return: True if initialization is successful, False on error
+        """
 
         log_level = self.get_config('log_level').upper()
 
@@ -161,8 +194,15 @@ class Onionprobe:
 
             return False
 
+        return True
+
     def initialize_tor(self):
-        """Initialize Tor control connection"""
+        """
+        Initialize Tor control connection
+
+        :rtype: bol
+        :return: True if initialization is successful, False on error
+        """
 
         control_address = self.get_config('tor_address')
         control_port    = self.get_config('control_port')
@@ -190,8 +230,15 @@ class Onionprobe:
 
             return False
 
+        return True
+
     def initialize_tor_auth(self):
-        """Initialize an authenticated Tor control connection"""
+        """
+        Initialize an authenticated Tor control connection
+
+        :rtype: bol
+        :return: True if initialization is successful, False on error
+        """
 
         if 'controller' not in dir(self):
             self.log("Unable to find a Tor control connection", "critical")
@@ -227,8 +274,12 @@ class Onionprobe:
 
                 return False
 
+        return True
+
     def initialize_prometheus_exporter(self):
-        """Initialize the Prometheus Exporter"""
+        """
+        Initialize the Prometheus Exporter
+        """
 
         from prometheus_client import start_http_server
 
@@ -238,14 +289,23 @@ class Onionprobe:
         start_http_server(port)
 
     def initialize_metrics(self):
-        """Initialize the metrics subsystem"""
+        """
+        Initialize the metrics subsystem
 
-        # Use Prometheus metrics even if the exported is not in use
+        It uses Prometheus metrics even if the Prometheus exporter is not in use.
+
+        This means that the Prometheus metrics are always used, even if only for
+        internal purposes, saving resources from preventing us to build additional
+        metric logic.
+        """
+
+        # Import Prometheus data types
         from prometheus_client import Counter, Gauge, Info, Enum
 
+        # The metrics object
         self.metrics = {
             #
-            # Metametrics
+            # Metametrics: data about the Onionprobe instance itself
             #
 
             'onionprobe_version': Info(
@@ -260,7 +320,7 @@ class Onionprobe:
                 ),
 
             #
-            # Probing gauges
+            # Probing gauges: the basic data
             #
 
             'onionprobe_wait': Gauge(
@@ -381,12 +441,39 @@ class Onionprobe:
     #
 
     def log(self, message, level='info'):
-        """Helper log function"""
+        """
+        Helper log function
 
+        Appends a message into the logging subsystem.
+
+        :type  message: str
+        :param message: The message to be logged.
+
+        :type  level: str
+        :param level: The log level. Defaults to 'info'.
+                      For the available log levels, check
+                      https://docs.python.org/3/howto/logging.html#logging-levels
+        """
+
+        # Just a wrapper for the logging() function
         getattr(logging, level)(message)
 
     def get_config(self, item, default = None):
-        """Helper to get config or use default value"""
+        """
+        Helper to get instance configuration
+
+        Retrieve a config parameter from the self.config object or use a
+        default value as fallback
+
+        :type  item: str
+        :param item: Configuration item name
+
+        :param default: Default config value to be used as a fallback if there's
+                        no self.config[item] available.
+                        Defaults to None
+
+        :return: The configuration parameter value or the default fallback value.
+        """
 
         if item in self.config:
             return self.config[item]
@@ -400,21 +487,42 @@ class Onionprobe:
         return defaults[item]
 
     def wait(self, value):
-        """Helper to wait some time"""
+        """
+        Helper to wait some time
+
+        :type  value: int
+        :param value: Number of seconds to wait.
+        """
 
         # Randomize if needed
         if self.get_config('randomize'):
             value = random.random() * value
 
-        # Sleep
+        # Sleep, collecting metrics about it
         self.log('Waiting {} seconds...'.format(str(round(value))))
         self.metrics['onionprobe_wait'].set(value)
         self.metrics['onionprobe_state'].state('sleeping')
         time.sleep(value)
 
-    def elapsed(self, init_time, verbose):
+    def elapsed(self, init_time, verbose = False):
+        """
+        Calculate the time elapsed since an initial time.
+
+        :type  init_time: datetime.datetime
+        :param init_time: Initial time.
+
+        :type  verbose: bol
+        :param verbose: If verbose is True, logs the elapsed time.
+                        Defaults to False.
+
+        :rtype: int
+        :return: Number of elapsed time in seconds
+        """
+
+        # Calculate the elapsed time
         elapsed = (datetime.now() - init_time)
 
+        # Log the elapsed time
         if verbose:
             self.log("Elapsed time: " + str(elapsed))
 
@@ -430,6 +538,10 @@ class Onionprobe:
 
         Checks if should be run indefinitely.
         Then dispatch to a round of probes.
+
+        If runs continuously, waits before starting the next round.
+
+        If not, just returns.
         """
 
         # Check if should loop
@@ -447,12 +559,12 @@ class Onionprobe:
 
     def round(self):
         """
-        Process a round of tests
+        Process a round of probes
 
         Each round is composed of the entire set of the endpoints
         which is optionally shuffled.
 
-        Each probe is then tested.
+        Each endpoint is then probed.
         """
 
         # Shuffle the deck
@@ -476,7 +588,23 @@ class Onionprobe:
                 self.wait(self.get_config('interval'))
 
     def probe(self, endpoint):
-        """Probe an unique endpoint"""
+        """
+        Probe an unique endpoint
+
+        Checks for a valid and published Onion Service descriptor for the endpoint.
+
+        Then probes each path configured for the endpoint, storing the results in
+        a dictionary.
+
+        Ensure that each probe starts with a cleared Stem Controller cache.
+
+        :type  endpoint: str
+        :param endpoint: The endpoint name from the 'endpoints' instance config.
+
+        :rtype: dict or False
+        :return: A dictionary of results for each path configured for the endpoint.
+                 False in case of Onion Service descriptor error.
+        """
 
         self.log("Processing {}...".format(endpoint))
 
@@ -562,14 +690,32 @@ class Onionprobe:
     #
 
     def build_url(self, config, path = None):
+        """
+        Build an Onion Service URL to be probed
+
+        :type  config: dict
+        :param config: Endpoint configuration
+
+        :type  path: str
+        :param path: The path to be chosen in the endpoint configuration.
+
+        :rtype: str
+        :return: The Onion Service URL for the given config and path
+
+        """
+
+        # Get the base URL
         url = config['address']
 
+        # Set the protocol
         if 'protocol' in config:
             url = config['protocol'] + '://' + url
 
+        # Set the port
         if 'port' in config:
             url += ':' + str(config['port'])
 
+        # Set the path
         #if 'path' in config:
         #    url += config['path']
         if path is not None:
@@ -578,12 +724,27 @@ class Onionprobe:
         return url
 
     def query(self, endpoint, config, path):
-        """Fetches endpoint from URL"""
+        """
+        Fetches endpoint from URL
 
-        url = self.build_url(config, path)
+        Tries an HTTP connection to the URL and update metrics when needed.
 
-        self.log('Querying {}...'.format(url))
+        :type  endpoint: str
+        :param endpoint: The endpoint name from the 'endpoints' instance config.
 
+        :type  config: dict
+        :param config: Endpoint configuration
+
+        :type  path: str
+        :param path: The path to be chosen in the endpoint configuration.
+
+        :rtype: requests.Response or False
+        :return: The query result on success.
+                 False on error.
+        """
+
+        # Setup query parameters
+        url         = self.build_url(config, path)
         result      = False
         exception   = None
         init_time   = datetime.now()
@@ -595,9 +756,13 @@ class Onionprobe:
                 }
 
         try:
+            self.log('Querying {}...'.format(url))
+
+            # Fetch results and calculate the elapsed time
             result  = requests.get(url, proxies=proxies)
             elapsed = self.elapsed(init_time, True)
 
+            # Update metrics
             self.metrics['onion_service_latency'].labels(
                         name=endpoint,
                         address=config['address'],
@@ -653,6 +818,7 @@ class Onionprobe:
         else:
             self.log('Status code is {}'.format(result.status_code))
 
+            # Register status code in the metrics
             self.metrics['onion_service_status_code'].labels(
                         name=endpoint,
                         address=config['address'],
@@ -664,6 +830,7 @@ class Onionprobe:
         finally:
             reachable = 0 if result is False else 1
 
+            # Register reachability on metrics
             self.metrics['onion_service_reachable'].labels(
                         name=endpoint,
                         address=config['address'],
@@ -673,6 +840,7 @@ class Onionprobe:
                     ).set(reachable)
 
             if exception is not None:
+                # Count exceptions
                 self.metrics['onion_service_' + exception].labels(
                             name=endpoint,
                             address=config['address'],
@@ -681,6 +849,7 @@ class Onionprobe:
                             path=path,
                         ).inc()
 
+                # Count errors
                 self.metrics['onion_service_fetch_error_counter'].labels(
                             name=endpoint,
                             address=config['address'],
@@ -696,14 +865,31 @@ class Onionprobe:
     #
 
     def gen_control_password(self):
-        """Generates a random password"""
+        """
+        Generates a random password
+
+        :rtype: str
+        :return: A random password between 22 and 32 bytes
+        """
 
         import secrets
 
         return secrets.token_urlsafe(random.randrange(22, 32))
 
     def hash_password(self, password):
-        """Produce a hashed password in the format used by HashedControlPassword"""
+        """
+        Produce a hashed password in the format used by HashedControlPassword
+
+        It currently relies on spawning a "tor --hash-password" process so it suffering
+        from the security issue of temporarily exposing the unhashed password in the
+        operating system's list of running processes.
+
+        :type  password: str
+        :param password: A password to be hashed
+
+        :rtype: str
+        :return: The hashed password
+        """
 
         import subprocess
 
@@ -721,6 +907,7 @@ class Onionprobe:
 
         """
 
+        # Check if the tor executable is available
         if shutil.which('tor') is None:
             self.log('Cannot find the tor executable. Is it installed?', 'critical')
 
@@ -728,6 +915,7 @@ class Onionprobe:
 
         from stem.util import term
 
+        # Helper function to print bootstrap lines
         def print_bootstrap_lines(line):
             if "Bootstrapped " in line:
                 self.log(term.format(line), 'debug')
@@ -756,7 +944,14 @@ class Onionprobe:
             return False
 
     def new_circuit(self, stream):
-        """Setup a fresh circuit for new streams"""
+        """
+        Setup a fresh Tor circuit for new streams
+
+        See https://stem.torproject.org/tutorials/to_russia_with_love.html
+
+        :type  stream: stem.response.events.StreamEvent
+        :param stream: Stream event
+        """
 
         self.log('Building new circuit...', 'debug')
 
@@ -768,7 +963,7 @@ class Onionprobe:
         # Create new circuit
         self.circuit_id = self.controller.new_circuit(await_build=True)
 
-        # See https://stem.torproject.org/tutorials/to_russia_with_love.html
+        # Attach the new stream
         if stream.status == 'NEW':
             self.log('Setting up new circuit {}...'.format(self.circuit_id), 'debug')
             self.controller.attach_stream(stream.id, self.circuit_id)
@@ -778,14 +973,33 @@ class Onionprobe:
         Extract .onion pubkey from the address
 
         Leaves out the .onion domain suffix and any existing subdomains.
+
+        :type  address: str
+        :param address: Onion Service address
+
+        :rtype: str
+        :return: Onion Service public key
         """
 
+        # Extract
         pubkey = address[0:-6].split('.')[-1]
 
         return pubkey
 
     def get_descriptor(self, endpoint, config):
-        """Get Onion Service descriptor"""
+        """
+        Get Onion Service descriptor from a given endpoint
+
+        :type  endpoint: str
+        :param endpoint: The endpoint name from the 'endpoints' instance config.
+
+        :type  config: dict
+        :param config: Endpoint configuration
+
+        :rtype: stem.descriptor.hidden_service.InnerLayer or False
+        :return: The Onion Service descriptor inner layer on success.
+                 False on error.
+        """
 
         self.log('Getting descriptor for {}...'.format(config['address']))
 
@@ -854,6 +1068,14 @@ class Onionprobe:
     #
 
     def close(self):
+        """
+        Onionprobe teardown procedure.
+
+        Change the internal metrics state to running.
+
+        Stops the built-in Tor daemon.
+        """
+
         self.metrics['onionprobe_state'].state('stopping')
         self.controller.close()
 
