@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 #
-# Compile an Onionprobe configuration file from the "Real-World Onion Sites"
-# repository.
+# Compile an Onionprobe configuration file from the Secure Drop API.
 #
 # Copyright (C) 2022 Silvio Rhatto <rhatto@torproject.org>
 #
