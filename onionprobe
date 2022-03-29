@@ -241,7 +241,7 @@ class Onionprobe:
         """Initialize the metrics subsystem"""
 
         # Use Prometheus metrics even if the exported is not in use
-        from prometheus_client import Counter, Gauge, Info
+        from prometheus_client import Counter, Gauge, Info, Enum
 
         self.metrics = {
             #
@@ -251,6 +251,12 @@ class Onionprobe:
             'onionprobe_version': Info(
                 'onionprobe_version',
                 'Onionprobe version info',
+                ),
+
+            'onionprobe_state': Enum(
+                'onionprobe_state',
+                'Onionprobe latest state',
+                states=['starting', 'probing', 'sleeping', 'stopping']
                 ),
 
             #
@@ -367,6 +373,9 @@ class Onionprobe:
             'version': onionprobe_version,
             })
 
+        # Set initial state
+        self.metrics['onionprobe_state'].state('starting')
+
     #
     # Helper methods
     #
@@ -400,6 +409,7 @@ class Onionprobe:
         # Sleep
         self.log('Waiting {} seconds...'.format(str(round(value))))
         self.metrics['onionprobe_wait'].set(value)
+        self.metrics['onionprobe_state'].state('sleeping')
         time.sleep(value)
 
     def elapsed(self, init_time, verbose):
@@ -457,6 +467,8 @@ class Onionprobe:
 
         # Probe each endpoint
         for key, endpoint in enumerate(endpoints):
+            self.metrics['onionprobe_state'].state('probing')
+
             result = self.probe(endpoint)
 
             # Wait if not last endpoint
@@ -842,6 +854,7 @@ class Onionprobe:
     #
 
     def close(self):
+        self.metrics['onionprobe_state'].state('stopping')
         self.controller.close()
 
         # Terminate built-in Tor
