@@ -64,7 +64,7 @@ class RealWorldOnionSites(OnionprobeConfigCompiler):
                         'paths'   : paths,
                         }
 
-            return endpoints
+        return endpoints
 
 if __name__ == "__main__":
     """Process from CLI"""
