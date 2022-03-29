@@ -84,7 +84,7 @@
 * [x] Script that compiles configuration from [the SecureDrop API](https://securedrop.org/api/v1/directory/).
 * [x] Status: enum: sleeping, probing, starting, stopping.
 * [ ] Watch for config file changes (hot reload).
-* [ ] Fetch config from external application, like securedrop.py or real-world-onion-sites.py.
+* [ ] Fetch config from external application, like `securedrop.py` or `real-world-onion-sites.py`.
 * [ ] Handling SIGKILL and other signals.
 * [ ] Daemon mode.
 * [ ] Logfile support.
