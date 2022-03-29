@@ -82,6 +82,9 @@ Then point your browser to:
       If using the prometheus exporter with python, consider to just use request and
       beautiful soup to check that the page is returning what one expects.
 * [x] Add in additional metrics wherever appropriate.
+* [x] To get the timings right, the tool should take care of the test frequency and
+      just expose the metrics rather than having Prometheus scraping individual
+      targets on Prometheus' schedule.
 * [ ] Try to get the descriptor from multiple (if not all) HSDirs where it
       should be available. Check the [control-spec](https://gitlab.torproject.org/tpo/core/torspec/-/blob/main/control-spec.txt)
       for `HSFETCH` command and the `HS_DESC` event ([using SETEVENTS](https://stem.torproject.org/tutorials/down_the_rabbit_hole.html)).
@@ -89,11 +92,7 @@ Then point your browser to:
     * [When an onion service lookup has failed at the first k HSDirs we tried, what are the chances it will still succeed?](https://gitlab.torproject.org/tpo/network-health/analysis/-/issues/28)
     * [Write a hidden service hsdir health measurer](https://gitlab.torproject.org/tpo/network-health/metrics/analysis/-/issues/13209)
     * [What's the average number of hsdir fetches before we get the hsdesc?](https://gitlab.torproject.org/tpo/core/tor/-/issues/13208)
-* [ ] To get the timings right, the tool should take care of the test frequency and
-      just expose the metrics rather than having Prometheus scraping individual
-      targets on Prometheus' schedule.
 * [ ] Authentication (if not done by a frontend proxy).
-* [ ] Review metrics names and types (use "elapsed" instead of "latency" etc).
 
 ### Enhancements
 
@@ -113,12 +112,42 @@ Then point your browser to:
 * [ ] Tests.
 * [ ] Custom actions/hooks/triggers.
 
+### Metrics
+
+* [ ] Number of introduction points.
+* [ ] Current introduction points (summary/histogram?).
+* [ ] Current used HSDir.
+* [ ] Response size.
+* [ ] Response content type.
+* [ ] Other relevant response metadata and headers.
+* [ ] Review metrics names and types (use "elapsed" instead of "latency" etc).
+
+### Tests
+
+* [ ] Descriptor unavailable.
+* [ ] Invalid descriptor.
+* [ ] Invalid X.509 certificate.
+* [ ] Connection errors / timeout.
+* [ ] Path not found.
+* [ ] Pattern not found.
+
 ### Bonus
 
 * [x] Optionally launch it's [own Tor process](https://stem.torproject.org/api/process.html)
       like in [this example](https://stem.torproject.org/tutorials/to_russia_with_love.html#using-pycurl).
 * [x] Script that compiles configuration from [real-world-onion-sites](https://github.com/alecmuffett/real-world-onion-sites) repository.
 * [ ] Script that compiles configuration from [the SecureDrop API](https://securedrop.org/api/v1/directory/).
+* [ ] Status: enum: sleeping, probing, starting, stopping.
+* [ ] Watch for config file changes (hot reload).
+* [ ] Fetch config from external application, like securedrop.py or real-world-onion-sites.py.
+* [ ] Handling SIGKILL and other signals.
+* [ ] Daemon mode.
+* [ ] Logfile support.
+* [ ] Parseable log format.
+* [ ] Manpage.
+* [ ] Distro packaging (Debian, ArchLinux, rpm).
+* [ ] Metric units in the description.
+* [ ] Gitlab CI.
 * [ ] `ControlSocket` support using `stem.control.Controller.from_socket_file()`.
 * [ ] HTTPS certificate validation check/exception.
 * [ ] Built-in `HashedControlPort` generation to not leak password information to command as `tor --hash-password` does.
