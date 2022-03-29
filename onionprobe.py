@@ -20,7 +20,6 @@
 
 # Dependencies
 import argparse
-import random
 
 from onionprobes.init       import OnionprobeInit
 from onionprobes.config     import OnionprobeConfig
@@ -32,6 +31,7 @@ from onionprobes.metrics    import OnionprobeMetrics
 from onionprobes.prober     import OnionprobeProber
 from onionprobes.http       import OnionprobeHTTP
 from onionprobes.teardown   import OnionprobeTeardown
+from onionprobes.main       import OnionprobeMain
 
 class Onionprobe(
         # Inherit from subsystems
@@ -45,69 +45,11 @@ class Onionprobe(
         OnionprobeProber,
         OnionprobeHTTP,
         OnionprobeTeardown,
+        OnionprobeMain,
         ):
     """
     Onionprobe class to test and monitor Tor Onion Services
     """
-
-    #
-    # Main application logic
-    #
-
-    def run(self):
-        """
-        Main application loop
-
-        Checks if should be run indefinitely.
-        Then dispatch to a round of probes.
-
-        If runs continuously, waits before starting the next round.
-
-        If not, just returns.
-        """
-
-        # Check if should loop
-        if self.get_config('loop'):
-            while True:
-                # Call for a round
-                self.round()
-
-                # Then wait
-                self.wait(self.get_config('sleep'))
-
-        else:
-            # Single pass, only one round
-            self.round()
-
-    def round(self):
-        """
-        Process a round of probes
-
-        Each round is composed of the entire set of the endpoints
-        which is optionally shuffled.
-
-        Each endpoint is then probed.
-        """
-
-        # Shuffle the deck
-        endpoints = sorted(self.get_config('endpoints'))
-
-        if self.get_config('shuffle'):
-            # Reinitializes the random number generator to avoid predictable
-            # results if running countinuously for long periods.
-            random.seed()
-
-            endpoints = random.sample(endpoints, k=len(endpoints))
-
-        # Probe each endpoint
-        for key, endpoint in enumerate(endpoints):
-            self.metrics['onionprobe_state'].state('probing')
-
-            result = self.probe(endpoint)
-
-            # Wait if not last endpoint
-            if key != len(endpoints) - 1:
-                self.wait(self.get_config('interval'))
 
 if __name__ == "__main__":
     """Process from CLI"""
