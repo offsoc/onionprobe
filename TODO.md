@@ -83,6 +83,7 @@
 * [x] Script that compiles configuration from [real-world-onion-sites](https://github.com/alecmuffett/real-world-onion-sites) repository.
 * [x] Script that compiles configuration from [the SecureDrop API](https://securedrop.org/api/v1/directory/).
 * [x] Status: enum: sleeping, probing, starting, stopping.
+* [ ] Clear the Stem Controller cache at every path probing and not only for each endpoint probing.
 * [ ] Watch for config file changes (hot reload).
 * [ ] Fetch config from external application, like `securedrop.py` or `real-world-onion-sites.py`.
 * [ ] Handling SIGKILL and other signals.
