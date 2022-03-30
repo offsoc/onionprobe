@@ -42,7 +42,7 @@
 
 ## Probing
 
-* [ ] Set timeout at `get_hidden_service_descriptor()`.
+* [x] Set timeout at `get_hidden_service_descriptor()`.
 * [ ] Set timeout at `Requests`.
 * [ ] Try to get the descriptor from multiple (if not all) HSDirs where it
       should be available. Check the [control-spec](https://gitlab.torproject.org/tpo/core/torspec/-/blob/main/control-spec.txt)

@@ -59,6 +59,9 @@ interval: 5
 # Max random interval in seconds to wait between each round of tests
 sleep: 5
 
+# Timeout in seconds when retrieving an Onion Service descriptor
+descriptor_timeout: 30
+
 # Whether to get a new circuit for every stream
 new_circuit: false
 

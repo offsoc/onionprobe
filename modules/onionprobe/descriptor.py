@@ -69,6 +69,7 @@ class OnionprobeDescriptor:
 
         pubkey    = self.get_pubkey_from_address(config['address'])
         init_time = self.now()
+        timeout   = self.get_config('descriptor_timeout')
         reachable = 0
 
         # Metrics labels
@@ -79,7 +80,7 @@ class OnionprobeDescriptor:
 
         # Get the descriptor
         try:
-            descriptor = self.controller.get_hidden_service_descriptor(pubkey)
+            descriptor = self.controller.get_hidden_service_descriptor(pubkey, timeout=timeout)
 
         except (stem.DescriptorUnavailable, stem.Timeout, stem.ControllerError, ValueError)  as e:
             inner = False
