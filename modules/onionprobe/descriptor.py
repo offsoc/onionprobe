@@ -95,6 +95,12 @@ class OnionprobeDescriptor:
             #for introduction_point in inner.introduction_points:
             #    self.log(introduction_point.link_specifiers, 'debug')
 
+            if 'introduction_points' in dir(inner):
+                self.metrics['onion_service_introduction_points'].labels(
+                            name=endpoint,
+                            address=config['address'],
+                        ).set(len(inner.introduction_points))
+
             reachable = 1
             elapsed   = self.elapsed(init_time, True)
 

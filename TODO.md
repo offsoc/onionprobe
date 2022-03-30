@@ -66,13 +66,13 @@
 * [x] Status: sleeping, probing, starting or stopping.
 * [x] Match found / not found.
 * [x] Metric units in the description.
-* [ ] Number of introduction points.
-* [ ] Current introduction points (summary/histogram?).
+* [x] Number of introduction points.
+* [ ] Current introduction points (info metric type?).
 * [ ] Current used HSDir.
 * [ ] Response size.
 * [ ] Response content type.
 * [ ] Other relevant response metadata and headers.
-* [ ] Review metrics names and types (use "elapsed" instead of "latency" etc).
+* [ ] Review metrics names and types (use "elapsed" instead of "latency", "query" instead of "fetch" etc).
 
 ## Logging
 

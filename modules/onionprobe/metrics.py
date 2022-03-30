@@ -107,6 +107,12 @@ class OnionprobeMetrics:
                     ['name', 'address']
                 ),
 
+            'onion_service_introduction_points': Gauge(
+                    'onion_service_introduction_points',
+                    'Register the nummber of introduction points in the Onion Service descriptor',
+                    ['name', 'address']
+                ),
+
             'onion_service_match_pattern_matched': Gauge(
                     'onion_service_pattern_matched',
                     'Register a regular expression pattern is matched when connection to the Onion Service: value is 1 for matched pattern and 0 otherwise',
