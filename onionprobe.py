@@ -19,28 +19,13 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Dependencies
-import argparse
-
-from modules.onionprobe.app import Onionprobe
+from modules.onionprobe.app    import Onionprobe
+from modules.onionprobe.config import cmdline
 
 if __name__ == "__main__":
     """Process from CLI"""
 
-    epilog = """Examples:
-
-      onionprobe -c config.yaml
-    """
-
-    description = 'Test and monitor onion services'
-    parser      = argparse.ArgumentParser(
-                    description=description,
-                    epilog=epilog,
-                    formatter_class=argparse.RawDescriptionHelpFormatter,
-                  )
-
-    parser.add_argument('-c', '--config', help='Read options from configuration file')
-
-    args = parser.parse_args()
+    args = cmdline()
 
     # Dispatch
     try:

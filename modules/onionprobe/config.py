@@ -20,6 +20,7 @@
 
 # Dependencies
 import os
+import argparse
 
 try:
     import yaml
@@ -65,6 +66,31 @@ defaults = {
                 },
             }
         }
+
+def cmdline():
+    """
+    Evalutate the command line.
+
+    :return: Command line arguments.
+    """
+
+    epilog = """Examples:
+
+      onionprobe -c config.yaml
+    """
+
+    description = 'Test and monitor onion services'
+    parser      = argparse.ArgumentParser(
+                    description=description,
+                    epilog=epilog,
+                    formatter_class=argparse.RawDescriptionHelpFormatter,
+                  )
+
+    parser.add_argument('-c', '--config', help='Read options from configuration file')
+
+    args = parser.parse_args()
+
+    return args
 
 class OnionprobeConfig:
     """
