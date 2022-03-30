@@ -47,3 +47,28 @@ class Onionprobe(
     """
     Onionprobe class to test and monitor Tor Onion Services
     """
+
+def run(args):
+    """
+    Run Onionprobe from arguments
+
+    :type  args: dict
+    :param args: Instance arguments.
+    """
+
+    # Dispatch
+    try:
+        probe = Onionprobe(args)
+
+        if probe.initialize() is not False:
+            probe.run()
+            probe.close()
+        else:
+            print('Error: could not initialize')
+            exit(1)
+
+    #except (FileNotFoundError, KeyboardInterrupt) as e:
+    except Exception as e:
+        probe.log(e, 'error')
+        probe.close()
+        exit(1)

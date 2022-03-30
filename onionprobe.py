@@ -19,27 +19,9 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Dependencies
-from modules.onionprobe.app    import Onionprobe
 from modules.onionprobe.config import cmdline
+from modules.onionprobe.app    import run
 
+# Process from CLI
 if __name__ == "__main__":
-    """Process from CLI"""
-
-    args = cmdline()
-
-    # Dispatch
-    try:
-        probe = Onionprobe(args)
-
-        if probe.initialize() is not False:
-            probe.run()
-            probe.close()
-        else:
-            print('Error: could not initialize')
-            exit(1)
-
-    #except (FileNotFoundError, KeyboardInterrupt) as e:
-    except Exception as e:
-        probe.log(e, 'error')
-        probe.close()
-        exit(1)
+    run(cmdline())
