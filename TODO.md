@@ -45,6 +45,7 @@
 * [x] Set timeout at `get_hidden_service_descriptor()`.
 * [x] Set timeout at `Requests`.
 * [x] HTTPS certificate validation check/exception.
+* [ ] Set `CircuitStreamTimeout` in the built-in Tor daemon.
 * [ ] Try to get the descriptor from multiple (if not all) HSDirs where it
       should be available. Check the [control-spec](https://gitlab.torproject.org/tpo/core/torspec/-/blob/main/control-spec.txt)
       for `HSFETCH` command and the `HS_DESC` event ([using SETEVENTS](https://stem.torproject.org/tutorials/down_the_rabbit_hole.html)).
