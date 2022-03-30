@@ -67,6 +67,7 @@
 * [x] Match found / not found.
 * [x] Metric units in the description.
 * [x] Number of introduction points.
+* [x] Timestamp label.
 * [ ] Current introduction points (info metric type?).
 * [ ] Current used HSDir.
 * [ ] Response size.

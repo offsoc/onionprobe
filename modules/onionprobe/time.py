@@ -39,6 +39,16 @@ class OnionprobeTime:
 
         return datetime.now()
 
+    def timestamp(self):
+        """
+        Wrapper around datetime.now().timestamp()
+
+        :rtype: datetime.datetime
+        :return: Current time.
+        """
+
+        return datetime.now().timestamp()
+
     def wait(self, value):
         """
         Helper to wait some time

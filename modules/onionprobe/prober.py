@@ -114,14 +114,15 @@ class OnionprobeProber:
                         results[path['path']] = False
 
                     # Update metrics
-                    self.metrics['onion_service_pattern_matched'].labels(
-                                name=endpoint,
-                                address=config['address'],
-                                protocol=config['protocol'],
-                                port=config['port'],
-                                path=path,
-                                pattern=path['pattern'],
-                            ).set(matched)
+                    self.set_metric('onion_service_pattern_matched',
+                                    matched, {
+                                        'name'     : endpoint,
+                                        'address'  : config['address'],
+                                        'protocol' : config['protocol'],
+                                        'port'     : config['port'],
+                                        'path'     : path,
+                                        'pattern'  : path['pattern'],
+                                    })
 
                 else:
                     results[path['path']] = result

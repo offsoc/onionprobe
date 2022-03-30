@@ -90,9 +90,20 @@ class OnionprobeHTTP:
         init_time   = self.now()
         tor_address = self.get_config('tor_address')
         socks_port  = self.get_config('socks_port')
+
+        # Request everything via Tor, including DNS queries
         proxies     = {
                 'http' : 'socks5h://{}:{}'.format(tor_address, socks_port),
                 'https': 'socks5h://{}:{}'.format(tor_address, socks_port),
+                }
+
+        # Metric labels
+        labels = {
+                'name'     : endpoint,
+                'address'  : config['address'],
+                'protocol' : config['protocol'],
+                'port'     : config['port'],
+                'path'     : path,
                 }
 
         try:
@@ -103,13 +114,7 @@ class OnionprobeHTTP:
             elapsed = self.elapsed(init_time, True)
 
             # Update metrics
-            self.metrics['onion_service_latency'].labels(
-                        name=endpoint,
-                        address=config['address'],
-                        protocol=config['protocol'],
-                        port=config['port'],
-                        path=path,
-                    ).set(elapsed)
+            self.set_metric('onion_service_latency', elapsed, labels)
 
         except requests.exceptions.RequestException as e:
             result    = False
@@ -159,43 +164,19 @@ class OnionprobeHTTP:
             self.log('Status code is {}'.format(result.status_code))
 
             # Register status code in the metrics
-            self.metrics['onion_service_status_code'].labels(
-                        name=endpoint,
-                        address=config['address'],
-                        protocol=config['protocol'],
-                        port=config['port'],
-                        path=path,
-                    ).set(result.status_code)
+            self.set_metric('onion_service_status_code', result.status_code, labels)
 
         finally:
             reachable = 0 if result is False else 1
 
             # Register reachability on metrics
-            self.metrics['onion_service_reachable'].labels(
-                        name=endpoint,
-                        address=config['address'],
-                        protocol=config['protocol'],
-                        port=config['port'],
-                        path=path,
-                    ).set(reachable)
+            self.set_metric('onion_service_reachable', reachable, labels)
 
             if exception is not None:
                 # Count exceptions
-                self.metrics['onion_service_' + exception].labels(
-                            name=endpoint,
-                            address=config['address'],
-                            protocol=config['protocol'],
-                            port=config['port'],
-                            path=path,
-                        ).inc()
+                self.inc_metric('onion_service_' + exception, 1, labels)
 
                 # Count errors
-                self.metrics['onion_service_fetch_error_counter'].labels(
-                            name=endpoint,
-                            address=config['address'],
-                            protocol=config['protocol'],
-                            port=config['port'],
-                            path=path,
-                        ).inc()
+                self.inc_metric('onion_service_fetch_error_counter', 1, labels)
 
             return result

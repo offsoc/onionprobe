@@ -69,14 +69,20 @@ class OnionprobeDescriptor:
 
         pubkey    = self.get_pubkey_from_address(config['address'])
         init_time = self.now()
+        reachable = 0
+
+        # Metrics labels
+        labels = {
+                'name'   : endpoint,
+                'address': config['address'],
+                }
 
         # Get the descriptor
         try:
             descriptor = self.controller.get_hidden_service_descriptor(pubkey)
 
         except (stem.DescriptorUnavailable, stem.Timeout, stem.ControllerError, ValueError)  as e:
-            inner     = False
-            reachable = 0
+            inner = False
 
         else:
             # Ensure it's converted to the v3 format
@@ -96,30 +102,22 @@ class OnionprobeDescriptor:
             #    self.log(introduction_point.link_specifiers, 'debug')
 
             if 'introduction_points' in dir(inner):
-                self.metrics['onion_service_introduction_points'].labels(
-                            name=endpoint,
-                            address=config['address'],
-                        ).set(len(inner.introduction_points))
+                self.set_metric('onion_service_introduction_points',
+                                len(inner.introduction_points), labels)
 
             reachable = 1
             elapsed   = self.elapsed(init_time, True)
 
-            self.metrics['onion_service_descriptor_latency'].labels(
-                        name=endpoint,
-                        address=config['address'],
-                    ).set(elapsed)
+            self.set_metric('onion_service_descriptor_latency',
+                            elapsed, labels)
 
         finally:
-            self.metrics['onion_service_descriptor_reachable'].labels(
-                        name=endpoint,
-                        address=config['address'],
-                    ).set(reachable)
+            self.set_metric('onion_service_descriptor_reachable',
+                            reachable, labels)
 
             if inner is False:
-                self.metrics['onion_service_descriptor_fetch_error_counter'].labels(
-                            name=endpoint,
-                            address=config['address'],
-                        ).inc()
+                self.inc_metric('onion_service_descriptor_fetch_error_counter',
+                                1, labels)
 
             # Return the inner layer or False
             return inner
