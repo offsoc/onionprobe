@@ -105,11 +105,23 @@ class OnionprobeProber:
                     if match is not None:
                         self.log('Match found: "%s"' % (path['pattern']))
 
+                        matched               = 1
                         results[path['path']] = result
                     else:
                         self.log('Match not found: "%s"' % (path['pattern']))
 
+                        matched               = 0
                         results[path['path']] = False
+
+                    # Update metrics
+                    self.metrics['onion_service_pattern_matched'].labels(
+                                name=endpoint,
+                                address=config['address'],
+                                protocol=config['protocol'],
+                                port=config['port'],
+                                path=path,
+                                pattern=path['pattern'],
+                            ).set(matched)
 
                 else:
                     results[path['path']] = result

@@ -59,6 +59,7 @@
 
 ## Metrics
 
+* [x] Match found / not found.
 * [ ] Number of introduction points.
 * [ ] Current introduction points (summary/histogram?).
 * [ ] Current used HSDir.

@@ -107,6 +107,12 @@ class OnionprobeMetrics:
                     ['name', 'address']
                 ),
 
+            'onion_service_match_pattern_matched': Gauge(
+                    'onion_service_pattern_matched',
+                    'Register a regular expression pattern is matched when connection to the Onion Service. Value is 1 for matched pattern and 0 otherwise',
+                    ['name', 'address', 'protocol', 'port', 'path', 'pattern']
+                ),
+
             #
             # Probing counters
             #
