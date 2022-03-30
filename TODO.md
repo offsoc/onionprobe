@@ -53,6 +53,7 @@
 * [ ] More command line options.
 * [ ] Python packaging (`requirements.txt` or other format).
 * [ ] Better documentation.
+* [ ] API Docs.
 * [ ] Tests.
 * [ ] Custom actions/hooks/triggers.
 * [ ] Move tasks to the [issue tracker](https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues).
@@ -60,6 +61,7 @@
 ## Metrics
 
 * [x] Match found / not found.
+* [x] Metric units in the description.
 * [ ] Number of introduction points.
 * [ ] Current introduction points (summary/histogram?).
 * [ ] Current used HSDir.
@@ -93,7 +95,6 @@
 * [ ] Parseable log format.
 * [ ] Manpage.
 * [ ] Distro packaging (Debian, ArchLinux, rpm).
-* [ ] Metric units in the description.
 * [ ] Gitlab CI.
 * [ ] `ControlSocket` support using `stem.control.Controller.from_socket_file()`.
 * [ ] HTTPS certificate validation check/exception.
