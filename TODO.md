@@ -49,10 +49,9 @@
     * [When an onion service lookup has failed at the first k HSDirs we tried, what are the chances it will still succeed?](https://gitlab.torproject.org/tpo/network-health/analysis/-/issues/28)
     * [Write a hidden service hsdir health measurer](https://gitlab.torproject.org/tpo/network-health/metrics/analysis/-/issues/13209)
     * [What's the average number of hsdir fetches before we get the hsdesc?](https://gitlab.torproject.org/tpo/core/tor/-/issues/13208)
-* [ ] Non-http endpoints (regular TCP).
-* [ ] Max retries before throwing an error for getting descriptors and querying the endpoint.
-* [ ] Custom actions/hooks/triggers.
 * [ ] HTTPS certificate validation check/exception.
+* [ ] Max retries before throwing an error for getting descriptors and querying the endpoint.
+* [ ] Non-http endpoints (regular TCP).
 
 ## Enhancements
 
@@ -121,6 +120,7 @@
 * [ ] Watch for config file changes (hot reload).
 * [ ] Fetch config from external application, like `securedrop.py` or `real-world-onion-sites.py`.
 * [ ] Architecture should be extensible to allow for different reporting options (stdout, Prometheus etc).
+* [ ] Custom actions/hooks/triggers.
 * [ ] Multitasking: multiple threads/workers continuously probing endpoints
       with a centralized reporting data structure. This helps splitting
       data gathering from presentation logic, especially with the Prometheus
