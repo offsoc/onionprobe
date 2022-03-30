@@ -1,4 +1,5 @@
 control_port: 19051
+descriptor_timeout: 30
 endpoints:
   Ablative Hosting:
     address: hzwjmjimhr7bdmfv2doll4upibt5ojjmpo3pbp5ctwcg37n3hyk7qzid.onion
@@ -828,6 +829,8 @@ endpoints:
     - path: /
     port: 443
     protocol: https
+http_connect_timeout: 30
+http_read_timeout: 30
 interval: 5
 launch_tor: true
 log_level: info

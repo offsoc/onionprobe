@@ -1,4 +1,5 @@
 control_port: 19051
+descriptor_timeout: 30
 endpoints:
   '2600: The Hacker Quarterly':
     address: cy6wj77vryhcyh6go576hxycjz4wxlo4s5vevdinkw3armwzty5jozyd.onion
@@ -210,6 +211,8 @@ endpoints:
     - path: ''
     port: 80
     protocol: http
+http_connect_timeout: 30
+http_read_timeout: 30
 interval: 5
 launch_tor: true
 log_level: info
