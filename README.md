@@ -37,7 +37,7 @@ Just clone the repository
 ## Usage
 
 Right now Onionprobe works only with a configuration file.
-A [sample config](configs/tor.yaml] is provided:
+A [sample config](configs/tor.yaml) is provided:
 
     ./onionprobe -c configs/tor.yaml
 
