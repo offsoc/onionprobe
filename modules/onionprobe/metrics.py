@@ -120,13 +120,13 @@ class OnionprobeMetrics:
             'onion_service_fetch_error_counter': Counter(
                     'onion_service_fetch_error_counter',
                     'Counts errors when fetching an Onion Service',
-                    ['name', 'address']
+                    ['name', 'address', 'protocol', 'port', 'path']
                 ),
 
             'onion_service_descriptor_fetch_error_counter': Counter(
                     'onion_service_descriptor_fetch_error_counter',
                     'Counts errors when fetching an Onion Service descriptor',
-                    ['name', 'address', 'protocol', 'port', 'path']
+                    ['name', 'address']
                 ),
 
             #
