@@ -106,11 +106,16 @@ class OnionprobeHTTP:
                 'path'     : path,
                 }
 
+        timeout = (
+                self.get_config('http_connect_timeout'),
+                self.get_config('http_read_timeout'),
+                )
+
         try:
             self.log('Querying {}...'.format(url))
 
             # Fetch results and calculate the elapsed time
-            result  = requests.get(url, proxies=proxies)
+            result  = requests.get(url, proxies=proxies, timeout=timeout)
             elapsed = self.elapsed(init_time, True)
 
             # Update metrics

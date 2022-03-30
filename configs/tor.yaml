@@ -62,6 +62,12 @@ sleep: 5
 # Timeout in seconds when retrieving an Onion Service descriptor
 descriptor_timeout: 30
 
+# Connection timeout for HTTP/HTTPS requests
+http_connect_timeout: 30
+
+# Read timeout for HTTP/HTTPS requests
+http_read_timeout: 30
+
 # Whether to get a new circuit for every stream
 new_circuit: false
 
