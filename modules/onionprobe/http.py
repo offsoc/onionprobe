@@ -90,9 +90,10 @@ class OnionprobeHTTP:
         init_time   = self.now()
         tor_address = self.get_config('tor_address')
         socks_port  = self.get_config('socks_port')
+        valid_cert  = 1
 
         # Request everything via Tor, including DNS queries
-        proxies     = {
+        proxies = {
                 'http' : 'socks5h://{}:{}'.format(tor_address, socks_port),
                 'https': 'socks5h://{}:{}'.format(tor_address, socks_port),
                 }
@@ -165,6 +166,13 @@ class OnionprobeHTTP:
 
             self.log(e, 'error')
 
+        except requests.exceptions.SSLError as e:
+            result     = False
+            exception  = 'certificate_error'
+            valid_cert = 0
+
+            self.log(e, 'error')
+
         else:
             self.log('Status code is {}'.format(result.status_code))
 
@@ -176,6 +184,9 @@ class OnionprobeHTTP:
 
             # Register reachability on metrics
             self.set_metric('onion_service_reachable', reachable, labels)
+
+            if config['protocol'] == 'https':
+                self.inc_metric('onion_service_valid_certificate', valid_cert, labels)
 
             if exception is not None:
                 # Count exceptions

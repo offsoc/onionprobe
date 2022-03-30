@@ -119,6 +119,12 @@ class OnionprobeMetrics:
                     ['name', 'address', 'protocol', 'port', 'path', 'pattern', 'updated_at']
                 ),
 
+            'onion_service_valid_certificate': Gauge(
+                    'onion_service_valid_certificate',
+                    'Register if the Onion Service HTTPS certificate is valid: value is 1 for valid and 0 otherwise, but only for sites reachable using HTTPS',
+                    ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
+                ),
+
             #
             # Probing counters
             #
@@ -175,7 +181,7 @@ class OnionprobeMetrics:
                 ),
 
             # Counter for requests.ReadTimeout
-            'onion_service_read_timeuot': Counter(
+            'onion_service_read_timeout': Counter(
                     'onion_service_read_timeout',
                     'Counts Onion Service read timeouts',
                     ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
@@ -185,6 +191,13 @@ class OnionprobeMetrics:
             'onion_service_timeout': Counter(
                     'onion_service_timeout',
                     'Counts Onion Service timeouts',
+                    ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
+                ),
+
+            # Counter for requests.exceptions.SSLError
+            'onion_service_certificate_error': Counter(
+                    'onion_service_certificate_error',
+                    'Counts HTTPS certificate validation errors',
                     ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
                 ),
             }
