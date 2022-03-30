@@ -21,7 +21,7 @@
 # Dependencies
 import argparse
 
-from onionprobes.app import Onionprobe
+from modules.onionprobe.app import Onionprobe
 
 if __name__ == "__main__":
     """Process from CLI"""

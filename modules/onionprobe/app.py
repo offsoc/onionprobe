@@ -18,17 +18,17 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from init       import OnionprobeInit
-from config     import OnionprobeConfig
-from logger     import OnionprobeLogger
-from time       import OnionprobeTime
-from tor        import OnionprobeTor
-from descriptor import OnionprobeDescriptor
-from metrics    import OnionprobeMetrics
-from prober     import OnionprobeProber
-from http       import OnionprobeHTTP
-from teardown   import OnionprobeTeardown
-from main       import OnionprobeMain
+from .init       import OnionprobeInit
+from .config     import OnionprobeConfig
+from .logger     import OnionprobeLogger
+from .time       import OnionprobeTime
+from .tor        import OnionprobeTor
+from .descriptor import OnionprobeDescriptor
+from .metrics    import OnionprobeMetrics
+from .prober     import OnionprobeProber
+from .http       import OnionprobeHTTP
+from .teardown   import OnionprobeTeardown
+from .main       import OnionprobeMain
 
 class Onionprobe(
         # Inherit from subsystems

@@ -33,7 +33,7 @@ except ImportError:
 onionprobe_version = '0.0.1'
 
 # The base path for this project
-basepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir) + os.sep
+basepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir) + os.sep
 
 # Default configuration
 defaults = {
