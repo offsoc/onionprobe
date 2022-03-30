@@ -54,7 +54,6 @@
 * [ ] Python packaging (`requirements.txt` or other format).
 * [ ] Better documentation.
 * [ ] API Docs.
-* [ ] Tests.
 * [ ] Custom actions/hooks/triggers.
 * [ ] Move tasks to the [issue tracker](https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues).
 
@@ -72,12 +71,14 @@
 
 ## Tests
 
-* [ ] Descriptor unavailable.
-* [ ] Invalid descriptor.
-* [ ] Invalid X.509 certificate.
-* [ ] Connection errors / timeout.
-* [ ] Path not found.
-* [ ] Pattern not found.
+* [ ] Testing subsystem.
+* [ ] Test cases:
+  * [ ] Descriptor unavailable.
+  * [ ] Invalid descriptor.
+  * [ ] Invalid X.509 certificate.
+  * [ ] Connection errors / timeout.
+  * [ ] Path not found.
+  * [ ] Pattern not found.
 
 ## Bonus
 
