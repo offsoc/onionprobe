@@ -107,8 +107,8 @@ class OnionprobeMetrics:
                     ['name', 'address', 'updated_at']
                 ),
 
-            'onion_service_introduction_points': Gauge(
-                    'onion_service_introduction_points',
+            'onion_service_introduction_points_number': Gauge(
+                    'onion_service_introduction_points_number',
                     'Register the nummber of introduction points in the Onion Service descriptor',
                     ['name', 'address', 'updated_at']
                 ),

@@ -102,7 +102,7 @@ class OnionprobeDescriptor:
             #    self.log(introduction_point.link_specifiers, 'debug')
 
             if 'introduction_points' in dir(inner):
-                self.set_metric('onion_service_introduction_points',
+                self.set_metric('onion_service_introduction_points_number',
                                 len(inner.introduction_points), labels)
 
             reachable = 1
