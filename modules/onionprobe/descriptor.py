@@ -74,55 +74,46 @@ class OnionprobeDescriptor:
         try:
             descriptor = self.controller.get_hidden_service_descriptor(pubkey)
 
-        except stem.DescriptorUnavailable as e:
+        except (stem.DescriptorUnavailable, stem.Timeout, stem.ControllerError, ValueError)  as e:
+            inner     = False
+            reachable = 0
+
+        else:
+            # Ensure it's converted to the v3 format
+            #
+            # See https://github.com/torproject/stem/issues/96
+            #     https://stem.torproject.org/api/control.html#stem.control.Controller.get_hidden_service_descriptor
+            #     https://gitlab.torproject.org/legacy/trac/-/issues/25417
+            from stem.descriptor.hidden_service import HiddenServiceDescriptorV3
+            descriptor = HiddenServiceDescriptorV3.from_str(str(descriptor))
+
+            # Decrypt the inner layer
+            inner = descriptor.decrypt(pubkey)
+
+            # Get introduction points
+            # See https://stem.torproject.org/api/descriptor/hidden_service.html#stem.descriptor.hidden_service.IntroductionPointV3
+            #for introduction_point in inner.introduction_points:
+            #    self.log(introduction_point.link_specifiers, 'debug')
+
+            reachable = 1
+            elapsed   = self.elapsed(init_time, True)
+
+            self.metrics['onion_service_descriptor_latency'].labels(
+                        name=endpoint,
+                        address=config['address'],
+                    ).set(elapsed)
+
+        finally:
             self.metrics['onion_service_descriptor_reachable'].labels(
                         name=endpoint,
                         address=config['address'],
-                    ).set(0)
+                    ).set(reachable)
 
-            self.metrics['onion_service_descriptor_fetch_error_counter'].labels(
-                        name=endpoint,
-                        address=config['address'],
-                    ).inc()
+            if inner is False:
+                self.metrics['onion_service_descriptor_fetch_error_counter'].labels(
+                            name=endpoint,
+                            address=config['address'],
+                        ).inc()
 
-            return False
-
-        except stem.Timeout as e:
-            return False
-
-        except stem.ControllerError as e:
-            return False
-
-        except ValueError as e:
-            return False
-
-        # Ensure it's converted to the v3 format
-        #
-        # See https://github.com/torproject/stem/issues/96
-        #     https://stem.torproject.org/api/control.html#stem.control.Controller.get_hidden_service_descriptor
-        #     https://gitlab.torproject.org/legacy/trac/-/issues/25417
-        from stem.descriptor.hidden_service import HiddenServiceDescriptorV3
-        descriptor = HiddenServiceDescriptorV3.from_str(str(descriptor))
-
-        # Decrypt the inner layer
-        inner = descriptor.decrypt(pubkey)
-
-        # Get introduction points
-        # See https://stem.torproject.org/api/descriptor/hidden_service.html#stem.descriptor.hidden_service.IntroductionPointV3
-        #for introduction_point in inner.introduction_points:
-        #    self.log(introduction_point.link_specifiers, 'debug')
-
-        elapsed = self.elapsed(init_time, True)
-
-        self.metrics['onion_service_descriptor_latency'].labels(
-                    name=endpoint,
-                    address=config['address'],
-                ).set(elapsed)
-
-        self.metrics['onion_service_descriptor_reachable'].labels(
-                    name=endpoint,
-                    address=config['address'],
-                ).set(1)
-
-        # Return the inner layer
-        return inner
+            # Return the inner layer or False
+            return inner
