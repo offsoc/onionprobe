@@ -72,7 +72,6 @@
       for `HSFETCH` command and the `HS_DESC` event ([using SETEVENTS](https://stem.torproject.org/tutorials/down_the_rabbit_hole.html)).
       Relevant issues:
 * [ ] Current introduction points (info metric type?).
-* [ ] Current used HSDir.
 * [ ] Response size.
 * [ ] Response content type.
 * [ ] Other relevant response metadata and headers.
