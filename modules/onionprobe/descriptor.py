@@ -85,7 +85,7 @@ class OnionprobeDescriptor:
                  False on error.
         """
 
-        self.log('Getting descriptor for {}...'.format(config['address']))
+        self.log('Trying to get descriptor for {} (attempt {})...'.format(config['address'], attempt))
 
         pubkey    = self.get_pubkey_from_address(config['address'])
         init_time = self.now()
@@ -109,7 +109,7 @@ class OnionprobeDescriptor:
 
             # Try again until max retries is reached
             if attempt <= retries:
-                return self.get_descriptor(endpoint, config, ++attempt)
+                return self.get_descriptor(endpoint, config, attempt + 1)
 
         else:
             # Ensure it's converted to the v3 format

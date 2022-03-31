@@ -60,7 +60,9 @@ interval: 5
 sleep: 5
 
 # Max retries when fetching a descriptor
-descriptor_max_retries: 6
+# By default it is set to the number of HSDirs the client usually fetch minus one
+# See discussion at https://gitlab.torproject.org/tpo/network-health/analysis/-/issues/28
+descriptor_max_retries: 5
 
 # Timeout in seconds when retrieving an Onion Service descriptor
 descriptor_timeout: 30

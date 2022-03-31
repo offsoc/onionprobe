@@ -1,6 +1,6 @@
 circuit_stream_timeout: 60
 control_port: 19051
-descriptor_max_retries: 6
+descriptor_max_retries: 5
 descriptor_timeout: 30
 endpoints:
   '2600: The Hacker Quarterly':

@@ -52,7 +52,7 @@ defaults = {
         'new_circuit'             : False,
         'interval'                : 60,
         'sleep'                   : 60,
-        'descriptor_max_retries'  : 6,
+        'descriptor_max_retries'  : 5,
         'descriptor_timeout'      : 30,
         'http_connect_timeout'    : 30,
         'http_read_timeout'       : 30,
