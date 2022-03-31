@@ -63,7 +63,7 @@ class OnionprobeHTTP:
 
         return url
 
-    def query(self, endpoint, config, path):
+    def query(self, endpoint, config, path, attempt = 1):
         """
         Fetches endpoint from URL
 
@@ -113,7 +113,7 @@ class OnionprobeHTTP:
                 )
 
         try:
-            self.log('Querying {}...'.format(url))
+            self.log('Trying to connect to {} (attempt {})...'.format(url, attempt))
 
             # Fetch results and calculate the elapsed time
             result  = requests.get(url, proxies=proxies, timeout=timeout)
@@ -182,6 +182,13 @@ class OnionprobeHTTP:
         finally:
             reachable = 0 if result is False else 1
 
+            if result is False:
+                retries   = self.get_config('http_connect_max_retries')
+
+                # Try again until max retries is reached
+                if attempt <= retries:
+                    return self.query(endpoint, config, path, attempt + 1)
+
             # Register reachability on metrics
             self.set_metric('onion_service_reachable', reachable, labels)
 
@@ -194,5 +201,9 @@ class OnionprobeHTTP:
 
                 # Count errors
                 self.inc_metric('onion_service_fetch_error_counter', 1, labels)
+
+            # Register the number of attempts on metrics
+            labels['reachable'] = reachable
+            self.set_metric('onion_service_connection_attempts', attempt, labels)
 
             return result

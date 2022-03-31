@@ -89,6 +89,12 @@ class OnionprobeMetrics:
                     ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
                 ),
 
+            'onion_service_connection_attempts': Gauge(
+                    'onion_service_connection_attempts',
+                    'Register the number of attempts when trying to connect to an Onion Service',
+                    ['name', 'address', 'protocol', 'port', 'path', 'reachable', 'updated_at']
+                ),
+
             'onion_service_status_code': Gauge(
                     'onion_service_status_code',
                     'Register Onion Service connection HTTP status code',

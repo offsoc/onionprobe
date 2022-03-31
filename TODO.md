@@ -50,7 +50,7 @@
       This could help answering the following questions:
     * [When an onion service lookup has failed at the first k HSDirs we tried, what are the chances it will still succeed?](https://gitlab.torproject.org/tpo/network-health/analysis/-/issues/28)
     * [What's the average number of hsdir fetches before we get the hsdesc?](https://gitlab.torproject.org/tpo/core/tor/-/issues/13208)
-* [ ] Max retries before throwing an error when querying the endpoint.
+* [x] Max retries before throwing an error when querying the endpoint.
 
 ## Enhancements
 

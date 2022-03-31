@@ -70,6 +70,9 @@ descriptor_timeout: 30
 # Connection timeout for HTTP/HTTPS requests
 http_connect_timeout: 30
 
+# Max retries when doing a HTTP/HTTPS connection to an Onion Service
+http_connect_max_retries: 3
+
 # Read timeout for HTTP/HTTPS requests
 http_read_timeout: 30
 

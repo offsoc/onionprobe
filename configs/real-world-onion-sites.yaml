@@ -837,6 +837,7 @@ endpoints:
     - path: /
     port: 443
     protocol: https
+http_connect_max_retries: 3
 http_connect_timeout: 30
 http_read_timeout: 30
 interval: 5

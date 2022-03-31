@@ -55,6 +55,7 @@ defaults = {
         'descriptor_max_retries'  : 5,
         'descriptor_timeout'      : 30,
         'http_connect_timeout'    : 30,
+        'http_connect_max_retries': 3,
         'http_read_timeout'       : 30,
         'circuit_stream_timeout'  : 60,
         'endpoints'               : {
