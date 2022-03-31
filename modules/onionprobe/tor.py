@@ -116,6 +116,19 @@ class OnionprobeTor:
 
         return True
 
+    def initialize_listeners(self):
+        """
+        Initialize Tor event listeners
+        """
+
+        # Stream management
+        # See https://stem.torproject.org/tutorials/to_russia_with_love.html
+        if self.get_config('new_circuit'):
+            self.controller.set_conf('__LeaveStreamsUnattached', '1')
+            self.controller.add_event_listener(self.new_circuit, stem.control.EventType.STREAM)
+
+            self.circuit_id = None
+
     #
     # Tor related logic
     #

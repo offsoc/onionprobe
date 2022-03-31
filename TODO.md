@@ -54,7 +54,6 @@
     * [Write a hidden service hsdir health measurer](https://gitlab.torproject.org/tpo/network-health/metrics/analysis/-/issues/13209)
     * [What's the average number of hsdir fetches before we get the hsdesc?](https://gitlab.torproject.org/tpo/core/tor/-/issues/13208)
 * [ ] Max retries before throwing an error for getting descriptors and querying the endpoint.
-* [ ] Non-http endpoints (regular TCP).
 
 ## Enhancements
 
@@ -120,6 +119,7 @@
       like in [this example](https://stem.torproject.org/tutorials/to_russia_with_love.html#using-pycurl).
 * [x] Script that compiles configuration from [real-world-onion-sites](https://github.com/alecmuffett/real-world-onion-sites) repository.
 * [x] Script that compiles configuration from [the SecureDrop API](https://securedrop.org/api/v1/directory/).
+* [ ] Non-http endpoints (regular TCP).
 * [ ] Support for [Client Authorization](https://community.torproject.org/onion-services/advanced/client-auth/).
 * [ ] Watch for config file changes (hot reload).
 * [ ] Fetch config from external application, like `securedrop.py` or `real-world-onion-sites.py`.
