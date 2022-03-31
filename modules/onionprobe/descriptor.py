@@ -50,6 +50,26 @@ class OnionprobeDescriptor:
 
         return pubkey
 
+    def get_endpoint_by_pubkey(self, pubkey):
+        """
+        Get an endpoint configuration given an Onion Service pubkey.
+
+        :type  pubkey: str
+        :param pubkey: Onion Service pubkey
+
+        :rtype: tuple or False
+        :return: Endpoint name and configuration if a match is found.
+                 False otherwise.
+        """
+
+        endpoints = self.get_config('endpoints')
+
+        for name in endpoints:
+            if self.get_pubkey_from_address(endpoints[name]['address']) == pubkey:
+                return (name, endpoints[name])
+
+        return False
+
     def get_descriptor(self, endpoint, config):
         """
         Get Onion Service descriptor from a given endpoint
@@ -70,7 +90,6 @@ class OnionprobeDescriptor:
         pubkey    = self.get_pubkey_from_address(config['address'])
         init_time = self.now()
         timeout   = self.get_config('descriptor_timeout')
-        reachable = 0
 
         # Metrics labels
         labels = {
@@ -106,19 +125,52 @@ class OnionprobeDescriptor:
                 self.set_metric('onion_service_introduction_points_number',
                                 len(inner.introduction_points), labels)
 
-            reachable = 1
-            elapsed   = self.elapsed(init_time, True)
+            elapsed = self.elapsed(init_time, True)
 
             self.set_metric('onion_service_descriptor_latency',
                             elapsed, labels)
 
         finally:
-            self.set_metric('onion_service_descriptor_reachable',
-                            reachable, labels)
-
             if inner is False:
                 self.inc_metric('onion_service_descriptor_fetch_error_counter',
                                 1, labels)
 
             # Return the inner layer or False
             return inner
+
+    def hsdesc_event(
+            self,
+            event,
+            ):
+        """
+        Process HS_DESC events.
+
+        Sets the onion_service_descriptor_reachable metric.
+
+        See https://gitlab.torproject.org/tpo/core/torspec/-/blob/main/control-spec.txt
+
+        :type  event : stem.response.events.HSDescEvent
+        :param stream: HS_DESC event
+        """
+
+        if event.action not in [ 'RECEIVED', 'FAILED' ]:
+            return
+
+        # Get the endpoint configuration
+        (name, endpoint) = self.get_endpoint_by_pubkey(event.address)
+
+        # Metrics labels
+        labels = {
+                'name'   : name,
+                'address': event.address + '.onion',
+                'hsdir'  : event.directory,
+                'reason' : '',
+                }
+
+        if event.action == 'RECEIVED':
+            self.set_metric('onion_service_descriptor_reachable', 1, labels)
+
+        elif event.action == 'FAILED':
+            labels['reason'] = event.reason
+
+            self.set_metric('onion_service_descriptor_reachable', 0, labels)

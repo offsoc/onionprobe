@@ -104,7 +104,7 @@ class OnionprobeMetrics:
             'onion_service_descriptor_reachable': Gauge(
                     'onion_service_descriptor_reachable',
                     'Register if the Onion Service descriptor is available: value is 1 for reachability and 0 otherwise',
-                    ['name', 'address', 'updated_at']
+                    ['name', 'address', 'hsdir', 'reason', 'updated_at']
                 ),
 
             'onion_service_introduction_points_number': Gauge(

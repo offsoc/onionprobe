@@ -129,6 +129,9 @@ class OnionprobeTor:
 
             self.circuit_id = None
 
+        # Add listener for Onion Services descriptors
+        self.controller.add_event_listener(self.hsdesc_event, stem.control.EventType.HS_DESC)
+
     #
     # Tor related logic
     #
