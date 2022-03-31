@@ -747,6 +747,12 @@ endpoints:
     - path: /en/security/network-security/tor
     port: 80
     protocol: http
+  Shen's Essays:
+    address: shen.hongio267dx4o2ofkn4ddsztu4ok2vq4euc7sxumbi7kcfd64ije62ad.onion
+    paths:
+    - path: /
+    port: 443
+    protocol: https
   Systemli Home:
     address: 7sk2kov2xwx6cbc32phynrifegg6pklmzs7luwcggtzrnlsolxxuyfyd.onion
     paths:
