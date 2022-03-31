@@ -107,6 +107,12 @@ class OnionprobeMetrics:
                     ['name', 'address', 'hsdir', 'reason', 'updated_at']
                 ),
 
+            'onion_service_descriptor_fetch_attempts': Gauge(
+                    'onion_service_descriptor_fetch_attempts',
+                    'Register the number of attempts required when trying to get an Onion Service descriptor',
+                    ['name', 'address', 'reachable', 'updated_at']
+                ),
+
             'onion_service_introduction_points_number': Gauge(
                     'onion_service_introduction_points_number',
                     'Register the nummber of introduction points in the Onion Service descriptor',

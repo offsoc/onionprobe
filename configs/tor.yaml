@@ -59,6 +59,9 @@ interval: 5
 # Max random interval in seconds to wait between each round of tests
 sleep: 5
 
+# Max retries when fetching a descriptor
+descriptor_max_retries: 3
+
 # Timeout in seconds when retrieving an Onion Service descriptor
 descriptor_timeout: 30
 

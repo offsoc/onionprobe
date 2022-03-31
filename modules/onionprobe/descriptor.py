@@ -70,7 +70,7 @@ class OnionprobeDescriptor:
 
         return False
 
-    def get_descriptor(self, endpoint, config):
+    def get_descriptor(self, endpoint, config, attempt = 1):
         """
         Get Onion Service descriptor from a given endpoint
 
@@ -90,6 +90,7 @@ class OnionprobeDescriptor:
         pubkey    = self.get_pubkey_from_address(config['address'])
         init_time = self.now()
         timeout   = self.get_config('descriptor_timeout')
+        reachable = 1
 
         # Metrics labels
         labels = {
@@ -102,7 +103,13 @@ class OnionprobeDescriptor:
             descriptor = self.controller.get_hidden_service_descriptor(pubkey, timeout=timeout)
 
         except (stem.DescriptorUnavailable, stem.Timeout, stem.ControllerError, ValueError)  as e:
-            inner = False
+            reachable = 0
+            inner     = False
+            retries   = self.get_config('descriptor_max_retries')
+
+            # Try again until max retries is reached
+            if attempt <= retries:
+                return self.get_descriptor(endpoint, config, ++attempt)
 
         else:
             # Ensure it's converted to the v3 format
@@ -134,6 +141,12 @@ class OnionprobeDescriptor:
             if inner is False:
                 self.inc_metric('onion_service_descriptor_fetch_error_counter',
                                 1, labels)
+
+            labels['reachable'] = reachable
+
+            # Register the number of fetch attempts
+            self.set_metric('onion_service_descriptor_fetch_attempts',
+                            attempt, labels)
 
             # Return the inner layer or False
             return inner
