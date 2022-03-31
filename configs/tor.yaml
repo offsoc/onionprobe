@@ -60,7 +60,7 @@ interval: 5
 sleep: 5
 
 # Max retries when fetching a descriptor
-descriptor_max_retries: 3
+descriptor_max_retries: 6
 
 # Timeout in seconds when retrieving an Onion Service descriptor
 descriptor_timeout: 30
