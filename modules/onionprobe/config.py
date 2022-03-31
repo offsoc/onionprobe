@@ -55,6 +55,7 @@ defaults = {
         'descriptor_timeout'      : 30,
         'http_connect_timeout'    : 30,
         'http_read_timeout'       : 30,
+        'circuit_stream_timeout'  : 60,
         'endpoints'               : {
             'www.torproject.org': {
                 'address' : '2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion',

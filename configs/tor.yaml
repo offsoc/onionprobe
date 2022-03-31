@@ -71,6 +71,10 @@ http_read_timeout: 30
 # Whether to get a new circuit for every stream
 new_circuit: false
 
+# Sets how many seconds until a stream is detached from a circuit and try a new
+# circuit (CircuitStreamTimeout Tor daemon config)
+circuit_stream_timeout: 60
+
 # Using addresses from https://onion.torproject.org
 endpoints:
   2019.www.torproject.org:

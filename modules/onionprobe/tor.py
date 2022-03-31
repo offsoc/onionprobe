@@ -186,6 +186,7 @@ class OnionprobeTor:
                         'SocksPort'            : tor_address + ':' + str(self.get_config('socks_port')),
                         'ControlPort'          : tor_address + ':' + str(self.get_config('control_port')),
                         'HashedControlPassword': self.hash_password(control_password),
+                        'CircuitStreamTimeout' : str(self.get_config('circuit_stream_timeout')),
 
                         #'Log'                 : [
                         #    'NOTICE stdout',
