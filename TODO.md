@@ -46,20 +46,16 @@
 * [x] Set timeout at `Requests`.
 * [x] Set `CircuitStreamTimeout` in the built-in Tor daemon.
 * [x] HTTPS certificate validation check/exception.
-* [ ] Try to get the descriptor from multiple (if not all) HSDirs where it
-      should be available. Check the [control-spec](https://gitlab.torproject.org/tpo/core/torspec/-/blob/main/control-spec.txt)
-      for `HSFETCH` command and the `HS_DESC` event ([using SETEVENTS](https://stem.torproject.org/tutorials/down_the_rabbit_hole.html)).
-      Relevant issues:
-    * [When an onion service lookup has failed at the first k HSDirs we tried, what are the chances it will still succeed?](https://gitlab.torproject.org/tpo/network-health/analysis/-/issues/28)
-    * [Write a hidden service hsdir health measurer](https://gitlab.torproject.org/tpo/network-health/metrics/analysis/-/issues/13209)
-    * [What's the average number of hsdir fetches before we get the hsdesc?](https://gitlab.torproject.org/tpo/core/tor/-/issues/13208)
 * [ ] Max retries before throwing an error for getting descriptors and querying the endpoint.
+      This could help answering the following questions:
+      * [When an onion service lookup has failed at the first k HSDirs we tried, what are the chances it will still succeed?](https://gitlab.torproject.org/tpo/network-health/analysis/-/issues/28)
+      * [What's the average number of hsdir fetches before we get the hsdesc?](https://gitlab.torproject.org/tpo/core/tor/-/issues/13208)
 
 ## Enhancements
 
 * [x] Better logging.
 * [x] Better exception handling.
-* [ ] Better reporting.
+* [ ] Better reporting/outputs.
 * [ ] Additional command line options.
 * [ ] Daemon mode.
 
@@ -70,6 +66,10 @@
 * [x] Metric units in the description.
 * [x] Number of introduction points.
 * [x] Timestamp label.
+* [x] Register HSDir used to fetch the descriptor.
+      Check the [control-spec](https://gitlab.torproject.org/tpo/core/torspec/-/blob/main/control-spec.txt)
+      for `HSFETCH` command and the `HS_DESC` event ([using SETEVENTS](https://stem.torproject.org/tutorials/down_the_rabbit_hole.html)).
+      Relevant issues:
 * [ ] Current introduction points (info metric type?).
 * [ ] Current used HSDir.
 * [ ] Response size.
@@ -121,6 +121,7 @@
 * [x] Script that compiles configuration from [the SecureDrop API](https://securedrop.org/api/v1/directory/).
 * [ ] Non-http endpoints (regular TCP).
 * [ ] Support for [Client Authorization](https://community.torproject.org/onion-services/advanced/client-auth/).
+* [ ] Try to get the descriptor from multiple (if not all) HSDirs where it should be available.
 * [ ] Watch for config file changes (hot reload).
 * [ ] Fetch config from external application, like `securedrop.py` or `real-world-onion-sites.py`.
 * [ ] Architecture should be extensible to allow for different reporting options (stdout, Prometheus etc).

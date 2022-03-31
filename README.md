@@ -114,3 +114,9 @@ Related software and libraries with useful routines:
 * [Stem](https://stem.torproject.org/)
 * [txtorcon](https://txtorcon.readthedocs.io/en/latest/)
 * [Onionbalance](https://onionbalance.readthedocs.io/en/latest/)
+* [hs-health](https://gitlab.com/hs-health/hs-health)
+
+Relevant issues:
+
+* [Write a hidden service hsdir health measurer](https://gitlab.torproject.org/tpo/network-health/metrics/analysis/-/issues/13209)
+* [Write tool for onion service health assessment (#28841)](https://gitlab.torproject.org/tpo/core/tor/-/issues/28841)
