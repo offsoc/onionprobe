@@ -1,3 +1,9 @@
+---
+#
+# Test configuration for Onionprobe.
+# Content may vary and endpoints selected usually have descriptor or connection errors.
+#
+
 circuit_stream_timeout: 60
 control_port: 19051
 descriptor_max_retries: 5
