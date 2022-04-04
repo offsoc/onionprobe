@@ -18,7 +18,171 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-from .config import onionprobe_version
+from .config           import onionprobe_version
+from prometheus_client import Counter, Gauge, Info, Enum
+
+# Holds all metrics
+metrics = {
+    #
+    # Metametrics: data about the Onionprobe instance itself
+    #
+
+    'onionprobe_version': Info(
+        'onionprobe_version',
+        'Onionprobe version information',
+        ),
+
+    'onionprobe_state': Enum(
+        'onionprobe_state',
+        'Onionprobe latest state',
+        states=['starting', 'probing', 'sleeping', 'stopping']
+        ),
+
+    #
+    # Probing gauges: the basic data
+    #
+
+    'onionprobe_wait': Gauge(
+            'onionprobe_wait',
+            'How long onionprobe waited between two probes',
+        ),
+
+    'onion_service_latency': Gauge(
+            'onion_service_latency',
+            'Register Onion Service connection latency in seconds',
+            ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
+        ),
+
+    'onion_service_reachable': Gauge(
+            'onion_service_reachable',
+            'Register if the Onion Service is reachable: value is 1 for reachability and 0 otherwise',
+            ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
+        ),
+
+    'onion_service_connection_attempts': Gauge(
+            'onion_service_connection_attempts',
+            'Register the number of attempts when trying to connect to an Onion Service',
+            ['name', 'address', 'protocol', 'port', 'path', 'reachable', 'updated_at']
+        ),
+
+    'onion_service_status_code': Gauge(
+            'onion_service_status_code',
+            'Register Onion Service connection HTTP status code',
+            ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
+        ),
+
+    'onion_service_descriptor_latency': Gauge(
+            'onion_service_descriptor_latency',
+            'Register Onion Service latency in seconds to get the descriptor',
+            ['name', 'address', 'updated_at']
+        ),
+
+    'onion_service_descriptor_reachable': Gauge(
+            'onion_service_descriptor_reachable',
+            'Register if the Onion Service descriptor is available: value is 1 for reachability and 0 otherwise',
+            ['name', 'address', 'hsdir', 'reason', 'updated_at']
+        ),
+
+    'onion_service_descriptor_fetch_attempts': Gauge(
+            'onion_service_descriptor_fetch_attempts',
+            'Register the number of attempts required when trying to get an Onion Service descriptor',
+            ['name', 'address', 'reachable', 'updated_at']
+        ),
+
+    'onion_service_introduction_points_number': Gauge(
+            'onion_service_introduction_points_number',
+            'Register the nummber of introduction points in the Onion Service descriptor',
+            ['name', 'address', 'updated_at']
+        ),
+
+    'onion_service_match_pattern_matched': Gauge(
+            'onion_service_pattern_matched',
+            'Register a regular expression pattern is matched when connection to the Onion Service: value is 1 for matched pattern and 0 otherwise',
+            ['name', 'address', 'protocol', 'port', 'path', 'pattern', 'updated_at']
+        ),
+
+    'onion_service_valid_certificate': Gauge(
+            'onion_service_valid_certificate',
+            'Register if the Onion Service HTTPS certificate is valid: value is 1 for valid and 0 otherwise, but only for sites reachable using HTTPS',
+            ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
+        ),
+
+    #
+    # Probing counters
+    #
+
+    'onion_service_fetch_error_counter': Counter(
+            'onion_service_fetch_error_counter',
+            'Counts errors when fetching an Onion Service',
+            ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
+        ),
+
+    'onion_service_descriptor_fetch_error_counter': Counter(
+            'onion_service_descriptor_fetch_error_counter',
+            'Counts errors when fetching an Onion Service descriptor',
+            ['name', 'address', 'updated_at']
+        ),
+
+    #
+    # Requests exception counter
+    #
+
+    # Counter for requests.RequestException
+    'onion_service_request_exception': Counter(
+            'onion_service_request_exception',
+            'Counts Onion Service general exception errors',
+            ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
+        ),
+
+    # Counter for requests.ConnectionError
+    'onion_service_connection_error': Counter(
+            'onion_service_connection_error',
+            'Counts Onion Service connection errors',
+            ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
+        ),
+
+    # Counter for requests.HTTPError
+    'onion_service_http_error': Counter(
+            'onion_service_http_error',
+            'Counts Onion Service HTTP errors',
+            ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
+        ),
+
+    # Counter for requests.TooManyRedirects
+    'onion_service_too_many_redirects': Counter(
+            'onion_service_too_many_redirects',
+            'Counts Onion Service too many redirects errors',
+            ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
+        ),
+
+    # Counter for requests.ConnectionTimeout
+    'onion_service_connection_timeout': Counter(
+            'onion_service_connection_timeout',
+            'Counts Onion Service connection timeouts',
+            ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
+        ),
+
+    # Counter for requests.ReadTimeout
+    'onion_service_read_timeout': Counter(
+            'onion_service_read_timeout',
+            'Counts Onion Service read timeouts',
+            ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
+        ),
+
+    # Counter for requests.Timeout
+    'onion_service_timeout': Counter(
+            'onion_service_timeout',
+            'Counts Onion Service timeouts',
+            ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
+        ),
+
+    # Counter for requests.exceptions.SSLError
+    'onion_service_certificate_error': Counter(
+            'onion_service_certificate_error',
+            'Counts HTTPS certificate validation errors',
+            ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
+        ),
+    }
 
 class OnionprobeMetrics:
     """
@@ -48,171 +212,8 @@ class OnionprobeMetrics:
         metric logic.
         """
 
-        # Import Prometheus data types
-        from prometheus_client import Counter, Gauge, Info, Enum
-
         # The metrics object
-        self.metrics = {
-            #
-            # Metametrics: data about the Onionprobe instance itself
-            #
-
-            'onionprobe_version': Info(
-                'onionprobe_version',
-                'Onionprobe version info',
-                ),
-
-            'onionprobe_state': Enum(
-                'onionprobe_state',
-                'Onionprobe latest state',
-                states=['starting', 'probing', 'sleeping', 'stopping']
-                ),
-
-            #
-            # Probing gauges: the basic data
-            #
-
-            'onionprobe_wait': Gauge(
-                    'onionprobe_wait',
-                    'How long onionprobe waited between two probes',
-                ),
-
-            'onion_service_latency': Gauge(
-                    'onion_service_latency',
-                    'Register Onion Service connection latency in seconds',
-                    ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
-                ),
-
-            'onion_service_reachable': Gauge(
-                    'onion_service_reachable',
-                    'Register if the Onion Service is reachable: value is 1 for reachability and 0 otherwise',
-                    ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
-                ),
-
-            'onion_service_connection_attempts': Gauge(
-                    'onion_service_connection_attempts',
-                    'Register the number of attempts when trying to connect to an Onion Service',
-                    ['name', 'address', 'protocol', 'port', 'path', 'reachable', 'updated_at']
-                ),
-
-            'onion_service_status_code': Gauge(
-                    'onion_service_status_code',
-                    'Register Onion Service connection HTTP status code',
-                    ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
-                ),
-
-            'onion_service_descriptor_latency': Gauge(
-                    'onion_service_descriptor_latency',
-                    'Register Onion Service latency in seconds to get the descriptor',
-                    ['name', 'address', 'updated_at']
-                ),
-
-            'onion_service_descriptor_reachable': Gauge(
-                    'onion_service_descriptor_reachable',
-                    'Register if the Onion Service descriptor is available: value is 1 for reachability and 0 otherwise',
-                    ['name', 'address', 'hsdir', 'reason', 'updated_at']
-                ),
-
-            'onion_service_descriptor_fetch_attempts': Gauge(
-                    'onion_service_descriptor_fetch_attempts',
-                    'Register the number of attempts required when trying to get an Onion Service descriptor',
-                    ['name', 'address', 'reachable', 'updated_at']
-                ),
-
-            'onion_service_introduction_points_number': Gauge(
-                    'onion_service_introduction_points_number',
-                    'Register the nummber of introduction points in the Onion Service descriptor',
-                    ['name', 'address', 'updated_at']
-                ),
-
-            'onion_service_match_pattern_matched': Gauge(
-                    'onion_service_pattern_matched',
-                    'Register a regular expression pattern is matched when connection to the Onion Service: value is 1 for matched pattern and 0 otherwise',
-                    ['name', 'address', 'protocol', 'port', 'path', 'pattern', 'updated_at']
-                ),
-
-            'onion_service_valid_certificate': Gauge(
-                    'onion_service_valid_certificate',
-                    'Register if the Onion Service HTTPS certificate is valid: value is 1 for valid and 0 otherwise, but only for sites reachable using HTTPS',
-                    ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
-                ),
-
-            #
-            # Probing counters
-            #
-
-            'onion_service_fetch_error_counter': Counter(
-                    'onion_service_fetch_error_counter',
-                    'Counts errors when fetching an Onion Service',
-                    ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
-                ),
-
-            'onion_service_descriptor_fetch_error_counter': Counter(
-                    'onion_service_descriptor_fetch_error_counter',
-                    'Counts errors when fetching an Onion Service descriptor',
-                    ['name', 'address', 'updated_at']
-                ),
-
-            #
-            # Requests exception counter
-            #
-
-            # Counter for requests.RequestException
-            'onion_service_request_exception': Counter(
-                    'onion_service_request_exception',
-                    'Counts Onion Service general exception errors',
-                    ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
-                ),
-
-            # Counter for requests.ConnectionError
-            'onion_service_connection_error': Counter(
-                    'onion_service_connection_error',
-                    'Counts Onion Service connection errors',
-                    ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
-                ),
-
-            # Counter for requests.HTTPError
-            'onion_service_http_error': Counter(
-                    'onion_service_http_error',
-                    'Counts Onion Service HTTP errors',
-                    ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
-                ),
-
-            # Counter for requests.TooManyRedirects
-            'onion_service_too_many_redirects': Counter(
-                    'onion_service_too_many_redirects',
-                    'Counts Onion Service too many redirects errors',
-                    ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
-                ),
-
-            # Counter for requests.ConnectionTimeout
-            'onion_service_connection_timeout': Counter(
-                    'onion_service_connection_timeout',
-                    'Counts Onion Service connection timeouts',
-                    ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
-                ),
-
-            # Counter for requests.ReadTimeout
-            'onion_service_read_timeout': Counter(
-                    'onion_service_read_timeout',
-                    'Counts Onion Service read timeouts',
-                    ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
-                ),
-
-            # Counter for requests.Timeout
-            'onion_service_timeout': Counter(
-                    'onion_service_timeout',
-                    'Counts Onion Service timeouts',
-                    ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
-                ),
-
-            # Counter for requests.exceptions.SSLError
-            'onion_service_certificate_error': Counter(
-                    'onion_service_certificate_error',
-                    'Counts HTTPS certificate validation errors',
-                    ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
-                ),
-            }
+        self.metrics = metrics
 
         # Set version
         self.metrics['onionprobe_version'].info({

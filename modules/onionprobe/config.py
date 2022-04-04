@@ -85,6 +85,16 @@ def cmdline():
       onionprobe -c config.yaml
     """
 
+    epilog += """\nAvailable metrics:
+    """
+
+    from .metrics import metrics
+
+    for metric in metrics:
+        item = metrics[metric].describe()[0]
+
+        epilog += "\n      {}: {}".format(item.name, item.documentation)
+
     description = 'Test and monitor onion services'
     parser      = argparse.ArgumentParser(
                     description=description,
