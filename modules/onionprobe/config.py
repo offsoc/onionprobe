@@ -93,7 +93,7 @@ def cmdline():
     for metric in metrics:
         item = metrics[metric].describe()[0]
 
-        epilog += "\n      {}: {}".format(item.name, item.documentation)
+        epilog += "\n  {}:\n        {}".format(item.name, item.documentation)
 
     description = 'Test and monitor onion services'
     parser      = argparse.ArgumentParser(
