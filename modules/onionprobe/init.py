@@ -67,6 +67,9 @@ class OnionprobeInit:
         else:
             self.config = {}
 
+        #if args.endpoints is not None:
+        #    pass
+
     def initialize(self):
         """
         Onionprobe initialization procedures

@@ -82,8 +82,9 @@ def cmdline():
 
     epilog = """Examples:
 
-      onionprobe -c config.yaml
+      onionprobe -c configs/tor.yaml
     """
+    # onionprobe -e http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion
 
     epilog += """\nAvailable metrics:
     """
@@ -103,6 +104,8 @@ def cmdline():
                   )
 
     parser.add_argument('-c', '--config', help='Read options from configuration file')
+
+    #parser.add_argument('-e', '--endpoints', nargs='*', help='Add endpoints to the test list', metavar="onion-address1")
 
     args = parser.parse_args()
 
