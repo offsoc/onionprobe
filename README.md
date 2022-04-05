@@ -45,7 +45,7 @@ with:
 Full usage and available metrics is provided passing the `-h` flag:
 
     ./onionprobe -h
-    usage: onionprobe [-h] [-c CONFIG]
+    usage: onionprobe [-h] [-c CONFIG] [-e [onion-address1 ...]]
 
     Test and monitor onion services
 
@@ -53,10 +53,13 @@ Full usage and available metrics is provided passing the `-h` flag:
       -h, --help            show this help message and exit
       -c CONFIG, --config CONFIG
                             Read options from configuration file
+      -e [onion-address1 ...], --endpoints [onion-address1 ...]
+                            Add endpoints to the test list
 
     Examples:
 
-          onionprobe -c config.yaml
+          onionprobe -c configs/tor.yaml
+          onionprobe -e http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion
 
     Available metrics:
 
@@ -65,7 +68,7 @@ Full usage and available metrics is provided passing the `-h` flag:
       onionprobe_state:
             Onionprobe latest state
       onionprobe_wait:
-            How long onionprobe waited between two probes
+            Records how long Onionprobe waited between two probes
       onion_service_latency:
             Register Onion Service connection latency in seconds
       onion_service_reachable:
@@ -81,11 +84,11 @@ Full usage and available metrics is provided passing the `-h` flag:
       onion_service_descriptor_fetch_attempts:
             Register the number of attempts required when trying to get an Onion Service descriptor
       onion_service_introduction_points_number:
-            Register the nummber of introduction points in the Onion Service descriptor
+            Register the number of introduction points in the Onion Service descriptor
       onion_service_pattern_matched:
-            Register a regular expression pattern is matched when connection to the Onion Service: value is 1 for matched pattern and 0 otherwise
+            Register whether a regular expression pattern is matched when connection to the Onion Service: value is 1 for matched pattern and 0 otherwise
       onion_service_valid_certificate:
-            Register if the Onion Service HTTPS certificate is valid: value is 1 for valid and 0 otherwise, but only for sites reachable using HTTPS
+            Register whether the Onion Service HTTPS certificate is valid: value is 1 for valid and 0 otherwise, but only for sites reachable using HTTPS
       onion_service_fetch_error_counter:
             Counts errors when fetching an Onion Service
       onion_service_descriptor_fetch_error_counter:

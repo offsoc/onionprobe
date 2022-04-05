@@ -46,6 +46,8 @@ class OnionprobeInit:
 
         Setup instance configuration.
 
+        Handles command-line parameters.
+
         :type  args: dict
         :param args: Instance arguments.
         """
@@ -67,8 +69,35 @@ class OnionprobeInit:
         else:
             self.config = {}
 
-        #if args.endpoints is not None:
-        #    pass
+        # Endpoints argument handling
+        if args.endpoints is not None:
+            import urllib.parse
+
+            if 'endpoints' not in self.config:
+                self.config['endpoints'] = {}
+
+            for endpoint in args.endpoints:
+                try:
+                    url = urllib.parse.urlparse(endpoint)
+
+                    # Check if only the onion address was provided
+                    if url.path == endpoint:
+                        url = urllib.parse.urlparse('http://' + endpoint)
+
+                    self.config['endpoints'][endpoint] = {
+                        'address' : url.netloc,
+                        'protocol': url.scheme,
+                        'port'    : url.port if url.port is not None else '80',
+                        'paths'   : [{
+                                        'path': url.path if url.path != '' else '/',
+                                },
+                            ],
+                        }
+
+                except ValueError as e:
+                    self.log('Invalid URL {}, skipping.'.format(endpoint))
+
+                    continue
 
     def initialize(self):
         """
