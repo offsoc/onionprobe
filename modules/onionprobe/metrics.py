@@ -44,7 +44,7 @@ metrics = {
 
     'onionprobe_wait': Gauge(
             'onionprobe_wait',
-            'How long onionprobe waited between two probes',
+            'Records how long Onionprobe waited between two probes',
         ),
 
     'onion_service_latency': Gauge(
@@ -91,19 +91,19 @@ metrics = {
 
     'onion_service_introduction_points_number': Gauge(
             'onion_service_introduction_points_number',
-            'Register the nummber of introduction points in the Onion Service descriptor',
+            'Register the number of introduction points in the Onion Service descriptor',
             ['name', 'address', 'updated_at']
         ),
 
     'onion_service_match_pattern_matched': Gauge(
             'onion_service_pattern_matched',
-            'Register a regular expression pattern is matched when connection to the Onion Service: value is 1 for matched pattern and 0 otherwise',
+            'Register whether a regular expression pattern is matched when connection to the Onion Service: value is 1 for matched pattern and 0 otherwise',
             ['name', 'address', 'protocol', 'port', 'path', 'pattern', 'updated_at']
         ),
 
     'onion_service_valid_certificate': Gauge(
             'onion_service_valid_certificate',
-            'Register if the Onion Service HTTPS certificate is valid: value is 1 for valid and 0 otherwise, but only for sites reachable using HTTPS',
+            'Register whether the Onion Service HTTPS certificate is valid: value is 1 for valid and 0 otherwise, but only for sites reachable using HTTPS',
             ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
         ),
 
