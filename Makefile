@@ -36,3 +36,16 @@ log-containers:
 configs:
 	@./modules/real-world-onion-sites.py
 	@./modules/securedrop.py
+
+#
+# Packaging
+#
+
+build-package:
+	@python3 -m build
+
+upload-test-package:
+	@twine upload --repository testpypi dist/*
+
+upload-package:
+	@twine upload dist/*

@@ -72,3 +72,12 @@ def run(args):
         probe.log(e, 'error')
         probe.close()
         exit(1)
+
+def run_from_cmdline():
+    """
+    Run Onionprobe getting arguments from the command line.
+    """
+
+    from .config import cmdline
+
+    run(cmdline())
