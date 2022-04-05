@@ -58,6 +58,7 @@
 * [x] Better exception handling.
 * [ ] Better reporting/outputs.
 * [ ] Additional command line options.
+* [ ] Support for URL fragments.
 * [ ] Daemon mode.
 
 ## Metrics
