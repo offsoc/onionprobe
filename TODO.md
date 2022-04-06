@@ -97,8 +97,8 @@
 
 ## Packaging
 
+* [x] Python packaging (PyPI, `requirements.txt` or other format).
 * [ ] Distro packaging (Debian, ArchLinux, rpm).
-* [ ] Python packaging (`requirements.txt` or other format).
 
 ## Documentation
 
