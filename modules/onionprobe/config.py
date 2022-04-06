@@ -149,7 +149,7 @@ class OnionprobeConfig:
 class OnionprobeConfigCompiler:
     """Base class to build Onionprobe configs from external sources of Onion Services"""
 
-    def __init__(self, databases):
+    def __init__(self, databases, template_config = None, output_path = None):
         """
         Constructor for the OnionprobeConfigCompiler class.
 
@@ -160,17 +160,28 @@ class OnionprobeConfigCompiler:
         :type  databases: dict
         :param databases: Dictionary of data sources to fetch .onion sites.
                           Format is { 'database_name': 'database_url' }
+
+        :type  template_config: str
+        :param template_config: Configuration file path to be used as template
+
+        :type  output_path: str
+        :param output_path: Output folder where configs are written
         """
 
         # Save the databases of Onion Services
         self.databases = databases
 
         # Determine the default configuration file
-        default_config = os.path.join(basepath, 'configs', 'tor.yaml')
+        if template_config is None:
+            template_config = os.path.join(basepath, 'configs', 'tor.yaml')
+
+        # Determine the output path
+        if output_path is None:
+            self.output_path = os.path.join(basepath, 'configs')
 
         # Load the default configuration file as a template
-        if os.path.exists(default_config):
-            with open(default_config, 'r') as config:
+        if os.path.exists(template_config):
+            with open(template_config, 'r') as config:
                 self.config = yaml.load(config, yaml.CLoader)
 
     def build_endpoints_config(self, database):
@@ -223,7 +234,7 @@ class OnionprobeConfigCompiler:
                 config['endpoints'] = endpoints
 
                 # Save
-                with open(os.path.join(basepath, 'configs', database + '.yaml'), 'w') as output:
+                with open(os.path.join(self.output_path, database + '.yaml'), 'w') as output:
                     output.write(yaml.dump(config))
 
             except Exception as e:
