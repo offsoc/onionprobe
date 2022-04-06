@@ -31,7 +31,7 @@ except ImportError:
 # The Onionprobe version string
 # Uses Semantic Versioning 2.0.0
 # See https://semver.org
-onionprobe_version = '0.2.1'
+onionprobe_version = '0.2.2'
 
 # The base path for this project
 basepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir) + os.sep
@@ -110,6 +110,10 @@ def cmdline():
     parser.add_argument('-v', '--version', action='version', version='%(prog)s ' + onionprobe_version)
 
     args = parser.parse_args()
+
+    if args.config is None and args.endpoints is None:
+        parser.print_usage()
+        exit(1)
 
     return args
 
