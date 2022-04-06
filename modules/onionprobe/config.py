@@ -178,6 +178,8 @@ class OnionprobeConfigCompiler:
         # Determine the output path
         if output_path is None:
             self.output_path = os.path.join(basepath, 'configs')
+        else:
+            self.output_path = output_path
 
         # Load the default configuration file as a template
         if os.path.exists(template_config):
