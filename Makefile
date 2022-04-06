@@ -41,11 +41,14 @@ configs:
 # Packaging
 #
 
-build-package:
+clean:
+	@find -name __pycache__ -exec rm -rf {} \;
+
+build-package: clean
 	@python3 -m build
 
 upload-test-package:
-	@twine upload --repository testpypi dist/*
+	@twine upload --skip-existing --repository testpypi dist/*
 
 upload-package:
-	@twine upload dist/*
+	@twine upload --skip-existing dist/*

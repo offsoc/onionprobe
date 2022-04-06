@@ -29,7 +29,11 @@ On [Debian](https://debian.org), they can be installed using
 
 ## Installation
 
-Just clone the repository
+Onionprobe is [available on PyPI](https://pypi.org/project/keyring/):
+
+    pip install onionprobe
+
+It's also possible to run it directly from the Git repository:
 
     git clone https://gitlab.torproject.org/tpo/onion-services/onionprobe
     cd onionprobe
@@ -40,11 +44,11 @@ Right now Onionprobe works only with a configuration file.
 A [detailed sample config](configs/tor.yaml) is provided and can be invoked
 with:
 
-    ./onionprobe -c configs/tor.yaml
+    onionprobe -c configs/tor.yaml
 
 Full usage and available metrics is provided passing the `-h` flag:
 
-    ./onionprobe -h
+    onionprobe -h
     usage: onionprobe [-h] [-c CONFIG] [-e [onion-address1 ...]]
 
     Test and monitor onion services
