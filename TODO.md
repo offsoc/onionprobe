@@ -127,6 +127,8 @@
 * [ ] Fetch config from external application, like `securedrop.py` or `real-world-onion-sites.py`.
 * [ ] Architecture should be extensible to allow for different reporting options (stdout, Prometheus etc).
 * [ ] Custom actions/hooks/triggers.
+* [ ] Work as a Nagios/Icinga plugin, perhaps using the [nagiosplugin](https://pypi.org/project/nagiosplugin/) Python class.
+* [ ] Work as a [Zabbix plugin](https://www.zabbix.com/integrations/python).
 * [ ] Multitasking: multiple threads/workers continuously probing endpoints
       with a centralized reporting data structure. This helps splitting
       data gathering from presentation logic, especially with the Prometheus
