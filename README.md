@@ -3,7 +3,7 @@
 ![](assets/logo.jpg "Onionprobe")
 
 Onionprobe is a tool for testing and monitoring the status of
-[Tor Onion Services](https://community.torproject.org/onion-services/).
+[Tor Onion Services](https://community.torproject.org/onion-services/) sites.
 
 It can run a single time or continuously to probe a set of onion services
 endpoints and paths, optionally exporting to [Prometheus](https://prometheus.io).
@@ -40,11 +40,22 @@ It's also possible to run it directly from the Git repository:
 
 ## Usage
 
-Right now Onionprobe works only with a configuration file.
-A [detailed sample config](configs/tor.yaml) is provided and can be invoked
-with:
+Simply ask Onionprobe to try an Onion Service site:
+
+    onionprobe -e http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion
+
+It's possible to supply multiple addresses:
+
+    onionprobe -e <onion-address1> <onionaddress2> ...
+
+Onionprobe also accepts a configuration file with a list of .onion endpoints
+and options. A [detailed sample config](configs/tor.yaml) is provided and can
+be invoked with:
 
     onionprobe -c configs/tor.yaml
+
+By default, Onionprobe starts it's own Tor daemon instance, so the `tor` binary
+must be available in the system.
 
 Full usage and available metrics is provided passing the `-h` flag:
 
