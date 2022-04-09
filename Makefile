@@ -29,6 +29,9 @@ watch-containers:
 log-containers:
 	@docker-compose logs -f
 
+stop-containers:
+	@docker-compose down
+
 #
 # Configs
 #
