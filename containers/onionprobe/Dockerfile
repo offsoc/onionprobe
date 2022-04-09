@@ -1,4 +1,5 @@
 FROM debian:stable
+MAINTAINER Silvio Rhatto <rhatto@torproject.org>
 
 ENV APP="onionprobe"
 ENV APP_BASE="/srv/"

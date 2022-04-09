@@ -1,4 +1,5 @@
 FROM debian:stable
+MAINTAINER Silvio Rhatto <rhatto@torproject.org>
 
 ENV APP="tor"
 ENV APP_BASE="/etc"
