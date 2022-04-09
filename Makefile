@@ -34,8 +34,8 @@ log-containers:
 #
 
 configs:
-	@./modules/real-world-onion-sites.py
-	@./modules/securedrop.py
+	@./packages/real-world-onion-sites.py
+	@./packages/securedrop.py
 
 #
 # Packaging

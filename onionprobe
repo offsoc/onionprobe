@@ -19,7 +19,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 # Dependencies
-from modules.onionprobe.app import run_from_cmdline
+from packages.onionprobe.app import run_from_cmdline
 
 # Process from CLI
 if __name__ == "__main__":
