@@ -11,7 +11,7 @@ DEPENDENCIES="python3-prometheus-client python3-stem python3-cryptography python
 DEPENDENCIES="$DEPENDENCIES tor"
 DEPENDENCIES_DOCS="pandoc latexmk texlive-latex-extra texlive-fonts-extra"
 DEPENDENCIES_PACKAGING_PYTHON="python3-venv python3-build python3-keyrings.alt twine"
-DEPENDENCIES_PACKAGING_DEBIAN="pandoc dh-python python3-setuptools-scm"
+DEPENDENCIES_PACKAGING_DEBIAN="sbuild-debian-developer-setup"
 TORRC="/etc/tor/torrc"
 
 # Install dependencies
@@ -47,6 +47,12 @@ sudo apt-get install -y $DEPENDENCIES_PACKAGING_PYTHON
 
 # Debian packaging
 sudo apt-get install -y $DEPENDENCIES_PACKAGING_DEBIAN
+sudo sbuild-debian-developer-setup  --distribution=unstable
+#sudo sbuild-debian-developer-setup --distribution=stable
+
+if [ ! -e "$HOME/.sbuildrc" ]; then
+  cp /usr/share/doc/sbuild/examples/example.sbuildrc $HOME/.sbuildrc
+fi
 
 # This allows one to build Debian packages inside a KVMX virtual machine
 #if [ -d "/srv/onionprobe" ]; then
