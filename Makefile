@@ -64,4 +64,5 @@ update_sbuild:
 #	@dpkg-buildpackage -rfakeroot --no-sign
 
 sbuild: update_sbuild
-	sbuild
+	@#sbuild -c stable-amd64-sbuild
+	@sbuild  -c unstable-amd64-sbuild
