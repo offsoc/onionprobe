@@ -45,7 +45,7 @@ configs:
 #
 
 clean:
-	@find -name __pycache__ -exec rm -rf {} \;
+	@find -name __pycache__ -exec rm -rf {} \; || true
 
 build-package: clean
 	@python3 -m build
