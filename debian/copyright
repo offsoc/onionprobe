@@ -6,10 +6,6 @@ Files: *
 Copyright: 2022 Silvio Rhatto <rhatto@torproject.orgorg>
 License: GPL-3.0+
 
-Files: debian/*
-Copyright: 2022 Silvio Rhatto <rhatto@torproject.orgorg>
-License: GPL-3.0+
-
 License: GPL-3.0+
  Copyright (C) 2022 Silvio Rhatto <rhatto@torproject.org>
  .
