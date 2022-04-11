@@ -9,7 +9,7 @@ Build-Depends:
  python3-setuptools,
  python3-setuptools-scm
 X-Python-3-Version: >= 3.5
-Standards-Version: 4.5.1
+Standards-Version: 4.6.0.1
 Homepage: https://gitlab.torproject.org/tpo/onion-services/onionprobe
 Vcs-Git: https://gitlab.torproject.org/tpo/onion-services/onionprobe.git
 Vcs-Browser: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/tree/main
