@@ -102,9 +102,9 @@
 
 ## Documentation
 
+* [x] Manpage.
 * [ ] Better documentation.
 * [ ] API Docs.
-* [ ] Manpage.
 
 ## Plumbing
 

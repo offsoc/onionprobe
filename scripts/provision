@@ -10,13 +10,16 @@ DEPENDENCIES="python3-prometheus-client python3-stem python3-cryptography python
 #DEPENDENCIES="python3-bs4 python3-pytest"
 DEPENDENCIES="$DEPENDENCIES tor"
 DEPENDENCIES_DOCS="pandoc latexmk texlive-latex-extra texlive-fonts-extra"
-DEPENDENCIES_PACKAGING="python3-venv python3-build python3-keyrings.alt twine"
+DEPENDENCIES_PACKAGING_PYTHON="python3-venv python3-build python3-keyrings.alt twine"
+DEPENDENCIES_PACKAGING_DEBIAN="pandoc dh-python python3-setuptools-scm"
 TORRC="/etc/tor/torrc"
 
 # Install dependencies
 sudo apt install -y $DEPENDENCIES
 
 # Configure Tor
+# This is mainly intended to test Onionprobe using a system-wide Tor daemon,
+# i.e., when not using the built-in Tor process handling.
 if ! grep "^ControlPort" $TORRC; then
 
   control_pass="$(grep "^control_password" $BASEPATH/onionprobe.yaml | cut -d "'" -f 2)"
@@ -39,6 +42,13 @@ sudo usermod -a -G docker $(whoami)
 # Not automatically installed because some texlive packages uses a lot of diskspace
 #sudo apt-get install -y $DEPENDENCIES_DOCS
 
-# Packaging
-# Not automatically installed
-#sudo apt-get install -y $DEPENDENCIES_PACKAGING
+# Python packaging
+sudo apt-get install -y $DEPENDENCIES_PACKAGING_PYTHON
+
+# Debian packaging
+sudo apt-get install -y $DEPENDENCIES_PACKAGING_PYTHON
+
+# This allows one to build Debian packages inside a KVMX virtual machine
+#if [ -d "/srv/onionprobe" ]; then
+#  sudo chown user. /srv/onionprobe
+#fi

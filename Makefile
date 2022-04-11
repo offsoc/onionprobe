@@ -43,15 +43,24 @@ configs:
 #
 # Packaging
 #
+#
+build_man:
+	@# Pipe output to sed to avoid http://lintian.debian.org/tags/hyphen-used-as-minus-sign.html
+	@# Fixed in http://johnmacfarlane.net/pandoc/releases.html#pandoc-1.10-2013-01-19
+	@pandoc -s -w man docs/man/onionprobe.1.md -o docs/man/onionprobe.1
+	@sed -i -e 's/--/\\-\\-/g' docs/man/onionprobe.1
 
 clean:
 	@find -name __pycache__ -exec rm -rf {} \; || true
 
-build-package: clean
+build-python-package: clean
 	@python3 -m build
 
-upload-test-package:
+upload-python-test-package:
 	@twine upload --skip-existing --repository testpypi dist/*
 
-upload-package:
+upload-python-package:
 	@twine upload --skip-existing dist/*
+
+build-debian-test-package:
+	@dpkg-buildpackage -rfakeroot --no-sign
