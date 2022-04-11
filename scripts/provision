@@ -46,7 +46,7 @@ sudo usermod -a -G docker $(whoami)
 sudo apt-get install -y $DEPENDENCIES_PACKAGING_PYTHON
 
 # Debian packaging
-sudo apt-get install -y $DEPENDENCIES_PACKAGING_PYTHON
+sudo apt-get install -y $DEPENDENCIES_PACKAGING_DEBIAN
 
 # This allows one to build Debian packages inside a KVMX virtual machine
 #if [ -d "/srv/onionprobe" ]; then
