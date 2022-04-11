@@ -18,12 +18,6 @@ Architecture: all
 Depends:
  ${misc:Depends},
  ${python3:Depends},
- python3-prometheus-client,
- python3-stem,
- python3-cryptography,
- python3-yaml,
- python3-requests,
- python3-socks,
  tor
 Description: a test/monitor tool for Onion Services sites
  Onionprobe is a tool for testing and monitoring the status of Tor Onion
