@@ -3,7 +3,7 @@ Upstream-Name: onionprobe
 Source: https://gitlab.torproject.org/tpo/onion-services/onionprobe
 
 Files: *
-Copyright: 2022 Silvio Rhatto <rhatto@torproject.orgorg>
+Copyright: 2022 Silvio Rhatto <rhatto@torproject.org>
 License: GPL-3.0+
 
 License: GPL-3.0+
