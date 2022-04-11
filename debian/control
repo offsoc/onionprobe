@@ -20,7 +20,7 @@ Depends:
  ${misc:Depends},
  ${python3:Depends},
  tor
-Description: a test/monitor tool for Onion Services sites
+Description: test/monitor tool for Onion Services sites
  Onionprobe is a tool for testing and monitoring the status of Tor Onion
  Services sites. It can run a single time or continuously to probe a set of
  onion services endpoints and paths, optionally exporting to Prometheus.
