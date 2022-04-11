@@ -1,5 +1,5 @@
 Source: onionprobe
-Section: admin
+Section: net
 Priority: optional
 Maintainer: Silvio Rhatto <rhatto@torproject.org>
 Build-Depends:
