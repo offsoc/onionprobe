@@ -44,11 +44,6 @@ configs:
 # Packaging
 #
 #
-build_man:
-	@# Pipe output to sed to avoid http://lintian.debian.org/tags/hyphen-used-as-minus-sign.html
-	@# Fixed in http://johnmacfarlane.net/pandoc/releases.html#pandoc-1.10-2013-01-19
-	@pandoc -s -w man docs/man/onionprobe.1.md -o docs/man/onionprobe.1
-	@sed -i -e 's/--/\\-\\-/g' docs/man/onionprobe.1
 
 clean:
 	@find -name __pycache__ -exec rm -rf {} \; || true
