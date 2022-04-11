@@ -12,3 +12,8 @@ override_dh_auto_build:
 	pandoc -s -w man docs/man/onionprobe.1.md -o docs/man/onionprobe.1
 	sed -i -e 's/--/\\-\\-/g' docs/man/onionprobe.1
 	dh_auto_build
+
+override_dh_auto_install:
+	dh_auto_install
+	# Remove duplicate configs created by the Python packaging procedure
+	rm -rf debian/onionprobe/usr/etc
