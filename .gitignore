@@ -2,12 +2,4 @@
 dist
 __pycache__
 *.egg-info/
-.pybuild
-debian/onionprobe
-debian/files
-debian/.debhelper
-debian/*.postinst.debhelper
-debian/*.prerm.debhelper
-debian/*.substvars
-debian/debhelper-build-stamp
 docs/man/onionprobe.1
