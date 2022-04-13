@@ -98,7 +98,16 @@
 ## Packaging
 
 * [x] Python packaging (PyPI, `requirements.txt` or other format).
-* [ ] Distro packaging (Debian, ArchLinux, rpm).
+* [ ] Debian:
+  * [x] Work on an initial packaging implementation:
+        https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/merge_requests/1
+  * [ ] Upload the package at [deb.torproject.org](http://deb.torproject.org) or some alternative repository.
+  * [ ] Open an ITP issue on WNPP for an official Debian package.
+  * [ ] Set autopkgtest:
+      * [ContinuousIntegration/autopkgtest - Debian Wiki](https://wiki.debian.org/ContinuousIntegration/autopkgtest)
+      * [Autopkgtest - Defining tests for Debian packages](https://people.debian.org/~eriberto/README.package-tests.html)
+  * [ ] Configure [CI Pipeline](https://salsa.debian.org/salsa-ci-team/pipeline)
+* [ ] Other distros (ArchLinux, rpm, *BSDs).
 
 ## Documentation
 
