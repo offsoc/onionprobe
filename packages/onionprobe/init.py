@@ -99,6 +99,18 @@ class OnionprobeInit:
 
                     continue
 
+        from .config import config
+
+        # Handle all other arguments
+        for argument in config:
+            if argument == 'endpoints':
+                continue
+
+            value = getattr(args, argument)
+
+            if value is not None and value != config[argument]['default']:
+                self.config[argument] = value
+
     def initialize(self):
         """
         Onionprobe initialization procedures

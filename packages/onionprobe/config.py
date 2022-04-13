@@ -36,41 +36,144 @@ onionprobe_version = '0.2.2'
 # The base path for this project
 basepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir) + os.sep
 
-# Default configuration
-defaults = {
-        'log_level'               : 'info',
-        'launch_tor'              : True,
-        'tor_address'             : '127.0.0.1',
-        'socks_port'              : 19050,
-        'control_port'            : 19051,
-        'control_password'        : False,
-        'loop'                    : False,
-        'prometheus_exporter'     : False,
-        'prometheus_exporter_port': 9091,
-        'shuffle'                 : True,
-        'randomize'               : True,
-        'new_circuit'             : False,
-        'interval'                : 60,
-        'sleep'                   : 60,
-        'descriptor_max_retries'  : 5,
-        'descriptor_timeout'      : 30,
-        'http_connect_timeout'    : 30,
-        'http_connect_max_retries': 3,
-        'http_read_timeout'       : 30,
-        'circuit_stream_timeout'  : 60,
-        'endpoints'               : {
-            'www.torproject.org': {
-                'address' : '2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion',
-                'protocol': 'http',
-                'port'    : '80',
-                'paths'   : [
+# Describe configuration options
+config = {
+        'log_level': {
+            'description': 'Log level: debug, info, warning, error or critical',
+            'default': 'info',
+            'argparse_action': 'store',
+            },
+
+        'launch_tor': {
+            'description': "Whether to launch it's own Tor daemon (set to false to use the system-wide Tor process)",
+            'default': True,
+            'argparse_action': argparse.BooleanOptionalAction,
+            },
+
+        'tor_address': {
+            'description': 'Tor listening address if the system-wide service is used',
+            'default': '127.0.0.1',
+            'argparse_action': 'store',
+            },
+
+        'socks_port': {
+            'description': 'Tor SOCKS port',
+            'default': 19050,
+            'argparse_action': 'store',
+            },
+
+        'control_port': {
+            'description': 'Tor control port',
+            'default': 19051,
+            'argparse_action': 'store',
+            },
+
+        'control_password': {
+            'description': 'Set Tor control password or use a password prompt (system-wide Tor service) or auto-generate a temporary password (built-in Tor service)',
+            'default': None,
+            'argparse_action': 'store',
+            },
+
+        'loop': {
+            'description': 'Run Onionprobe continuously',
+            'default': False,
+            'argparse_action': argparse.BooleanOptionalAction,
+            },
+
+        'prometheus_exporter': {
+            'description': 'Enable Prometheus exporting functionality',
+            'default': False,
+            'argparse_action': argparse.BooleanOptionalAction,
+            },
+
+        'prometheus_exporter_port': {
+            'description': 'Set the Prometheus exporter port',
+            'default': 9091,
+            'argparse_action': 'store',
+            },
+
+        'shuffle': {
+            'description': 'Shuffle the list of endpoints at each probing round',
+            'default': True,
+            'argparse_action': argparse.BooleanOptionalAction,
+            },
+
+        'randomize': {
+            'description': 'Randomize the interval between each probing',
+            'default': True,
+            'argparse_action': argparse.BooleanOptionalAction,
+            },
+
+        'new_circuit': {
+            'description': 'Get a new circuit for every stream',
+            'default': False,
+            'argparse_action': argparse.BooleanOptionalAction,
+            },
+
+        'interval': {
+            'description': 'Max random interval in seconds between probing each endpoint',
+            'default': 60,
+            'argparse_action': 'store',
+            },
+
+        'sleep': {
+            'description': 'Max random interval in seconds to wait between each round of tests',
+            'default': 60,
+            'argparse_action': 'store',
+            },
+
+        'descriptor_max_retries': {
+            'description': 'Max retries when fetching a descriptor',
+            'default': 5,
+            'argparse_action': 'store',
+            },
+
+        'descriptor_timeout': {
+            'description': 'Timeout in seconds when retrieving an Onion Service descriptor',
+            'default': 30,
+            'argparse_action': 'store',
+            },
+
+        'http_connect_timeout': {
+            'description': 'Connection timeout for HTTP/HTTPS requests',
+            'default': 30,
+            'argparse_action': 'store',
+            },
+
+        'http_connect_max_retries': {
+            'description': 'Max retries when doing a HTTP/HTTPS connection to an Onion Service',
+            'default': 3,
+            'argparse_action': 'store',
+            },
+
+        'http_read_timeout': {
+            'description': 'Read timeout for HTTP/HTTPS requests',
+            'default': 30,
+            'argparse_action': 'store',
+            },
+
+        'circuit_stream_timeout': {
+            'description': 'Sets how many seconds until a stream is detached from a circuit and try a new circuit',
+            'default': 60,
+            'argparse_action': 'store',
+            },
+
+        'endpoints': {
+            'description': 'The list of endpoints to be tested',
+            'default': {
+                'www.torproject.org': {
+                    'address' : '2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion',
+                    'protocol': 'http',
+                    'port'    : '80',
+                    'paths'   : [
                         {
                             'path'   : '/',
                             'pattern': 'Tor Project',
-                        },
-                    ],
-                },
-            }
+                            },
+                        ],
+                    },
+                }
+            },
         }
 
 def cmdline():
@@ -105,9 +208,20 @@ def cmdline():
 
     parser.add_argument('-c', '--config', help='Read options from configuration file')
 
-    parser.add_argument('-e', '--endpoints', nargs='*', help='Add endpoints to the test list', metavar="onion-address1")
-
     parser.add_argument('-v', '--version', action='version', version='%(prog)s ' + onionprobe_version)
+
+    for argument in sorted(config):
+        if argument == 'endpoints':
+            parser.add_argument('-e', '--endpoints', nargs='*', help='Add endpoints to the test list', metavar="ONION-ADDRESS1")
+
+        else:
+            parser.add_argument(
+                    '--' + argument,
+                    help=config[argument]['description'],
+                    default=config[argument]['default'],
+                    type=type(config[argument]['default']),
+                    action=config[argument]['argparse_action'],
+                    )
 
     args = parser.parse_args()
 
@@ -148,7 +262,7 @@ class OnionprobeConfig:
 
             return default
 
-        return defaults[item]
+        return config[item]['default']
 
 class OnionprobeConfigCompiler:
     """Base class to build Onionprobe configs from external sources of Onion Services"""
