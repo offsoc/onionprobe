@@ -56,10 +56,13 @@
 
 * [x] Better logging.
 * [x] Better exception handling.
-* [ ] Better reporting/outputs.
+* [ ] Better reporting/outputs (CSV and JSON).
 * [ ] Additional command line options.
 * [ ] Support for URL fragments.
 * [ ] Daemon mode.
+* [ ] Option to run just for a fixed number of iterations.
+* [ ] Option to run just for a definite amount of time.
+* [ ] Option to run until a given date.
 
 ## Metrics
 
