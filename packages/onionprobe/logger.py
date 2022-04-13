@@ -21,6 +21,8 @@
 # Dependencies
 import logging
 
+from .config import onionprobe_version
+
 try:
     import stem.util
 except ImportError:
@@ -45,7 +47,7 @@ class OnionprobeLogger:
         if log_level in dir(logging):
             level = getattr(logging, log_level)
 
-            logging.basicConfig(level=level)
+            logging.basicConfig(level=level, format='%(asctime)s %(levelname)s: %(message)s')
 
             # See https://stem.torproject.org/api/util/log.html
             stem_logger = stem.util.log.get_logger()
@@ -56,6 +58,8 @@ class OnionprobeLogger:
             logging.error("Invalid log level %s" % (log_level))
 
             return False
+
+        self.log('Starting Onionprobe version %s...' % (onionprobe_version))
 
         return True
 
