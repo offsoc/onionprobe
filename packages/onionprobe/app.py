@@ -67,7 +67,21 @@ def run(args):
             print('Error: could not initialize')
             exit(1)
 
-    #except (FileNotFoundError, KeyboardInterrupt) as e:
+    # Handle user interruption
+    # See https://stackoverflow.com/questions/21120947/catching-keyboardinterrupt-in-python-during-program-shutdown
+    except KeyboardInterrupt as e:
+        probe.log('Stopping Onionprobe due to user request...')
+        probe.close()
+
+        try:
+            import sys
+
+            sys.exit(0)
+        except SystemExit:
+            import os
+
+            os._exit(0)
+
     except Exception as e:
         probe.log(e, 'error')
         probe.close()

@@ -139,4 +139,6 @@ class OnionprobeInit:
         # Initialize metrics
         self.initialize_metrics()
 
+        self.log('Onionprobe is initialized. Hit Ctrl-C to interrupt it.')
+
         return True
