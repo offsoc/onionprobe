@@ -5,6 +5,7 @@ Maintainer: Silvio Rhatto <rhatto@torproject.org>
 Build-Depends:
  debhelper-compat (= 13),
  dh-python,
+ pybuild-plugin-pyproject,
  python3,
  python3-setuptools,
  pandoc
