@@ -43,15 +43,26 @@ configs:
 #
 # Packaging
 #
+#
 
 clean:
 	@find -name __pycache__ -exec rm -rf {} \; || true
 
-build-package: clean
+build-python-package: clean
 	@python3 -m build
 
-upload-test-package:
+upload-python-test-package:
 	@twine upload --skip-existing --repository testpypi dist/*
 
-upload-package:
+upload-python-package:
 	@twine upload --skip-existing dist/*
+
+update_sbuild:
+	@sudo sbuild-update -udcar u
+
+#build-debian-test-package:
+#	@dpkg-buildpackage -rfakeroot --no-sign
+
+sbuild: update_sbuild
+	@#sbuild -c stable-amd64-sbuild
+	@sbuild  -c unstable-amd64-sbuild
