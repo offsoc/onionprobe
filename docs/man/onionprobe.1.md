@@ -58,7 +58,7 @@ onion services endpoints and paths, optionally exporting to Prometheus.
       --launch_tor, --no-launch_tor
                             Whether to launch it's own Tor daemon (set to false to use the system-wide Tor process) (default: True)
       --log_level LOG_LEVEL
-                            Log level: debug, info, warning, error or critical
+                            Log level : debug, info, warning, error or critical
       --loop, --no-loop     Run Onionprobe continuously (default: False)
       --new_circuit, --no-new_circuit
                             Get a new circuit for every stream (default: False)
@@ -142,6 +142,11 @@ Onionprobe currently has the following limitations:
 
 1. Only works for Onion Services websites, i.e, those served via
    either HTTP or HTTPS.
+
+2. Currently Onionprobe probes runs in a single thread.
+
+3. For other limitations, check the list of issues  available at the Onionprobe
+   source code repository.
 
 # SEE ALSO
 
