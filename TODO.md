@@ -104,6 +104,7 @@
 * [ ] Debian:
   * [x] Work on an initial packaging implementation:
         https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/merge_requests/1
+  * [ ] Systemd service unit file.
   * [ ] Upload the package at [deb.torproject.org](http://deb.torproject.org) or some alternative repository.
   * [ ] Open an ITP issue on WNPP for an official Debian package.
   * [ ] Set autopkgtest:
@@ -115,6 +116,8 @@
 ## Documentation
 
 * [x] Manpage.
+* [x] Auto-generate command line docs from CLI invocation.
+* [x] Auto-generate manpage from `argparse`.
 * [ ] Better documentation.
 * [ ] API Docs.
 
@@ -148,3 +151,7 @@
       exporter. Not a requirement for Prometheus, since the [official client](https://github.com/prometheus/client_python)
       already [uses](https://github.com/prometheus/client_python/blob/789b24a47148f63109626958fe2eb1ad9231f9c3/prometheus_client/exposition.py#L142)
       a [threaded socketserver](https://docs.python.org/3.8/library/socketserver.html#socketserver.ThreadingMixIn).
+* [ ] Support for heartbeat mode: an authenticated and persistent Onion Service
+      with enables other Onionprobe instances to check if the current instance is
+      up and running, allowing for notifications and other actions in case of
+      failure.
