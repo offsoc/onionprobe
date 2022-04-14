@@ -176,11 +176,11 @@ config = {
             },
         }
 
-def cmdline():
+def cmdline_parser():
     """
-    Evalutate the command line.
+    Generate command line arguments
 
-    :return: Command line arguments.
+    :return: ArgumentParser object
     """
 
     epilog = """Examples:
@@ -201,12 +201,17 @@ def cmdline():
 
     description = 'Test and monitor onion services'
     parser      = argparse.ArgumentParser(
+                    prog='onionprobe',
                     description=description,
                     epilog=epilog,
                     formatter_class=argparse.RawDescriptionHelpFormatter,
                   )
 
-    parser.add_argument('-c', '--config', help='Read options from configuration file')
+    parser.add_argument('-c', '--config', help="""
+                        Read options from configuration file. All command line
+                        parameters can be specified inside a YAML file.
+                        Additional command line parameters override those set
+                        in the configuration file.""".strip())
 
     parser.add_argument('-v', '--version', action='version', version='%(prog)s ' + onionprobe_version)
 
@@ -223,7 +228,17 @@ def cmdline():
                     action=config[argument]['argparse_action'],
                     )
 
-    args = parser.parse_args()
+    return parser
+
+def cmdline():
+    """
+    Evalutate the command line.
+
+    :return: Command line arguments.
+    """
+
+    parser = cmdline_parser()
+    args   = parser.parse_args()
 
     if args.config is None and args.endpoints is None:
         parser.print_usage()
