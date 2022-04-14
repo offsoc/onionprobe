@@ -33,7 +33,8 @@ control_port: 19051
 #   service.
 # * Show a password prompt when using the system-wide Tor service.
 #
-# Do not use the example value in production, as this is just an example
+# Do not use the example value in production, as this password is available
+# publicly
 #control_password: false
 #control_password: 'hackedpasswdbSkUMOr2vIlL5u2YEMA1YpwKj08'
 
