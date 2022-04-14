@@ -220,6 +220,8 @@ def cmdline_parser():
             parser.add_argument('-e', '--endpoints', nargs='*', help='Add endpoints to the test list', metavar="ONION-ADDRESS1")
 
         else:
+            config[argument]['type'] = type(config[argument]['default'])
+
             parser.add_argument('--' + argument, **config[argument])
 
     return parser
