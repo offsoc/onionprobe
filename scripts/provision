@@ -47,10 +47,19 @@ sudo apt-get install -y $DEPENDENCIES_PACKAGING_PYTHON
 
 # Debian packaging
 sudo apt-get install -y $DEPENDENCIES_PACKAGING_DEBIAN
-#sudo sbuild-debian-developer-setup  --distribution=unstable
-#sudo sbuild-debian-developer-setup --distribution=stable
-sudo sbuild-createchroot  --include=eatmydata,gnupg unstable /srv/chroot/unstable-amd64-sbuild http://deb.debian.org/debian
-#sudo sbuild-createchroot --include=eatmydata,gnupg stable   /srv/chroot/stable-amd64-sbuild   http://deb.debian.org/debian
+
+# Sbuild chroot for unstable
+if [ ! -e "/srv/chroot/unstable-amd64-sbuild" ]; then
+  #sudo sbuild-debian-developer-setup --distribution=unstable
+  sudo sbuild-createchroot  --include=eatmydata,gnupg unstable /srv/chroot/unstable-amd64-sbuild http://deb.debian.org/debian
+fi
+
+# Sbuild chroot for stable
+#if [ ! -e "/srv/chroot/stable-amd64-sbuild" ]; then
+#  sudo sbuild-createchroot --include=eatmydata,gnupg stable   /srv/chroot/stable-amd64-sbuild   http://deb.debian.org/debian
+#  sudo sbuild-debian-developer-setup --distribution=stable
+#fi
+
 sudo sbuild-adduser $LOGNAME
 
 if [ ! -e "$HOME/.sbuildrc" ]; then
