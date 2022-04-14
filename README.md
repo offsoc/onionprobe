@@ -95,6 +95,7 @@ Relevant folders and files in this repository:
 * `assets`: logos and other stuff.
 * `configs`: miscelaneous configurations.
 * `containers`: container configurations.
+* `debian`: debian packaging.
 * `docs`: documentation.
 * `packages`: python packages codebase.
 * `scripts`: provisioning and other configuration scripts.
