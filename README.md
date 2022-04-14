@@ -57,8 +57,9 @@ be invoked with:
 By default, Onionprobe starts it's own Tor daemon instance, so the `tor` binary
 must be available in the system.
 
-See the [manual page](docs/man/onionprobe.1.md) for the complete list of
-options and available metrics.
+See the [manual
+page](https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/blob/main/docs/man/onionprobe.1.md)
+for the complete list of options and available metrics.
 
 ## Testing
 
