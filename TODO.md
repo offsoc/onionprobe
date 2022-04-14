@@ -56,8 +56,8 @@
 
 * [x] Better logging.
 * [x] Better exception handling.
-* [ ] Better reporting/outputs (CSV and JSON).
-* [ ] Additional command line options.
+* [x] Additional command line options.
+* [ ] Reporting with CSV and JSON outputs.
 * [ ] Support for URL fragments.
 * [ ] Daemon mode.
 * [ ] Option to run just for a fixed number of iterations.

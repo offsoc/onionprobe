@@ -14,7 +14,7 @@
 # Place - Suite 330, Boston, MA 02111-1307, USA
 #
 
-.PHONY: configs
+.PHONY: configs docs
 
 #
 # Containers
@@ -41,8 +41,14 @@ configs:
 	@./packages/securedrop.py
 
 #
-# Packaging
+# Documentation
 #
+
+docs:
+	@./packages/manpage.py
+
+#
+# Packaging
 #
 
 clean:
@@ -66,3 +72,9 @@ update_sbuild:
 sbuild: update_sbuild
 	@#sbuild -c stable-amd64-sbuild
 	@sbuild  -c unstable-amd64-sbuild
+
+#
+# Release
+#
+
+release: clean configs docs
