@@ -18,6 +18,11 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
+# Dependencies
+import sys
+import os
+import signal
+
 from .init       import OnionprobeInit
 from .config     import OnionprobeConfig
 from .logger     import OnionprobeLogger
@@ -48,6 +53,34 @@ class Onionprobe(
     Onionprobe class to test and monitor Tor Onion Services
     """
 
+def finish(status=0):
+    """
+    Stops Onionprobe
+
+    :type  status: int
+    :param status: Exit status code.
+    """
+
+    try:
+        sys.exit(status)
+    except SystemExit:
+        os._exit(status)
+
+def finish_handler(signal, frame):
+    """
+    Wrapper around finish() for handling system signals
+
+    :type  signal: int
+    :param signal: Signal number.
+
+    :type  frame: object
+    :param frame: Current stack frame.
+    """
+
+    print('Signal received, stopping Onionprobe..')
+
+    finish(1)
+
 def run(args):
     """
     Run Onionprobe from arguments
@@ -55,6 +88,10 @@ def run(args):
     :type  args: dict
     :param args: Instance arguments.
     """
+
+    # Register signal handling
+    #signal.signal(signal.SIGINT, finish_handler)
+    signal.signal(signal.SIGTERM, finish_handler)
 
     # Dispatch
     try:
@@ -65,27 +102,19 @@ def run(args):
             probe.close()
         else:
             print('Error: could not initialize')
-            exit(1)
+            finish(1)
 
     # Handle user interruption
     # See https://stackoverflow.com/questions/21120947/catching-keyboardinterrupt-in-python-during-program-shutdown
     except KeyboardInterrupt as e:
         probe.log('Stopping Onionprobe due to user request...')
         probe.close()
-
-        try:
-            import sys
-
-            sys.exit(0)
-        except SystemExit:
-            import os
-
-            os._exit(0)
+        finish()
 
     except Exception as e:
         probe.log(e, 'error')
         probe.close()
-        exit(1)
+        finish(1)
 
 def run_from_cmdline():
     """
