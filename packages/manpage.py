@@ -24,6 +24,36 @@ import datetime
 import re
 from onionprobe.config import cmdline_parser, basepath
 
+def remove_usage_prefix(text):
+    """
+    Simply removes the "usage: " string prefix from a text.
+
+    :type text : str
+    :param text: The input text.
+
+    :rtype: str
+    :return: The text without the "usage: string"
+    """
+
+    return text.replace('usage: ', '')
+
+def format_as_markdown_verbatim(text):
+    """
+    Formats a text as a Markdown verbatim block.
+
+    :type text : str
+    :param text: The input text.
+
+    :rtype: str
+    :return: Formatted text.
+    """
+
+    # Some handy regexps
+    lines      = re.compile('^',    re.MULTILINE)
+    trailing   = re.compile('^ *$', re.MULTILINE)
+
+    return trailing.sub('', lines.sub('    ', text))
+
 def generate():
     """
     Produces the manpage in Markdown format.
@@ -35,24 +65,23 @@ def generate():
     # Set inputs and outputs
     template   = os.path.join(basepath, 'docs', 'man', 'onionprobe.1.md.tmpl')
     output     = os.path.join(basepath, 'docs', 'man', 'onionprobe.1.md')
+    config     = os.path.join(basepath, 'configs', 'tor.yaml')
 
     # Initialize the command line parser
     parser     = cmdline_parser()
 
-    # Compile some handy regexps
-    lines      = re.compile('^',    re.MULTILINE)
-    trailing   = re.compile('^ *$', re.MULTILINE)
-
     # Compile template variables
-    usage      = parser.format_usage().replace('usage: ', '')
-    invocation = trailing.sub('', lines.sub('    ', parser.format_help())).replace('usage: ', '')
+    usage      = remove_usage_prefix(parser.format_usage())
+    invocation = remove_usage_prefix(format_as_markdown_verbatim(parser.format_help()))
     date       = datetime.datetime.now().strftime('%b %d, %Y')
 
     with open(template, 'r') as template_file:
-        with open(output, 'w') as output_file:
-            contents = template_file.read()
+        with open(config, 'r') as config_file:
+            with open(output, 'w') as output_file:
+                contents = template_file.read()
+                config   = format_as_markdown_verbatim(config_file.read())
 
-            output_file.write(contents.format(date=date, usage=usage, invocation=invocation))
+                output_file.write(contents.format(date=date, usage=usage, invocation=invocation, config=config))
 
 # Process from CLI
 if __name__ == "__main__":

@@ -90,8 +90,20 @@ new_circuit: false
 circuit_stream_timeout: 60
 
 # The list of endpoints to be tested
-# Using addresses from https://onion.torproject.org
 endpoints:
+  # Using addresses from https://onion.torproject.org
+  www.torproject.org:
+    address: '2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion'
+    protocol: 'http'
+    port: 80
+    paths:
+      - path   : '/'
+        # Specifying a per-path pattern makes Onionprobe look for it in the
+        # request and hence operating like a basic check if the endpoint
+        # is operational.
+        #
+        # Accepts patterns using Python's regex format
+        pattern: 'Tor Project'
   2019.www.torproject.org:
     address: 'jqyzxhjk6psc6ul5jnfwloamhtyh7si74b4743k2qgpskwwxrzhsxmad.onion'
     protocol: 'http'
@@ -352,10 +364,3 @@ endpoints:
     address: 'tttyx2vwp7ihml3vkhywwcizv6nbwrikpgeciy3qrow7l7muak2pnhad.onion'
     protocol: 'http'
     port: 80
-  www.torproject.org:
-    address: '2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion'
-    protocol: 'http'
-    port: 80
-    paths:
-      - path   : '/'
-        pattern: 'Tor Project'
