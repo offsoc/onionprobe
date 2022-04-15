@@ -180,7 +180,8 @@ def cmdline_parser():
     """
     Generate command line arguments
 
-    :return: ArgumentParser object
+    :rtype: argparse.ArgumentParser
+    :return: The parser object
     """
 
     epilog = """Examples:
@@ -230,6 +231,7 @@ def cmdline():
     """
     Evalutate the command line.
 
+    :rtype: argparse.Namespace
     :return: Command line arguments.
     """
 
