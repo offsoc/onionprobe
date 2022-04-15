@@ -266,6 +266,9 @@ class OnionprobeConfig:
         :return: The configuration parameter value or the default fallback value.
         """
 
+        if self.config is None:
+            self.config = {}
+
         if item in self.config:
             return self.config[item]
 
