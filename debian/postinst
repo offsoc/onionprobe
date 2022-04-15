@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# Post-installation script for Onionprobe
+#
+
+# Parameters
+USERNAME="onionprobe"
+
+# Ensure that the scripts abort in case of any errors
+set -e
+
+# Ensure a dedicated user for running the system-wide service
+adduser --no-create-home --home /nonexistent --system --group $USERNAME
+
+# Include automatic generated code by debhelper(7)
+#DEBHELPER#

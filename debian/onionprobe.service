@@ -1,0 +1,11 @@
+[Unit]
+Description=Onionprobe
+After=network.target
+
+[Service]
+ExecStart=/usr/bin/onionprobe -c /etc/onionprobe/onionprobe.yaml
+User=onionprobe
+Group=onionprobe
+
+[Install]
+WantedBy=multi-user.target
