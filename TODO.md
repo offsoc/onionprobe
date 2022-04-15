@@ -63,6 +63,12 @@
 * [ ] Option to run just for a fixed number of iterations.
 * [ ] Option to run just for a definite amount of time.
 * [ ] Option to run until a given date.
+* [ ] Configuration:
+  * [ ] Config file auto lookup:
+    * Current folder.
+    * `$XDG_CONFIG_HOME/onionprobe`: local configurations.
+    * `$sysconfigdir/onionprobe`.
+  * [ ] Config file description field.
 
 ## Metrics
 
