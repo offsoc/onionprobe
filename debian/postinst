@@ -10,7 +10,9 @@ USERNAME="onionprobe"
 set -e
 
 # Ensure a dedicated user for running the system-wide service
-adduser --no-create-home --home /nonexistent --system --group $USERNAME
+adduser --no-create-home --home /var/lib/$USERNAME --system --group $USERNAME
+mkdir -p /var/lib/$USERNAME
+chown $USERNAME. /var/lib/$USERNAME
 
 # Include automatic generated code by debhelper(7)
 #DEBHELPER#
