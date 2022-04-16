@@ -39,6 +39,7 @@
       just expose the metrics rather than having Prometheus scraping individual
       targets on Prometheus' schedule.
 * [ ] Authentication (if not done by a frontend proxy).
+* [ ] Support for Onion Service exporter endpoint with optional client authorization.
 
 ## Probing
 
