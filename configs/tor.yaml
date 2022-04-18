@@ -51,7 +51,7 @@ prometheus_exporter_port: 9091
 # Whether to shuffle list to scramble the ordering of the probe to avoid
 # the endpoint list to be guessed by a third party.
 #
-# This shuffles the list everytime Onionprobe starts a new round of
+# This shuffles the list every time Onionprobe starts a new round of
 # tests.
 shuffle: true
 

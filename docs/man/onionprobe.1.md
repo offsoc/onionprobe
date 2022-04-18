@@ -1,6 +1,6 @@
 % ONIONPROBE(1) Onionprobe User Manual
 % Silvio Rhatto <rhatto@torproject.org>
-% Apr 15, 2022
+% Apr 18, 2022
 
 # NAME
 
@@ -188,7 +188,7 @@ This is a sample configuration file that can be adapted:
     # Whether to shuffle list to scramble the ordering of the probe to avoid
     # the endpoint list to be guessed by a third party.
     #
-    # This shuffles the list everytime Onionprobe starts a new round of
+    # This shuffles the list every time Onionprobe starts a new round of
     # tests.
     shuffle: true
 
