@@ -65,7 +65,7 @@ class OnionprobeInit:
                 with open(args.config, 'r') as config:
                     self.config = yaml.load(config, yaml.CLoader)
             else:
-                raise FileNotFoundError('No such file ' + args.config)
+                raise FileNotFoundError(args.config)
         else:
             self.config = {}
 

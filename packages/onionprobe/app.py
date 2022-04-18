@@ -93,28 +93,39 @@ def run(args):
     #signal.signal(signal.SIGINT, finish_handler)
     signal.signal(signal.SIGTERM, finish_handler)
 
+    status = 0
+
     # Dispatch
     try:
         probe = Onionprobe(args)
 
         if probe.initialize() is not False:
             probe.run()
-            probe.close()
         else:
+            status = 1
+
             print('Error: could not initialize')
-            finish(1)
 
     # Handle user interruption
     # See https://stackoverflow.com/questions/21120947/catching-keyboardinterrupt-in-python-during-program-shutdown
     except KeyboardInterrupt as e:
         probe.log('Stopping Onionprobe due to user request...')
-        probe.close()
-        finish()
+
+    except FileNotFoundError as e:
+        status = 1
+
+        print('File not found: ' + str(e))
 
     except Exception as e:
-        probe.log(e, 'error')
-        probe.close()
-        finish(1)
+        status = 1
+
+        print(repr(e))
+
+    finally:
+        if 'probe' in locals():
+            probe.close()
+
+        finish(status)
 
 def run_from_cmdline():
     """
