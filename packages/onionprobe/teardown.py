@@ -32,8 +32,11 @@ class OnionprobeTeardown:
         Stops the built-in Tor daemon.
         """
 
-        self.metrics['onionprobe_state'].state('stopping')
-        self.controller.close()
+        if 'metrics' in dir(self):
+            self.metrics['onionprobe_state'].state('stopping')
+
+        if 'controller' in dir(self):
+            self.controller.close()
 
         # Terminate built-in Tor
         if 'tor' in dir(self):
