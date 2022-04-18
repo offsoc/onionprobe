@@ -108,7 +108,7 @@ Relevant folders and files in this repository:
 
 ## Tasks
 
-See [TODO](TODO.md) and the [issue tracker](https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues).
+Check the [issue tracker](https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues).
 
 ## Acknowledgements
 
