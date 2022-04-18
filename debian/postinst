@@ -13,7 +13,8 @@ USERNAME="_$NAME"
 set -e
 
 # Ensure a dedicated user for running the system-wide service
-adduser --no-create-home --home /var/lib/$NAME --system --group $USERNAME
+# Needs --force-badname to allow user names with underscores
+adduser --no-create-home --home /var/lib/$NAME --system --group --force-badname $USERNAME
 mkdir -p /var/lib/$USERNAME
 chown $USERNAME. /var/lib/$NAME
 
