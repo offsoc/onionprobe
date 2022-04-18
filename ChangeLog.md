@@ -1,0 +1,130 @@
+# Onionprobe ChangeLog
+
+## v0.2.3 - Unreleased
+
+Main issue: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/4
+
+### Features
+
+* [x] Debian package.
+* [x] Better logging.
+* [x] Additional command line options.
+* [x] Handling of SIGTERM and other signals.
+
+### Documentation
+
+* [x] Manpage.
+* [x] Auto-generate command line docs from CLI invocation.
+* [x] Auto-generate manpage from `argparse`.
+
+## v0.2.2 - 2022-04-06
+
+### Fixes
+
+* [x] Print usage when no arguments are supplied.
+
+## v0.2.1 - 2022-04-06
+
+### Fixes
+
+* [x] Python package fixes.
+
+## v0.2.0 - 2022-04-06
+
+Main issue: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/3
+
+### Enhancements
+
+* [x] Python packaging: https://pypi.org/project/onionprobe.
+* [x] Support for `--endpoints` command line argument.
+* [x] Display available metrics at command line usage.
+* [x] Adds `OnionprobeConfigCompiler` to help compile custom configuration.
+
+## v0.1.0 - 2022-03-31
+
+Main issue: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/2
+
+### Meta
+
+* [x] Move the repository to the [Onion Services Gitlab group](https://gitlab.torproject.org/tpo/onion-services).
+* [x] Docstrings.
+* [x] Environment variable controlling the configuration file to use.
+
+### Probing
+
+* [x] Set timeout at `get_hidden_service_descriptor()`.
+* [x] Set timeout at `Requests`.
+* [x] Set `CircuitStreamTimeout` in the built-in Tor daemon.
+* [x] HTTPS certificate validation check/exception.
+* [x] Max retries before throwing an error when getting descriptors.
+      This could help answering the following questions:
+    * [When an onion service lookup has failed at the first k HSDirs we tried, what are the chances it will still succeed?](https://gitlab.torproject.org/tpo/network-health/analysis/-/issues/28)
+    * [What's the average number of hsdir fetches before we get the hsdesc?](https://gitlab.torproject.org/tpo/core/tor/-/issues/13208)
+* [x] Max retries before throwing an error when querying the endpoint.
+
+### Metrics
+
+* [x] Status: sleeping, probing, starting or stopping.
+* [x] Match found / not found.
+* [x] Metric units in the description.
+* [x] Number of introduction points.
+* [x] Timestamp label.
+* [x] Register HSDir used to fetch the descriptor.
+      Check the [control-spec](https://gitlab.torproject.org/tpo/core/torspec/-/blob/main/control-spec.txt)
+      for `HSFETCH` command and the `HS_DESC` event ([using SETEVENTS](https://stem.torproject.org/tutorials/down_the_rabbit_hole.html)).
+      Relevant issues:
+
+### Enhancements
+
+* [x] Refactor into smaller modules.
+* [x] Better exception handling.
+
+### Bonus
+
+* [x] Script that compiles configuration from the
+      [real-world-onion-sites](https://github.com/alecmuffett/real-world-onion-sites) repository.
+* [x] Script that compiles configuration from the
+      [the SecureDrop API](https://securedrop.org/api/v1/directory/).
+
+## v0.0.1 - 2022-03-23
+
+Main issue: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/1
+
+### Basic
+
+* [x] Take a list of onions to check and make sure that you can always fetch
+      descriptors rather than just using cached descriptors etc.
+* [x] Randomisation of timing to avoid systemic errors getting lucky and not
+      detected.
+* [x] Looping support: goes through the list of onions in a loop, testing one
+      at a time continuously.
+* [x] Flush descriptor caches so testing happens like if a fresh client.
+* [x] Support for HTTP status codes.
+* [x] Page load latency.
+* [x] Ability to fetch a set of paths from each onion.
+      Customisable by test path: not all our sites have content at the root,
+      but do not bootstrap every time if that can be avoided.
+* [x] Need to know about "does the site have useful content?"
+      Regex for content inside the page: allow configuring a regex per path for
+      what should be found in the returned content/headers.
+* [x] Documentation.
+
+### Meta
+
+* [x] Dockerfile (and optionally a Docker Compose).
+
+### Prometheus
+
+* [x] Exports Prometheus metrics for the connection to the onion service, and
+      extra metrics per path on the status code for each path returned by the server.
+      If using the prometheus exporter with python, consider to just use request and
+      beautiful soup to check that the page is returning what one expects.
+* [x] Add in additional metrics wherever appropriate.
+* [x] To get the timings right, the tool should take care of the test frequency and
+      just expose the metrics rather than having Prometheus scraping individual
+      targets on Prometheus' schedule.
+
+### Bonus
+
+* [x] Optionally launch it's [own Tor process](https://stem.torproject.org/api/process.html)
+      like in [this example](https://stem.torproject.org/tutorials/to_russia_with_love.html#using-pycurl).
