@@ -131,8 +131,8 @@
 
 ## Plumbing
 
+* [x] Handling of SIGTERM and other signals.
 * [ ] Clear the Stem Controller cache at every path probing and not only for each endpoint probing.
-* [ ] Handling SIGKILL and other signals.
 * [ ] `ControlSocket` support using `stem.control.Controller.from_socket_file()`.
 * [ ] Built-in `HashedControlPort` generation to not leak password information to command as `tor --hash-password` does.
       See discussion [here](https://tor.stackexchange.com/questions/6448/how-does-the-tor-hash-password-option-work#12068).
