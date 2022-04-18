@@ -4,7 +4,9 @@
 #
 
 # Parameters
-USERNAME="onionprobe"
+# Use a name beginning with an underscore, see
+# https://www.debian.org/doc/debian-policy/ch-opersys.html#introduction
+USERNAME="_onionprobe"
 
 # Ensure that the scripts abort in case of any errors
 set -e

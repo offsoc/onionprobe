@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 ExecStart=/usr/bin/onionprobe -c /etc/onionprobe/onionprobe.yaml
-User=onionprobe
-Group=onionprobe
+User=_onionprobe
+Group=_onionprobe
 
 [Install]
 WantedBy=multi-user.target

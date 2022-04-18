@@ -15,8 +15,8 @@ DAEMON=/usr/bin/onionprobe
 DAEMON_OPTS="-c /etc/onionprobe/onionprobe.yaml"
 NAME="onionprobe"
 DESC="onionprobe"
-USER="$NAME"
-GROUP="$NAME"
+USER="_$NAME"
+GROUP="_$NAME"
 PIDFILE="/run/onionprobe/${NAME}.pid"
 
 test -x $DAEMON || exit 0
