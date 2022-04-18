@@ -27,6 +27,7 @@
 * [x] Docstrings.
 * [x] Refactor into smaller modules.
 * [ ] Move tasks to the [issue tracker](https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues).
+* [ ] CONTRIBUTING instructions.
 
 ## Prometheus
 
@@ -145,7 +146,8 @@
 * [ ] Non-http endpoints (regular TCP).
 * [ ] Support for [Client Authorization](https://community.torproject.org/onion-services/advanced/client-auth/).
 * [ ] Try to get the descriptor from multiple (if not all) HSDirs where it should be available.
-* [ ] Watch for config file changes (hot reload).
+* [ ] Watch for config file changes (hot reload), possibly using
+      [watchdog](https://pythonhosted.org/watchdog/) ([debian package](https://tracker.debian.org/pkg/python-watchdog)).
 * [ ] Fetch config from external application, like `securedrop.py` or `real-world-onion-sites.py`.
 * [ ] Architecture should be extensible to allow for different reporting options (stdout, Prometheus etc).
 * [ ] Custom actions/hooks/triggers.
