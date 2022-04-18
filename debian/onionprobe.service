@@ -4,7 +4,7 @@ After=network.target
 
 [Service]
 EnvironmentFile=/etc/default/onionprobe
-ExecStart=/usr/bin/onionprobe $DAEMON_OPTS
+ExecStart=/usr/bin/onionprobe -c $CONFIG $DAEMON_OPTS
 User=_onionprobe
 Group=_onionprobe
 

@@ -12,7 +12,8 @@
 
 PATH=/usr/local/sbin:/usr/local/bin:/sbin:/bin:/usr/sbin:/usr/bin
 DAEMON=/usr/bin/onionprobe
-DAEMON_OPTS="-c /etc/onionprobe/onionprobe.yaml"
+DAEMON_OPTS=""
+CONFIG="/etc/onionprobe/onionprobe.yaml"
 NAME="onionprobe"
 DESC="onionprobe"
 USER="_$NAME"
@@ -32,7 +33,7 @@ reload_onionprobe() {
 start_onionprobe() {
     start-stop-daemon --start --quiet --pidfile $PIDFILE \
         --user $USER --group $GROUP \
-        --startas $DAEMON -- $NAME $DAEMON_OPTS
+        --startas $DAEMON -- $NAME -c $CONFIG $DAEMON_OPTS
 }
 
 stop_onionprobe() {
