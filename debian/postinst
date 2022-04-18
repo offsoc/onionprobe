@@ -4,17 +4,18 @@
 #
 
 # Parameters
-# Use a name beginning with an underscore, see
+# User name should begin with an underscore, see
 # https://www.debian.org/doc/debian-policy/ch-opersys.html#introduction
-USERNAME="_onionprobe"
+NAME="onionprobe"
+USERNAME="_$NAME"
 
 # Ensure that the scripts abort in case of any errors
 set -e
 
 # Ensure a dedicated user for running the system-wide service
-adduser --no-create-home --home /var/lib/$USERNAME --system --group $USERNAME
+adduser --no-create-home --home /var/lib/$NAME --system --group $USERNAME
 mkdir -p /var/lib/$USERNAME
-chown $USERNAME. /var/lib/$USERNAME
+chown $USERNAME. /var/lib/$NAME
 
 # Include automatic generated code by debhelper(7)
 #DEBHELPER#
