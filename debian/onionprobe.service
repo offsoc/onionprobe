@@ -3,7 +3,8 @@ Description=Onionprobe
 After=network.target
 
 [Service]
-ExecStart=/usr/bin/onionprobe -c /etc/onionprobe/onionprobe.yaml
+EnvironmentFile=/etc/default/onionprobe
+ExecStart=/usr/bin/onionprobe $DAEMON_OPTS
 User=_onionprobe
 Group=_onionprobe
 
