@@ -11,7 +11,7 @@ DEPENDENCIES="python3-prometheus-client python3-stem python3-cryptography python
 DEPENDENCIES="$DEPENDENCIES tor"
 DEPENDENCIES_DOCS="pandoc latexmk texlive-latex-extra texlive-fonts-extra"
 DEPENDENCIES_PACKAGING_PYTHON="python3-venv python3-build python3-keyrings.alt twine"
-DEPENDENCIES_PACKAGING_DEBIAN="sbuild-debian-developer-setup"
+DEPENDENCIES_PACKAGING_DEBIAN="sbuild-debian-developer-setup piuparts"
 TORRC="/etc/tor/torrc"
 
 # Install dependencies
