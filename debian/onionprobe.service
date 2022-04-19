@@ -40,7 +40,7 @@ ProcSubset=pid
 DevicePolicy=closed
 RestrictAddressFamilies=AF_INET AF_INET6
 SystemCallArchitectures=native
-UMask=0177
+UMask=0077
 MemoryDenyWriteExecute=true
 
 [Install]
