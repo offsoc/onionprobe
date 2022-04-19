@@ -17,9 +17,12 @@ Vcs-Browser: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/tree/
 
 Package: onionprobe
 Architecture: all
+Pre-Depends:
+  ${misc:Pre-Depends}
 Depends:
  ${misc:Depends},
  ${python3:Depends},
+ adduser,
  tor
 Recommends:
  prometheus
