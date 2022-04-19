@@ -14,9 +14,7 @@ set -e
 
 # Ensure a dedicated user for running the system-wide service
 # Needs --force-badname to allow user names with underscores
-adduser --no-create-home --home /var/lib/$NAME --system --group --force-badname $USERNAME
-mkdir -p /var/lib/$USERNAME
-chown $USERNAME:$USERNAME /var/lib/$NAME
+adduser --home /var/lib/$NAME --system --group --force-badname $USERNAME
 
 # Include automatic generated code by debhelper(7)
 #DEBHELPER#
