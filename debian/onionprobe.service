@@ -1,6 +1,6 @@
 [Unit]
 Description=Onionprobe
-Documentation=https://gitlab.torproject.org/tpo/onion-services/onionprobe
+Documentation=file:///usr/share/doc/onionprobe/README.Debian https://gitlab.torproject.org/tpo/onion-services/onionprobe
 After=network.target
 
 [Service]
