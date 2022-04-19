@@ -1,6 +1,6 @@
 % ONIONPROBE(1) Onionprobe User Manual
 % Silvio Rhatto <rhatto@torproject.org>
-% Apr 18, 2022
+% Apr 19, 2022
 
 # NAME
 

@@ -1,6 +1,6 @@
 # Onionprobe ChangeLog
 
-## v0.2.3 - Unreleased
+## v0.3.0 - 2022-04-19
 
 Main issue: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/4
 
