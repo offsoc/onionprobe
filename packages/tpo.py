@@ -125,6 +125,12 @@ if __name__ == "__main__":
     else:
         template_config = None
 
-    instance = TPOSites(databases, template_config)
+    # Check if an output path is provided, overriding the default location
+    if len(sys.argv) > 3:
+        output_path = sys.argv[3]
+    else:
+        output_path = None
+
+    instance = TPOSites(databases, template_config, output_path)
 
     instance.build_onionprobe_config()
