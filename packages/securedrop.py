@@ -102,6 +102,18 @@ class SecureDropSites(OnionprobeConfigCompiler):
 if __name__ == "__main__":
     """Process from CLI"""
 
-    instance = SecureDropSites(databases)
+    # Check if a template file is provided, overriding the default location
+    if len(sys.argv) > 1 and os.path.exists(sys.argv[1]):
+        template_config = sys.argv[1]
+    else:
+        template_config = None
+
+    # Check if an output path is provided, overriding the default location
+    if len(sys.argv) > 2:
+        output_path = sys.argv[2]
+    else:
+        output_path = None
+
+    instance = SecureDropSites(databases, template_config, output_path)
 
     instance.build_onionprobe_config()
