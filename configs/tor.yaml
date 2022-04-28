@@ -65,6 +65,12 @@ interval: 5
 # Max random interval in seconds to wait between each round of tests
 sleep: 5
 
+# Run only a limited number of rounds (i.e., the number of times that
+# Onionprobe tests all the configured endpoints).
+# Requires the "loop" option to be enabled.
+# Set to 0 to disable this limit.
+rounds: 0
+
 # Max retries when fetching a descriptor
 # By default it is set to the number of HSDirs the client usually fetch minus one
 # See discussion at https://gitlab.torproject.org/tpo/network-health/analysis/-/issues/28

@@ -40,12 +40,28 @@ class OnionprobeMain:
 
         # Check if should loop
         if self.get_config('loop'):
+            iteration = 1
+            rounds    = self.get_config('rounds')
+
             while True:
+                self.log('Starting round %s, probing all defined endpoints...' % (iteration))
+
                 # Call for a round
                 self.round()
 
+                # Check rounds
+                if rounds > 0 and iteration >= rounds:
+                    self.log('Stopping after %s rounds' % (iteration))
+
+                    break
+
+                self.log('Round %s completed.' % (iteration))
+
                 # Then wait
                 self.wait(self.get_config('sleep'))
+
+                # Update iterations counter
+                iteration += 1
 
         else:
             # Single pass, only one round

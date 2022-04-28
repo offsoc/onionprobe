@@ -122,6 +122,12 @@ config = {
             'action'  : 'store',
             },
 
+        'rounds': {
+            'help'    : 'Run only a limited number of rounds (i.e., the number of times that Onionprobe tests all the configured endpoints). Requires the "loop" option to be enabled. Set to 0 to disable this limit.',
+            'default' : 0,
+            'action'  : 'store',
+            },
+
         'descriptor_max_retries': {
             'help'    : 'Max retries when fetching a descriptor',
             'default' : 5,
