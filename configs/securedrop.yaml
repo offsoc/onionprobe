@@ -63,6 +63,12 @@ endpoints:
     - path: ''
     port: 80
     protocol: http
+  Claudio Guarnieri:
+    address: 7dw7foypguycptlodmkscnziw5a65ilivzz6ajiei3yhe3gsfojlqwad.onion
+    paths:
+    - path: ''
+    port: 80
+    protocol: http
   Dagbladet:
     address: udgkmwzb5jmucs2r2cjtfscgf6s6d6otbt2qfiinovtwknsxk5oyzeid.onion
     paths:
@@ -224,6 +230,7 @@ new_circuit: false
 prometheus_exporter: true
 prometheus_exporter_port: 9091
 randomize: true
+rounds: 0
 shuffle: true
 sleep: 5
 socks_port: 19050

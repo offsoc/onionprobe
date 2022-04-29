@@ -291,6 +291,36 @@ endpoints:
     - path: /ws/languages
     port: 443
     protocol: https
+  Bellingcat:
+    address: bellcatmbguthn3age23lrbseln2lryzv3mt7whis7ktjw4qrestbzad.onion
+    paths:
+    - path: /
+    port: 80
+    protocol: http
+  Bellingcat | es:
+    address: es.bellcatmbguthn3age23lrbseln2lryzv3mt7whis7ktjw4qrestbzad.onion
+    paths:
+    - path: /
+    port: 80
+    protocol: http
+  Bellingcat | fr:
+    address: fr.bellcatmbguthn3age23lrbseln2lryzv3mt7whis7ktjw4qrestbzad.onion
+    paths:
+    - path: /
+    port: 80
+    protocol: http
+  Bellingcat | ru:
+    address: ru.bellcatmbguthn3age23lrbseln2lryzv3mt7whis7ktjw4qrestbzad.onion
+    paths:
+    - path: /
+    port: 80
+    protocol: http
+  Bellingcat | ua:
+    address: ukraine.bellcatmbguthn3age23lrbseln2lryzv3mt7whis7ktjw4qrestbzad.onion
+    paths:
+    - path: /
+    port: 80
+    protocol: http
   Brave Search:
     address: search.brave4u7jddbv7cyviptqjc7jusxh72uik7zt6adtckl5f4nwy2v72qd.onion
     paths:
@@ -765,6 +795,12 @@ endpoints:
     - path: /en/service/onion.html
     port: 80
     protocol: http
+  The Guardian:
+    address: guardian2zotagl6tmjucg3lrhxdk4dw3lhbqnkvvkywawy3oqfoprid.onion
+    paths:
+    - path: /
+    port: 443
+    protocol: https
   The Intercept:
     address: 27m3p2uv7igmj6kvd4ql3cct5h3sdwrsajovkkndeufumzyfhlfev4qd.onion
     paths:
@@ -819,6 +855,18 @@ endpoints:
     - path: /
     port: 80
     protocol: http
+  WikiFesad:
+    address: hyfs2rd42ij4opqkdxzycb7dolzwjtbmmm4mbpohc57mm76u6iyurxqd.onion
+    paths:
+    - path: /
+    port: 443
+    protocol: https
+  Yahoo News:
+    address: yahoonewsnqkxo423g7vuwr2mvkwmc5t4df5x44dfdfvmyzqgcyt3had.onion
+    paths:
+    - path: /
+    port: 443
+    protocol: https
   decoded.legal:
     address: dlegal66uj5u2dvcbrev7vv6fjtwnd4moqu7j6jnd42rmbypv3coigyd.onion
     paths:
@@ -848,6 +896,7 @@ new_circuit: false
 prometheus_exporter: true
 prometheus_exporter_port: 9091
 randomize: true
+rounds: 0
 shuffle: true
 sleep: 5
 socks_port: 19050
