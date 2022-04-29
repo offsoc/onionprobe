@@ -20,6 +20,7 @@
 
 # Dependencies
 import os
+import sys
 import json
 import urllib.parse
 
@@ -60,12 +61,24 @@ class SecureDropSites(OnionprobeConfigCompiler):
         """
 
         # Get the Onion Service database from a remote API
-        result    = requests.get(self.databases[database])
-        data      = json.load(StringIO(result.text))
-        endpoints = {}
+        try:
+            print('Fetching remote list of %s database endpoints...' % (database))
+
+            result    = requests.get(self.databases[database])
+            data      = json.load(StringIO(result.text))
+            endpoints = {}
+
+        except Exception as e:
+            # Log the exception
+            print(repr(e))
+
+            # Some error happened: do not proceed generating the config
+            exit(1)
 
         # Parse the database and convert it to the Onionprobe endpoints format
         for item in data:
+            print('Processing %s...' % (item['title']))
+
             # Complete parsing
             # Does not work right now since the 'onion_address' field is not
             # RFC 1808 compliant.

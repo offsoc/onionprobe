@@ -21,6 +21,7 @@
 
 # Dependencies
 import os
+import sys
 import csv
 import urllib.parse
 
@@ -62,12 +63,24 @@ class RealWorldOnionSites(OnionprobeConfigCompiler):
         """
 
         # Get the Onion Service database from a remote CSV file
-        result    = requests.get(self.databases[database])
-        data      = csv.DictReader(StringIO(result.text))
-        endpoints = {}
+        try:
+            print('Fetching remote list of %s database endpoints...' % (database))
+
+            result    = requests.get(self.databases[database])
+            data      = csv.DictReader(StringIO(result.text))
+            endpoints = {}
+
+        except Exception as e:
+            # Log the exception
+            print(repr(e))
+
+            # Some error happened: do not proceed generating the config
+            exit(1)
 
         # Parse the database and convert it to the Onionprobe endpoints format
         for item in data:
+            print('Processing %s...' % (item['site_name']))
+
             url      = urllib.parse.urlparse(item['onion_url'])
             address  = url.netloc
             protocol = url.scheme if url.scheme != '' else 'http'

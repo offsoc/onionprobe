@@ -323,6 +323,8 @@ class OnionprobeConfigCompiler:
 
         # Load the default configuration file as a template
         if os.path.exists(template_config):
+            print('Loading configuration template...')
+
             with open(template_config, 'r') as config:
                 self.config = yaml.load(config, yaml.CLoader)
 
@@ -366,6 +368,8 @@ class OnionprobeConfigCompiler:
 
         for database in self.databases:
             try:
+                print('Building the list of endpoints for database %s...' % (database))
+
                 # Build list of endpoints
                 endpoints = self.build_endpoints_config(database)
 
@@ -377,6 +381,8 @@ class OnionprobeConfigCompiler:
 
                 # Save
                 with open(os.path.join(self.output_path, database + '.yaml'), 'w') as output:
+                    print('Saving the generated config for database %s...' % (database))
+
                     output.write(yaml.dump(config))
 
             except Exception as e:
