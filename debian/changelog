@@ -4,6 +4,8 @@ onionprobe (0.3.1+nmu0) unstable; urgency=medium
   * New upstream version.
   * Add examples folder.
 
+ -- Silvio Rhatto <rhatto@riseup.net>  Tue, 03 May 2022 13:18:40 -0300
+
 onionprobe (0.3.0+nmu0) unstable; urgency=medium
 
   * Non-maintainer upload.
