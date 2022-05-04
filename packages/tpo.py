@@ -37,7 +37,7 @@ except ImportError:
 
 # The list of external databases handled by this implementation
 databases = {
-        'tpo': 'https://onion.torproject.org/services.json',
+        'tpo': 'https://onion.torproject.org/onionbalancev3-services.yaml',
         }
 
 class TPOSites(OnionprobeConfigCompiler):
