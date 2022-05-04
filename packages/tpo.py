@@ -73,7 +73,8 @@ class TPOSites(OnionprobeConfigCompiler):
             result = requests.get(self.databases[database])
 
             for line in result.text.split('\n'):
-                data.update(json.loads(line))
+                if line != '':
+                    data.update(json.loads(line))
 
         endpoints = {}
 
