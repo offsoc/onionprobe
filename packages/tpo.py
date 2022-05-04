@@ -70,7 +70,15 @@ class TPOSites(OnionprobeConfigCompiler):
                     items = data.update(json.loads(line))
 
         else:
-            result = requests.get(self.databases[database])
+            try:
+                result = requests.get(self.databases[database])
+
+            except Exception as e:
+                # Log the exception
+                print(repr(e))
+
+                # Some error happened: do not proceed generating the config
+                exit(1)
 
             for line in result.text.split('\n'):
                 if line != '':
