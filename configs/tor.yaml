@@ -48,6 +48,13 @@ prometheus_exporter: true
 # Prometheus exporter port
 prometheus_exporter_port: 9091
 
+# Max random time in seconds between probing each endpoint
+interval: 5
+
+# Max random time in seconds to wait between each round of tests (a round = a
+# pass among all defined endpoints)
+sleep: 5
+
 # Whether to shuffle list to scramble the ordering of the probe to avoid
 # the endpoint list to be guessed by a third party.
 #
@@ -55,15 +62,9 @@ prometheus_exporter_port: 9091
 # tests.
 shuffle: true
 
-# Whether to randomize intervals for privacy concerns and to avoid systematic
-# errors
+# Whether to randomize both the interval and the sleep time for privacy
+# concerns and to avoid systematic errors
 randomize: true
-
-# Max random interval in seconds between probing each endpoint
-interval: 5
-
-# Max random interval in seconds to wait between each round of tests
-sleep: 5
 
 # Run only a limited number of rounds (i.e., the number of times that
 # Onionprobe tests all the configured endpoints).
