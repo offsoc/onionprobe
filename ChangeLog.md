@@ -1,5 +1,15 @@
 # Onionprobe ChangeLog
 
+## v0.3.1 - Unreleased
+
+Main issue: https://gitlab.torproject.org/tpo/tpa/team/-/issues/40717
+
+### Features
+
+* [x] Adds `packages/tpo.py` to generate an Onionprobe config with Tor
+      Project's .onions.
+      Details at https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/merge_requests/4
+
 ## v0.3.0 - 2022-04-19
 
 Main issue: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/4
