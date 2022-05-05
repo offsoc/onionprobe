@@ -121,6 +121,22 @@ class TPOSites(OnionprobeConfigCompiler):
 
         return endpoints
 
+    def build_onionprobe_config(self):
+        """
+        Overrides OnionprobeConfigCompiler.build_onionprobe_config()
+        method with custom logic.
+
+        """
+
+        # Set the interval and disable shuffling and randomization
+        self.config['shuffle']   = False
+        self.config['randomize'] = False
+        self.config['interval']  = 60
+        self.config['sleep']     = 60
+
+        # Build the configuration
+        super().build_onionprobe_config()
+
 if __name__ == "__main__":
     """Process from CLI"""
 
