@@ -1,6 +1,6 @@
 % ONIONPROBE(1) Onionprobe User Manual
 % Silvio Rhatto <rhatto@torproject.org>
-% Apr 19, 2022
+% May 06, 2022
 
 # NAME
 
@@ -11,7 +11,7 @@ Onionprobe - a test and monitoring tool for Onion Services sites
 onionprobe [-h] [-c CONFIG] [-v] [--circuit_stream_timeout CIRCUIT_STREAM_TIMEOUT] [--control_password CONTROL_PASSWORD] [--control_port CONTROL_PORT] [--descriptor_max_retries DESCRIPTOR_MAX_RETRIES]
                   [--descriptor_timeout DESCRIPTOR_TIMEOUT] [-e [ONION-ADDRESS1 ...]] [--http_connect_max_retries HTTP_CONNECT_MAX_RETRIES] [--http_connect_timeout HTTP_CONNECT_TIMEOUT] [--http_read_timeout HTTP_READ_TIMEOUT]
                   [--interval INTERVAL] [--launch_tor | --no-launch_tor] [--log_level LOG_LEVEL] [--loop | --no-loop] [--new_circuit | --no-new_circuit] [--prometheus_exporter | --no-prometheus_exporter]
-                  [--prometheus_exporter_port PROMETHEUS_EXPORTER_PORT] [--randomize | --no-randomize] [--shuffle | --no-shuffle] [--sleep SLEEP] [--socks_port SOCKS_PORT] [--tor_address TOR_ADDRESS]
+                  [--prometheus_exporter_port PROMETHEUS_EXPORTER_PORT] [--randomize | --no-randomize] [--rounds ROUNDS] [--shuffle | --no-shuffle] [--sleep SLEEP] [--socks_port SOCKS_PORT] [--tor_address TOR_ADDRESS]
 
 
 # DESCRIPTION
@@ -27,7 +27,7 @@ onion services endpoints and paths, optionally exporting to Prometheus.
     onionprobe [-h] [-c CONFIG] [-v] [--circuit_stream_timeout CIRCUIT_STREAM_TIMEOUT] [--control_password CONTROL_PASSWORD] [--control_port CONTROL_PORT] [--descriptor_max_retries DESCRIPTOR_MAX_RETRIES]
                       [--descriptor_timeout DESCRIPTOR_TIMEOUT] [-e [ONION-ADDRESS1 ...]] [--http_connect_max_retries HTTP_CONNECT_MAX_RETRIES] [--http_connect_timeout HTTP_CONNECT_TIMEOUT] [--http_read_timeout HTTP_READ_TIMEOUT]
                       [--interval INTERVAL] [--launch_tor | --no-launch_tor] [--log_level LOG_LEVEL] [--loop | --no-loop] [--new_circuit | --no-new_circuit] [--prometheus_exporter | --no-prometheus_exporter]
-                      [--prometheus_exporter_port PROMETHEUS_EXPORTER_PORT] [--randomize | --no-randomize] [--shuffle | --no-shuffle] [--sleep SLEEP] [--socks_port SOCKS_PORT] [--tor_address TOR_ADDRESS]
+                      [--prometheus_exporter_port PROMETHEUS_EXPORTER_PORT] [--randomize | --no-randomize] [--rounds ROUNDS] [--shuffle | --no-shuffle] [--sleep SLEEP] [--socks_port SOCKS_PORT] [--tor_address TOR_ADDRESS]
 
     Test and monitor onion services
 
@@ -68,6 +68,7 @@ onion services endpoints and paths, optionally exporting to Prometheus.
                             Set the Prometheus exporter port
       --randomize, --no-randomize
                             Randomize the interval between each probing (default: True)
+      --rounds ROUNDS       Run only a limited number of rounds (i.e., the number of times that Onionprobe tests all the configured endpoints). Requires the "loop" option to be enabled. Set to 0 to disable this limit.
       --shuffle, --no-shuffle
                             Shuffle the list of endpoints at each probing round (default: True)
       --sleep SLEEP         Max random interval in seconds to wait between each round of tests
@@ -185,6 +186,13 @@ This is a sample configuration file that can be adapted:
     # Prometheus exporter port
     prometheus_exporter_port: 9091
 
+    # Max random time in seconds between probing each endpoint
+    interval: 5
+
+    # Max random time in seconds to wait between each round of tests (a round = a
+    # pass among all defined endpoints)
+    sleep: 5
+
     # Whether to shuffle list to scramble the ordering of the probe to avoid
     # the endpoint list to be guessed by a third party.
     #
@@ -192,15 +200,15 @@ This is a sample configuration file that can be adapted:
     # tests.
     shuffle: true
 
-    # Whether to randomize intervals for privacy concerns and to avoid systematic
-    # errors
+    # Whether to randomize both the interval and the sleep time for privacy
+    # concerns and to avoid systematic errors
     randomize: true
 
-    # Max random interval in seconds between probing each endpoint
-    interval: 5
-
-    # Max random interval in seconds to wait between each round of tests
-    sleep: 5
+    # Run only a limited number of rounds (i.e., the number of times that
+    # Onionprobe tests all the configured endpoints).
+    # Requires the "loop" option to be enabled.
+    # Set to 0 to disable this limit.
+    rounds: 0
 
     # Max retries when fetching a descriptor
     # By default it is set to the number of HSDirs the client usually fetch minus one
