@@ -311,7 +311,7 @@ class OnionprobeConfigCompiler:
         # Save the databases of Onion Services
         self.databases = databases
 
-        # Determine the default configuration file
+        # Determine the default configuration template
         if config_template is None:
             # Fallback to configs/ folder when running directly from the
             # Onionprobe repository or from the python package
@@ -320,12 +320,6 @@ class OnionprobeConfigCompiler:
             # Finally fallback to /etc/onionprobe
             if not os.path.exists(config_template):
                 config_template = os.path.normpath(os.path.join(os.sep, 'etc', 'onionprobe', 'tor.yaml'))
-
-        # Determine the output path
-        if output_path is None:
-            self.output_path = os.path.join(basepath, 'configs')
-        else:
-            self.output_path = output_path
 
         # Load the default configuration file as a template
         if os.path.exists(config_template):
@@ -336,6 +330,19 @@ class OnionprobeConfigCompiler:
 
         else:
             raise FileNotFoundError(config_template)
+
+        # Determine the output path
+        if output_path is None:
+            # Fallback to configs/ folder when running directly from the
+            # Onionprobe repository
+            self.output_path = os.path.join(basepath, 'configs')
+
+            # Fallback to the current working directory
+            if not os.path.exists(self.output_path):
+                self.output_path = os.getcwd()
+
+        else:
+            self.output_path = output_path
 
     def build_endpoints_config(self, database):
         """
