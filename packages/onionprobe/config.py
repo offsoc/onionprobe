@@ -423,7 +423,7 @@ def cmdline_parser_compiler(default_source=None):
 
     parser.add_argument('-s', '--source',          dest='source',          help="Database source file or endpoint. Defaults to " + default_source + '.')
     parser.add_argument('-t', '--config_template', dest='config_template', help="Configuration template to use")
-    parser.add_argument('-o', '--output_path',     dest='output_path',     help="Output path where config should be saved")
+    parser.add_argument('-o', '--output_path',     dest='output_path',     help="Output folder where config should be saved")
 
     return parser
 
