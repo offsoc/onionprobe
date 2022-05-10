@@ -21,13 +21,11 @@
 
 # Dependencies
 import os
-import sys
 import json
+import argparse
 import urllib.parse
 
-from io import StringIO
-
-from onionprobe.config import OnionprobeConfigCompiler, basepath
+from onionprobe.config import OnionprobeConfigCompiler, basepath, cmdline_parser_compiler, cmdline_compiler
 
 try:
     import requests
@@ -65,12 +63,16 @@ class TPOSites(OnionprobeConfigCompiler):
 
         # Get the Onion Service database from a remote API
         if os.path.exists(self.databases[database]):
+            print('Using list of %s database endpoints from %s...' % (
+                database, self.databases[database]))
+
             with open(self.databases[database], 'r') as result:
                 for line in result.readlines():
                     items = data.update(json.loads(line))
 
         else:
             try:
+                print('Fetching remote list of %s database endpoints from %s...' % (database, self.databases[database]))
                 result = requests.get(self.databases[database])
 
             except Exception as e:
@@ -88,6 +90,8 @@ class TPOSites(OnionprobeConfigCompiler):
 
         # Parse the database and convert it to the Onionprobe endpoints format
         for item in data:
+            print('Processing %s...' % (data[item]))
+
             # Complete parsing
             # Does not work right now since the 'onion_address' field is not
             # RFC 1808 compliant.
@@ -140,22 +144,11 @@ class TPOSites(OnionprobeConfigCompiler):
 if __name__ == "__main__":
     """Process from CLI"""
 
-    # Check if a filepath is provided, overriding the default database location
-    if len(sys.argv) > 1 and os.path.exists(sys.argv[1]):
-        databases['tpo'] = sys.argv[1]
+    args = cmdline_compiler(databases['tpo'])
 
-    # Check if a template file is provided, overriding the default location
-    if len(sys.argv) > 2 and os.path.exists(sys.argv[2]):
-        template_config = sys.argv[2]
-    else:
-        template_config = None
+    if args.source != None:
+        databases['tpo'] = args.source
 
-    # Check if an output path is provided, overriding the default location
-    if len(sys.argv) > 3:
-        output_path = sys.argv[3]
-    else:
-        output_path = None
-
-    instance = TPOSites(databases, template_config, output_path)
+    instance = TPOSites(databases, args.config_template, args.output_path)
 
     instance.build_onionprobe_config()
