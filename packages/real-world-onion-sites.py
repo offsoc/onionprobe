@@ -117,6 +117,6 @@ if __name__ == "__main__":
     if args.source != None:
         databases['real-world-onion-sites'] = args.source
 
-    instance = RealWorldOnionSites(databases, args.config_template, args.output_path)
+    instance = RealWorldOnionSites(databases, args.config_template, args.output_folder)
 
     instance.build_onionprobe_config()

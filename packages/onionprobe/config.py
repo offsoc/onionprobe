@@ -289,7 +289,7 @@ class OnionprobeConfig:
 class OnionprobeConfigCompiler:
     """Base class to build Onionprobe configs from external sources of Onion Services"""
 
-    def __init__(self, databases, config_template = None, output_path = None):
+    def __init__(self, databases, config_template = None, output_folder = None):
         """
         Constructor for the OnionprobeConfigCompiler class.
 
@@ -304,8 +304,8 @@ class OnionprobeConfigCompiler:
         :type  config_template: str
         :param config_template: Configuration file path to be used as template
 
-        :type  output_path: str
-        :param output_path: Output folder where configs are written
+        :type  output_folder: str
+        :param output_folder: Output folder where configs are written
         """
 
         # Save the databases of Onion Services
@@ -332,17 +332,17 @@ class OnionprobeConfigCompiler:
             raise FileNotFoundError(config_template)
 
         # Determine the output path
-        if output_path is None:
+        if output_folder is None:
             # Fallback to configs/ folder when running directly from the
             # Onionprobe repository
-            self.output_path = os.path.join(basepath, 'configs')
+            self.output_folder = os.path.join(basepath, 'configs')
 
             # Fallback to the current working directory
-            if not os.path.exists(self.output_path):
-                self.output_path = os.getcwd()
+            if not os.path.exists(self.output_folder):
+                self.output_folder = os.getcwd()
 
         else:
-            self.output_path = output_path
+            self.output_folder = output_folder
 
     def build_endpoints_config(self, database):
         """
@@ -396,11 +396,11 @@ class OnionprobeConfigCompiler:
                 config['endpoints'] = endpoints
 
                 # Build the output path
-                output_path = os.path.normpath(os.path.join(self.output_path, database + '.yaml'))
+                output_folder = os.path.normpath(os.path.join(self.output_folder, database + '.yaml'))
 
                 # Save
-                with open(output_path, 'w') as output:
-                    print('Saving the generated config for database %s into %s...' % (database, output_path))
+                with open(output_folder, 'w') as output:
+                    print('Saving the generated config for database %s into %s...' % (database, output_folder))
 
                     output.write(yaml.dump(config))
 
@@ -423,7 +423,7 @@ def cmdline_parser_compiler(default_source=None):
 
     parser.add_argument('-s', '--source',          dest='source',          help="Database source file or endpoint. Defaults to " + default_source + '.')
     parser.add_argument('-t', '--config_template', dest='config_template', help="Configuration template to use")
-    parser.add_argument('-o', '--output_path',     dest='output_path',     help="Output folder where config should be saved")
+    parser.add_argument('-o', '--output_folder',   dest='output_folder',   help="Output folder where config should be saved")
 
     return parser
 
