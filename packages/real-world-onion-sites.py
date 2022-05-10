@@ -27,7 +27,7 @@ import urllib.parse
 
 from io import StringIO
 
-from onionprobe.config import OnionprobeConfigCompiler, basepath
+from onionprobe.config import OnionprobeConfigCompiler, basepath, cmdline_parser_compiler, cmdline_compiler
 
 try:
     import requests
@@ -62,20 +62,29 @@ class RealWorldOnionSites(OnionprobeConfigCompiler):
 
         """
 
+        endpoints = {}
+
         # Get the Onion Service database from a remote CSV file
-        try:
-            print('Fetching remote list of %s database endpoints...' % (database))
+        if os.path.exists(self.databases[database]):
+            print('Using list of %s database endpoints from %s...' % (
+                database, self.databases[database]))
 
-            result    = requests.get(self.databases[database])
-            data      = csv.DictReader(StringIO(result.text))
-            endpoints = {}
+            with open(self.databases[database], 'r') as result:
+                data = csv.DictReader(result.readlines())
 
-        except Exception as e:
-            # Log the exception
-            print(repr(e))
+        else:
+            try:
+                print('Fetching remote list of %s database endpoints from %s...' % (database, self.databases[database]))
 
-            # Some error happened: do not proceed generating the config
-            exit(1)
+                result = requests.get(self.databases[database])
+                data   = csv.DictReader(StringIO(result.text))
+
+            except Exception as e:
+                # Log the exception
+                print(repr(e))
+
+                # Some error happened: do not proceed generating the config
+                exit(1)
 
         # Parse the database and convert it to the Onionprobe endpoints format
         for item in data:
@@ -103,18 +112,11 @@ class RealWorldOnionSites(OnionprobeConfigCompiler):
 if __name__ == "__main__":
     """Process from CLI"""
 
-    # Check if a template file is provided, overriding the default location
-    if len(sys.argv) > 1 and os.path.exists(sys.argv[1]):
-        template_config = sys.argv[1]
-    else:
-        template_config = None
+    args = cmdline_compiler(databases['real-world-onion-sites'])
 
-    # Check if an output path is provided, overriding the default location
-    if len(sys.argv) > 2:
-        output_path = sys.argv[2]
-    else:
-        output_path = None
+    if args.source != None:
+        databases['real-world-onion-sites'] = args.source
 
-    instance = RealWorldOnionSites(databases, template_config, output_path)
+    instance = RealWorldOnionSites(databases, args.config_template, args.output_folder)
 
     instance.build_onionprobe_config()

@@ -289,7 +289,7 @@ class OnionprobeConfig:
 class OnionprobeConfigCompiler:
     """Base class to build Onionprobe configs from external sources of Onion Services"""
 
-    def __init__(self, databases, template_config = None, output_path = None):
+    def __init__(self, databases, config_template = None, output_folder = None):
         """
         Constructor for the OnionprobeConfigCompiler class.
 
@@ -301,32 +301,48 @@ class OnionprobeConfigCompiler:
         :param databases: Dictionary of data sources to fetch .onion sites.
                           Format is { 'database_name': 'database_url' }
 
-        :type  template_config: str
-        :param template_config: Configuration file path to be used as template
+        :type  config_template: str
+        :param config_template: Configuration file path to be used as template
 
-        :type  output_path: str
-        :param output_path: Output folder where configs are written
+        :type  output_folder: str
+        :param output_folder: Output folder where configs are written
         """
 
         # Save the databases of Onion Services
         self.databases = databases
 
-        # Determine the default configuration file
-        if template_config is None:
-            template_config = os.path.join(basepath, 'configs', 'tor.yaml')
+        # Determine the default configuration template
+        if config_template is None:
+            # Fallback to configs/ folder when running directly from the
+            # Onionprobe repository or from the python package
+            config_template = os.path.normpath(os.path.join(basepath, 'configs', 'tor.yaml'))
 
-        # Determine the output path
-        if output_path is None:
-            self.output_path = os.path.join(basepath, 'configs')
-        else:
-            self.output_path = output_path
+            # Finally fallback to /etc/onionprobe
+            if not os.path.exists(config_template):
+                config_template = os.path.normpath(os.path.join(os.sep, 'etc', 'onionprobe', 'tor.yaml'))
 
         # Load the default configuration file as a template
-        if os.path.exists(template_config):
-            print('Loading configuration template...')
+        if os.path.exists(config_template):
+            print('Loading configuration template from %s...' % (config_template))
 
-            with open(template_config, 'r') as config:
+            with open(config_template, 'r') as config:
                 self.config = yaml.load(config, yaml.CLoader)
+
+        else:
+            raise FileNotFoundError(config_template)
+
+        # Determine the output path
+        if output_folder is None:
+            # Fallback to configs/ folder when running directly from the
+            # Onionprobe repository
+            self.output_folder = os.path.join(basepath, 'configs')
+
+            # Fallback to the current working directory
+            if not os.path.exists(self.output_folder):
+                self.output_folder = os.getcwd()
+
+        else:
+            self.output_folder = output_folder
 
     def build_endpoints_config(self, database):
         """
@@ -379,11 +395,47 @@ class OnionprobeConfigCompiler:
                 # Replace the endpoints
                 config['endpoints'] = endpoints
 
+                # Build the output path
+                output_folder = os.path.normpath(os.path.join(self.output_folder, database + '.yaml'))
+
                 # Save
-                with open(os.path.join(self.output_path, database + '.yaml'), 'w') as output:
-                    print('Saving the generated config for database %s...' % (database))
+                with open(output_folder, 'w') as output:
+                    print('Saving the generated config for database %s into %s...' % (database, output_folder))
 
                     output.write(yaml.dump(config))
 
             except Exception as e:
                 print(e)
+
+def cmdline_parser_compiler(default_source=None):
+    """
+    Generate command line arguments for the configuration compiler
+
+    :rtype: argparse.ArgumentParser
+    :return: The parser object
+    """
+
+    description = 'Generates an Onionprobe config file from ' + default_source
+    parser      = argparse.ArgumentParser(
+                    description=description,
+                    formatter_class=argparse.RawDescriptionHelpFormatter,
+                  )
+
+    parser.add_argument('-s', '--source',          dest='source',          help="Database source file or endpoint. Defaults to " + default_source + '.')
+    parser.add_argument('-t', '--config_template', dest='config_template', help="Configuration template to use")
+    parser.add_argument('-o', '--output_folder',   dest='output_folder',   help="Output folder where config should be saved")
+
+    return parser
+
+def cmdline_compiler(default_source=None):
+    """
+    Evalutate the command line for the configuration compiler.
+
+    :rtype: argparse.Namespace
+    :return: Command line arguments.
+    """
+
+    parser = cmdline_parser_compiler(default_source)
+    args   = parser.parse_args()
+
+    return args
