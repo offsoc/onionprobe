@@ -1,5 +1,12 @@
 # Onionprobe ChangeLog
 
+## v0.3.4 - 2022-05-11
+
+### Fixes
+
+* [x] Onionprobe's exporter port allocation conflict with the push gateway
+      https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/45
+
 ## v0.3.3 - 2022-05-11
 
 ### Fixes
