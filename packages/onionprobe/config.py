@@ -88,7 +88,7 @@ config = {
 
         'prometheus_exporter_port': {
             'help'    : 'Set the Prometheus exporter port',
-            'default' : 9091,
+            'default' : 9935,
             'action'  : 'store',
             },
 

@@ -72,7 +72,7 @@ Compose](https://docs.docker.com/compose/), which can be started using
 Then point your browser to:
 
 * The built-in Prometheus dashboard: https://localhost:9090
-* The built-in Onionprobe Prometheus exporter: https://localhost:9091
+* The built-in Onionprobe Prometheus exporter: https://localhost:9935
 
 ## Compiled configurations
 

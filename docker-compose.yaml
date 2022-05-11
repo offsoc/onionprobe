@@ -37,7 +37,7 @@ services:
     volumes:
       - .:/srv/onionprobe
     ports:
-      - 9091:9091
+      - 9935:9935
     environment:
       ONIONPROBE_CONFIG: ${ONIONPROBE_CONFIG:-/srv/onionprobe/configs/tor.yaml}
     #depends_on:

@@ -228,7 +228,7 @@ log_level: info
 loop: true
 new_circuit: false
 prometheus_exporter: true
-prometheus_exporter_port: 9091
+prometheus_exporter_port: 9935
 randomize: true
 rounds: 0
 shuffle: true

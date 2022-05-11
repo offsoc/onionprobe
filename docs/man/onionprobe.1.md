@@ -184,7 +184,7 @@ This is a sample configuration file that can be adapted:
     prometheus_exporter: true
 
     # Prometheus exporter port
-    prometheus_exporter_port: 9091
+    prometheus_exporter_port: 9935
 
     # Max random time in seconds between probing each endpoint
     interval: 5
