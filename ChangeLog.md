@@ -1,10 +1,17 @@
 # Onionprobe ChangeLog
 
+## v0.3.3 - Unreleased
+
+### Fixes
+
+* [x] Stem is unable to find cryptography module when runing from the pip package
+      https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/43
+
 ## v0.3.2 - 2022-05-11
 
 Main issue: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/42
 
-## Features
+### Features
 
 * [x] Enhanced config generators: switch all three config generators currently
       supporter (Real-World Onion Sites, SecureDrop and TPO) to rely on argparse
