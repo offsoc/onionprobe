@@ -1,6 +1,6 @@
 # Onionprobe ChangeLog
 
-## v0.3.3 - Unreleased
+## v0.3.3 - 2022-05-11
 
 ### Fixes
 
