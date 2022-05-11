@@ -1,3 +1,10 @@
+onionprobe (0.3.2) unstable; urgency=medium
+
+  * New upstream version.
+  * Leave examples only at /usr/lib/python3/dist-packages.
+
+ -- Silvio Rhatto <rhatto@torproject.org>  Wed, 11 May 2022 09:50:53 -0300
+
 onionprobe (0.3.1) unstable; urgency=medium
 
   * New upstream version.

@@ -1,5 +1,15 @@
 # Onionprobe ChangeLog
 
+## v0.3.2 - 2022-05-11
+
+Main issue: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/42
+
+## Features
+
+* [x] Enhanced config generators: switch all three config generators currently
+      supporter (Real-World Onion Sites, SecureDrop and TPO) to rely on argparse
+      for command line arguments.
+
 ## v0.3.1 - 2022-05-10
 
 Main issue: https://gitlab.torproject.org/tpo/tpa/team/-/issues/40717
