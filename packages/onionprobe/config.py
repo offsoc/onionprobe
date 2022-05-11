@@ -321,8 +321,11 @@ class OnionprobeConfigCompiler:
         else:
             raise FileNotFoundError(config_template)
 
-        # TODO: should this also raise a FileNotFoundError?
+        # Set the output folder
         self.output_folder = output_folder
+
+        if not os.path.exists(output_folder):
+            raise FileNotFoundError(output_folder)
 
     def build_endpoints_config(self, database):
         """
@@ -401,24 +404,27 @@ def cmdline_parser_compiler(default_source=None):
                     formatter_class=argparse.RawDescriptionHelpFormatter,
                   )
 
-    # Fallback to configs/ folder when running directly from the
-    # Onionprobe repository or from the python package
+    # Try to use the configs/ folder as the default config_template (will match
+    # when running directly from the Onionprobe repository or from the python
+    # package)
     config_template = os.path.normpath(os.path.join(basepath, 'configs', 'tor.yaml'))
-    # Finally fallback to /etc/onionprobe
+
+    # Fallback config_template to /etc/onionprobe
     if not os.path.exists(config_template):
         config_template = os.path.normpath(os.path.join(os.sep, 'etc', 'onionprobe', 'tor.yaml'))
 
-    # Fallback to configs/ folder when running directly from the
-    # Onionprobe repository
+    # Try to use the configs/ folder as the default output_folder (will match
+    # when running directly from the Onionprobe repository or from the python
+    # package)
     output_folder = os.path.join(basepath, 'configs')
 
-    # Fallback to the current working directory
+    # Fallback output_folder to the current working directory
     if not os.path.exists(output_folder):
         output_folder = os.getcwd()
 
-    parser.add_argument('-s', '--source',          dest='source',          default=default_source, help="Database source file or endpoint, default: %(default)s")
+    parser.add_argument('-s', '--source',          dest='source',          default=default_source,  help="Database source file or endpoint, default: %(default)s")
     parser.add_argument('-t', '--config_template', dest='config_template', default=config_template, help="Configuration template to use, default: %(default)s")
-    parser.add_argument('-o', '--output_folder',   dest='output_folder',   default=output_folder, help="Output folder where config should be saved")
+    parser.add_argument('-o', '--output_folder',   dest='output_folder',   default=output_folder,   help="Output folder where config should be saved, default: current working directory")
 
     return parser
 
