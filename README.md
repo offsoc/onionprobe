@@ -100,6 +100,9 @@ when the services are running:
     docker exec -ti onionprobe_tor_1 cat /var/lib/tor/alertmanager/hostname
     docker exec -ti onionprobe_tor_1 cat /var/lib/tor/grafana/hostname
 
+You can also get this info from the host by browsing directly the
+`onionprobe_tor` volume.
+
 ### Protecting the monitoring dashboards
 
 By default, all dashboards are accessible without credentials.
