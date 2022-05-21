@@ -128,8 +128,12 @@ if __name__ == "__main__":
     args = cmdline_compiler(databases['securedrop'])
 
     if args.source != None:
-        databases['securedrop'] = args.source
+        args.databases = {
+                'securedrop': args.source,
+                }
 
-    instance = SecureDropSites(databases, args.config_template, args.output_folder)
+        del args.source
+
+    instance = SecureDropSites(**vars(args))
 
     instance.build_onionprobe_config()

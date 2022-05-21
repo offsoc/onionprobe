@@ -115,8 +115,12 @@ if __name__ == "__main__":
     args = cmdline_compiler(databases['real-world-onion-sites'])
 
     if args.source != None:
-        databases['real-world-onion-sites'] = args.source
+        args.databases = {
+                'real-world-onion-sites': args.source,
+                }
 
-    instance = RealWorldOnionSites(databases, args.config_template, args.output_folder)
+        del args.source
+
+    instance = RealWorldOnionSites(**vars(args))
 
     instance.build_onionprobe_config()

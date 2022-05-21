@@ -9,10 +9,10 @@ WORKDIR ${APP_BASE}/${APP}
 
 RUN apt-get update && \
     apt-get install -y \
-    tor \
+    tor basez \
     && rm -rf /var/lib/apt/lists/*
 
-COPY configs/torrc.sample ${APP_BASE}/${APP}/torrc
+COPY containers/tor/torrc ${APP_BASE}/${APP}/torrc
 
 RUN chown -R debian-tor. ${APP_BASE}/${APP}/torrc
 

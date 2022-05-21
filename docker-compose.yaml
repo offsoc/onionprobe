@@ -6,28 +6,68 @@ services:
     image: docker.io/prom/prometheus
     restart: always
     volumes:
-      - ./configs/prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./${PROMETHEUS_CONFIG:-configs/prometheus/prometheus.yml}:/etc/prometheus/prometheus.yml
+      - ./${PROMETHEUS_RULES:-configs/prometheus/prometheus-rules.yml}:/etc/prometheus/prometheus-rules.yml
+      - prometheus:/prometheus
     ports:
       - 9090:9090
+    # This needs a newer Docker Compose (>= 1.28)
+    #profiles: ["prometheus", "all"]
 
-  # This service is currently not in use since Onionprobe already handles it's
-  # own Tor process.
-  #
-  # This service container is also shipped with a hardcoded
-  # HashedControlPassword, so please use it only fort testing purposes but not
-  # in production.
-  #tor:
-  #  image: "rhatto/tor:1.0"
-  #  build:
-  #    context: .
-  #    dockerfile: containers/tor/Dockerfile
-  #  restart: always
-  #  #ports:
-  #  #  - 9050:9050
-  #  #  - 9051:9051
+  alertmanager:
+    image: docker.io/prom/alertmanager
+    volumes:
+      - ./${ALERTMANAGER_CONFIG:-configs/alertmanager/alertmanager.yml}:/etc/alertmanager/alertmanager.yml
+      - alertmanager:/alertmanager
+    ports:
+      - 9093:9093
+    command:
+      - "--config.file=/etc/alertmanager/alertmanager.yml"
+      - "--storage.path=/alertmanager"
+    restart: always
+    # This needs a newer Docker Compose (>= 1.28)
+    #profiles: ["alertmanager", "all"]
+
+  grafana:
+    image: docker.io/grafana/grafana
+    volumes:
+      - grafana:/var/lib/grafana
+    ports:
+      - 3000:3000
+    restart: always
+    # This needs a newer Docker Compose (>= 1.28)
+    #profiles: ["grafana", "all"]
+
+  tor:
+    image: "onionprobe/tor:1.0"
+    build:
+      context: .
+      dockerfile: containers/tor/Dockerfile
+    volumes:
+      - tor:/var/lib/tor
+    restart: always
+    # This needs a newer Docker Compose (>= 1.28)
+    #profiles: ["tor", "all"]
+
+  # Service that periodically compiles an Onionprobe configuration
+  configurator:
+    image: "onionprobe/onionprobe:1.0"
+    build:
+      context: .
+      dockerfile: containers/onionprobe/Dockerfile
+    restart: always
+    tty: true
+    stdin_open: true
+    volumes:
+      - .:/srv/onionprobe
+    entrypoint: "/srv/onionprobe/${CONFIGURATOR_ENTRYPOINT:-packages/tpo.py}"
+    command: "${CONFIGURATOR_PARAMS:---wait 240 --config_override rounds=20 --config_template /srv/onionprobe/configs/tor.yaml --output_folder /srv/onionprobe/contrib}"
+    user: "${CONTAINER_UID:-1000}:${CONTAINER_GID:-1000}"
+    # This needs a newer Docker Compose (>= 1.28)
+    #profiles: ["configurator", "all"]
 
   onionprobe:
-    image: "rhatto/onionprobe:1.0"
+    image: "onionprobe/onionprobe:1.0"
     build:
       context: .
       dockerfile: containers/onionprobe/Dockerfile
@@ -39,6 +79,12 @@ services:
     ports:
       - 9935:9935
     environment:
-      ONIONPROBE_CONFIG: ${ONIONPROBE_CONFIG:-/srv/onionprobe/configs/tor.yaml}
-    #depends_on:
-    #  - tor
+      ONIONPROBE_CONFIG: /srv/onionprobe/${ONIONPROBE_CONFIG:-contrib/tpo.yaml}
+    depends_on:
+      - configurator
+
+volumes:
+  prometheus: {}
+  alertmanager: {}
+  grafana: {}
+  tor: {}
