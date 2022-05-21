@@ -96,9 +96,9 @@ These services are also automatically exported as Onion Services,
 which addresses can be discovered by running the following commands
 when the services are running:
 
-    docker exec -ti onionprobe_tor_1 cat /var/lib /tor/prometheus/hostname
-    docker exec -ti onionprobe_tor_1 cat /var/lib /tor/alertmanager/hostname
-    docker exec -ti onionprobe_tor_1 cat /var/lib /tor/grafana/hostname
+    docker exec -ti onionprobe_tor_1 cat /var/lib/tor/prometheus/hostname
+    docker exec -ti onionprobe_tor_1 cat /var/lib/tor/alertmanager/hostname
+    docker exec -ti onionprobe_tor_1 cat /var/lib/tor/grafana/hostname
 
 ### Protecting the monitoring dashboards
 
