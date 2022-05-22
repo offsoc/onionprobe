@@ -103,6 +103,8 @@ services:
       ONIONPROBE_CONFIG: /srv/onionprobe/${ONIONPROBE_CONFIG:-contrib/tpo.yaml}
     depends_on:
       - configurator
+    # This needs a newer Docker Compose (>= 1.28)
+    #profiles: ["onionprobe", "all"]
 
 volumes:
   prometheus: {}
