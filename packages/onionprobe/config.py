@@ -480,11 +480,11 @@ def cmdline_parser_compiler(default_source=None):
                     Useful for a configurator container service tha should run periodically.
                     Defaults to %(default)s""".strip())
 
-    parser.add_argument('-c', '--config_override',
+    parser.add_argument('-c', '--config_overrides',
             dest='config_overrides',
             default=None,
-            action='append',
-            help="Override a configuration parameter in the form of param=value. Can be set multiple times.")
+            nargs='*',
+            help="Override configuration parameters in the form of param1=value1 ... paramN=valueN")
 
     return parser
 
