@@ -67,9 +67,9 @@ Onionprobe comes with full monitoring environment based on [Docker
 Compose](https://docs.docker.com/compose/) with:
 
 * An Onionprobe instance continuously monitoring endpoints.
-* Metrics are exporter to a Prometheus instance.
-* Alerts are managed using Alertmanager.
-* A Grafana Dashboard is available for browsing the metrics.
+* Metrics are exporter to a [Prometheus](https://prometheus.io) instance.
+* Alerts are managed using [Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager/).
+* A [Grafana](https://grafana.com) Dashboard is available for browsing the metrics.
 
 ### Starting the monitoring node
 
@@ -102,6 +102,10 @@ when the services are running:
 
 You can also get this info from the host by browsing directly the
 `onionprobe_tor` volume.
+
+It's also possible to replace the automatically generated Onion Service
+addresses by using keys with vanity addresses using a tool like
+[Onionmine](https://gitlab.torproject.org/tpo/onion-services/onionmine).
 
 ### Protecting the monitoring dashboards
 
