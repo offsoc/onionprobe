@@ -114,6 +114,7 @@ class OnionprobeHTTP:
 
         try:
             self.log('Trying to connect to {} (attempt {})...'.format(url, attempt))
+            self.inc_metric('onion_service_fetch_requests_total', 1, labels)
 
             # Fetch results and calculate the elapsed time
             result  = requests.get(url, proxies=proxies, timeout=timeout)
@@ -201,6 +202,10 @@ class OnionprobeHTTP:
 
                 # Count errors
                 self.inc_metric('onion_service_fetch_error_total', 1, labels)
+
+            #else:
+            #    # Increment the total number of successful fetches
+            #    self.inc_metric('onion_service_fetch_success_total', 1, labels)
 
             # Register the number of attempts on metrics
             labels['reachable'] = reachable

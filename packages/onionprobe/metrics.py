@@ -55,13 +55,15 @@ metrics = {
 
     'onion_service_reachable': Gauge(
             'onion_service_reachable',
-            'Register if the Onion Service is reachable: value is 1 for reachability and 0 otherwise',
+            """Register if the Onion Service is reachable: value is 1 for
+               reachability and 0 otherwise""".strip(),
             ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
         ),
 
     'onion_service_connection_attempts': Gauge(
             'onion_service_connection_attempts',
-            'Register the number of attempts when trying to connect to an Onion Service',
+            """Register the number of attempts when trying to connect to an
+               Onion Service in a probing round""".strip(),
             ['name', 'address', 'protocol', 'port', 'path', 'reachable', 'updated_at']
         ),
 
@@ -80,13 +82,14 @@ metrics = {
     'onion_service_descriptor_reachable': Gauge(
             'onion_service_descriptor_reachable',
             """Register if the Onion Service descriptor is available: value is
-               1 for reachability and 0 otherwise""".split(),
+               1 for reachability and 0 otherwise""".strip(),
             ['name', 'address', 'hsdir', 'reason', 'updated_at']
         ),
 
     'onion_service_descriptor_fetch_attempts': Gauge(
             'onion_service_descriptor_fetch_attempts',
-            'Register the number of attempts required when trying to get an Onion Service descriptor',
+            """Register the number of attempts required when trying to get an
+               Onion Service descriptor in a probing round""".strip(),
             ['name', 'address', 'reachable', 'updated_at']
         ),
 
@@ -100,7 +103,7 @@ metrics = {
             'onion_service_pattern_matched',
             """Register whether a regular expression pattern is matched when
                connection to the Onion Service: value is 1 for matched pattern and
-               0 otherwise""".split(),
+               0 otherwise""".strip(),
             ['name', 'address', 'protocol', 'port', 'path', 'pattern', 'updated_at']
         ),
 
@@ -108,7 +111,7 @@ metrics = {
             'onion_service_valid_certificate',
             """Register whether the Onion Service HTTPS certificate is valid:
                value is 1 for valid and 0 otherwise, but only for sites reachable
-               using HTTPS""".split(),
+               using HTTPS""".strip(),
             ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
         ),
 
@@ -116,11 +119,45 @@ metrics = {
     # Probing counters
     #
 
+    # Prometheus documentation says:
+    #
+    # > "When you have a successful request count and a failed request count, the
+    # > best way to expose this is as one metric for total requests and another
+    # > metric for failed requests. This makes it easy to calculate the failure
+    # > ratio. Do not use one metric with a failed or success label. Similarly,
+    # > with hit or miss for caches, it’s better to have one metric for total and
+    # > another for hits."
+    # >
+    # > -- https://prometheus.io/docs/instrumenting/writing_exporters/#naming
+    'onion_service_fetch_requests_total': Counter(
+            'onion_service_fetch_requests_total',
+            'Counts the total number of requests to access an Onion Service',
+            ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
+        ),
+
+    #'onion_service_fetch_success_total': Counter(
+    #        'onion_service_fetch_success_total',
+    #        'Counts the total number of successful fetches of an Onion Service',
+    #        ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
+    #    ),
+
     'onion_service_fetch_error_total': Counter(
-            'onion_service_fetch_error__total',
+            'onion_service_fetch_error_total',
             'Counts the total number of errors when fetching an Onion Service',
             ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
         ),
+
+    'onion_service_descriptor_fetch_requests_total': Counter(
+            'onion_service_descriptor_fetch_requests_total',
+            'Counts the total number of requests to fetch an Onion Service descriptor',
+            ['name', 'address', 'updated_at']
+        ),
+
+    #'onion_service_descriptor_fetch_success_total': Counter(
+    #        'onion_service_descriptor_fetch_success_total',
+    #        'Counts the total number of successful fetches of an Onion Service descriptor',
+    #        ['name', 'address', 'updated_at']
+    #    ),
 
     'onion_service_descriptor_fetch_error_total': Counter(
             'onion_service_descriptor_fetch_error_total',

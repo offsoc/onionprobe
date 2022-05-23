@@ -31,6 +31,10 @@
 
 * Config generation improvements.
 
+* New metrics:
+  * `onion_service_fetch_requests_total`.
+  * `onion_service_descriptor_fetch_requests_total`.
+
 ## v0.3.4 - 2022-05-11
 
 ### Fixes
