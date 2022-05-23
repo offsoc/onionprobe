@@ -350,7 +350,12 @@ class OnionprobeConfigCompiler:
 
                 key   = str(override[0])
                 value = override[1]
-                cast  = type(config[key]['default'])
+
+                if key not in config:
+                    print('Skipping unknown parameter %s...' % (key))
+                    continue
+
+                cast = type(config[key]['default'])
 
                 if cast == bool:
                     value.lower()
