@@ -133,7 +133,10 @@ xrandr="0"
 
 # Set additional hostfwd mappings
 #port_mapping="hostfwd=tcp:127.0.0.1:8080-:80,hostfwd=tcp:127.0.0.1:8443-:443"
-port_mapping="hostfwd=tcp:127.0.0.1:9090-:9090,hostfwd=tcp:127.0.0.1:9935-:9935"
+port_mapping="hostfwd=tcp:127.0.0.1:9090-:9090"          # Prometheus Dashboard
+port_mapping="$hostfwd,hostfwd=tcp:127.0.0.1:9935-:9935" # Onionprobe Prometheus exporter
+port_mapping="$hostfwd,hostfwd=tcp:127.0.0.1:9093-:9093" # Alertmanager Dashboard
+port_mapping="$hostfwd,hostfwd=tcp:127.0.0.1:3030-:3030" # Grafana Dashboard
 
 # Where the guest image is stored
 #image="$HOME/.local/share/kvmx/$VM/box.img"
