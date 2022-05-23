@@ -93,31 +93,23 @@ onion services endpoints and paths, optionally exporting to Prometheus.
       onion_service_latency_seconds:
             Register Onion Service connection latency in seconds
       onion_service_reachable:
-            Register if the Onion Service is reachable: value is 1 for
-                   reachability and 0 otherwise
+            Register if the Onion Service is reachable: value is 1 for reachability and 0 otherwise
       onion_service_connection_attempts:
-            Register the number of attempts when trying to connect to an
-                   Onion Service in a probing round
+            Register the number of attempts when trying to connect to an Onion Service in a probing round
       onion_service_status_code:
             Register Onion Service connection HTTP status code
       onion_service_descriptor_latency_seconds:
             Register Onion Service latency in seconds to get the descriptor
       onion_service_descriptor_reachable:
-            Register if the Onion Service descriptor is available: value is
-                   1 for reachability and 0 otherwise
+            Register if the Onion Service descriptor is available: value is 1 for reachability and 0 otherwise
       onion_service_descriptor_fetch_attempts:
-            Register the number of attempts required when trying to get an
-                   Onion Service descriptor in a probing round
+            Register the number of attempts required when trying to get an Onion Service descriptor in a probing round
       onion_service_introduction_points_number:
             Register the number of introduction points in the Onion Service descriptor
       onion_service_pattern_matched:
-            Register whether a regular expression pattern is matched when
-                   connection to the Onion Service: value is 1 for matched pattern and
-                   0 otherwise
+            Register whether a regular expression pattern is matched when connection to the Onion Service: value is 1 for matched pattern and 0 otherwise
       onion_service_valid_certificate:
-            Register whether the Onion Service HTTPS certificate is valid:
-                   value is 1 for valid and 0 otherwise, but only for sites reachable
-                   using HTTPS
+            Register whether the Onion Service HTTPS certificate is valid: value is 1 for valid and 0 otherwise, but only for sites reachable using HTTPS
       onion_service_fetch_requests:
             Counts the total number of requests to access an Onion Service
       onion_service_fetch_error:
