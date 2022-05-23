@@ -26,6 +26,9 @@ ENV SHELL="/bin/bash"
 
 WORKDIR ${APP_BASE}/${APP}
 
+# Install dependencies
+# Package basez is installed to allow generation of Client Authorization keys
+# inside the container
 RUN apt-get update && \
     apt-get install -y \
     tor basez \
