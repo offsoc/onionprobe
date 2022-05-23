@@ -492,31 +492,31 @@ def cmdline_parser_compiler(default_source=None):
     parser.add_argument('-s', '--source',
             dest='source',
             default=default_source,
-            help="Database source file or endpoint. Defaults to %(default)s")
+            help="Database source file or endpoint (default: %(default)s)")
 
     parser.add_argument('-t', '--config_template',
             dest='config_template',
             default=config_template,
-            help="Configuration template to use. Defaults to %(default)s")
+            help="Configuration template to use (default %(default)s)")
 
     parser.add_argument('-o', '--output_folder',
             dest='output_folder',
             default=output_folder,
-            help="Output folder where config should be saved. Defaults to current working directory")
+            help="Output folder where config should be saved (default: current working directory)")
 
     parser.add_argument('-w', '--wait',
             dest='wait',
             default=0,
             type=int,
             help="""Wait a number of seconds before exiting after writing the config.
-                    Useful for a configurator container service tha should run periodically.
-                    Defaults to %(default)s""".strip())
+                    Useful for a configurator container service tha should run periodically
+                    (default: %(default)s)""".strip())
 
     parser.add_argument('-l', '--loop',
             dest='loop',
             action='store_true',
             default=False,
-            help="Whether to continuously generate configuration. Defaults to %(default)s")
+            help="Whether to continuously generate configuration (default: %(default)s)")
 
     parser.add_argument('-c', '--config_overrides',
             dest='config_overrides',
