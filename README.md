@@ -143,7 +143,7 @@ Authorization](https://community.torproject.org/onion-services/advanced/client-a
 3. Restart the `tor` service container from the host to ensure that this new
    configuration is applied:
 
-        docker compose down tor
+        docker compose stop tor
         docker compose up -d
 
 Note that the Grafana dashboard also comes with it's own user management system,
