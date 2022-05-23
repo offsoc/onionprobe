@@ -133,6 +133,7 @@ class TPOSites(OnionprobeConfigCompiler):
         """
 
         # Set the interval and disable shuffling and randomization
+        print('Enforcing shuffle, randomize, interval and sleep configurations, no matter what the template or the user says.')
         self.config['shuffle']   = False
         self.config['randomize'] = False
         self.config['interval']  = 60
@@ -147,8 +148,12 @@ if __name__ == "__main__":
     args = cmdline_compiler(databases['tpo'])
 
     if args.source != None:
-        databases['tpo'] = args.source
+        args.databases = {
+                'tpo': args.source,
+                }
 
-    instance = TPOSites(databases, args.config_template, args.output_folder)
+        del args.source
+
+    instance = TPOSites(**vars(args))
 
     instance.build_onionprobe_config()

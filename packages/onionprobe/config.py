@@ -69,7 +69,9 @@ config = {
             },
 
         'control_password': {
-            'help'    : 'Set Tor control password or use a password prompt (system-wide Tor service) or auto-generate a temporary password (built-in Tor service)',
+            'help'    : """Set Tor control password or use a password prompt
+                           (system-wide Tor service) or auto-generate a temporary password
+                           (built-in Tor service)""".strip(),
             'default' : None,
             'action'  : 'store',
             },
@@ -123,7 +125,10 @@ config = {
             },
 
         'rounds': {
-            'help'    : 'Run only a limited number of rounds (i.e., the number of times that Onionprobe tests all the configured endpoints). Requires the "loop" option to be enabled. Set to 0 to disable this limit.',
+            'help'    : """Run only a limited number of rounds (i.e., the
+                           number of times that Onionprobe tests all the configured
+                           endpoints). Requires the "loop" option to be enabled. Set to 0 to
+                           disable this limit.""".strip(),
             'default' : 0,
             'action'  : 'store',
             },
@@ -289,7 +294,7 @@ class OnionprobeConfig:
 class OnionprobeConfigCompiler:
     """Base class to build Onionprobe configs from external sources of Onion Services"""
 
-    def __init__(self, databases, config_template, output_folder):
+    def __init__(self, databases, config_template, output_folder, wait=0, config_overrides=None):
         """
         Constructor for the OnionprobeConfigCompiler class.
 
@@ -308,6 +313,9 @@ class OnionprobeConfigCompiler:
         :param output_folder: Output folder where configs are written
         """
 
+        # Initialize the configuration object
+        self.config = {}
+
         # Save the databases of Onion Services
         self.databases = databases
 
@@ -315,8 +323,8 @@ class OnionprobeConfigCompiler:
         if os.path.exists(config_template):
             print('Loading configuration template from %s...' % (config_template))
 
-            with open(config_template, 'r') as config:
-                self.config = yaml.load(config, yaml.CLoader)
+            with open(config_template, 'r') as base_config:
+                self.config = yaml.load(base_config, yaml.CLoader)
 
         else:
             raise FileNotFoundError(config_template)
@@ -326,6 +334,37 @@ class OnionprobeConfigCompiler:
 
         if not os.path.exists(output_folder):
             raise FileNotFoundError(output_folder)
+
+        # Set wait time
+        self.wait = wait
+
+        # Apply overrides
+        if config_overrides != None:
+            # Copy item by item, ensuring type casting
+            for item in config_overrides:
+                override = item.split('=')
+
+                if len(override) != 2:
+                    print('Skipping malformed override param %s...' % (item))
+                    continue
+
+                key   = str(override[0])
+                value = override[1]
+
+                if key not in config:
+                    print('Skipping unknown parameter %s...' % (key))
+                    continue
+
+                cast = type(config[key]['default'])
+
+                if cast == bool:
+                    value.lower()
+
+                    self.config[key] = True if value == 'true' else False
+                else:
+                    self.config[key] = cast(value)
+
+                print('Setting %s to %s.' % (key, value))
 
     def build_endpoints_config(self, database):
         """
@@ -373,10 +412,10 @@ class OnionprobeConfigCompiler:
                 endpoints = self.build_endpoints_config(database)
 
                 # Create a new config using the default as base
-                config = dict(self.config)
+                new_config = dict(self.config)
 
                 # Replace the endpoints
-                config['endpoints'] = endpoints
+                new_config['endpoints'] = endpoints
 
                 # Build the output path
                 output_folder = os.path.normpath(os.path.join(self.output_folder, database + '.yaml'))
@@ -385,10 +424,16 @@ class OnionprobeConfigCompiler:
                 with open(output_folder, 'w') as output:
                     print('Saving the generated config for database %s into %s...' % (database, output_folder))
 
-                    output.write(yaml.dump(config))
+                    output.write(yaml.dump(new_config))
 
             except Exception as e:
                 print(e)
+
+        if self.wait != 0:
+            import time
+
+            print('Waiting %s seconds before exit...' % (self.wait))
+            time.sleep(self.wait)
 
 def cmdline_parser_compiler(default_source=None):
     """
@@ -422,9 +467,34 @@ def cmdline_parser_compiler(default_source=None):
     if not os.path.exists(output_folder):
         output_folder = os.getcwd()
 
-    parser.add_argument('-s', '--source',          dest='source',          default=default_source,  help="Database source file or endpoint, default: %(default)s")
-    parser.add_argument('-t', '--config_template', dest='config_template', default=config_template, help="Configuration template to use, default: %(default)s")
-    parser.add_argument('-o', '--output_folder',   dest='output_folder',   default=output_folder,   help="Output folder where config should be saved, default: current working directory")
+    parser.add_argument('-s', '--source',
+            dest='source',
+            default=default_source,
+            help="Database source file or endpoint. Defaults to %(default)s")
+
+    parser.add_argument('-t', '--config_template',
+            dest='config_template',
+            default=config_template,
+            help="Configuration template to use. Defaults to %(default)s")
+
+    parser.add_argument('-o', '--output_folder',
+            dest='output_folder',
+            default=output_folder,
+            help="Output folder where config should be saved. Defaults to current working directory")
+
+    parser.add_argument('-w', '--wait',
+            dest='wait',
+            default=0,
+            type=int,
+            help="""Wait a number of seconds before exiting after writing the config.
+                    Useful for a configurator container service tha should run periodically.
+                    Defaults to %(default)s""".strip())
+
+    parser.add_argument('-c', '--config_overrides',
+            dest='config_overrides',
+            default=None,
+            nargs='*',
+            help="Override configuration parameters in the form of param1=value1 ... paramN=valueN")
 
     return parser
 

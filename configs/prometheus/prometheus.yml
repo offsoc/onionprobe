@@ -1,5 +1,5 @@
-#
-# Dockerfile for a Tor container.
+---
+# Sample Prometheus configuration to be used with Docker Compose.
 #
 # Copyright (C) 2022 Silvio Rhatto <rhatto@torproject.org>
 #
@@ -15,33 +15,20 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-#
 
-FROM debian:stable
-MAINTAINER Silvio Rhatto <rhatto@torproject.org>
+global:
+  scrape_interval: 15s
 
-ENV APP="tor"
-ENV APP_BASE="/etc"
-ENV SHELL="/bin/bash"
+scrape_configs:
+  - job_name: 'onionprobe'
 
-WORKDIR ${APP_BASE}/${APP}
+    static_configs:
+      - targets: ['onionprobe:9935']
 
-# Install dependencies
-# Package basez is installed to allow generation of Client Authorization keys
-# inside the container
-RUN apt-get update && \
-    apt-get install -y \
-    tor basez \
-    && rm -rf /var/lib/apt/lists/*
+alerting:
+  alertmanagers:
+    - static_configs:
+      - targets: ['alertmanager:9093']
 
-COPY containers/tor/torrc ${APP_BASE}/${APP}/torrc
-
-RUN chown -R debian-tor. ${APP_BASE}/${APP}/torrc
-
-RUN chmod 600 ${APP_BASE}/${APP}/torrc
-
-USER debian-tor
-
-ENTRYPOINT [ "/usr/bin/tor", "-f", "/etc/tor/torrc" ]
-
-EXPOSE 9050 9051
+rule_files:
+  - prometheus-rules.yml
