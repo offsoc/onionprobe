@@ -55,15 +55,15 @@ metrics = {
 
     'onion_service_reachable': Gauge(
             'onion_service_reachable',
-            """Register if the Onion Service is reachable: value is 1 for
-               reachability and 0 otherwise""".strip(),
+            "Register if the Onion Service is reachable: value is 1 for " + \
+                    "reachability and 0 otherwise",
             ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
         ),
 
     'onion_service_connection_attempts': Gauge(
             'onion_service_connection_attempts',
-            """Register the number of attempts when trying to connect to an
-               Onion Service in a probing round""".strip(),
+            "Register the number of attempts when trying to connect to an " + \
+                    "Onion Service in a probing round",
             ['name', 'address', 'protocol', 'port', 'path', 'reachable', 'updated_at']
         ),
 
@@ -81,15 +81,15 @@ metrics = {
 
     'onion_service_descriptor_reachable': Gauge(
             'onion_service_descriptor_reachable',
-            """Register if the Onion Service descriptor is available: value is
-               1 for reachability and 0 otherwise""".strip(),
+            "Register if the Onion Service descriptor is available: value is " + \
+                    "1 for reachability and 0 otherwise",
             ['name', 'address', 'hsdir', 'reason', 'updated_at']
         ),
 
     'onion_service_descriptor_fetch_attempts': Gauge(
             'onion_service_descriptor_fetch_attempts',
-            """Register the number of attempts required when trying to get an
-               Onion Service descriptor in a probing round""".strip(),
+            "Register the number of attempts required when trying to get an " + \
+                    "Onion Service descriptor in a probing round",
             ['name', 'address', 'reachable', 'updated_at']
         ),
 
@@ -101,17 +101,17 @@ metrics = {
 
     'onion_service_match_pattern_matched': Gauge(
             'onion_service_pattern_matched',
-            """Register whether a regular expression pattern is matched when
-               connection to the Onion Service: value is 1 for matched pattern and
-               0 otherwise""".strip(),
+            "Register whether a regular expression pattern is matched when " + \
+                    "connection to the Onion Service: value is 1 for matched pattern and " + \
+                    "0 otherwise",
             ['name', 'address', 'protocol', 'port', 'path', 'pattern', 'updated_at']
         ),
 
     'onion_service_valid_certificate': Gauge(
             'onion_service_valid_certificate',
-            """Register whether the Onion Service HTTPS certificate is valid:
-               value is 1 for valid and 0 otherwise, but only for sites reachable
-               using HTTPS""".strip(),
+            "Register whether the Onion Service HTTPS certificate is valid: " + \
+               "value is 1 for valid and 0 otherwise, but only for sites reachable " + \
+               "using HTTPS",
             ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
         ),
 
