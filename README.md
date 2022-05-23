@@ -69,7 +69,8 @@ Compose](https://docs.docker.com/compose/) with:
 * An Onionprobe instance continuously monitoring endpoints.
 * Metrics are exporter to a [Prometheus](https://prometheus.io) instance.
 * Alerts are managed using [Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager/).
-* A [Grafana](https://grafana.com) Dashboard is available for browsing the metrics.
+* A [Grafana](https://grafana.com) Dashboard is available for browsing the
+  metrics and using a PostgreSQL service container as the database backend.
 
 ### Configuring the monitoring node
 
