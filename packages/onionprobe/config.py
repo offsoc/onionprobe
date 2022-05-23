@@ -294,7 +294,7 @@ class OnionprobeConfig:
 class OnionprobeConfigCompiler:
     """Base class to build Onionprobe configs from external sources of Onion Services"""
 
-    def __init__(self, databases, config_template, output_folder, wait=0, config_overrides=None):
+    def __init__(self, databases, config_template, output_folder, wait=0, config_overrides=None, loop=False):
         """
         Constructor for the OnionprobeConfigCompiler class.
 
@@ -337,6 +337,9 @@ class OnionprobeConfigCompiler:
 
         # Set wait time
         self.wait = wait
+
+        # Set loop configuration
+        self.loop = loop
 
         # Apply overrides
         if config_overrides != None:
@@ -429,11 +432,30 @@ class OnionprobeConfigCompiler:
             except Exception as e:
                 print(e)
 
+    def build_and_wait(self):
+        """
+        Build Onionprobe configs, then wait.
+        """
+
+        self.build_onionprobe_config()
+
         if self.wait != 0:
             import time
 
-            print('Waiting %s seconds before exit...' % (self.wait))
+            print('Waiting %s seconds...' % (self.wait))
             time.sleep(self.wait)
+
+    def compile(self):
+        """
+        Main compilation procedure.
+
+        """
+
+        if self.loop is True:
+            while True:
+                self.build_and_wait()
+        else:
+            self.build_and_wait()
 
 def cmdline_parser_compiler(default_source=None):
     """
@@ -489,6 +511,12 @@ def cmdline_parser_compiler(default_source=None):
             help="""Wait a number of seconds before exiting after writing the config.
                     Useful for a configurator container service tha should run periodically.
                     Defaults to %(default)s""".strip())
+
+    parser.add_argument('-l', '--loop',
+            dest='loop',
+            action='store_true',
+            default=False,
+            help="Whether to continuously generate configuration. Defaults to %(default)s")
 
     parser.add_argument('-c', '--config_overrides',
             dest='config_overrides',

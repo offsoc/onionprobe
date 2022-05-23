@@ -136,4 +136,4 @@ if __name__ == "__main__":
 
     instance = SecureDropSites(**vars(args))
 
-    instance.build_onionprobe_config()
+    instance.compile()
