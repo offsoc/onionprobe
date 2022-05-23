@@ -100,6 +100,10 @@ class OnionprobeDescriptor:
 
         # Get the descriptor
         try:
+            # Increment the total number of descriptor fetch attempts
+            self.inc_metric('onion_service_descriptor_fetch_requests_total', 1, labels)
+
+            # Try to get the descriptor
             descriptor = self.controller.get_hidden_service_descriptor(pubkey, timeout=timeout)
 
         except (stem.DescriptorUnavailable, stem.Timeout, stem.ControllerError, ValueError)  as e:
@@ -134,17 +138,19 @@ class OnionprobeDescriptor:
 
             elapsed = self.elapsed(init_time, True)
 
-            self.set_metric('onion_service_descriptor_latency',
+            self.set_metric('onion_service_descriptor_latency_seconds',
                             elapsed, labels)
 
         finally:
             if inner is False:
-                self.inc_metric('onion_service_descriptor_fetch_error_counter',
-                                1, labels)
+                self.inc_metric('onion_service_descriptor_fetch_error_total', 1, labels)
+            #else:
+            #    # Increment the total number of sucessful descriptor fetch attempts
+            #    self.inc_metric('onion_service_descriptor_fetch_success_total', 1, labels)
 
             labels['reachable'] = reachable
 
-            # Register the number of fetch attempts
+            # Register the number of fetch attempts in the current probing round
             self.set_metric('onion_service_descriptor_fetch_attempts',
                             attempt, labels)
 

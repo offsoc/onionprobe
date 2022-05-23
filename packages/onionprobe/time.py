@@ -63,7 +63,7 @@ class OnionprobeTime:
 
         # Sleep, collecting metrics about it
         self.log('Waiting {} seconds...'.format(str(round(value))))
-        self.metrics['onionprobe_wait'].set(value)
+        self.metrics['onionprobe_wait_seconds'].set(value)
         self.metrics['onionprobe_state'].state('sleeping')
         time.sleep(value)
 

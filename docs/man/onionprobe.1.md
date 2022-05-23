@@ -1,6 +1,6 @@
 % ONIONPROBE(1) Onionprobe User Manual
 % Silvio Rhatto <rhatto@torproject.org>
-% May 11, 2022
+% May 23, 2022
 
 # NAME
 
@@ -88,48 +88,52 @@ onion services endpoints and paths, optionally exporting to Prometheus.
             Onionprobe version information
       onionprobe_state:
             Onionprobe latest state
-      onionprobe_wait:
-            Records how long Onionprobe waited between two probes
-      onion_service_latency:
+      onionprobe_wait_seconds:
+            Records how long Onionprobe waited between two probes in seconds
+      onion_service_latency_seconds:
             Register Onion Service connection latency in seconds
       onion_service_reachable:
             Register if the Onion Service is reachable: value is 1 for reachability and 0 otherwise
       onion_service_connection_attempts:
-            Register the number of attempts when trying to connect to an Onion Service
+            Register the number of attempts when trying to connect to an Onion Service in a probing round
       onion_service_status_code:
             Register Onion Service connection HTTP status code
-      onion_service_descriptor_latency:
+      onion_service_descriptor_latency_seconds:
             Register Onion Service latency in seconds to get the descriptor
       onion_service_descriptor_reachable:
             Register if the Onion Service descriptor is available: value is 1 for reachability and 0 otherwise
       onion_service_descriptor_fetch_attempts:
-            Register the number of attempts required when trying to get an Onion Service descriptor
+            Register the number of attempts required when trying to get an Onion Service descriptor in a probing round
       onion_service_introduction_points_number:
             Register the number of introduction points in the Onion Service descriptor
       onion_service_pattern_matched:
             Register whether a regular expression pattern is matched when connection to the Onion Service: value is 1 for matched pattern and 0 otherwise
       onion_service_valid_certificate:
             Register whether the Onion Service HTTPS certificate is valid: value is 1 for valid and 0 otherwise, but only for sites reachable using HTTPS
-      onion_service_fetch_error_counter:
-            Counts errors when fetching an Onion Service
-      onion_service_descriptor_fetch_error_counter:
-            Counts errors when fetching an Onion Service descriptor
+      onion_service_fetch_requests:
+            Counts the total number of requests to access an Onion Service
+      onion_service_fetch_error:
+            Counts the total number of errors when fetching an Onion Service
+      onion_service_descriptor_fetch_requests:
+            Counts the total number of requests to fetch an Onion Service descriptor
+      onion_service_descriptor_fetch_error:
+            Counts the total number of errors when fetching an Onion Service descriptor
       onion_service_request_exception:
-            Counts Onion Service general exception errors
+            Counts the total number of Onion Service general exception errors
       onion_service_connection_error:
-            Counts Onion Service connection errors
+            Counts the total number of Onion Service connection errors
       onion_service_http_error:
-            Counts Onion Service HTTP errors
+            Counts the total number of Onion Service HTTP errors
       onion_service_too_many_redirects:
-            Counts Onion Service too many redirects errors
+            Counts the total number of Onion Service too many redirects errors
       onion_service_connection_timeout:
-            Counts Onion Service connection timeouts
+            Counts the total number of Onion Service connection timeouts
       onion_service_read_timeout:
-            Counts Onion Service read timeouts
+            Counts the total number of Onion Service read timeouts
       onion_service_timeout:
-            Counts Onion Service timeouts
+            Counts the total number of Onion Service timeouts
       onion_service_certificate_error:
-            Counts HTTPS certificate validation errors
+            Counts the total number of HTTPS certificate validation errors
 
 
 # CONFIGURATION FILE FORMAT
@@ -138,6 +142,21 @@ This is a sample configuration file that can be adapted:
 
     ---
     # Sample config file for Onionprobe
+    #
+    # Copyright (C) 2022 Silvio Rhatto <rhatto@torproject.org>
+    #
+    # This program is free software: you can redistribute it and/or modify
+    # it under the terms of the GNU General Public License as published
+    # by the Free Software Foundation, either version 3 of the License,
+    # or any later version.
+    #
+    # This program is distributed in the hope that it will be useful,
+    # but WITHOUT ANY WARRANTY; without even the implied warranty of
+    # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    # GNU General Public License for more details.
+    #
+    # You should have received a copy of the GNU General Public License
+    # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
     # Log level: debug, info, warning, error or critical
     log_level: 'info'

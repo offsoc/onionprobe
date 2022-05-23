@@ -1,5 +1,41 @@
 # Onionprobe ChangeLog
 
+## v1.0.0 - unreleased
+
+### Breaking changes
+
+* Changed Prometheus exporter metric names to adhere to the
+  [Best practices](https://prometheus.io/docs/practices/naming/) and to
+  [other recommendations when writing an exporter](https://prometheus.io/docs/instrumenting/writing_exporters/#naming).
+  Prometheus admins might want to rename their old metrics to the new
+  ones to keep time series continuity, drop the old ones or keep both
+  during a transition phase. The following metrics were renamed:
+  * From `onionprobe_wait` to `onionprobe_wait_seconds`.
+  * From `onion_service_latency` to `onion_service_latency_seconds`.
+  * From `onion_service_descriptor_latency` to `onion_service_descriptor_latency_seconds`.
+  * From `onion_service_fetch_error_counter` to `onion_service_fetch_error_total`.
+  * From `onion_service_descriptor_fetch_error_counter` to
+         `onion_service_descriptor_fetch_error_total`.
+  * From `onion_service_request_exception` to `onion_service_request_exception_total`.
+  * From `onion_service_connection_error` to `onion_service_connection_error_total`.
+  * From `onion_service_http_error` to `onion_service_http_error_total`.
+  * From `onion_service_too_many_redirects` to `onion_service_too_many_redirects_total`.
+  * From `onion_service_connection_timeout` to `onion_service_connection_timeout_total`.
+  * From `onion_service_read_timeout` to `onion_service_read_timeout_total`.
+  * From `onion_service_timeout` to `onion_service_timeout_total`.
+  * From `onion_service_certificate_error` to `onion_service_certificate_error_total`.
+
+### Features
+
+* Monitoring node setup using Docker Compose and Prometheus, Alertmanager
+  and Grafana dashboards served via Onion Services.
+
+* Config generation improvements.
+
+* New metrics:
+  * `onion_service_fetch_requests_total`.
+  * `onion_service_descriptor_fetch_requests_total`.
+
 ## v0.3.4 - 2022-05-11
 
 ### Fixes
