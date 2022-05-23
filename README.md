@@ -71,6 +71,17 @@ Compose](https://docs.docker.com/compose/) with:
 * Alerts are managed using [Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager/).
 * A [Grafana](https://grafana.com) Dashboard is available for browsing the metrics.
 
+### Configuring the monitoring node
+
+By default, the monitoring node periodically compiles the Onionprobe configuration
+from the official Tor Project Onion Services into `contrib/tpo.yaml`, by using
+the [tpo.py script](packages/tpo.py).
+
+This and other configurations can be changed by creating an `.env` file in the
+toplevel project folder.
+
+Check the [sample .env](configs/env.sample) for an example.
+
 ### Starting the monitoring node
 
 The monitoring node may be started using `docker-compose`:
@@ -132,28 +143,11 @@ whose default user and password is `admin`. You might change this default user
 and not setup the Client Authorization for Grafana, or maybe use both depending
 or your security needs.
 
-### Configuring the monitoring node
+### Using the monitoring node
 
-Once your monitoring node is up and running, you still need to proceed with
-some manual steps to connect Prometheus and Grafana,
-
-Create your dashboards an visualizations as usual, getting the data compiled by
-Onionprobe using Prometheus as the data source.
-
-There's a [ticket intended to make this configuration automatically in
-place](https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/46)
-once the containers are set, but right now this still needs to be done by hand.
-
-### Customizing the monitoring node
-
-By default, the monitoring node periodically compiles the Onionprobe configuration
-from the official Tor Project Onion Services into `contrib/tpo.yaml`, by using
-the [tpo.py script](packages/tpo.py).
-
-This and other configurations can be changed by creating an `.env` file in the
-toplevel project folder.
-
-Check the [sample .env](configs/env.sample) for an example.
+Once your monitoring node is up and running, you can create your dashboards an
+visualizations as usual, getting the data compiled by Onionprobe using
+Prometheus as the data source.
 
 ## Compiled configurations
 
@@ -176,7 +170,7 @@ Relevant folders and files in this repository:
 
 * `assets`: logos and other stuff.
 * `configs`: miscelaneous configurations.
-* `contrib`: folder reserver for storing contributed code and configuration.
+* `contrib`: folder reserved for storing contributed code and configuration.
 * `containers`: container configurations.
 * `debian`: debian packaging.
 * `docs`: documentation.
@@ -185,9 +179,6 @@ Relevant folders and files in this repository:
 * `tests`: test procedures.
 * `vendors`: other third-party libraries and helpers.
 * `kvmxfile`: please ignore this if you're not a [KVMX](https://kvmx.fluxo.info) user.
-* `.env`: should be manually created if you plan to use custom configuration
-  with Docker Composer. Check the [sample .env](configs/env.sample) for an
-  example.
 * `docker-compose.yml`: service container configuration.
 
 ## Tasks
