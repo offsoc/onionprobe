@@ -29,7 +29,7 @@ On [Debian](https://debian.org), they can be installed using
 
 ## Installation
 
-Onionprobe is [available on PyPI](https://pypi.org/project/keyring/):
+Onionprobe is [available on PyPI](https://pypi.org/project/onionprobe):
 
     pip install onionprobe
 
