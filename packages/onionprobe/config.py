@@ -69,7 +69,9 @@ config = {
             },
 
         'control_password': {
-            'help'    : 'Set Tor control password or use a password prompt (system-wide Tor service) or auto-generate a temporary password (built-in Tor service)',
+            'help'    : """Set Tor control password or use a password prompt
+                           (system-wide Tor service) or auto-generate a temporary password
+                           (built-in Tor service)""".strip(),
             'default' : None,
             'action'  : 'store',
             },
@@ -123,7 +125,10 @@ config = {
             },
 
         'rounds': {
-            'help'    : 'Run only a limited number of rounds (i.e., the number of times that Onionprobe tests all the configured endpoints). Requires the "loop" option to be enabled. Set to 0 to disable this limit.',
+            'help'    : """Run only a limited number of rounds (i.e., the
+                           number of times that Onionprobe tests all the configured
+                           endpoints). Requires the "loop" option to be enabled. Set to 0 to
+                           disable this limit.""".strip(),
             'default' : 0,
             'action'  : 'store',
             },
