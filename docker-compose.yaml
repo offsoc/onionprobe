@@ -4,13 +4,13 @@ version: '3'
 services:
   prometheus:
     image: docker.io/prom/prometheus
-    restart: always
     volumes:
       - ./${PROMETHEUS_CONFIG:-configs/prometheus/prometheus.yml}:/etc/prometheus/prometheus.yml
       - ./${PROMETHEUS_RULES:-configs/prometheus/prometheus-rules.yml}:/etc/prometheus/prometheus-rules.yml
       - prometheus:/prometheus
     ports:
       - 9090:9090
+    restart: always
     # This needs a newer Docker Compose (>= 1.28)
     #profiles: ["prometheus", "all"]
 
@@ -77,7 +77,6 @@ services:
     build:
       context: .
       dockerfile: containers/onionprobe/Dockerfile
-    restart: always
     tty: true
     stdin_open: true
     volumes:
@@ -85,6 +84,7 @@ services:
     entrypoint: "/srv/onionprobe/${CONFIGURATOR_ENTRYPOINT:-packages/tpo.py}"
     command: "${CONFIGURATOR_PARAMS:---wait 240 --config_overrides rounds=20 --config_template /srv/onionprobe/configs/tor.yaml --output_folder /srv/onionprobe/contrib}"
     user: "${CONTAINER_UID:-1000}:${CONTAINER_GID:-1000}"
+    restart: always
     # This needs a newer Docker Compose (>= 1.28)
     #profiles: ["configurator", "all"]
 
@@ -93,7 +93,6 @@ services:
     build:
       context: .
       dockerfile: containers/onionprobe/Dockerfile
-    restart: always
     tty: true
     stdin_open: true
     volumes:
@@ -102,6 +101,7 @@ services:
       - 9935:9935
     environment:
       ONIONPROBE_CONFIG: /srv/onionprobe/${ONIONPROBE_CONFIG:-contrib/tpo.yaml}
+    restart: always
     depends_on:
       - configurator
     # This needs a newer Docker Compose (>= 1.28)
