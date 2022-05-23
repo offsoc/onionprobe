@@ -148,6 +148,12 @@ whose default user and password is `admin`. You might change this default user
 and not setup the Client Authorization for Grafana, or maybe use both depending
 or your security needs.
 
+### Managing the monitoring node with systemd
+
+The monitoring node can be managed with systemd.
+A [sample service file](configs/systemd/onionprobe-monitor.service) is provided
+and can be adapted..
+
 ### Using the monitoring node
 
 Once your monitoring node is up and running, you can create your dashboards an
