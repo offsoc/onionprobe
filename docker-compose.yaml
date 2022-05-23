@@ -83,7 +83,7 @@ services:
     volumes:
       - .:/srv/onionprobe
     entrypoint: "/srv/onionprobe/${CONFIGURATOR_ENTRYPOINT:-packages/tpo.py}"
-    command: "${CONFIGURATOR_PARAMS:---wait 240 --config_overrides rounds=20 --config_template /srv/onionprobe/configs/tor.yaml --output_folder /srv/onionprobe/contrib}"
+    command: "${CONFIGURATOR_PARAMS:---loop --wait 240 --config_overrides rounds=20 --config_template /srv/onionprobe/configs/tor.yaml --output_folder /srv/onionprobe/contrib}"
     user: "${CONTAINER_UID:-1000}:${CONTAINER_GID:-1000}"
     restart: always
     # This needs a newer Docker Compose (>= 1.28)
