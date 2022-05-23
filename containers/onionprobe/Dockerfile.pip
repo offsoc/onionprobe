@@ -18,13 +18,14 @@
 #
 
 FROM debian:stable
+MAINTAINER Silvio Rhatto <rhatto@torproject.org>
 
 ENV APP="onionprobe"
 ENV APP_BASE="/srv/"
 ENV SHELL="/bin/bash"
 
 # Use the default configuration from the pip install
-# This somehow not being included in the pip installation
+# This is somehow not being included in the pip installation
 #ENV ONIONPROBE_CONFIG="/usr/local/share/onionprobe/onionprobe/configs/tor.yaml"
 
 # Use the default configuration from the Onionprobe repository
