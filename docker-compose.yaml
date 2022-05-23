@@ -66,6 +66,7 @@ services:
       context: .
       dockerfile: containers/tor/Dockerfile
     volumes:
+      - ./scripts/generate-auth-keys-for-all-onion-services:/usr/local/bin/generate-auth-keys-for-all-onion-services
       - tor:/var/lib/tor
     restart: always
     # This needs a newer Docker Compose (>= 1.28)
