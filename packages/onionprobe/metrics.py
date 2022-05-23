@@ -79,7 +79,8 @@ metrics = {
 
     'onion_service_descriptor_reachable': Gauge(
             'onion_service_descriptor_reachable',
-            'Register if the Onion Service descriptor is available: value is 1 for reachability and 0 otherwise',
+            """Register if the Onion Service descriptor is available: value is
+               1 for reachability and 0 otherwise""".split(),
             ['name', 'address', 'hsdir', 'reason', 'updated_at']
         ),
 
@@ -97,13 +98,17 @@ metrics = {
 
     'onion_service_match_pattern_matched': Gauge(
             'onion_service_pattern_matched',
-            'Register whether a regular expression pattern is matched when connection to the Onion Service: value is 1 for matched pattern and 0 otherwise',
+            """Register whether a regular expression pattern is matched when
+               connection to the Onion Service: value is 1 for matched pattern and
+               0 otherwise""".split(),
             ['name', 'address', 'protocol', 'port', 'path', 'pattern', 'updated_at']
         ),
 
     'onion_service_valid_certificate': Gauge(
             'onion_service_valid_certificate',
-            'Register whether the Onion Service HTTPS certificate is valid: value is 1 for valid and 0 otherwise, but only for sites reachable using HTTPS',
+            """Register whether the Onion Service HTTPS certificate is valid:
+               value is 1 for valid and 0 otherwise, but only for sites reachable
+               using HTTPS""".split(),
             ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
         ),
 
