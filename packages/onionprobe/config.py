@@ -516,7 +516,8 @@ def cmdline_parser_compiler(default_source=None):
             dest='loop',
             action='store_true',
             default=False,
-            help="Whether to continuously generate configuration (default: %(default)s)")
+            help="""Whether to continuously generate configuration.
+                    Useful when set in conjunction with --wait (default: %(default)s)""")
 
     parser.add_argument('-c', '--config_overrides',
             dest='config_overrides',
