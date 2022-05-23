@@ -135,14 +135,10 @@ or your security needs.
 ### Configuring the monitoring node
 
 Once your monitoring node is up and running, you still need to proceed with
-some manual steps to connect Prometheus and Grafana:
+some manual steps to connect Prometheus and Grafana,
 
-1. Proceed [according to the official
-   documentation](https://prometheus.io/docs/visualization/grafana/), using
-   http://prometheus:9090 (the address of the Prometheus container reachable from
-   Grafana).
-2. Create your dashboards an visualizations as usual, getting the data compiled
-   by Onionprobe.
+Create your dashboards an visualizations as usual, getting the data compiled by
+Onionprobe using Prometheus as the data source.
 
 There's a [ticket intended to make this configuration automatically in
 place](https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/46)
