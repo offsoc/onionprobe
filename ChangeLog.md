@@ -4,8 +4,9 @@
 
 ### Breaking changes
 
-* Changed Prometheus exporter metric names to adhere to the [Best
-  practices](https://prometheus.io/docs/practices/naming/).
+* Changed Prometheus exporter metric names to adhere to the
+  [Best practices](https://prometheus.io/docs/practices/naming/) and to
+  [other recommendations when writing an exporter](https://prometheus.io/docs/instrumenting/writing_exporters/#naming).
   Prometheus admins might want to rename their old metrics to the new
   ones to keep time series continuity, drop the old ones or keep both
   during a transition phase. The following metrics were renamed:
