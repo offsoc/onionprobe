@@ -25,6 +25,9 @@ ENV APP_BASE="/srv/"
 ENV SHELL="/bin/bash"
 ENV ONIONPROBE_CONFIG="/srv/onionprobe/configs/tor.yaml"
 
+# Set the PYTHONPATH in the container
+ENV PYTHONPATH="/usr/lib/python3/dist-packages:/srv/onionprobe/packages"
+
 RUN apt-get update && \
     apt-get install -y \
     python3-prometheus-client python3-stem python3-cryptography \
