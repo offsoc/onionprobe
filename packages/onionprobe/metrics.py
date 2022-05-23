@@ -42,13 +42,13 @@ metrics = {
     # Probing gauges: the basic data
     #
 
-    'onionprobe_wait': Gauge(
-            'onionprobe_wait',
-            'Records how long Onionprobe waited between two probes',
+    'onionprobe_wait_seconds': Gauge(
+            'onionprobe_wait_seconds',
+            'Records how long Onionprobe waited between two probes in seconds',
         ),
 
-    'onion_service_latency': Gauge(
-            'onion_service_latency',
+    'onion_service_latency_seconds': Gauge(
+            'onion_service_latency_seconds',
             'Register Onion Service connection latency in seconds',
             ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
         ),
@@ -71,8 +71,8 @@ metrics = {
             ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
         ),
 
-    'onion_service_descriptor_latency': Gauge(
-            'onion_service_descriptor_latency',
+    'onion_service_descriptor_latency_seconds': Gauge(
+            'onion_service_descriptor_latency_seconds',
             'Register Onion Service latency in seconds to get the descriptor',
             ['name', 'address', 'updated_at']
         ),
@@ -111,15 +111,15 @@ metrics = {
     # Probing counters
     #
 
-    'onion_service_fetch_error_counter': Counter(
-            'onion_service_fetch_error_counter',
-            'Counts errors when fetching an Onion Service',
+    'onion_service_fetch_error_total': Counter(
+            'onion_service_fetch_error__total',
+            'Counts the total number of errors when fetching an Onion Service',
             ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
         ),
 
-    'onion_service_descriptor_fetch_error_counter': Counter(
-            'onion_service_descriptor_fetch_error_counter',
-            'Counts errors when fetching an Onion Service descriptor',
+    'onion_service_descriptor_fetch_error_total': Counter(
+            'onion_service_descriptor_fetch_error_total',
+            'Counts the total number of errors when fetching an Onion Service descriptor',
             ['name', 'address', 'updated_at']
         ),
 
@@ -128,58 +128,58 @@ metrics = {
     #
 
     # Counter for requests.RequestException
-    'onion_service_request_exception': Counter(
-            'onion_service_request_exception',
-            'Counts Onion Service general exception errors',
+    'onion_service_request_exception_total': Counter(
+            'onion_service_request_exception_total',
+            'Counts the total number of Onion Service general exception errors',
             ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
         ),
 
     # Counter for requests.ConnectionError
-    'onion_service_connection_error': Counter(
-            'onion_service_connection_error',
-            'Counts Onion Service connection errors',
+    'onion_service_connection_error_total': Counter(
+            'onion_service_connection_error_total',
+            'Counts the total number of Onion Service connection errors',
             ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
         ),
 
     # Counter for requests.HTTPError
-    'onion_service_http_error': Counter(
-            'onion_service_http_error',
-            'Counts Onion Service HTTP errors',
+    'onion_service_http_error_total': Counter(
+            'onion_service_http_error_total',
+            'Counts the total number of Onion Service HTTP errors',
             ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
         ),
 
     # Counter for requests.TooManyRedirects
-    'onion_service_too_many_redirects': Counter(
-            'onion_service_too_many_redirects',
-            'Counts Onion Service too many redirects errors',
+    'onion_service_too_many_redirects_total': Counter(
+            'onion_service_too_many_redirects_total',
+            'Counts the total number of Onion Service too many redirects errors',
             ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
         ),
 
     # Counter for requests.ConnectionTimeout
-    'onion_service_connection_timeout': Counter(
+    'onion_service_connection_timeout_total': Counter(
             'onion_service_connection_timeout',
-            'Counts Onion Service connection timeouts',
+            'Counts the total number of Onion Service connection timeouts',
             ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
         ),
 
     # Counter for requests.ReadTimeout
-    'onion_service_read_timeout': Counter(
-            'onion_service_read_timeout',
-            'Counts Onion Service read timeouts',
+    'onion_service_read_timeout_total': Counter(
+            'onion_service_read_timeout_total',
+            'Counts the total number of Onion Service read timeouts',
             ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
         ),
 
     # Counter for requests.Timeout
-    'onion_service_timeout': Counter(
+    'onion_service_timeout_total': Counter(
             'onion_service_timeout',
-            'Counts Onion Service timeouts',
+            'Counts the total number of Onion Service timeouts',
             ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
         ),
 
     # Counter for requests.exceptions.SSLError
-    'onion_service_certificate_error': Counter(
+    'onion_service_certificate_error_total': Counter(
             'onion_service_certificate_error',
-            'Counts HTTPS certificate validation errors',
+            'Counts the total number of HTTPS certificate validation errors',
             ['name', 'address', 'protocol', 'port', 'path', 'updated_at']
         ),
     }

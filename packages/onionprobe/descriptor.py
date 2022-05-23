@@ -134,12 +134,12 @@ class OnionprobeDescriptor:
 
             elapsed = self.elapsed(init_time, True)
 
-            self.set_metric('onion_service_descriptor_latency',
+            self.set_metric('onion_service_descriptor_latency_seconds',
                             elapsed, labels)
 
         finally:
             if inner is False:
-                self.inc_metric('onion_service_descriptor_fetch_error_counter',
+                self.inc_metric('onion_service_descriptor_fetch_error_total',
                                 1, labels)
 
             labels['reachable'] = reachable

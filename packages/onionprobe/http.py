@@ -120,7 +120,7 @@ class OnionprobeHTTP:
             elapsed = self.elapsed(init_time, True)
 
             # Update metrics
-            self.set_metric('onion_service_latency', elapsed, labels)
+            self.set_metric('onion_service_latency_seconds', elapsed, labels)
 
         except requests.exceptions.RequestException as e:
             result    = False
@@ -197,10 +197,10 @@ class OnionprobeHTTP:
 
             if exception is not None:
                 # Count exceptions
-                self.inc_metric('onion_service_' + exception, 1, labels)
+                self.inc_metric('onion_service_' + exception + '_total', 1, labels)
 
                 # Count errors
-                self.inc_metric('onion_service_fetch_error_counter', 1, labels)
+                self.inc_metric('onion_service_fetch_error_total', 1, labels)
 
             # Register the number of attempts on metrics
             labels['reachable'] = reachable
