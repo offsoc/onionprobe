@@ -27,10 +27,10 @@ Type=oneshot
 RemainAfterExit=yes
 
 # User, groups and dirs
-User=onionprobe
-Group=onionprobe
+User=onionprobe-monitor
+Group=onionprobe-monitor
 RuntimeDirectory=onionprobe-monitor
-WorkingDirectory=/home/onionprobe/onionprobe-monitor
+WorkingDirectory=/var/lib/onionprobe-monitor
 
 #ExecStartPre=-/usr/local/bin/docker-compose pull --quiet
 ExecStart=/usr/local/bin/docker-compose up -d --remove-orphans
