@@ -591,20 +591,8 @@ endpoints:
     - path: /
     port: 80
     protocol: http
-  Impffrei.work:
-    address: 5sh6hmyvnm4nux5hibm7i3eakhzhdrs647ntv3ekuys2exskmtire4id.onion
-    paths:
-    - path: /
-    port: 443
-    protocol: https
   Impreza Hosting:
     address: imprezareshna326gqgmbdzwmnad2wnjmeowh45bs2buxarh5qummjad.onion
-    paths:
-    - path: /
-    port: 443
-    protocol: https
-  Internet Archive | archive.org:
-    address: archivebyd3rzt3ehjpm4c3bjkyxv3hjleiytnvxcn7x32psn2kxcuid.onion
     paths:
     - path: /
     port: 443
@@ -741,24 +729,6 @@ endpoints:
     - path: /
     port: 443
     protocol: https
-  "RFERL | Q\u0131r\u0131m Aqiqat old1":
-    address: ktatkr72hfpautxxdsa47e6ywsj6gzdu3zneuqcu3do6qglk4yjs7jyd.onion
-    paths:
-    - path: /
-    port: 443
-    protocol: https
-  "RFERL | \u041A\u0440\u0438\u043C \u0420\u0435\u0430\u043B\u0456\u0457 old2":
-    address: krymruazp7xfegryesi3guntfok25ilayldbfx2yrfvyx2q277xyrcyd.onion
-    paths:
-    - path: /
-    port: 443
-    protocol: https
-  "RFERL | \u041A\u0440\u044B\u043C \u0420\u0435\u0430\u043B\u0438\u0438 old3":
-    address: rukrymrmpgj3an2qt7tsuxxgjxs6ppt2gbxnbvc7dvf5vyhprxkdt4yd.onion
-    paths:
-    - path: /
-    port: 443
-    protocol: https
   Radio Free Europe | RFERL:
     address: www.rferlo2zxgv23tct66v45s5mecftol5vod3hf4rqbipfp46fqu2q56ad.onion
     paths:
@@ -796,7 +766,7 @@ endpoints:
     port: 80
     protocol: http
   The Guardian:
-    address: guardian2zotagl6tmjucg3lrhxdk4dw3lhbqnkvvkywawy3oqfoprid.onion
+    address: www.guardian2zotagl6tmjucg3lrhxdk4dw3lhbqnkvvkywawy3oqfoprid.onion
     paths:
     - path: /
     port: 443
@@ -843,6 +813,18 @@ endpoints:
     - path: /index.html
     port: 80
     protocol: http
+  "VOA russian | \u0413\u043E\u043B\u043E\u0441\u0430 \u0410\u043C\u0435\u0440\u0438\u043A\u0438":
+    address: www.golosamr2fr3ojunabk2zaa2hyislbt2ht34vjhfsdwpg2dyg2xaybqd.onion
+    paths:
+    - path: /
+    port: 443
+    protocol: https
+  Voice of America | VOA:
+    address: www.voanews5aitmne6gs2btokcacixclgfl43cv27sirgbauyyjylwpdtqd.onion
+    paths:
+    - path: /
+    port: 443
+    protocol: https
   Whonix Forums:
     address: forums.dds6qkxpwdeubwucdiaord2xgbbeyds25rbsgr73tbfpqpt4a6vjwsyd.onion
     paths:
