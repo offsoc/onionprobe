@@ -123,27 +123,16 @@ class OnionprobeHTTP:
             # Update metrics
             self.set_metric('onion_service_latency_seconds', elapsed, labels)
 
-        except requests.exceptions.RequestException as e:
-            result    = False
-            exception = 'request_exception'
-
-            self.log(e, 'error')
-
-        except requests.exceptions.ConnectionError as e:
-            result    = False
-            exception = 'connection_error'
-
-            self.log(e, 'error')
-
-        except requests.exceptions.HTTPError as e:
-            result    = False
-            exception = 'http_error'
-
-            self.log(e, 'error')
-
         except requests.exceptions.TooManyRedirects as e:
             result    = False
             exception = 'too_many_redirects'
+
+            self.log(e, 'error')
+
+        except requests.exceptions.SSLError as e:
+            result     = False
+            exception  = 'certificate_error'
+            valid_cert = 0
 
             self.log(e, 'error')
 
@@ -167,10 +156,21 @@ class OnionprobeHTTP:
 
             self.log(e, 'error')
 
-        except requests.exceptions.SSLError as e:
-            result     = False
-            exception  = 'certificate_error'
-            valid_cert = 0
+        except requests.exceptions.HTTPError as e:
+            result    = False
+            exception = 'http_error'
+
+            self.log(e, 'error')
+
+        except requests.exceptions.ConnectionError as e:
+            result    = False
+            exception = 'connection_error'
+
+            self.log(e, 'error')
+
+        except requests.exceptions.RequestException as e:
+            result    = False
+            exception = 'request_exception'
 
             self.log(e, 'error')
 
