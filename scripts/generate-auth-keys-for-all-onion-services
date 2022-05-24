@@ -23,7 +23,7 @@
 # Parameters
 ONION_SERVICE_BASEDIR="/var/lib/tor"
 TMP_DIR="`mktemp -d`"
-KEY_PREFIX="admin"
+KEY_PREFIX="${1:-admin}"
 GENERATED_KEY="$TMP_DIR/$KEY_PREFIX.private.pem"
 PRIVATE_KEY="$TMP_DIR/$KEY_PREFIX.private.key"
 PUBLIC_KEY="$TMP_DIR/$KEY_PREFIX.private.pub"

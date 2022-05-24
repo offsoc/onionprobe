@@ -133,7 +133,8 @@ Authorization](https://community.torproject.org/onion-services/advanced/client-a
    Onionprobe ships with a handy
    [generate-auth-keys-for-all-onion-services](scripts/generate-auth-keys-for-all-onion-services)
    available at the `tor` service container and which can be invoked with
-  `docker exec -ti onionprobe_tor_1 /usr/local/bin/generate-auth-keys-for-all-onion-services`.
+  `docker exec -ti onionprobe_tor_1 /usr/local/bin/generate-auth-keys-for-all-onion-services`
+  (it also accepts an optional auth name parameter allowing multiple credentials to be deployed).
 2. Place the `.auth` files at the Onion Services `authorized_clients` folder if you did not
    created them with the `generate-auth-keys-for-all-onion-services` script:
     * Prometheus: `/var/lib/tor/prometheus/authorized_clients`.
