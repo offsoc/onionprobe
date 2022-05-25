@@ -25,6 +25,9 @@
   * From `onion_service_timeout` to `onion_service_timeout_total`.
   * From `onion_service_certificate_error` to `onion_service_certificate_error_total`.
 
+* Removed the `updated_at` label from all metrics, which effectivelly created
+  a new data series for every measurement on Prometheus.
+
 ### Features
 
 * Monitoring node setup using Docker Compose and Prometheus, Alertmanager
