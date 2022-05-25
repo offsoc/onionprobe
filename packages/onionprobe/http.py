@@ -194,7 +194,7 @@ class OnionprobeHTTP:
             self.set_metric('onion_service_reachable', reachable, labels)
 
             if config['protocol'] == 'https':
-                self.inc_metric('onion_service_valid_certificate', valid_cert, labels)
+                self.set_metric('onion_service_valid_certificate', valid_cert, labels)
 
             if exception is not None:
                 # Count exceptions
