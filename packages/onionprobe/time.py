@@ -80,3 +80,13 @@ class OnionprobeTime:
             self.log("Elapsed time: " + str(elapsed))
 
         return timedelta.total_seconds(elapsed)
+
+    def timestamp(self):
+        """
+        Wrapper around datetime.now().timestamp()
+
+        :rtype: datetime.datetime
+        :return: Current time.
+        """
+
+        return datetime.now().timestamp()
