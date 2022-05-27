@@ -1,6 +1,6 @@
 % ONIONPROBE(1) Onionprobe User Manual
 % Silvio Rhatto <rhatto@torproject.org>
-% May 23, 2022
+% May 27, 2022
 
 # NAME
 
@@ -134,6 +134,10 @@ onion services endpoints and paths, optionally exporting to Prometheus.
             Counts the total number of Onion Service timeouts
       onion_service_certificate_error:
             Counts the total number of HTTPS certificate validation errors
+      onion_service_descriptor:
+            Onion Service descriptor information, including state and Hidden Service Directory (HSDir) used
+      onion_service_probe_status:
+            Register information about the last test made to a given Onion Service, including POSIX timestamp
 
 
 # CONFIGURATION FILE FORMAT
