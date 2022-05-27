@@ -22,7 +22,6 @@ services:
       test: ["CMD-SHELL", "/bin/wget http://localhost:9090/-/healthy -q -O - | /bin/grep -q 'Prometheus is Healthy'"]
       interval: 10s
       timeout: 30s
-      start_period: 20s
       retries: 50
     restart: always
     # This needs a newer Docker Compose (>= 1.28)
