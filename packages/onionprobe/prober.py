@@ -55,10 +55,21 @@ class OnionprobeProber:
 
             return False
 
-        elif is_valid_hidden_service_address(self.get_pubkey_from_address(config['address']), 3) is False:
-            self.log('Invalid onion service address set for {}: {}'.format(endpoint, config['address']), 'error')
+        elif is_valid_hidden_service_address(
+                self.get_pubkey_from_address(config['address']), 3) is False:
+            self.log('Invalid onion service address set for {}: {}'.format(
+                endpoint, config['address']), 'error')
 
             return False
+
+        # Register test metadata
+        self.info_metric('onion_service_probe_status', {
+            'last_tested_at_posix_timestamp': str(self.timestamp()),
+            },
+            {
+            'name'   : endpoint,
+            'address': config['address'],
+            })
 
         # Ensure we always begin with a cleared cache
         # This allows to discover issues with published descriptors

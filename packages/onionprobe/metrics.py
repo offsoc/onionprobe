@@ -83,7 +83,7 @@ metrics = {
             'onion_service_descriptor_reachable',
             "Register if the Onion Service descriptor is available: value is " + \
                     "1 for reachability and 0 otherwise",
-            ['name', 'address', 'hsdir', 'reason']
+            ['name', 'address']
         ),
 
     'onion_service_descriptor_fetch_attempts': Gauge(
@@ -224,6 +224,24 @@ metrics = {
             'Counts the total number of HTTPS certificate validation errors',
             ['name', 'address', 'protocol', 'port', 'path']
         ),
+
+    #
+    # Infos
+    #
+
+    'onion_service_descriptor': Info(
+            'onion_service_descriptor',
+            'Onion Service descriptor information, including state and Hidden Service ' + \
+                    'Directory (HSDir) used',
+            ['name', 'address']
+        ),
+
+    'onion_service_probe_status': Info(
+            'onion_service_probe_status',
+            'Register information about the last test made to a given Onion Service, ' + \
+                    'including POSIX timestamp',
+            ['name', 'address'],
+        ),
     }
 
 class OnionprobeMetrics:
@@ -300,3 +318,39 @@ class OnionprobeMetrics:
 
         if metric in self.metrics:
             self.metrics[metric].labels(**labels).inc(value)
+
+    def state_metric(self, metric, value, labels = {}):
+        """
+        Set a metric state.
+
+        :type  metric: str
+        :param metric: Metric name
+
+        :type  value: Object
+        :param value: Increment value.
+
+        :type  labels: dict
+        :param labels: Metric labels dictionary.
+                       Defaults to an empty dictionary.
+        """
+
+        if metric in self.metrics:
+            self.metrics[metric].labels(**labels).state(value)
+
+    def info_metric(self, metric, value, labels = {}):
+        """
+        Set an info metric.
+
+        :type  metric: str
+        :param metric: Metric name
+
+        :type  value: dict
+        :param value: Increment value.
+
+        :type  labels: dict
+        :param labels: Metric labels dictionary.
+                       Defaults to an empty dictionary.
+        """
+
+        if metric in self.metrics:
+            self.metrics[metric].labels(**labels).info(value)

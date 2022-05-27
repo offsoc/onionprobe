@@ -182,14 +182,22 @@ class OnionprobeDescriptor:
         labels = {
                 'name'   : name,
                 'address': event.address + '.onion',
-                'hsdir'  : event.directory,
-                'reason' : '',
                 }
 
         if event.action == 'RECEIVED':
+            reason = event.action
+
             self.set_metric('onion_service_descriptor_reachable', 1, labels)
 
         elif event.action == 'FAILED':
-            labels['reason'] = event.reason
+            # See control-spec.txt section "4.1.25. HiddenService descriptors"
+            # FAILED action is split into it's reasons
+            reason = event.reason
 
             self.set_metric('onion_service_descriptor_reachable', 0, labels)
+
+        self.info_metric('onion_service_descriptor', {
+            'hsdir': event.directory,
+            'state': reason,
+            },
+            labels)
