@@ -44,6 +44,8 @@
   * `onion_service_descriptor`, with Onion Service descriptor information.
   * `onion_service_probe_status`, with timestamp from the last test.
 
+* Default Grafana Dashboard with basic metrics.
+
 ## v0.3.4 - 2022-05-11
 
 ### Fixes

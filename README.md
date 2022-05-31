@@ -164,6 +164,10 @@ Once your monitoring node is up and running, you can create your dashboards an
 visualizations as usual, getting the data compiled by Onionprobe using
 Prometheus as the data source.
 
+Grafana already comes with a basic default dashboard as it's homepage:
+
+![](assets/dashboard.png "Grafana Onion Services Dashboard")
+
 ## Compiled configurations
 
 Besides the [sample config](configs/tor.yaml) containing sites listed at
