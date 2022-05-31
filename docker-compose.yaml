@@ -57,6 +57,7 @@ services:
     image: docker.io/grafana/grafana
     volumes:
       - ./${GRAFANA_PROVISIONING:-configs/grafana/provisioning}:/etc/grafana/provisioning
+      - ./${GRAFANA_HOME_DASHBOARD:-configs/grafana/home.json}:${GRAFANA_DASHBOARDS_DEFAULT_HOME_DASHBOARD:-/etc/grafana/home.json}
       - grafana:/var/lib/grafana
     environment:
       GF_DATABASE_TYPE: postgres
@@ -75,6 +76,7 @@ services:
       GF_ANALYTICS_CHECK_FOR_UPDATES: ${GRAFANA_ANALYTICS_CHECK_FOR_UPDATES:-false}
       GF_ANALYTICS_CHECK_FOR_PLUGIN_UPDATES: ${GRAFANA_ANALYTICS_CHECK_FOR_UPDATES:-false}
       GF_PLUGINS_ENABLE_ALPHA: ${GRAFANA_PLUGNS_ENABLE_ALPHA:-false}
+      GF_DASHBOARDS_DEFAULT_HOME_DASHBOARD_PATH: ${GRAFANA_DASHBOARDS_DEFAULT_HOME_DASHBOARD:-/etc/grafana/home.json}
     ports:
       - 3000:3000
     restart: always
