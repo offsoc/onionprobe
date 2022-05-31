@@ -1,6 +1,6 @@
 # Onionprobe ChangeLog
 
-## v1.0.0 - unreleased
+## v1.0.0 - 2022-05-31
 
 ### Breaking changes
 
