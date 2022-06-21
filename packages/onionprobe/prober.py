@@ -93,8 +93,9 @@ class OnionprobeProber:
         if 'paths' not in config:
             config['paths'] = [
                         {
-                            'path'   : '/',
-                            'pattern': None,
+                            'path'             : '/',
+                            'pattern'          : None,
+                            #'allowed_statuses': [ 200 ],
                         },
                     ]
 
@@ -102,7 +103,7 @@ class OnionprobeProber:
 
         # Query each path
         for path in config['paths']:
-            result = self.query(endpoint, config, path['path'])
+            result = self.query(endpoint, config, path)
 
             if result is not False:
                 # Check for a match

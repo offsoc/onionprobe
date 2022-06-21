@@ -19,6 +19,7 @@ endpoints:
     address: lxwu7pwyszfevhglxfgaukjqjdk2belosfvsl2ekzx3vrboacvewc7qd.onion
     paths:
     - path: /
+      allowed_statuses: [ 200 ]
     port: 443
     protocol: https
 http_connect_timeout: 30

@@ -178,8 +178,9 @@ config = {
                     'port'    : '80',
                     'paths'   : [
                         {
-                            'path'   : '/',
-                            'pattern': 'Tor Project',
+                            'path'            : '/',
+                            'pattern'         : 'Tor Project',
+                            'allowed_statuses': [ 200 ],
                             },
                         ],
                     },
