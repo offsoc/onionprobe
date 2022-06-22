@@ -73,6 +73,13 @@ metrics = {
             ['name', 'address', 'protocol', 'port', 'path']
         ),
 
+    'onion_service_unexpected_status_code': Gauge(
+            'onion_service_unexpected_status_code',
+            'Register if an Onion Service connection returned an unexpected HTTP status code: ' + \
+                    '1 for unexpected and 0 otherwise',
+            ['name', 'address', 'protocol', 'port', 'path']
+        ),
+
     'onion_service_descriptor_latency_seconds': Gauge(
             'onion_service_descriptor_latency_seconds',
             'Register Onion Service latency in seconds to get the descriptor',
@@ -164,6 +171,13 @@ metrics = {
             'Counts the total number of errors when fetching an Onion Service descriptor',
             ['name', 'address']
         ),
+
+    #'onion_service_unexpected_status_code_total': Counter(
+    #        'onion_service_unexpected_status_code_total',
+    #        'Counts the total number of Onion Service connections that returned ' + \
+    #                'an unexpected HTTP status code',
+    #        ['name', 'address', 'protocol', 'port', 'path']
+    #    ),
 
     #
     # Requests exception counter

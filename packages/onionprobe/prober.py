@@ -95,6 +95,10 @@ class OnionprobeProber:
                         {
                             'path'   : '/',
                             'pattern': None,
+
+                            # For backwards compatibility, this setting is not
+                            # used by default.
+                            #'allowed_statuses': [ 200 ],
                         },
                     ]
 
@@ -102,7 +106,7 @@ class OnionprobeProber:
 
         # Query each path
         for path in config['paths']:
-            result = self.query(endpoint, config, path['path'])
+            result = self.query(endpoint, config, path)
 
             if result is not False:
                 # Check for a match

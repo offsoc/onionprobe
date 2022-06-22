@@ -44,7 +44,7 @@ groups:
         summary: Onion Service reachability
 
     - alert: Status code
-      expr: onion_service_status_code != 200
+      expr: onion_service_unexpected_status_code == 1
       for: 30m
       labels:
         severity: critical

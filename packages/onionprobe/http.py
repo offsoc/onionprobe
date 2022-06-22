@@ -75,16 +75,22 @@ class OnionprobeHTTP:
         :type  config: dict
         :param config: Endpoint configuration
 
-        :type  path: str
-        :param path: The path to be chosen in the endpoint configuration.
+        :type  path: dict
+        :param path: A path dictionary from the endpoint configuration.
 
         :rtype: requests.Response or False
         :return: The query result on success.
                  False on error.
         """
 
+        # Parameter checks
+        if not isinstance(path, dict):
+            self.log('Path parameter should be dictionary, {} given' % (type(path)), 'error')
+
+            return False
+
         # Setup query parameters
-        url         = self.build_url(config, path)
+        url         = self.build_url(config, path['path'])
         result      = False
         exception   = None
         init_time   = self.now()
@@ -104,7 +110,7 @@ class OnionprobeHTTP:
                 'address'  : config['address'],
                 'protocol' : config['protocol'],
                 'port'     : config['port'],
-                'path'     : path,
+                'path'     : path['path'],
                 }
 
         timeout = (
@@ -180,6 +186,26 @@ class OnionprobeHTTP:
             # Register status code in the metrics
             self.set_metric('onion_service_status_code', result.status_code, labels)
 
+            # Check for expected status codes
+            if 'allowed_statuses' in path:
+                if result.status_code not in path['allowed_statuses']:
+                    result          = False
+                    expected_status = 1
+                    expected_clause = 'none'
+                    expected_level  = 'error'
+
+                else:
+                    expected_status = 0
+                    expected_clause = 'one'
+                    expected_level  = 'info'
+
+                self.log('Status code match {} of the expected {}'.format(
+                    expected_clause, repr(path['allowed_statuses'])),
+                    expected_level
+                    )
+
+                self.set_metric('onion_service_unexpected_status_code', expected_status, labels)
+
         finally:
             reachable = 0 if result is False else 1
 
@@ -202,6 +228,10 @@ class OnionprobeHTTP:
 
                 # Count errors
                 self.inc_metric('onion_service_fetch_error_total', 1, labels)
+
+            #if expected_status == 1:
+            #    # Count unexpected statuses
+            #    self.set_metric('onion_service_unexpected_status_code_total', 1, labels)
 
             #else:
             #    # Increment the total number of successful fetches

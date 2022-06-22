@@ -1,6 +1,6 @@
 % ONIONPROBE(1) Onionprobe User Manual
 % Silvio Rhatto <rhatto@torproject.org>
-% May 31, 2022
+% Jun 21, 2022
 
 # NAME
 
@@ -98,6 +98,8 @@ onion services endpoints and paths, optionally exporting to Prometheus.
             Register the number of attempts when trying to connect to an Onion Service in a probing round
       onion_service_status_code:
             Register Onion Service connection HTTP status code
+      onion_service_unexpected_status_code:
+            Register if an Onion Service connection returned an unexpected HTTP status code: 1 for unexpected and 0 otherwise
       onion_service_descriptor_latency_seconds:
             Register Onion Service latency in seconds to get the descriptor
       onion_service_descriptor_reachable:
@@ -272,6 +274,10 @@ This is a sample configuration file that can be adapted:
             #
             # Accepts patterns using Python's regex format
             pattern: 'Tor Project'
+
+            # The allowed HTTP status codes for this endpoint
+            # Any code not in this list will set an unexpected status code metric
+            allowed_statuses: [ 200 ]
       2019.www.torproject.org:
         address: 'jqyzxhjk6psc6ul5jnfwloamhtyh7si74b4743k2qgpskwwxrzhsxmad.onion'
         protocol: 'http'

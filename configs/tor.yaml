@@ -126,6 +126,10 @@ endpoints:
         #
         # Accepts patterns using Python's regex format
         pattern: 'Tor Project'
+
+        # The allowed HTTP status codes for this endpoint
+        # Any code not in this list will set an unexpected status code metric
+        allowed_statuses: [ 200 ]
   2019.www.torproject.org:
     address: 'jqyzxhjk6psc6ul5jnfwloamhtyh7si74b4743k2qgpskwwxrzhsxmad.onion'
     protocol: 'http'
