@@ -191,16 +191,18 @@ class OnionprobeHTTP:
                 if result.status_code not in path['allowed_statuses']:
                     result          = False
                     expected_status = 1
-                    expected_clause = 'does not '
+                    expected_clause = 'none'
+                    expected_level  = 'error'
 
                 else:
                     expected_status = 0
-                    expected_clause = ''
+                    expected_clause = 'one'
+                    expected_level  = 'info'
 
-                self.log('Status code {}match the expected {}'.format(
-                    expected_clause,
-                    repr(path['allowed_statuses'])
-                    ))
+                self.log('Status code match {} of the expected {}'.format(
+                    expected_clause, repr(path['allowed_statuses'])),
+                    expected_level
+                    )
 
                 self.set_metric('onion_service_unexpected_status_code', expected_status, labels)
 
@@ -212,7 +214,7 @@ class OnionprobeHTTP:
 
                 # Try again until max retries is reached
                 if attempt <= retries:
-                    return self.query(endpoint, config, path['path'], attempt + 1)
+                    return self.query(endpoint, config, path, attempt + 1)
 
             # Register reachability on metrics
             self.set_metric('onion_service_reachable', reachable, labels)
