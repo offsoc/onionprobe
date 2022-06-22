@@ -172,6 +172,13 @@ metrics = {
             ['name', 'address']
         ),
 
+    #'onion_service_unexpected_status_code_total': Counter(
+    #        'onion_service_unexpected_status_code_total',
+    #        'Counts the total number of Onion Service connections that returned ' + \
+    #                'an unexpected HTTP status code',
+    #        ['name', 'address', 'protocol', 'port', 'path']
+    #    ),
+
     #
     # Requests exception counter
     #

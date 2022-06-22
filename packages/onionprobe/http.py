@@ -229,6 +229,10 @@ class OnionprobeHTTP:
                 # Count errors
                 self.inc_metric('onion_service_fetch_error_total', 1, labels)
 
+            #if expected_status == 1:
+            #    # Count unexpected statuses
+            #    self.set_metric('onion_service_unexpected_status_code_total', 1, labels)
+
             #else:
             #    # Increment the total number of successful fetches
             #    self.inc_metric('onion_service_fetch_success_total', 1, labels)
