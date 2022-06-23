@@ -106,7 +106,8 @@ class SecureDropSites(OnionprobeConfigCompiler):
             protocol = 'http'
             port     = 80
             paths    = [{
-                'path': '',
+                'path'            : '/',
+                'allowed_statuses': [ 200 ],
                 }]
 
             # Append to the endpoints dictionary

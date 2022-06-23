@@ -38,6 +38,17 @@ databases = {
         'tpo': 'https://onion.torproject.org/onionbalancev3-services.yaml',
         }
 
+# Handle status overrides
+allowed_status_overrides = {
+        'crm.torproject.org'        : [ 401 ],
+        'nagios.torproject.org'     : [ 401 ],
+        'grafana1.torproject.org'   : [ 401 ],
+        'grafana2.torproject.org'   : [ 401 ],
+        'prometheus1.torproject.org': [ 401 ],
+        'prometheus2.torproject.org': [ 401 ],
+        'review.torproject.net'     : [ 401 ],
+        }
+
 class TPOSites(OnionprobeConfigCompiler):
     """
     Handles official Tor Project Onion Services list.
@@ -109,8 +120,12 @@ class TPOSites(OnionprobeConfigCompiler):
             protocol = 'http'
             port     = 80
             paths    = [{
-                'path': '',
+                'path'            : '/',
+                'allowed_statuses': [ 200 ],
                 }]
+
+            if item in allowed_status_overrides:
+                paths[0]['allowed_statuses'] = allowed_status_overrides[item]
 
             # Append to the endpoints dictionary
             if item not in endpoints:

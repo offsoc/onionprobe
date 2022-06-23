@@ -93,12 +93,9 @@ class OnionprobeProber:
         if 'paths' not in config:
             config['paths'] = [
                         {
-                            'path'   : '/',
-                            'pattern': None,
-
-                            # For backwards compatibility, this setting is not
-                            # used by default.
-                            #'allowed_statuses': [ 200 ],
+                            'path'            : '/',
+                            'pattern'         : None,
+                            'allowed_statuses': [ 200 ],
                         },
                     ]
 

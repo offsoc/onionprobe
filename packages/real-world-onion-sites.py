@@ -95,7 +95,8 @@ class RealWorldOnionSites(OnionprobeConfigCompiler):
             protocol = url.scheme if url.scheme != '' else 'http'
             port     = 80 if protocol == 'http' else 443
             paths    = [{
-                'path': url.path if url.path != '' else '/',
+                'path'            : url.path if url.path != '' else '/',
+                'allowed_statuses': [ 200 ],
                 }]
 
             # Append to the endpoints dictionary
