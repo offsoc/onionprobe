@@ -369,7 +369,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "builder",
-          "expr": "count(onion_service_status_code != 200)",
+          "expr": "count(onion_service_unexpected_status_code == 1)",
           "range": true,
           "refId": "A"
         }
