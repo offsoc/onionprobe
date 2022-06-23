@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-FROM debian:stable
+FROM debian:bullseye
 MAINTAINER Silvio Rhatto <rhatto@torproject.org>
 
 ENV APP="onionprobe"
