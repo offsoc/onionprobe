@@ -1,5 +1,15 @@
 # Onionprobe ChangeLog
 
+## v1.0.1 - Unreleased
+
+### Features
+
+  * Expected HTTP status codes:
+    * Per-endpoint configuration specifying a list of expected HTTP status
+      codes, useful when it's expected that an endpoint returns a status other
+      than 200.
+    * Custom metric indicating if the status code is expected or not.
+
 ## v1.0.0 - 2022-05-31
 
 ### Breaking changes
