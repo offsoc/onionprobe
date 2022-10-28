@@ -85,7 +85,7 @@ class OnionprobeHTTP:
 
         # Parameter checks
         if not isinstance(path, dict):
-            self.log('Path parameter should be dictionary, {} given' % (type(path)), 'error')
+            self.log('Path parameter should be dictionary, {} given'.format(type(path)), 'error')
 
             return False
 
