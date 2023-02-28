@@ -42,7 +42,7 @@ services:
     #profiles: ["alertmanager", "all"]
 
   postgres:
-    image: postgres:latest
+    image: postgres:15
     environment:
       POSTGRES_USER: grafana
       POSTGRES_DB: grafana

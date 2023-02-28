@@ -2,6 +2,11 @@
 
 ## v1.0.1 - Unreleased
 
+### Fixes
+
+* Stick to a PostgreSQL docker image.
+  See https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/70
+
 ### Features
 
   * Expected HTTP status codes:
