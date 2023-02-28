@@ -899,6 +899,14 @@ endpoints:
       path: /
     port: 443
     protocol: https
+  "RFERL farda | \u0631\u0627\u062F\u06CC\u0648 \u0641\u0631\u062F\u0627":
+    address: www.farda7tcb3bmdtmsmwx7wofkxxjrcw4iiizin7zzcju2oega74cnzbid.onion
+    paths:
+    - allowed_statuses:
+      - 200
+      path: /
+    port: 443
+    protocol: https
   "RFERL idelreal | Idel \u0420\u0435\u0430\u043B\u0438\u0438":
     address: www.idelraalduykh5md4f5kempsx2vhhvs53sf7td25imcsyscru7i63cyd.onion
     paths:
@@ -973,6 +981,14 @@ endpoints:
     protocol: https
   Radio Free Europe | RFERL:
     address: www.rferlo2zxgv23tct66v45s5mecftol5vod3hf4rqbipfp46fqu2q56ad.onion
+    paths:
+    - allowed_statuses:
+      - 200
+      path: /
+    port: 443
+    protocol: https
+  Reddit:
+    address: www.reddittorjg6rue252oqsxryoxengawnmo46qy4kyii5wtqnwfj4ooad.onion
     paths:
     - allowed_statuses:
       - 200
@@ -1085,6 +1101,14 @@ endpoints:
     protocol: http
   "VOA russian | \u0413\u043E\u043B\u043E\u0441\u0430 \u0410\u043C\u0435\u0440\u0438\u043A\u0438":
     address: www.golosamr2fr3ojunabk2zaa2hyislbt2ht34vjhfsdwpg2dyg2xaybqd.onion
+    paths:
+    - allowed_statuses:
+      - 200
+      path: /
+    port: 443
+    protocol: https
+  "VOA turkish | Amerika'n\u0131n Sesi":
+    address: www.sesic3wy3ursfzn7odbol5ddurz2kr3rbfvgnowhwbaefjahzwwsycqd.onion
     paths:
     - allowed_statuses:
       - 200
