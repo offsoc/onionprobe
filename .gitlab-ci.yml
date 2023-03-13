@@ -1,3 +1,4 @@
 ---
 include:
   - local: '.gitlab-ci-pages.yml'
+  - local: '.gitlab-ci-slides.yml'
