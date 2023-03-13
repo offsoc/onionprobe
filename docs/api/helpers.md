@@ -1,21 +1,21 @@
-## Helper scripts
+# Helper scripts
 
-### Manpage generator
+## Manpage generator
 
 ::: packages.manpage
     heading_level: 3
 
-### Real-world Onion Sites
+## Real-world Onion Sites
 
 ::: packages.real-world-onion-sites
     heading_level: 3
 
-### SecureDrop
+## SecureDrop
 
 ::: packages.securedrop
     heading_level: 3
 
-### TPO
+## TPO
 
 ::: packages.tpo
     heading_level: 3
