@@ -1,6 +1,6 @@
 # Onionprobe ChangeLog
 
-## v1.0.1 - Unreleased
+## v1.1.0 - Unreleased
 
 ### Fixes
 
@@ -9,11 +9,19 @@
 
 ### Features
 
-  * Expected HTTP status codes:
-    * Per-endpoint configuration specifying a list of expected HTTP status
-      codes, useful when it's expected that an endpoint returns a status other
-      than 200.
-    * Custom metric indicating if the status code is expected or not.
+* Added script to handle PostgreSQL version upgrades at the service container:
+  https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/70
+
+* Using Onion Mkdocs for the documentation, now hosted at
+  https://tpo.pages.torproject.net/onion-services/onionprobe/
+
+  See https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/19
+
+* Expected HTTP status codes:
+  * Per-endpoint configuration specifying a list of expected HTTP status
+    codes, useful when it's expected that an endpoint returns a status other
+    than 200.
+  * Custom metric indicating if the status code is expected or not.
 
 ## v1.0.0 - 2022-05-31
 
