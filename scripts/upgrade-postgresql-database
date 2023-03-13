@@ -8,7 +8,7 @@ DIRNAME="`dirname $0`"
 BASEPATH="$DIRNAME/.."
 TMP="${TMP:-/tmp}"
 WORK="`mktemp -d $TMP`"
-VOLUMERS="/var/lib/docker/volumes"
+VOLUMES="/var/lib/docker/volumes"
 CONTAINER="${1:-onionprobe_postgres}"
 PGUSER="${PGUSER:-grafana}"
 
