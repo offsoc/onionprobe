@@ -46,7 +46,7 @@ also makes a backup of the old PostgreSQL data. You can manually remove those
 later after checking that the upgrade procedure works. Just follow the script
 output for instructions or check it's source code.
 
-### Start the containers
+### Start the monitoring node
 
 Simply start the standalone monitoring node again after the upgrade procedure:
 
