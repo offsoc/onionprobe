@@ -12,7 +12,7 @@ https://onion.torproject.org, Onionprobe comes also with other example configs:
    [securedrop.py][] script.
 
 You can build your own configuration compiler by using the
-[OnionprobeConfigCompiler][packages/onionprobe/config.OnionprobeConfigCompiler] class.
+[OnionprobeConfigCompiler][packages.onionprobe.config.OnionprobeConfigCompiler] class.
 
 [tpo.py]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/blob/main/packages/tpo.py
 [securedrop.py]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/blob/main/packages/securedrop.py
