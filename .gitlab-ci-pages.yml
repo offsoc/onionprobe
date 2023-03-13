@@ -3,7 +3,7 @@ pages:
   script:
     - apt-get update
     - apt-get install -y git
-    - git submodule update --init
+    - git submodule update --init --recursive
     - scripts/provision-docs-build
     - make compile
   artifacts:

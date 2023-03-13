@@ -47,6 +47,18 @@ configs:
 docs:
 	@./packages/manpage.py
 
+compile:
+	mkdocs build
+
+serve:
+	mkdocs serve
+
+watch:
+	@./scripts/watch-docs
+
+share: compile
+	@onionshare-cli --disable_csp --website public
+
 #
 # Packaging
 #
