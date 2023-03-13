@@ -4,7 +4,7 @@ pages:
     - apt-get update
     - apt-get install -y git
     - git submodule update --init --recursive
-    - vendor/onion-mkdocs/scripts/provision-docs-build
+    - vendors/onion-mkdocs/scripts/provision-docs-build
     - make compile-docs
   artifacts:
     paths:

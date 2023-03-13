@@ -42,8 +42,8 @@ sudo usermod -a -G docker $(whoami)
 # Docs
 # Not automatically installed because some texlive packages uses a lot of diskspace
 sudo apt-get install -y $DEPENDENCIES_DOCS
-$BASEPATH/vendor/onion-mkdocs/scripts/provision-docs-build
-$BASEPATH/vendor/onion-tex-slim/scripts/provision-docs-build
+$BASEPATH/vendors/onion-mkdocs/scripts/provision-docs-build
+$BASEPATH/vendors/onion-tex-slim/scripts/provision-docs-build
 
 # Python packaging
 sudo apt-get install -y $DEPENDENCIES_PACKAGING_PYTHON

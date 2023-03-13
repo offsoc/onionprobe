@@ -4,7 +4,7 @@ slides:
     - apt-get update
     - apt-get install -y git
     - git submodule update --init --recursive
-    - vendor/onion-tex-slim/scripts/provision-docs-build
+    - vendors/onion-tex-slim/scripts/provision-docs-build
     - make -C docs/slides/demoday
     - mkdir public
     - find docs/slides -name '*.pdf' -exec cp {} public \;
