@@ -1,3 +1,3 @@
 # API
 
-::: onionprobe.Onionprobe
+::: packages.onionprobe
