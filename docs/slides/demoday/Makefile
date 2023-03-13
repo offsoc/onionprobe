@@ -1,12 +1,12 @@
 #
-# Makefile for The Onion Plan slides
+# Makefile for Onionprobe slides
 # Inspired by https://gitlab.torproject.org/anarcat/presentations/-/blob/main/soto-2022/Makefile
 #
 
-TARGET				  = demoday.pdf
-TEMPLATE        = beamer-ahf-slim.tex
-TEMPLATE_FOLDER = ../../../vendors/onion-tex-slim/src/pandoc/templates/$(TEMPLATE)
-COMPILE_CMD     = pandoc -t beamer --pdf-engine=pdflatex --slide-level 2 --template="$(TEMPLATE_FOLDER)"
+TARGET				= demoday.pdf
+TEMPLATE      = beamer-ahf-slim.tex
+TEMPLATE_PATH = ../../../vendors/onion-tex-slim/src/pandoc/templates/$(TEMPLATE)
+COMPILE_CMD   = pandoc -t beamer --pdf-engine=pdflatex --slide-level 2 --template="$(TEMPLATE_PATH)"
 
 export TEXINPUTS:=$(shell pwd)/../../../vendors/onion-tex-slim/src/tex:${TEXINPUTS}
 

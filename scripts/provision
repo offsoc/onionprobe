@@ -7,12 +7,13 @@
 DIRNAME="`dirname $0`"
 BASEPATH="$DIRNAME/.."
 DEPENDENCIES="python3-prometheus-client python3-stem python3-cryptography python3-yaml python3-requests python3-socks"
-#DEPENDENCIES="python3-bs4 python3-pytest"
 DEPENDENCIES="$DEPENDENCIES tor"
-DEPENDENCIES_DOCS="pandoc latexmk texlive-latex-extra"
 DEPENDENCIES_PACKAGING_PYTHON="python3-venv python3-build python3-keyrings.alt twine"
 DEPENDENCIES_PACKAGING_DEBIAN="sbuild-debian-developer-setup piuparts"
 TORRC="/etc/tor/torrc"
+
+# Update submodules
+git submoduled update --init
 
 # Install dependencies
 sudo apt install -y $DEPENDENCIES
@@ -41,7 +42,8 @@ sudo usermod -a -G docker $(whoami)
 # Docs
 # Not automatically installed because some texlive packages uses a lot of diskspace
 sudo apt-get install -y $DEPENDENCIES_DOCS
-$BASEPATH/scripts/provision-docs-build
+$BASEPATH/vendor/onion-mkdocs/scripts/provision-docs-build
+$BASEPATH/vendor/onion-tex-slim/scripts/provision-docs-build
 
 # Python packaging
 sudo apt-get install -y $DEPENDENCIES_PACKAGING_PYTHON
