@@ -41,6 +41,7 @@ sudo usermod -a -G docker $(whoami)
 # Docs
 # Not automatically installed because some texlive packages uses a lot of diskspace
 #sudo apt-get install -y $DEPENDENCIES_DOCS
+$BASEPATH/scripts/provision-docs-build
 
 # Python packaging
 sudo apt-get install -y $DEPENDENCIES_PACKAGING_PYTHON

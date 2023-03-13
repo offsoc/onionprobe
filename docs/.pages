@@ -6,6 +6,7 @@ nav:
   - standalone.md
   - configurations.md
   - structure.md
+  - api.md
   - acknowledgements.md
   - alternatives.md
   - issues.md

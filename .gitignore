@@ -4,3 +4,4 @@ __pycache__
 *.egg-info/
 docs/man/onionprobe.1
 contrib
+public

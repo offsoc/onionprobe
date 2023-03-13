@@ -37,6 +37,11 @@ extra_css:
 plugins:
   - search
 
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [packages]
+
   - awesome-pages:
       collapse_single_pages: true
 

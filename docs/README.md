@@ -1,6 +1,6 @@
 # Onionprobe
 
-![](docs/assets/logo.jpg "Onionprobe")
+![](assets/logo.jpg "Onionprobe")
 
 Onionprobe is a tool for testing and monitoring the status of
 [Tor Onion Services](https://community.torproject.org/onion-services/) sites.

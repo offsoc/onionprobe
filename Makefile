@@ -44,19 +44,21 @@ configs:
 # Documentation
 #
 
-docs:
+docs: manpage compile-docs
+
+manpage:
 	@./packages/manpage.py
 
-compile:
+compile-docs:
 	mkdocs build
 
-serve:
+serve-docs:
 	mkdocs serve
 
-watch:
+watch-docs:
 	@./scripts/watch-docs
 
-share: compile
+share-docs: compile
 	@onionshare-cli --disable_csp --website public
 
 #

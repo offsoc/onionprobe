@@ -11,5 +11,5 @@ Relevant folders and files in this repository:
 * `scripts`: provisioning and other configuration scripts.
 * `tests`: test procedures.
 * `vendors`: other third-party libraries and helpers.
-* `kvmxfile`: please ignore this if you're not a [KVMX](https://kvmx.fluxo.info) user.
+* `kvmxfile`: please ignore this if you're not a [KVMX](https://0xacab.org/rhatto/kvmx) user.
 * `docker-compose.yml`: service container configuration.
