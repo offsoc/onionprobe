@@ -1,0 +1,12 @@
+nav:
+  - README.md
+  - requirements.md
+  - installation.md
+  - usage.md
+  - standalone.md
+  - configurations.md
+  - structure.md
+  - acknowledgements.md
+  - alternatives.md
+  - issues.md
+  - references.md

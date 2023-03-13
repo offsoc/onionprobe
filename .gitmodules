@@ -1,3 +1,6 @@
 [submodule "vendors/onion-tex"]
 	path = vendors/onion-tex
 	url = https://gitlab.torproject.org/ahf/onion-tex
+[submodule "vendors/onion-mkdocs"]
+	path = vendors/onion-mkdocs
+	url = https://gitlab.torproject.org/rhatto/onion-mkdocs
