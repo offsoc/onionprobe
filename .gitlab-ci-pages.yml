@@ -1,0 +1,13 @@
+pages:
+  image: debian:bullseye
+  script:
+    - apt-get update
+    - apt-get install -y git
+    - git submodule update --init
+    - scripts/provision-docs-build
+    - make compile
+  artifacts:
+    paths:
+      - public
+  only:
+    - main
