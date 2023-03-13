@@ -9,7 +9,7 @@ It's possible to supply multiple addresses:
     onionprobe -e <onion-address1> <onionaddress2> ...
 
 Onionprobe also accepts a configuration file with a list of .onion endpoints
-and options. A [detailed sample config](configs/tor.yaml) is provided and can
+and options. A [detailed sample config][] is provided and can
 be invoked with:
 
     onionprobe -c configs/tor.yaml
@@ -20,3 +20,5 @@ must be available in the system.
 See the [manual
 page](https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/blob/main/docs/man/onionprobe.1.md)
 for the complete list of options and available metrics.
+
+[detailed sample config]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/blob/main/configs/tor.yaml

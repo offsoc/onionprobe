@@ -7,6 +7,4 @@ Onionprobe is a tool for testing and monitoring the status of
 
 It can run a single time or continuously to probe a set of onion services
 endpoints and paths, optionally exporting to [Prometheus](https://prometheus.io)
-and with [Grafana](https://grafana.com/) support:
-
-![](assets/dashboard.png "Grafana Onion Services Dashboard")
+and with [Grafana](https://grafana.com/) support.
