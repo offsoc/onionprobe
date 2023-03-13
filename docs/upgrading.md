@@ -23,9 +23,34 @@ This procedure is based on the [tianon/docker-postgres-upgrade][]
 approach[^docker-postgres-upgrade] and needs to be done whenever Onionprobe is
 upgraded to a new [postgres image][] version:
 
-1. Stop the monitoring node: `docker compose down`.
-2. Run the upgrade script and follow it's instructions: `./scripts/upgrade-postgresql-database`.
-3. Start the containers: `make run-containers`.
+### Stop the monitoring node
+
+Just run
+
+    docker compose down
+
+### Run the upgrade script
+
+This handy script may do all the heavy lifting for you:
+
+    ./scripts/upgrade-postgresql-database
+
+By default it searches for the `onionprobe_postgres` service containers, but
+you can pass the name of your custom container as the optional command line
+parameter:
+
+    ./scripts/upgrade-postgresql-database <service-container-name>
+
+As a safeguard measure, the script does not remove it's working directory and
+also makes a backup of the old PostgreSQL data. You can manually remove those
+later after checking that the upgrade procedure works. Just follow the script
+output for instructions or check it's source code.
+
+### Start the containers
+
+Simply start the standalone monitoring node again after the upgrade procedure:
+
+    make run-containers
 
 [tianon/docker-postgres-upgrade]: https://github.com/tianon/docker-postgres-upgrade
 [tpo/onion-services/onionprobe#70]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/70
