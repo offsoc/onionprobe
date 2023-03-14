@@ -144,4 +144,7 @@ class OnionprobeProber:
 
                 results[path['path']] = False
 
+        # Get certificate information
+        cert = self.get_certificate(endpoint, config)
+
         return results

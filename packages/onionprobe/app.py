@@ -32,6 +32,7 @@ from .descriptor import OnionprobeDescriptor
 from .metrics    import OnionprobeMetrics
 from .prober     import OnionprobeProber
 from .http       import OnionprobeHTTP
+from .tls        import OnionprobeTLS
 from .teardown   import OnionprobeTeardown
 from .main       import OnionprobeMain
 
@@ -46,6 +47,7 @@ class Onionprobe(
         OnionprobeMetrics,
         OnionprobeProber,
         OnionprobeHTTP,
+        OnionprobeTLS,
         OnionprobeTeardown,
         OnionprobeMain,
         ):
