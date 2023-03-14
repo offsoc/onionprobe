@@ -9,6 +9,7 @@ It can run a single time or continuously to probe a set of onion services
 endpoints and paths, optionally exporting to [Prometheus](https://prometheus.io)
 and with [Grafana](https://grafana.com/) support.
 
-The full documentation is [available here].
+The full documentation is available in the [docs/](docs) folder and at the
+[Onionprobe website][].
 
-[available here]: https://tpo.pages.torproject.net/onion-services/onionprobe/
+[Onionprobe website]: https://tpo.pages.torproject.net/onion-services/onionprobe/
