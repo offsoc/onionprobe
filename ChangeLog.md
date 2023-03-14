@@ -7,7 +7,8 @@
 * Stick to a PostgreSQL docker image.
   See https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/70
 
-* Command-line URL parsing.
+* Command-line URL parsing:
+  https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/merge_requests/17
 
 ### Features
 
