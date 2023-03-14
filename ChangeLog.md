@@ -7,6 +7,8 @@
 * Stick to a PostgreSQL docker image.
   See https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/70
 
+* Command-line URL parsing.
+
 ### Features
 
 * Added script to handle PostgreSQL version upgrades at the service container:

@@ -78,16 +78,23 @@ class OnionprobeInit:
 
             for endpoint in args.endpoints:
                 try:
-                    url = urllib.parse.urlparse(endpoint)
+                    url          = urllib.parse.urlparse(endpoint)
+                    default_port = '443' if url.scheme == 'https' else '80'
 
-                    # Check if only the onion address was provided
+                    # Check if only the onion address was provided, without protocol information
                     if url.path == endpoint:
                         url = urllib.parse.urlparse('http://' + endpoint)
 
+                    # Remove port from the address information
+                    if url.port is not None:
+                        (address, port) = tuple(url.netloc.split(':'))
+                    else:
+                        address = url.netloc
+
                     self.config['endpoints'][endpoint] = {
-                        'address' : url.netloc,
+                        'address' : address,
                         'protocol': url.scheme,
-                        'port'    : url.port if url.port is not None else '80',
+                        'port'    : str(url.port) if url.port is not None else default_port,
                         'paths'   : [{
                                         'path': url.path if url.path != '' else '/',
                                 },
