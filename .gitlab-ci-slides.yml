@@ -5,7 +5,7 @@ slides:
     - apt-get install -y git
     - git submodule update --init --recursive
     - vendors/onion-tex-slim/scripts/provision-docs-build
-    - make -C docs/slides/demoday
+    - make -C docs/slides all
     - mkdir public
     - find docs/slides -name '*.pdf' -exec cp {} public \;
   artifacts:
