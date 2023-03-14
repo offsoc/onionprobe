@@ -51,7 +51,7 @@ endpoints:
       path: /
     port: 80
     protocol: http
-  Bloomberg Law:
+  Bloomberg Industry Group:
     address: 33buewrpzrfpttl7kerqvtvzyo3ivumilwwmeqjryzajusltibaqc6ad.onion
     paths:
     - allowed_statuses:
@@ -107,6 +107,14 @@ endpoints:
       path: /
     port: 80
     protocol: http
+  Forbes:
+    address: 6zonlfhh7aqtfwoyvdlad3nxn6ljecx2k6tyyy3spt43nn54q6lvncid.onion
+    paths:
+    - allowed_statuses:
+      - 200
+      path: /
+    port: 80
+    protocol: http
   Forbidden Stories:
     address: fg25fqpu2dnxp24xs3jlcley4hp2inshpzek44q3czkhq3zffoqk26id.onion
     paths:
@@ -139,6 +147,14 @@ endpoints:
       path: /
     port: 80
     protocol: http
+  NOYB:
+    address: xjc4s5z26i2z5tzjzj3w6jwzuomedzsahq4tccktwdcs6fldt4ojznqd.onion
+    paths:
+    - allowed_statuses:
+      - 200
+      path: /
+    port: 80
+    protocol: http
   NRK:
     address: 537ztcntpbmspja4mkpxldpsoc46mqlssnsaklqnfw3gnlpj5glcjgid.onion
     paths:
@@ -155,6 +171,14 @@ endpoints:
       path: /
     port: 80
     protocol: http
+  POLITICO:
+    address: mzi5yynpd6qqq3lnh7vnaojy36v3hcorytsut47zwkguhnorduyxwead.onion
+    paths:
+    - allowed_statuses:
+      - 200
+      path: /
+    port: 80
+    protocol: http
   ProPublica:
     address: lvtu6mh6dd6ynqcxtd2mseqfkm7g2iuxvjobbyzpgx2jt427zvd7n3ad.onion
     paths:
@@ -165,6 +189,14 @@ endpoints:
     protocol: http
   Public Intelligence:
     address: z4gd5t2g6u6kqeqjeddvmvlhhjtjgslg4elh4ztnct7snskcd7phbiyd.onion
+    paths:
+    - allowed_statuses:
+      - 200
+      path: /
+    port: 80
+    protocol: http
+  Stavanger Aftenblad:
+    address: 4beybcv5e7xya4xu2nzdqkohawm32imugjtatkvmp2xwgfhcoj64slid.onion
     paths:
     - allowed_statuses:
       - 200
@@ -229,14 +261,6 @@ endpoints:
     protocol: http
   The Intercept:
     address: xpxduj55x2j27l2qytu2tcetykyfxbjbafin3x4i3ywddzphkbrd3jyd.onion
-    paths:
-    - allowed_statuses:
-      - 200
-      path: /
-    port: 80
-    protocol: http
-  The Markup:
-    address: fhrkds5du4uvv33ibce5bnwppih6kkzyam7othip4dywrpy46rxoytid.onion
     paths:
     - allowed_statuses:
       - 200
