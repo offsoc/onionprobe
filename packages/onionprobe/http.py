@@ -78,6 +78,9 @@ class OnionprobeHTTP:
         :type  path: dict
         :param path: A path dictionary from the endpoint configuration.
 
+        :type  attempt: int
+        :param attempt: The current attempt used to determine the maximum number of retries.
+
         :rtype: requests.Response or False
         :return: The query result on success.
                  False on error.
@@ -210,7 +213,7 @@ class OnionprobeHTTP:
             reachable = 0 if result is False else 1
 
             if result is False:
-                retries   = self.get_config('http_connect_max_retries')
+                retries = self.get_config('http_connect_max_retries')
 
                 # Try again until max retries is reached
                 if attempt <= retries:
