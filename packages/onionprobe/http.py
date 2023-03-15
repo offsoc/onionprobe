@@ -63,7 +63,7 @@ class OnionprobeHTTP:
 
         return url
 
-    def query(self, endpoint, config, path, attempt = 1):
+    def query_http(self, endpoint, config, path, attempt = 1):
         """
         Fetches endpoint from URL
 
@@ -99,7 +99,6 @@ class OnionprobeHTTP:
         init_time   = self.now()
         tor_address = self.get_config('tor_address')
         socks_port  = self.get_config('socks_port')
-        valid_cert  = 1
 
         # Request everything via Tor, including DNS queries
         proxies = {
@@ -121,12 +120,21 @@ class OnionprobeHTTP:
                 self.get_config('http_read_timeout'),
                 )
 
+        # Whether to verify TLS certificates
+        if 'tls_verify' in config:
+            tls_verify = config['tls_verify']
+        else:
+            tls_verify = self.config.get('tls_verify')
+
+        # Untested certs get a default status value as well
+        valid_cert = 1 if tls_verify else 2
+
         try:
             self.log('Trying to connect to {} (attempt {})...'.format(url, attempt))
             self.inc_metric('onion_service_fetch_requests_total', 1, labels)
 
             # Fetch results and calculate the elapsed time
-            result  = requests.get(url, proxies=proxies, timeout=timeout)
+            result  = requests.get(url, proxies=proxies, timeout=timeout, verify=tls_verify)
             elapsed = self.elapsed(init_time, True)
 
             # Update metrics
@@ -217,7 +225,7 @@ class OnionprobeHTTP:
 
                 # Try again until max retries is reached
                 if attempt <= retries:
-                    return self.query(endpoint, config, path, attempt + 1)
+                    return self.query_http(endpoint, config, path, attempt + 1)
 
             # Register reachability on metrics
             self.set_metric('onion_service_reachable', reachable, labels)

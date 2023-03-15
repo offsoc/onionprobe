@@ -12,6 +12,14 @@
 
 ### Features
 
+* TLS certificate verification:
+  * Added a global `tls_verify` flag to check certificates during HTTP tests.
+    Set it to `false` to ignore TLS certificate verification.
+    By default all TLS certificates are checked.
+
+  * Added a per-endpoint `tls_verify` flag to check certificates n HTTP tests,
+    overriding the global setting for the endpoing context.
+
 * Added script to handle PostgreSQL version upgrades at the service container:
   https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/70
 

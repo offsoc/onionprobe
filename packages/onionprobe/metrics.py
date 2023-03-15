@@ -117,9 +117,25 @@ metrics = {
     'onion_service_valid_certificate': Gauge(
             'onion_service_valid_certificate',
             "Register whether the Onion Service HTTPS certificate is valid: " + \
-               "value is 1 for valid and 0 otherwise, but only for sites reachable " + \
+               "value is 1, 0 for invalid, 2 for untested. Only for sites reachable " + \
                "using HTTPS",
             ['name', 'address', 'protocol', 'port', 'path']
+        ),
+
+    'onion_service_certificate_not_valid_before': Gauge(
+            'onion_service_certificate_not_valid_before',
+            "Register the beginning of the validity period of the certificate in UTC." + \
+               "This does not mean necessarily that the certificate is CA-validated." + \
+               "Value is represented as a POSIX timestamp",
+            ['name', 'address', 'port' ]
+        ),
+
+    'onion_service_certificate_not_valid_after': Gauge(
+            'onion_service_certificate_not_valid_after',
+            "Register the end of the validity period of the certificate in UTC." + \
+               "This does not mean necessarily that the certificate is CA-validated." + \
+               "Value is represented as a POSIX timestamp",
+            ['name', 'address', 'port' ]
         ),
 
     #
@@ -248,6 +264,20 @@ metrics = {
             'Onion Service descriptor information, including state and Hidden Service ' + \
                     'Directory (HSDir) used',
             ['name', 'address']
+        ),
+
+    'onion_service_tls_info': Info(
+            'onion_service_tls_info',
+            'Register miscelaneous TLS information for a a given Onion Service, ' + \
+                    'such as version and ciphers',
+            ['name', 'address', 'port'],
+        ),
+
+    'onion_service_certificate_info': Info(
+            'onion_service_certificate_info',
+            'Register miscelaneous TLS certificate information for a a given Onion Service, ' + \
+                    'such as version and fingerprints',
+            ['name', 'address', 'port'],
         ),
 
     'onion_service_probe_status': Info(
