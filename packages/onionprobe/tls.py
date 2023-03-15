@@ -67,6 +67,54 @@ class OnionprobeTLS:
                     print(tls.version())
                     print(cert_info)
 
+        except ssl.SSLZeroReturnError as e:
+            result  = False
+            error   = e.reason
+
+            self.log(e, 'error')
+
+        except ssl.SSLWantReadError as e:
+            result  = False
+            error   = e.reason
+
+            self.log(e, 'error')
+
+        except ssl.SSLWantWriteError as e:
+            result  = False
+            error   = e.reason
+
+            self.log(e, 'error')
+
+        except ssl.SSLSyscallError as e:
+            result  = False
+            error   = e.reason
+
+            self.log(e, 'error')
+
+        except ssl.SSLEOFError as e:
+            result  = False
+            error   = e.reason
+
+            self.log(e, 'error')
+
+        except ssl.SSLCertVerificationError as e:
+            result  = False
+            error   = e.reason
+
+            self.log(e, 'error')
+
+        except ssl.CertificateError as e:
+            result  = False
+            error   = e.reason
+
+            self.log(e, 'error')
+
+        except ssl.SSLError as e:
+            result  = False
+            error   = e.reason
+
+            self.log(e, 'error')
+
         except socks.GeneralProxyError as e:
             result = False
             error  = e.socket.err
