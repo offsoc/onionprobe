@@ -3,7 +3,7 @@ nav:
   - requirements.md
   - installation.md
   - usage.md
-  - Manual page: man/onionprobe
+  - Manual page: man/onionprobe.1
   - standalone.md
   - configurations.md
   - upgrading.md
