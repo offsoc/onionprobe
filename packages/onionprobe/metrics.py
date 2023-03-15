@@ -67,6 +67,13 @@ metrics = {
             ['name', 'address', 'protocol', 'port', 'path', 'reachable']
         ),
 
+    #'onion_service_tls_connection_attempts': Gauge(
+    #        'onion_service_tls_connection_attempts',
+    #        "Register the number of attempts when trying to connect to an " + \
+    #                "Onion Service in a TLS probing round",
+    #        ['name', 'address', 'port', 'reachable']
+    #    ),
+
     'onion_service_status_code': Gauge(
             'onion_service_status_code',
             'Register Onion Service connection HTTP status code',
