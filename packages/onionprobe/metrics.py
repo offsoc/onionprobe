@@ -129,16 +129,16 @@ metrics = {
             ['name', 'address', 'protocol', 'port', 'path']
         ),
 
-    'onion_service_certificate_not_valid_before': Gauge(
-            'onion_service_certificate_not_valid_before',
+    'onion_service_certificate_not_valid_before_timestamp_seconds': Gauge(
+            'onion_service_certificate_not_valid_before_timestamp_seconds',
             "Register the beginning of the validity period of the certificate in UTC." + \
                "This does not mean necessarily that the certificate is CA-validated." + \
                "Value is represented as a POSIX timestamp",
             ['name', 'address', 'port' ]
         ),
 
-    'onion_service_certificate_not_valid_after': Gauge(
-            'onion_service_certificate_not_valid_after',
+    'onion_service_certificate_not_valid_after_timestamp_seconds': Gauge(
+            'onion_service_certificate_not_valid_after_timestamp_seconds',
             "Register the end of the validity period of the certificate in UTC." + \
                "This does not mean necessarily that the certificate is CA-validated." + \
                "Value is represented as a POSIX timestamp",

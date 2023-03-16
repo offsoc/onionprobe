@@ -271,8 +271,8 @@ class OnionprobeTLS:
                 },
                 labels)
 
-            self.set_metric('onion_service_certificate_not_valid_before', not_valid_before, labels)
-            self.set_metric('onion_service_certificate_not_valid_after',  not_valid_after,  labels)
+            self.set_metric('onion_service_certificate_not_valid_before_timestamp_seconds', not_valid_before, labels)
+            self.set_metric('onion_service_certificate_not_valid_after_timestamp_seconds',  not_valid_after,  labels)
 
             message = 'Certificate for {address} on {port} has subject: {subject}; ' + \
                       'issuer: {issuer}; serial number: {serial_number}; version: {version}; ' + \
