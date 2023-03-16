@@ -18,7 +18,13 @@
     By default all TLS certificates are checked.
 
   * Added a per-endpoint `tls_verify` flag to check certificates n HTTP tests,
-    overriding the global setting for the endpoing context.
+    overriding the global setting for the endpoint context.
+
+  * Changed the `onion_service_valid_certificate` metric to also inform
+    when a certificate wasn't tested by setting a value of `2` on that
+    case. This isn't a breaking change since the TLS certificate is enabled
+    by default, so unless verification is disabled the metric will only
+    vary between `0` (invalid cert) and `1` (valid cert).
 
 * Added script to handle PostgreSQL version upgrades at the service container:
   https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/70
