@@ -85,7 +85,7 @@ class OnionprobeTLS:
 
         try:
             self.log('Trying to do a TLS connection to {} on port {} (attempt {})...'.format(
-                config['address'], port, attempt))
+                config['address'], config['port'], attempt))
 
             with socks.create_connection(
                     (config['address'], port),
@@ -93,6 +93,9 @@ class OnionprobeTLS:
                     proxy_addr=tor_address, proxy_port=socks_port, proxy_rdns=True) as sock:
                 with context.wrap_socket(sock, server_hostname=config['address']) as tls:
                     result = True
+
+                    self.log('TLS connection succeeded at {} on port {}'.format(
+                            config['address'], config['port']))
 
                     if self.get_config('get_certificate_info'):
                         cert_result = self.get_certificate(endpoint, config, tls)
@@ -241,6 +244,9 @@ class OnionprobeTLS:
             # We can't rely on ssl.getpeercert() if the certificate wasn't validated
             #cert_info = tls.getpeercert()
 
+            self.log('Retrieving certificate information for {} on port {}'.format(
+                    config['address'], config['port']))
+
             result           = True
             der_cert         = tls.getpeercert(binary_form=True)
             pem_cert         = ssl.DER_cert_to_PEM_cert(der_cert)
@@ -267,6 +273,22 @@ class OnionprobeTLS:
 
             self.set_metric('onion_service_certificate_not_valid_before', not_valid_before, labels)
             self.set_metric('onion_service_certificate_not_valid_after',  not_valid_after,  labels)
+
+            message = 'Certificate for {address} on {port} has subject: {subject}; ' + \
+                      'issuer: {issuer}; serial number: {serial_number}; version: {version}; ' + \
+                      'notBefore: {not_before}; notAfter: {not_after}; SHA256 fingerprint: {fingerprint}'
+
+            self.log(message.format(
+                address       = config['address'],
+                port          = config['port'],
+                subject       = cert.subject.rfc4514_string(),
+                issuer        = cert.issuer.rfc4514_string(),
+                serial_number = str(cert.serial_number),
+                version       = str(cert.version),
+                not_before    = cert.not_valid_before.isoformat(),
+                not_after     = cert.not_valid_after.isoformat(),
+                fingerprint   = cert_fp_sha256,
+                ))
 
         except Exception as e:
             result    = False
