@@ -51,7 +51,8 @@ class OnionprobeTLS:
         :param config: Endpoint configuration
 
         :type  attempt: int
-        :param attempt: The current attempt used to determine the maximum number of retries.
+        :param attempt: The current attempt used to determine the maximum
+                        number of retries.
 
         :rtype: bool
         :return: True if the connection succeeded.
