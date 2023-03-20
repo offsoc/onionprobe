@@ -244,7 +244,7 @@ class OnionprobeTLS:
             self.log(e, 'error')
 
         finally:
-            #reachable = 0 if result is False else 1
+            reachable = 0 if result is False else 1
 
             if result is False:
                 retries = self.get_config('tls_connect_max_retries')
@@ -253,20 +253,18 @@ class OnionprobeTLS:
                 if attempt <= retries:
                     return self.query_tls(endpoint, config, attempt + 1)
 
-            # Register the number attempts on metrics
-            #
-            # This may be redundant with what's already done at
-            # This metrics may be too specific and can cause confusion with
-            # OnionprobeHTTP.query_http(), so that's why it's commented.
-            # This could also be controlled by a flag.
-            #labels['reachable'] = reachable
-            #self.set_metric('onion_service_connection_attempts', attempt, labels)
-
             if exception is not None:
                 # Count exceptions
                 self.inc_metric('onion_service_' + exception + '_total', 1, labels)
 
                 # Count errors
                 self.inc_metric('onion_service_fetch_error_total', 1, labels)
+
+                # Register the number attempts on metrics, but only in case of errors,
+                # otherwse it may be redundant with what's already done at
+                # This metrics may be too specific and can cause confusion with
+                # OnionprobeHTTP.query_http()
+                labels['reachable'] = reachable
+                self.set_metric('onion_service_connection_attempts', attempt, labels)
 
             return result
