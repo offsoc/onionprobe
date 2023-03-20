@@ -191,6 +191,12 @@ class OnionprobeHTTP:
 
             self.log(e, 'error')
 
+        except Exception as e:
+            result    = False
+            exception = 'general_error'
+
+            self.log(e, 'error')
+
         else:
             self.log('Status code is {}'.format(result.status_code))
 

@@ -216,8 +216,15 @@ metrics = {
     #        ['name', 'address', 'protocol', 'port', 'path']
     #    ),
 
+    # Counter for generic errors
+    'onion_service_general_error_total': Counter(
+            'onion_service_general_error_total',
+            'Counts the total number of errors not tracked by other metrics',
+            ['name', 'address', 'port']
+        ),
+
     #
-    # Requests exception counter
+    # Requests exception counters
     #
 
     # Counter for requests.RequestException
@@ -234,7 +241,7 @@ metrics = {
             ['name', 'address', 'protocol', 'port', 'path']
         ),
 
-    # Counter for requests.HTTPError
+    # Counter for requests.HTTPError and socks.HTTPError
     'onion_service_http_error_total': Counter(
             'onion_service_http_error_total',
             'Counts the total number of Onion Service HTTP errors',
@@ -274,6 +281,100 @@ metrics = {
             'onion_service_certificate_error',
             'Counts the total number of HTTPS certificate validation errors',
             ['name', 'address', 'protocol', 'port', 'path']
+        ),
+
+    #
+    # SSL exception counters
+    #
+
+    # Counter for SSL.SSLZeroReturnError
+    'onion_service_ssl_zero_return_error_total': Counter(
+            'onion_service_ssl_zero_return_error_total',
+            'Counts the total number of TLS errors when trying to read or write' + \
+                    'and the SSL connection has been closed cleanly',
+            ['name', 'address', 'port']
+        ),
+
+    # Counter for SSL.SSLWantReadError
+    'onion_service_ssl_want_read_error_total': Counter(
+            'onion_service_ssl_want_read_error_total',
+            'Counts the total number of TLS errors when trying to read or write data, ' + \
+                    'but more data needs to be received on the underlying TCP transport ' + \
+                    'before the request can be fulfilled',
+            ['name', 'address', 'port']
+        ),
+
+    # Counter for SSL.SSLWantWriteError
+    'onion_service_ssl_want_write_error_total': Counter(
+            'onion_service_ssl_want_write_error_total',
+            'Counts the total number of TLS errors when trying to read or write data, ' + \
+                    'but more data needs to be received on the underlying TCP transport ' + \
+                    'before the request can be fulfilled',
+            ['name', 'address', 'port']
+        ),
+
+    # Counter for SSL.SSLSyscallError
+    'onion_service_ssl_syscall_error_total': Counter(
+            'onion_service_ssl_syscall_error_total',
+            'Counts the total number of underlying system errors during a TLS connection',
+            ['name', 'address', 'port']
+        ),
+
+    # Counter for SSL.SSLEOFError
+    'onion_service_ssl_eof_error_total': Counter(
+            'onion_service_ssl_eof_error_total',
+            'Counts the total number of TLS errors when the connection is terminated abruptly',
+            ['name', 'address', 'port']
+        ),
+
+    # Counter for ssl.SSLCertVerificationError
+    #
+    # This should never trigger since the TLS test does not check for certificate validation.
+    # We rely instead on the 'onion_service_certificate_error_total' metric.
+    #'onion_service_ssl_cert_verification_error_total': Counter(
+    #        'onion_service_ssl_cert_verification_error_total',
+    #        'Counts the total number of certificate validation when running a TLS test',
+    #        ['name', 'address', 'port']
+    #    ),
+
+    # Counter for SSL.CertificateError
+    # Alias for 'onion_service_ssl_cert_verification_error_total',
+    #'onion_service_ssl_certificate_error_total': Counter(
+    #        'onion_service_ssl_certificate_error_total',
+    #        'Counts the total number of',
+    #        ['name', 'address', 'port']
+    #    ),
+
+    # Counter for SSL.SSLError
+    'onion_service_ssl_error_total': Counter(
+        'onion_service_ssl_error_total',
+            'Counts the total number of other TLS errors',
+            ['name', 'address', 'port']
+        ),
+
+    #
+    # PySocks exception counters
+    #
+
+    # Counter for socks.SOCKS5AuthError
+    'onion_service_socks5_auth_error_total': Counter(
+            'onion_service_socks5_auth_error_total',
+            'Counts the total number of SOCKS5 authentication errors for tests using the PySocks library',
+            ['name', 'address', 'port']
+        ),
+
+    # Counter for socks.SOCKS5Error
+    'onion_service_socks5_general_error_total': Counter(
+        'onion_service_socks5_general_error_total',
+            'Counts the total number of non-authentication SOCKS5 errors for tests using the PySocks library',
+            ['name', 'address', 'port']
+        ),
+
+    # Counter for socks.GeneralProxyError
+    'onion_service_general_proxy_error_total': Counter(
+            'onion_service_general_proxy_error_total',
+            'Counts the total number of general proxy errors for tests using the PySocks library',
+            ['name', 'address', 'port']
         ),
 
     #

@@ -61,6 +61,7 @@ class OnionprobeTLS:
         socks_port  = self.get_config('socks_port')
         timeout     = self.get_config('tls_connect_timeout')
         port        = int(config['port']) if 'port' in config else 443
+        exception   = None
 
         # Approach to use when always checking the certificate
         #context                = ssl.create_default_context()
@@ -143,32 +144,28 @@ class OnionprobeTLS:
 
             self.log(e, 'error')
 
-        except ssl.SSLCertVerificationError as e:
-            result     = False
-            error      = e.reason
-            exception  = 'ssl_cert_verification_error'
-            valid_cert = 0
+        # This should never trigger since the TLS test does not check for
+        # certificate validation.
+        #except ssl.SSLCertVerificationError as e:
+        #    result     = False
+        #    error      = e.reason
+        #    exception  = 'ssl_cert_verification_error'
+        #    valid_cert = 0
 
-            self.log(e, 'error')
+        #    self.log(e, 'error')
 
-        except ssl.CertificateError as e:
-            result    = False
-            error     = e.reason
-            exception = 'ssl_certificate_error'
+        # Alias for ssl.CertificateVerificationError
+        #except ssl.CertificateError as e:
+        #    result    = False
+        #    error     = e.reason
+        #    exception = 'ssl_certificate_error'
 
-            self.log(e, 'error')
+        #    self.log(e, 'error')
 
         except ssl.SSLError as e:
             result    = False
             error     = e.reason
             exception = 'ssl_error'
-
-            self.log(e, 'error')
-
-        except socks.GeneralProxyError as e:
-            result    = False
-            error     = e.socket.err
-            exception = 'general_proxy_error'
 
             self.log(e, 'error')
 
@@ -182,7 +179,7 @@ class OnionprobeTLS:
         except socks.SOCKS5Error as e:
             result    = False
             error     = e.socket.err
-            exception = 'socks5_error'
+            exception = 'socks5_general_error'
 
             self.log(e, 'error')
 
@@ -190,6 +187,13 @@ class OnionprobeTLS:
             result    = False
             error     = e.socket.err
             exception = 'http_error'
+
+            self.log(e, 'error')
+
+        except socks.GeneralProxyError as e:
+            result    = False
+            error     = e.socket.err
+            exception = 'general_proxy_error'
 
             self.log(e, 'error')
 
@@ -216,5 +220,12 @@ class OnionprobeTLS:
             # This could also be controlled by a flag.
             #labels['reachable'] = reachable
             #self.set_metric('onion_service_tls_connection_attempts', attempt, labels)
+
+            if exception is not None:
+                # Count exceptions
+                self.inc_metric('onion_service_' + exception + '_total', 1, labels)
+
+                # Count errors
+                #self.inc_metric('onion_service_fetch_error_total', 1, labels)
 
             return result
