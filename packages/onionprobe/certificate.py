@@ -172,8 +172,8 @@ class OnionprobeCertificate:
         :type  tls: ssl.SSLSocket
         :param tls: The TLS socket connection to the endpoint.
 
-        :rtype: bool
-        :return: True on success.
+        :rtype: cryptography.x509.Certificate or False
+        :return: The X.509 certificate object on success.
                  False on error.
 
         """
@@ -185,10 +185,10 @@ class OnionprobeCertificate:
             self.log('Retrieving certificate information for {} on port {}'.format(
                     config['address'], config['port']))
 
-            result           = True
             der_cert         = tls.getpeercert(binary_form=True)
             pem_cert         = ssl.DER_cert_to_PEM_cert(der_cert)
             cert             = load_pem_x509_certificate(bytes(pem_cert, 'utf-8'))
+            result           = cert
             not_valid_before = cert.not_valid_before.timestamp()
             not_valid_after  = cert.not_valid_after.timestamp()
             info             = self.get_cert_info(cert)
