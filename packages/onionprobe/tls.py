@@ -110,37 +110,57 @@ class OnionprobeTLS:
                         labels)
 
         except ssl.SSLZeroReturnError as e:
-            result    = False
-            error     = e.reason
-            exception = 'ssl_zero_return_error'
+            result = False
+            error  = e.reason
+
+            # Do not use a fine grained exception metric here, but instead rely
+            # on an existing metric used by other tests such as the HTTP
+            #exception = 'ssl_zero_return_error'
+            exception  = 'connection_error'
 
             self.log(e, 'error')
 
         except ssl.SSLWantReadError as e:
-            result    = False
-            error     = e.reason
-            exception = 'ssl_want_read_error'
+            result = False
+            error  = e.reason
+
+            # Do not use a fine grained exception metric here, but instead rely
+            # on an existing metric used by other tests such as the HTTP
+            #exception = 'ssl_want_read_error'
+            exception  = 'connection_error'
 
             self.log(e, 'error')
 
         except ssl.SSLWantWriteError as e:
-            result    = False
-            error     = e.reason
-            exception = 'ssl_want_write_error'
+            result = False
+            error  = e.reason
+
+            # Do not use a fine grained exception metric here, but instead rely
+            # on an existing metric used by other tests such as the HTTP
+            #exception = 'ssl_want_write_error'
+            exception  = 'connection_error'
 
             self.log(e, 'error')
 
         except ssl.SSLSyscallError as e:
-            result    = False
-            error     = e.reason
-            exception = 'ssl_syscall_error'
+            result = False
+            error  = e.reason
+
+            # Do not use a fine grained exception metric here, but instead rely
+            # on an existing metric used by other tests such as the HTTP
+            #exception = 'ssl_syscall_error'
+            exception  = 'connection_error'
 
             self.log(e, 'error')
 
         except ssl.SSLEOFError as e:
-            result    = False
-            error     = e.reason
-            exception = 'ssl_eof_error'
+            result = False
+            error  = e.reason
+
+            # Do not use a fine grained exception metric here, but instead rely
+            # on an existing metric used by other tests such as the HTTP
+            #exception = 'ssl_eof_error'
+            exception  = 'connection_error'
 
             self.log(e, 'error')
 
@@ -163,23 +183,35 @@ class OnionprobeTLS:
         #    self.log(e, 'error')
 
         except ssl.SSLError as e:
-            result    = False
-            error     = e.reason
-            exception = 'ssl_error'
+            result = False
+            error  = e.reason
+
+            # Do not use a fine grained exception metric here, but instead rely
+            # on an existing metric used by other tests such as the HTTP
+            #exception = 'ssl_error'
+            exception  = 'connection_error'
 
             self.log(e, 'error')
 
         except socks.SOCKS5AuthError as e:
-            result    = False
-            error     = e.socket.err
-            exception = 'socks5_auth_error'
+            result = False
+            error  = e.socket.err
+
+            # Do not use a fine grained exception metric here, but instead rely
+            # on an existing metric used by other tests such as the HTTP
+            #exception = 'socks5_auth_error'
+            exception  = 'connection_error'
 
             self.log(e, 'error')
 
         except socks.SOCKS5Error as e:
-            result    = False
-            error     = e.socket.err
-            exception = 'socks5_general_error'
+            result = False
+            error  = e.socket.err
+
+            # Do not use a fine grained exception metric here, but instead rely
+            # on an existing metric used by other tests such as the HTTP
+            #exception = 'socks5_general_error'
+            exception  = 'connection_error'
 
             self.log(e, 'error')
 
@@ -191,15 +223,23 @@ class OnionprobeTLS:
             self.log(e, 'error')
 
         except socks.GeneralProxyError as e:
-            result    = False
-            error     = e.socket.err
-            exception = 'general_proxy_error'
+            result = False
+            error  = e.socket.err
+
+            # Do not use a fine grained exception metric here, but instead rely
+            # on an existing metric used by other tests such as the HTTP
+            #exception = 'general_proxy_error'
+            exception  = 'connection_error'
 
             self.log(e, 'error')
 
         except Exception as e:
-            result    = False
-            exception = 'general_error'
+            result = False
+
+            # Do not use a fine grained exception metric here, but instead rely
+            # on an existing metric used by other tests such as the HTTP
+            #exception = 'general_error'
+            exception = 'connection_error'
 
             self.log(e, 'error')
 
@@ -213,19 +253,20 @@ class OnionprobeTLS:
                 if attempt <= retries:
                     return self.query_tls(endpoint, config, attempt + 1)
 
-            # Register the number of TLS attempts on metrics
+            # Register the number attempts on metrics
             #
             # This may be redundant with what's already done at
+            # This metrics may be too specific and can cause confusion with
             # OnionprobeHTTP.query_http(), so that's why it's commented.
             # This could also be controlled by a flag.
             #labels['reachable'] = reachable
-            #self.set_metric('onion_service_tls_connection_attempts', attempt, labels)
+            #self.set_metric('onion_service_connection_attempts', attempt, labels)
 
             if exception is not None:
                 # Count exceptions
                 self.inc_metric('onion_service_' + exception + '_total', 1, labels)
 
                 # Count errors
-                #self.inc_metric('onion_service_fetch_error_total', 1, labels)
+                self.inc_metric('onion_service_fetch_error_total', 1, labels)
 
             return result
