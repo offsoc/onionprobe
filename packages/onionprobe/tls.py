@@ -26,7 +26,9 @@ except ImportError:
 
 import ssl
 
-from cryptography.x509              import load_pem_x509_certificate
+from datetime import timezone
+
+from cryptography.x509              import load_pem_x509_certificate, oid, DNSName
 from cryptography.hazmat.primitives import hashes
 
 class OnionprobeTLS:
@@ -222,6 +224,110 @@ class OnionprobeTLS:
 
             return result
 
+    def get_dns_alt_names_from_cert(self, cert, format='tuple'):
+        """
+        Get the DNS names from a X.509 certificate's SubjectAltName extension.
+
+        :type  cert: cryptography.x509.Certificate
+        :param cert: The X.509 Certificate object.
+
+        :type  format: str
+        :param format: The output format, either 'list' or 'tuple' in the
+                       same format returned by SSLSocket.getpeercert and
+                       accepted by ssl.match_hostname.
+
+        :rtype: list or tuple
+        :return: The list or tuple with the certificate's DNS Subject
+                 Alternative Names.
+
+        """
+
+        dns_alt_names = cert.extensions.get_extension_for_oid(
+                oid.ExtensionOID.SUBJECT_ALTERNATIVE_NAME
+                ).value.get_values_for_type(DNSName)
+
+        if format == 'tuple':
+            dns_alt_names = tuple(('DNS', item) for item in dns_alt_names)
+
+        return dns_alt_names
+
+    def get_cert_rdns(self, cert, field = 'issuer', format = 'tuple'):
+        """
+        Get the Relative Distinguished Names (RDNs) from a given X.509
+        certificate field like issuer or subject.
+
+        :type field: str
+        :param field: The name of the X.509 certificate field
+                      ('issuer' or 'subject').
+
+        :type  format: str
+        :param format: The output format, either 'list' or 'tuple' in the
+                       same format returned by SSLSocket.getpeercert and
+                       accepted by ssl.match_hostname.
+
+        :rtype: dict or tuple
+        :return: The dict or tuple with the certificate's DNS Subject
+                 Alternative Names.
+
+        :type  cert: cryptography.x509.Certificate
+        :param cert: The X.509 Certificate object.
+
+        """
+
+        items = {}
+
+        for item in getattr(cert, field):
+            name = item.oid._name
+
+            if name not in items:
+                items[name] = []
+
+            items[name].append(item.value)
+
+        if format == 'dict':
+            return items
+
+        result = []
+
+        for name in items:
+            result.append(tuple((name, item) for item in items[name]))
+
+        return tuple(result)
+
+    def get_cert_info(self, cert):
+        """
+        Get basic information from a X.509 certificate.
+
+        :type  cert: cryptography.x509.Certificate
+        :param cert: The X.509 Certificate object.
+
+        :rtype: dict
+        :return: Dictionary with basic certificate information in the same
+                 format returned by SSLSocket.getpeercert and accepted by
+                 ssl.match_hostname.
+
+        """
+
+        # Date format is the same from ssl.cert_time_to_seconds
+        date_format = '%b %d %H:%M:%S %Y %Z'
+
+        # The info dictionary
+        info = {
+                'issuer'         : self.get_cert_rdns(cert, 'issuer'),
+
+                # Convert to aware datetime formats since
+                # cryptography.x509.Certificate uses naive objects by default
+                'notAfter'       : cert.not_valid_after.replace(tzinfo=timezone.utc).strftime(date_format),
+                'notBefore'      : cert.not_valid_before.replace(tzinfo=timezone.utc).strftime(date_format),
+
+                'serialNumber'   : str(cert.serial_number),
+                'subject'        : self.get_cert_rdns(cert, 'subject'),
+                'subjectAltName' : self.get_dns_alt_names_from_cert(cert),
+                'version'        : int(str(cert.version).replace('Version.v', '')),
+        }
+
+        return info
+
     def get_certificate(self, endpoint, config, tls):
         """
         Get the certificate information from a TLS connection.
@@ -236,7 +342,7 @@ class OnionprobeTLS:
         :param tls: The TLS socket connection to the endpoint.
 
         :rtype: bool
-        :return: True if the connection succeeded.
+        :return: True on success.
                  False on error.
 
         """
@@ -256,9 +362,9 @@ class OnionprobeTLS:
             cert_fp_sha256   = cert.fingerprint(hashes.SHA256()).hex(':').upper()
             not_valid_before = cert.not_valid_before.timestamp()
             not_valid_after  = cert.not_valid_after.timestamp()
-
-            # Metric labels
-            labels = {
+            info             = self.get_cert_info(cert)
+            match_hostname   = 1
+            labels           = {
                     'name'    : endpoint,
                     'address' : config['address'],
                     'port'    : config['port'],
@@ -290,6 +396,14 @@ class OnionprobeTLS:
                 not_after     = cert.not_valid_after.isoformat(),
                 fingerprint   = cert_fp_sha256,
                 ))
+
+            try:
+                match = ssl.match_hostname(info, config['address'])
+
+            except ssl.CertificateError as e:
+                match_hostname = 0
+
+            self.set_metric('onion_service_certificate_match_hostname', 0, labels)
 
         except Exception as e:
             result    = False

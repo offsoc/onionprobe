@@ -134,7 +134,7 @@ metrics = {
             "Register the beginning of the validity period of the certificate in UTC." + \
                "This does not mean necessarily that the certificate is CA-validated." + \
                "Value is represented as a POSIX timestamp",
-            ['name', 'address', 'port' ]
+            ['name', 'address', 'port']
         ),
 
     'onion_service_certificate_not_valid_after_timestamp_seconds': Gauge(
@@ -142,7 +142,14 @@ metrics = {
             "Register the end of the validity period of the certificate in UTC." + \
                "This does not mean necessarily that the certificate is CA-validated." + \
                "Value is represented as a POSIX timestamp",
-            ['name', 'address', 'port' ]
+            ['name', 'address', 'port']
+        ),
+
+    'onion_service_certificate_match_hostname': Gauge(
+            'onion_service_certificate_match_hostname',
+            "Register whether a provided server certificate matches the server hostname " + \
+            "in a TLS connection: value is 1 for matched hostname and 0 otherwise",
+            ['name', 'address', 'port']
         ),
 
     #
