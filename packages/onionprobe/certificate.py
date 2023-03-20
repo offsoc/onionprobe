@@ -237,7 +237,7 @@ class OnionprobeCertificate:
                     address = config['address'],
                     port    = config['port'],
                     days    = str(int(-1 * expiry / 86400)),
-                    ))
+                    ), 'error')
 
         except Exception as e:
             result    = False
