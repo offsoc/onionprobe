@@ -111,6 +111,22 @@ new_circuit: false
 # circuit (CircuitStreamTimeout Tor daemon config)
 circuit_stream_timeout: 60
 
+# Whether to verify TLS/HTTPS certificates
+tls_verify: true
+
+# Whether to run a specific test for TLS endpoints
+test_tls_connection: true
+
+# Whether to get certificate information when testing TLS/HTTPS endpoints.
+# Requires "test_tls_connection" set to true to take effect.
+get_certificate_info: true
+
+# Connection timeout for TLS connections
+tls_connect_timeout: 30
+
+# Max retries when doing a TLS connection to an Onion Service
+tls_connect_max_retries: 3
+
 # The list of endpoints to be tested
 endpoints:
   # Using addresses from https://onion.torproject.org
