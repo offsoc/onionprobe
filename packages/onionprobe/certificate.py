@@ -233,7 +233,7 @@ class OnionprobeCertificate:
                 ))
 
             if expiry <= 0:
-                self.log('The certificate for {address} on {port} expired {days} days ago'.format(
+                self.log('The certificate for {address} on port {port} expired {days} days ago'.format(
                     address = config['address'],
                     port    = config['port'],
                     days    = str(int(-1 * expiry / 86400)),
