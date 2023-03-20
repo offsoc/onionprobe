@@ -313,17 +313,20 @@ class OnionprobeTLS:
 
         # The info dictionary
         info = {
-                'issuer'         : self.get_cert_rdns(cert, 'issuer'),
+                'issuer'           : self.get_cert_rdns(cert, 'issuer'),
 
                 # Convert to aware datetime formats since
                 # cryptography.x509.Certificate uses naive objects by default
-                'notAfter'       : cert.not_valid_after.replace(tzinfo=timezone.utc).strftime(date_format),
-                'notBefore'      : cert.not_valid_before.replace(tzinfo=timezone.utc).strftime(date_format),
+                'notAfter'         : cert.not_valid_after.replace(tzinfo=timezone.utc).strftime(date_format),
+                'notBefore'        : cert.not_valid_before.replace(tzinfo=timezone.utc).strftime(date_format),
 
-                'serialNumber'   : str(cert.serial_number),
-                'subject'        : self.get_cert_rdns(cert, 'subject'),
-                'subjectAltName' : self.get_dns_alt_names_from_cert(cert),
-                'version'        : int(str(cert.version).replace('Version.v', '')),
+                'serialNumber'     : str(cert.serial_number),
+                'subject'          : self.get_cert_rdns(cert, 'subject'),
+                'subjectAltName'   : self.get_dns_alt_names_from_cert(cert),
+                'version'          : int(str(cert.version).replace('Version.v', '')),
+
+                'fingerprintSHA1'  : cert.fingerprint(hashes.SHA1()).hex(':').upper(),
+                'fingerprintSHA256': cert.fingerprint(hashes.SHA256()).hex(':').upper(),
         }
 
         return info
@@ -358,8 +361,6 @@ class OnionprobeTLS:
             der_cert         = tls.getpeercert(binary_form=True)
             pem_cert         = ssl.DER_cert_to_PEM_cert(der_cert)
             cert             = load_pem_x509_certificate(bytes(pem_cert, 'utf-8'))
-            cert_fp_sha1     = cert.fingerprint(hashes.SHA1()).hex(':').upper()
-            cert_fp_sha256   = cert.fingerprint(hashes.SHA256()).hex(':').upper()
             not_valid_before = cert.not_valid_before.timestamp()
             not_valid_after  = cert.not_valid_after.timestamp()
             info             = self.get_cert_info(cert)
@@ -370,16 +371,17 @@ class OnionprobeTLS:
                     'port'    : config['port'],
                     }
 
-            self.info_metric('onion_service_certificate_info', {
-                'version'           : str(cert.version),
-                'serial_number'     : cert.serial_number,
-                'fingerprint_sha1'  : cert_fp_sha1,
-                'fingerprint_sha256': cert_fp_sha256,
-                },
-                labels)
+            try:
+                match = ssl.match_hostname(info, config['address'])
+
+            except ssl.CertificateError as e:
+                match_hostname = 0
+
+            self.info_metric('onion_service_certificate_info', info, labels)
 
             self.set_metric('onion_service_certificate_not_valid_before_timestamp_seconds', not_valid_before, labels)
             self.set_metric('onion_service_certificate_not_valid_after_timestamp_seconds',  not_valid_after,  labels)
+            self.set_metric('onion_service_certificate_match_hostname',                     0,                labels)
 
             message = 'Certificate for {address} on {port} has subject: {subject}; ' + \
                       'issuer: {issuer}; serial number: {serial_number}; version: {version}; ' + \
@@ -390,20 +392,12 @@ class OnionprobeTLS:
                 port          = config['port'],
                 subject       = cert.subject.rfc4514_string(),
                 issuer        = cert.issuer.rfc4514_string(),
-                serial_number = str(cert.serial_number),
-                version       = str(cert.version),
-                not_before    = cert.not_valid_before.isoformat(),
-                not_after     = cert.not_valid_after.isoformat(),
-                fingerprint   = cert_fp_sha256,
+                serial_number = info['serialNumber'],
+                version       = str(info['version']),
+                not_before    = info['notBefore'],
+                not_after     = info['notAfter'],
+                fingerprint   = info['fingerprintSHA256'],
                 ))
-
-            try:
-                match = ssl.match_hostname(info, config['address'])
-
-            except ssl.CertificateError as e:
-                match_hostname = 0
-
-            self.set_metric('onion_service_certificate_match_hostname', 0, labels)
 
         except Exception as e:
             result    = False
