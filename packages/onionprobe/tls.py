@@ -26,7 +26,7 @@ except ImportError:
 
 import ssl
 
-from datetime import timezone
+from datetime import datetime, timezone
 
 from cryptography.x509              import load_pem_x509_certificate, oid, DNSName
 from cryptography.hazmat.primitives import hashes
@@ -331,6 +331,26 @@ class OnionprobeTLS:
 
         return info
 
+    def get_certificate_expiration(self, cert):
+        """
+        Get the number of seconds remaining before a X.509 certificate expires,
+        or the number of seconds passed since it's expiration.
+
+        :type  cert: cryptography.x509.Certificate
+        :param cert: The X.509 Certificate object.
+
+        :rtype: int
+        :return: Number of seconding remaining before the certificate
+                 expiration (if positive) or the number of seconds passed since the
+                 expiration (if negative).
+
+        """
+
+        not_valid_after = cert.not_valid_after.replace(tzinfo=timezone.utc).timestamp()
+        now             = datetime.now(timezone.utc).timestamp()
+
+        return int(not_valid_after - now)
+
     def get_certificate(self, endpoint, config, tls):
         """
         Get the certificate information from a TLS connection.
@@ -364,6 +384,7 @@ class OnionprobeTLS:
             not_valid_before = cert.not_valid_before.timestamp()
             not_valid_after  = cert.not_valid_after.timestamp()
             info             = self.get_cert_info(cert)
+            expiry           = self.get_certificate_expiration(cert)
             match_hostname   = 1
             labels           = {
                     'name'    : endpoint,
@@ -381,6 +402,7 @@ class OnionprobeTLS:
 
             self.set_metric('onion_service_certificate_not_valid_before_timestamp_seconds', not_valid_before, labels)
             self.set_metric('onion_service_certificate_not_valid_after_timestamp_seconds',  not_valid_after,  labels)
+            self.set_metric('onion_service_certificate_expiry_seconds',                     expiry,           labels)
             self.set_metric('onion_service_certificate_match_hostname',                     0,                labels)
 
             message = 'Certificate for {address} on {port} has subject: {subject}; ' + \
@@ -398,6 +420,13 @@ class OnionprobeTLS:
                 not_after     = info['notAfter'],
                 fingerprint   = info['fingerprintSHA256'],
                 ))
+
+            if expiry <= 0:
+                self.log('The certificate for {address} on {port} expired {days} days ago'.format(
+                    address = config['address'],
+                    port    = config['port'],
+                    days    = str(int(-1 * expiry / 86400)),
+                    ))
 
         except Exception as e:
             result    = False

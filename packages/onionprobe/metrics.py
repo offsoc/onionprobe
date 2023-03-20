@@ -145,6 +145,13 @@ metrics = {
             ['name', 'address', 'port']
         ),
 
+    'onion_service_certificate_expiry_seconds': Gauge(
+            'onion_service_certificate_expiry_seconds',
+            "Register how many seconds are left before the certificate expire." + \
+               "Negative values indicate how many seconds passed after the certificate already expired.",
+            ['name', 'address', 'port']
+        ),
+
     'onion_service_certificate_match_hostname': Gauge(
             'onion_service_certificate_match_hostname',
             "Register whether a provided server certificate matches the server hostname " + \
