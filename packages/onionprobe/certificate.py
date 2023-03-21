@@ -226,7 +226,7 @@ class OnionprobeCertificate:
             except ssl.CertificateError as e:
                 match_hostname = 0
 
-            self.info_metric('onion_service_certificate_info', self.get_cert_info(cert, 'flat'), labels)
+            self.info_metric('onion_service_certificate', self.get_cert_info(cert, 'flat'), labels)
 
             self.set_metric('onion_service_certificate_not_valid_before_timestamp_seconds',
                     not_valid_before, labels)

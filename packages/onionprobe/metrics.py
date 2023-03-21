@@ -397,14 +397,14 @@ metrics = {
             ['name', 'address']
         ),
 
-    'onion_service_tls_info': Info(
+    'onion_service_tls': Info(
             'onion_service_tls_info',
             'Register miscelaneous TLS information for a given Onion Service, ' + \
                     'such as version and ciphers',
             ['name', 'address', 'port'],
         ),
 
-    'onion_service_certificate_info': Info(
+    'onion_service_certificate': Info(
             'onion_service_certificate_info',
             'Register miscellaneous TLS certificate information for a given Onion Service, ' + \
                     'such as version and fingerprints',

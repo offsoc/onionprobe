@@ -114,7 +114,7 @@ class OnionprobeTLS:
                     for item in stats:
                         info['session_' + item] = str(stats[item])
 
-                    self.info_metric('onion_service_tls_info', info, labels)
+                    self.info_metric('onion_service_tls', info, labels)
 
         except ssl.SSLZeroReturnError as e:
             result = False
