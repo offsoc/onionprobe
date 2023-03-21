@@ -26,6 +26,54 @@
     by default, so unless verification is disabled the metric will only
     vary between `0` (invalid cert) and `1` (valid cert).
 
+* TLS and X.509 certificate test:
+  * Added a new test to check the conditions of the underlying TLS connection
+    and to get detailed certificate information.
+
+  * This test currently only happens for endpoints with the `https` protocol,
+    and only if the `test_tls_connection` configuration is set to true in the
+    global scope or in the endpoint configuration.
+
+  * Certificates are retrieved and analyzed _even_ if they're not valid,
+    in order to also collect data on self-signed, expired or otherwise invalid
+    certificates.
+
+  * A number of new metrics is included both for the TLS connection and for the
+    server certificate:
+    * `onion_service_certificate_not_valid_before_timestamp_seconds`: Register
+      the beginning of the validity period of the certificate in UTC. This does
+      not mean necessarily that the certificate is CA-validated. Value is
+      represented as a POSIX timestamp,
+
+    * `onion_service_certificate_not_valid_after_timestamp_seconds`: Register
+      the end of the validity period of the certificate in UTC. This does not
+      mean necessarily that the certificate is CA-validated. Value is
+      represented as a POSIX timestamp.
+
+    * `onion_service_certificate_expiry_seconds`: Register how many seconds are
+      left before the certificate expire. Negative values indicate how many
+      seconds passed after the certificate already expired.
+
+    * `onion_service_certificate_match_hostname`: Register whether a provided
+      server certificate matches the server hostname in a TLS connection: value
+      is 1 for matched hostname and 0 otherwise. Check is done both on the
+      commonName and subjectAltName fields. A value of 1 does not mean necessarily
+      that the certificate is CA-validated.
+
+    * `onion_service_certificate_info`: Register miscellaneous TLS certificate
+      information for a given Onion Service such as version and fingerprints.
+
+    * `onion_service_tls_info`: Register miscellaneous TLS information for a
+      given Onion Service such as version and ciphers.
+
+  * Prometheus rules for the standalone monitoring node were updated to include
+    an alert for certificates about to expire (defaults to 30 days in advance).
+
+  * Details at https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/49
+
+* Added the `onion_service_generic_error_total` metric to track probing errors
+  not covered by other metrics.
+
 * Added script to handle PostgreSQL version upgrades at the service container:
   https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/70
 
