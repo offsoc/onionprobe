@@ -100,7 +100,7 @@ class OnionprobeCertificate:
 
         return tuple(result)
 
-    def get_cert_info(self, cert):
+    def get_cert_info(self, cert, format = 'tree'):
         """
         Get basic information from a X.509 certificate.
 
@@ -110,6 +110,15 @@ class OnionprobeCertificate:
 
         :type  cert: cryptography.x509.Certificate
         :param cert: The X.509 Certificate object.
+
+        :type  format: str
+        :param format: The output format, either 'tree' or 'flat'.
+                       The 'tree' format is the same as returned
+                       returned by SSLSocket.getpeercert and
+                       accepted by ssl.match_hostname. The 'flat' format
+                       uses just one level of key-value pairs, and all
+                       values are strings, and is accepted by Prometheus
+                       info metrics.
 
         :rtype: dict
         :return: Dictionary with basic certificate information in the same
@@ -125,6 +134,8 @@ class OnionprobeCertificate:
         # The info dictionary
         info = {
                 'issuer'           : self.get_cert_rdns(cert, 'issuer'),
+                'subject'          : self.get_cert_rdns(cert, 'subject'),
+                'subjectAltName'   : self.get_dns_alt_names_from_cert(cert),
 
                 # Convert to aware datetime formats since
                 # cryptography.x509.Certificate uses naive objects by default
@@ -134,13 +145,17 @@ class OnionprobeCertificate:
                     tzinfo=timezone.utc).strftime(date_format),
 
                 'serialNumber'     : str(cert.serial_number),
-                'subject'          : self.get_cert_rdns(cert, 'subject'),
-                'subjectAltName'   : self.get_dns_alt_names_from_cert(cert),
                 'version'          : int(str(cert.version).replace('Version.v', '')),
 
                 'fingerprintSHA1'  : cert.fingerprint(hashes.SHA1()).hex(':').upper(),
                 'fingerprintSHA256': cert.fingerprint(hashes.SHA256()).hex(':').upper(),
         }
+
+        if format == 'flat':
+            info['version']        = str(info['version'])
+            info['issuer']         = str(info['issuer'])
+            info['subject']        = str(info['subject'])
+            info['subjectAltName'] = ' '.join(self.get_dns_alt_names_from_cert(cert, 'list'))
 
         return info
 
@@ -211,7 +226,7 @@ class OnionprobeCertificate:
             except ssl.CertificateError as e:
                 match_hostname = 0
 
-            self.info_metric('onion_service_certificate_info', info, labels)
+            self.info_metric('onion_service_certificate_info', self.get_cert_info(cert, 'flat'), labels)
 
             self.set_metric('onion_service_certificate_not_valid_before_timestamp_seconds',
                     not_valid_before, labels)
