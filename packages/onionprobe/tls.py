@@ -99,15 +99,22 @@ class OnionprobeTLS:
                     if self.get_config('get_certificate_info'):
                         cert_result = self.get_certificate(endpoint, config, tls)
 
-                    self.info_metric('onion_service_tls_info', {
+                    alpn        = tls.selected_alpn_protocol()
+                    npn         = tls.selected_npn_protocol()
+                    compression = tls.compression()
+                    stats       = context.session_stats()
+                    info        = {
                         'version'    : tls.version(),
-                        'compression': tls.compression(),
-                        'cipher'     : tls.cipher(),
-                        'stats'      : context.session_stats(),
-                        'alpn'       : tls.selected_alpn_protocol(),
-                        'npn'        : tls.selected_npn_protocol(),
-                        },
-                        labels)
+                        'cipher'     : ' '.join([str(item) for item in tls.cipher()]),
+                        'compression': '' if compression is None else str(compression),
+                        'alpn'       : '' if alpn        is None else str(alpn),
+                        'npn'        : '' if npn         is None else str(npn),
+                        }
+
+                    for item in stats:
+                        info['session_' + item] = str(stats[item])
+
+                    self.info_metric('onion_service_tls_info', info, labels)
 
         except ssl.SSLZeroReturnError as e:
             result = False
