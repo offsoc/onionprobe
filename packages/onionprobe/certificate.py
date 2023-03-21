@@ -114,7 +114,8 @@ class OnionprobeCertificate:
         :rtype: dict
         :return: Dictionary with basic certificate information in the same
                  format returned by SSLSocket.getpeercert and accepted by
-                 ssl.match_hostname.
+                 ssl.match_hostname, additionally with certificate
+                 fingerprints.
 
         """
 
