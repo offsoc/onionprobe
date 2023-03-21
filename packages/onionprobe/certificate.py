@@ -104,6 +104,10 @@ class OnionprobeCertificate:
         """
         Get basic information from a X.509 certificate.
 
+        This method is compatible with SSLSocket.geetpeercert, with the
+        advantage that it does not require a valid certificate in order
+        to process it's data.
+
         :type  cert: cryptography.x509.Certificate
         :param cert: The X.509 Certificate object.
 
