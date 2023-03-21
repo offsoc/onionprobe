@@ -17,7 +17,7 @@
     Set it to `false` to ignore TLS certificate verification.
     By default all TLS certificates are checked.
 
-  * Added a per-endpoint `tls_verify` flag to check certificates n HTTP tests,
+  * Added a per-endpoint `tls_verify` flag to check certificates in HTTP tests,
     overriding the global setting for the endpoint context.
 
   * Changed the `onion_service_valid_certificate` metric to also inform
