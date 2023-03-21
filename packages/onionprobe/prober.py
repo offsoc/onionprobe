@@ -103,7 +103,7 @@ class OnionprobeProber:
 
         # Query each path
         for path in config['paths']:
-            result = self.query(endpoint, config, path)
+            result = self.query_http(endpoint, config, path)
 
             if result is not False:
                 # Check for a match
@@ -143,5 +143,11 @@ class OnionprobeProber:
                 self.log('Error querying {}'.format(config['address']), 'error')
 
                 results[path['path']] = False
+
+        # Get certificate information
+        if config['protocol'] == 'https':
+            if ('test_tls_connection' in config and config['test_tls_connection']) or \
+                    self.get_config('test_tls_connection'):
+                cert = self.query_tls(endpoint, config)
 
         return results

@@ -35,6 +35,13 @@ groups:
       annotations:
         summary: Certificate validity
 
+    - alert: Expiring certificate for the Onion Service
+      expr: onion_service_certificate_expiry_seconds < 86400 * 30
+      labels:
+        severity: page
+      annotations:
+        summary: Certificate expiration
+
     - alert: Onion Service unreachable
       expr: onion_service_reachable != 1
       for: 30m

@@ -23,17 +23,19 @@ import sys
 import os
 import signal
 
-from .init       import OnionprobeInit
-from .config     import OnionprobeConfig
-from .logger     import OnionprobeLogger
-from .time       import OnionprobeTime
-from .tor        import OnionprobeTor
-from .descriptor import OnionprobeDescriptor
-from .metrics    import OnionprobeMetrics
-from .prober     import OnionprobeProber
-from .http       import OnionprobeHTTP
-from .teardown   import OnionprobeTeardown
-from .main       import OnionprobeMain
+from .init        import OnionprobeInit
+from .config      import OnionprobeConfig
+from .logger      import OnionprobeLogger
+from .time        import OnionprobeTime
+from .tor         import OnionprobeTor
+from .descriptor  import OnionprobeDescriptor
+from .metrics     import OnionprobeMetrics
+from .prober      import OnionprobeProber
+from .http        import OnionprobeHTTP
+from .tls         import OnionprobeTLS
+from .certificate import OnionprobeCertificate
+from .teardown    import OnionprobeTeardown
+from .main        import OnionprobeMain
 
 class Onionprobe(
         # Inherit from subsystems
@@ -46,6 +48,8 @@ class Onionprobe(
         OnionprobeMetrics,
         OnionprobeProber,
         OnionprobeHTTP,
+        OnionprobeTLS,
+        OnionprobeCertificate,
         OnionprobeTeardown,
         OnionprobeMain,
         ):

@@ -112,6 +112,25 @@ config = {
             'action'  : argparse.BooleanOptionalAction,
             },
 
+        'tls_verify': {
+            'help'    : 'Whether to verify TLS/HTTPS certificates',
+            'default' : True,
+            'action'  : argparse.BooleanOptionalAction,
+            },
+
+        'test_tls_connection': {
+            'help'    : 'Whether to run a specific test for TLS endpoints',
+            'default' : True,
+            'action'  : argparse.BooleanOptionalAction,
+            },
+
+        'get_certificate_info': {
+            'help'    : """Whether to get certificate information when testing TLS/HTTPS endpoints.
+                           Requires --test_tls_connection to take effect.""".strip(),
+            'default' : True,
+            'action'  : argparse.BooleanOptionalAction,
+            },
+
         'interval': {
             'help'    : 'Max random interval in seconds between probing each endpoint',
             'default' : 60,
@@ -145,6 +164,12 @@ config = {
             'action'  : 'store',
             },
 
+        'tls_connect_timeout': {
+            'help'    : 'Connection timeout for TLS connections',
+            'default' : 30,
+            'action'  : 'store',
+            },
+
         'http_connect_timeout': {
             'help'    : 'Connection timeout for HTTP/HTTPS requests',
             'default' : 30,
@@ -160,6 +185,12 @@ config = {
         'http_read_timeout': {
             'help'    : 'Read timeout for HTTP/HTTPS requests',
             'default' : 30,
+            'action'  : 'store',
+            },
+
+        'tls_connect_max_retries': {
+            'help'    : 'Max retries when doing a TLS connection to an Onion Service',
+            'default' : 3,
             'action'  : 'store',
             },
 
