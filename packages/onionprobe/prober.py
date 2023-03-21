@@ -145,7 +145,9 @@ class OnionprobeProber:
                 results[path['path']] = False
 
         # Get certificate information
-        if config['protocol'] == 'https' and self.get_config('test_tls_connection'):
-            cert = self.query_tls(endpoint, config)
+        if config['protocol'] == 'https':
+            if ('test_tls_connection' in config and config['test_tls_connection']) or \
+                    self.get_config('test_tls_connection'):
+                cert = self.query_tls(endpoint, config)
 
         return results
