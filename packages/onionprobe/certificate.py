@@ -153,8 +153,8 @@ class OnionprobeCertificate:
 
         if format == 'flat':
             info['version']        = str(info['version'])
-            info['issuer']         = cert.issuer.rfc4514_string(),
-            info['subject']        = cert.subject.rfc4514_string(),
+            info['issuer']         = cert.issuer.rfc4514_string()
+            info['subject']        = cert.subject.rfc4514_string()
             info['subjectAltName'] = ' '.join(self.get_dns_alt_names_from_cert(cert, 'list'))
 
         return info
