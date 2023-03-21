@@ -156,7 +156,8 @@ metrics = {
             'onion_service_certificate_match_hostname',
             "Register whether a provided server certificate matches the server hostname " + \
             "in a TLS connection: value is 1 for matched hostname and 0 otherwise. " + \
-            "This does not mean necessarily that the certificate is CA-validated.",
+            "Check is done both on the commonName and subjectAltName fields. " + \
+            "A value of 1 does not mean necessarily that the certificate is CA-validated.",
             ['name', 'address', 'port']
         ),
 
@@ -398,14 +399,14 @@ metrics = {
 
     'onion_service_tls_info': Info(
             'onion_service_tls_info',
-            'Register miscelaneous TLS information for a a given Onion Service, ' + \
+            'Register miscelaneous TLS information for a given Onion Service, ' + \
                     'such as version and ciphers',
             ['name', 'address', 'port'],
         ),
 
     'onion_service_certificate_info': Info(
             'onion_service_certificate_info',
-            'Register miscelaneous TLS certificate information for a a given Onion Service, ' + \
+            'Register miscellaneous TLS certificate information for a given Onion Service, ' + \
                     'such as version and fingerprints',
             ['name', 'address', 'port'],
         ),
