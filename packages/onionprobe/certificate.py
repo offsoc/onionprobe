@@ -246,7 +246,7 @@ class OnionprobeCertificate:
 
         except Exception as e:
             result    = False
-            exception = 'general_error'
+            exception = 'generic_error'
 
             self.log(e, 'error')
 

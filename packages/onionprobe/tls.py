@@ -238,8 +238,8 @@ class OnionprobeTLS:
 
             # Do not use a fine grained exception metric here, but instead rely
             # on an existing metric used by other tests such as the HTTP
-            #exception = 'general_error'
-            exception = 'connection_error'
+            #exception = 'generic_error'
+            exception  = 'connection_error'
 
             self.log(e, 'error')
 

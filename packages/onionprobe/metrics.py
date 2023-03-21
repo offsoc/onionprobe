@@ -155,7 +155,8 @@ metrics = {
     'onion_service_certificate_match_hostname': Gauge(
             'onion_service_certificate_match_hostname',
             "Register whether a provided server certificate matches the server hostname " + \
-            "in a TLS connection: value is 1 for matched hostname and 0 otherwise",
+            "in a TLS connection: value is 1 for matched hostname and 0 otherwise. " + \
+            "This does not mean necessarily that the certificate is CA-validated.",
             ['name', 'address', 'port']
         ),
 
@@ -217,8 +218,8 @@ metrics = {
     #    ),
 
     # Counter for generic errors
-    'onion_service_general_error_total': Counter(
-            'onion_service_general_error_total',
+    'onion_service_generic_error_total': Counter(
+            'onion_service_generic_error_total',
             'Counts the total number of errors not tracked by other metrics',
             ['name', 'address', 'port']
         ),
