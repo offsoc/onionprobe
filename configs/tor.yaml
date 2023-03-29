@@ -56,6 +56,14 @@ control_port: 19051
 # Whether to run continuously
 loop: true
 
+# Tor Metrics port (MetricsPort)
+# A value of 0 means it is disabled
+metrics_port: 0
+
+# Tor Metrics port policy (MetricsPortPolicy)
+# An empty value means it is disabled
+metrics_port_policy: 'reject *:*'
+
 # Whether to enable Prometheus exporter functionality
 # Setting it to true automatically enables countinuos run (loop)
 prometheus_exporter: true

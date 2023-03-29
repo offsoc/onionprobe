@@ -76,6 +76,18 @@ config = {
             'action'  : 'store',
             },
 
+        'metrics_port': {
+            'help'    : 'Tor Metrics port (MetricsPort). A value of 0 means it is disabled',
+            'default' : 0,
+            'action'  : 'store',
+            },
+
+        'metrics_port_policy': {
+            'help'    : 'Tor Metrics port policy (MetricsPortPolicy). An empty value means it is disabled',
+            'default' : 'reject *',
+            'action'  : 'store',
+            },
+
         'loop': {
             'help'    : 'Run Onionprobe continuously',
             'default' : False,

@@ -125,7 +125,11 @@ services:
     volumes:
       - .:/srv/onionprobe
     ports:
+      # Onionprobe Prometheus exporter
       - 9935:9935
+
+      # Tor Metrics Prometheus exporter
+      - 9936:9936
     environment:
       ONIONPROBE_CONFIG: /srv/onionprobe/${ONIONPROBE_CONFIG:-contrib/tpo.yaml}
     restart: always

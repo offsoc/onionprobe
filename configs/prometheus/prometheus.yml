@@ -25,6 +25,16 @@ scrape_configs:
     static_configs:
       - targets: ['onionprobe:9935']
 
+  # Enable this if you want to collect metrics from
+  # the Tor probing process.
+  #
+  # This requires metrics_port and metrics_port_policy
+  # configured at your Onionprobe config.
+  - job_name: 'tor'
+
+    static_configs:
+      - targets: ['onionprobe:9936']
+
 alerting:
   alertmanagers:
     - static_configs:

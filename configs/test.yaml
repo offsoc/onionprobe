@@ -36,3 +36,5 @@ shuffle: true
 sleep: 5
 socks_port: 19050
 tor_address: 127.0.0.1
+metrics_port: 9936
+metrics_port_policy: 'accept *'
