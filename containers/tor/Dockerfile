@@ -26,11 +26,20 @@ ENV SHELL="/bin/bash"
 
 WORKDIR ${APP_BASE}/${APP}
 
+RUN apt-get update && \
+    apt-get install -y \
+    apt-transport-https \
+    ca-certificates
+
+COPY configs/apt/tor.list /etc/apt/sources.list.d/tor.list
+COPY keyrings/tor-archive-keyring.gpg /usr/share/keyrings/tor-archive-keyring.gpg
+
 # Install dependencies
 # Package basez is installed to allow generation of Client Authorization keys
 # inside the container
 RUN apt-get update && \
     apt-get install -y \
+    deb.torproject.org-keyring \
     tor basez \
     && rm -rf /var/lib/apt/lists/*
 
