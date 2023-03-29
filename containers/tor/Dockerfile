@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-FROM debian:stable
+FROM debian:bullseye
 MAINTAINER Silvio Rhatto <rhatto@torproject.org>
 
 ENV APP="tor"
@@ -26,11 +26,23 @@ ENV SHELL="/bin/bash"
 
 WORKDIR ${APP_BASE}/${APP}
 
+RUN apt-get update && \
+    apt-get install -y \
+    apt-transport-https \
+    ca-certificates \
+    wget gnupg
+
+COPY configs/apt/tor.list /etc/apt/sources.list.d/tor.list
+COPY scripts/get-tor-debian-key /usr/local/bin
+RUN  /usr/local/bin/get-tor-debian-key /usr/share/keyrings/tor-archive-keyring.gpg
+RUN  rm /usr/local/bin/get-tor-debian-key
+
 # Install dependencies
 # Package basez is installed to allow generation of Client Authorization keys
 # inside the container
 RUN apt-get update && \
     apt-get install -y \
+    deb.torproject.org-keyring \
     tor basez \
     && rm -rf /var/lib/apt/lists/*
 

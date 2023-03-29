@@ -6,14 +6,24 @@
 # Parameters
 DIRNAME="`dirname $0`"
 BASEPATH="$DIRNAME/.."
+REQUIREMENTS="ca-certificates apt-transport-https"
 DEPENDENCIES="python3-prometheus-client python3-stem python3-cryptography python3-yaml python3-requests python3-socks"
-DEPENDENCIES="$DEPENDENCIES tor"
+DEPENDENCIES="$DEPENDENCIES deb.torproject.org-keyring tor"
 DEPENDENCIES_PACKAGING_PYTHON="python3-venv python3-build python3-keyrings.alt twine"
 DEPENDENCIES_PACKAGING_DEBIAN="sbuild-debian-developer-setup piuparts"
 TORRC="/etc/tor/torrc"
 
 # Update submodules
 git submodule update --init --recursive
+
+# Install basic requirements
+sudo apt update
+sudo apt install -y $REQUIREMENTS
+
+# Configure Tor's Debian repository and keyring
+sudo $BASEPATH/scripts/get-tor-debian-key /usr/share/keyrings/tor-archive-keyring.gpg || exit 1
+sudo cp $BASEPATH/configs/apt/tor.list /etc/apt/sources.list.d/tor.list
+sudo apt update
 
 # Install dependencies
 sudo apt install -y $DEPENDENCIES
