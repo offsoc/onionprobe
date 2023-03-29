@@ -21,8 +21,8 @@ sudo apt update
 sudo apt install -y $REQUIREMENTS
 
 # Configure Tor's Debian repository and keyring
+sudo $BASEPATH/scripts/get-tor-debian-key /usr/share/keyrings/tor-archive-keyring.gpg || exit 1
 sudo cp $BASEPATH/configs/apt/tor.list /etc/apt/sources.list.d/tor.list
-sudo cp $BASEPATH/keyrings/tor-archive-keyring.gpg /usr/share/keyrings/tor-archive-keyring.gpg
 sudo apt update
 
 # Install dependencies
