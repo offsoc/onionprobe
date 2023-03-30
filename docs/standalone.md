@@ -109,7 +109,7 @@ Grafana already comes with a basic default dashboard as it's homepage:
 
 ![](assets/dashboard.png "Grafana Onion Services Dashboard")
 
-## Enabling Tor's metrics Prometheus exporter
+## Enabling Tor's Prometheus metrics exporter
 
 For debugging and research purposes, Onionprobe support Tor's `MetricsPort` and
 `MetricsPortPolicy` configuration parameters, along with a Prometheus,
