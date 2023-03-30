@@ -42,8 +42,10 @@ configs:
     - git submodule update --init --recursive
     - scripts/provision-onionprobe
     - make configs
+    - mkdir -p dist
+    - cp configs/*.yaml dist
   artifacts:
     paths:
-      - configs
+      - dist
   only:
     - main
