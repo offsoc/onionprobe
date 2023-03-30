@@ -32,6 +32,9 @@
   connection is unencrypted (HTTP) hence consider using a tool like stunnel to
   secure the link from this port to the server.
 
+  Check the [standalone monitoring node docs](docs/standalone.md) for
+  detailed instructions in how to enable this additional metric collection.
+
 * TLS certificate verification:
   * Added a global `tls_verify` flag to check certificates during HTTP tests.
     Set it to `false` to ignore TLS certificate verification.

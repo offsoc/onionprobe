@@ -42,11 +42,10 @@ prometheus_exporter_port: 9935
 # connection is unencrypted (HTTP) hence consider using a tool like stunnel to
 # secure the link from this port to the server.
 #
-#metrics_port: '0.0.0.0:9936'
-#metrics_port_policy: 'reject *,accept 127.0.0.1,accept 172.19.0.100'
-#metrics_port_policy: 'accept *'
-#metrics_port_policy: 'accept 127.0.0.1,accept 172.19.0.100'
-#metrics_port_policy: 'accept 172.19.0.100'
+# The following should work by default for Docker containers in the
+# 172.16.0.0/12 subnet.
+metrics_port: '0.0.0.0:9936'
+metrics_port_policy: 'accept 172.16.0.0/12'
 
 # Endpoint configuration
 # Usually includes Onion Services with miscellaneous errors.

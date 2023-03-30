@@ -69,10 +69,28 @@ loop: true
 # access this port should be the Prometheus server itself. Remember that the
 # connection is unencrypted (HTTP) hence consider using a tool like stunnel to
 # secure the link from this port to the server.
+#
+# Example settings for the metrics_port parameter:
+#
+#   metrics_port: '9936'         # localhost only on port 9936
+#   metrics_port: '0.0.0.0:9936' # binds to all IPv4 addresses in the host
+#
 metrics_port: ''
 
 # Tor Metrics port policy (MetricsPortPolicy)
 # An empty value means it is disabled
+#
+# Example settings for the metrics_port_policy parameter:
+#
+#   metrics_port_policy: 'accept 172.19.0.100'
+#   metrics_port_policy: 'accept 127.0.0.1,accept 172.19.0.100'
+#   metrics_port_policy: 'accept private'
+#   metrics_port_policy: 'accept *'
+#
+# This should work by default for Docker containers in the 172.16.0.0/12 subnet:
+#
+#   metrics_port_policy: 'accept 172.16.0.0/12'
+#
 metrics_port_policy: 'reject *'
 
 # Whether to enable Prometheus exporter functionality

@@ -130,23 +130,40 @@ connection is unencrypted (HTTP) hence consider using a tool like stunnel to
 secure the link from this port to the server.
 
 These settings are disabled by default. To enable it in the monitoring node,
-you'll need to edit a number of files:
+follow the steps below.
 
-1. At `configs/prometheus/prometheys.yml`, uncomment the `tor` job block at the
-   `scrape_configs` section.
+### 1. Onionprobe configuration
 
-2. At the Onionprobe config you're using (like `configs/tor.yaml`), set
-   `metrics_port` and `metrics_port_policy` to some sane values.
-   Examples:
+At the Onionprobe config you're using (like `configs/tor.yaml`), set
+`metrics_port` and `metrics_port_policy` to some sane values.
+
+The most basic, **non-recommended** example:
 
 ```yaml
+# The following should work by default for Docker containers in the
+# 172.16.0.0/12 subnet.
+metrics_port: '0.0.0.0:9936'
+metrics_port_policy: 'accept 172.16.0.0/12'
+```
+
+A safer, more restricted and **recommended** example:
+
+
+```yaml
+# This will allow only the host 172.19.0.100 to connect, and requires
+# that the Prometheus service containers binds to this IP address.
 metrics_port: '172.19.0.100:9936'
 metrics_port_policy: 'accept 172.19.0.100'
 ```
 
-3. At `docker-compose.yaml`, ensure that the `prometheus` container have
-   a fixed IP like the `172.19.0.100` from the example above. For that,
-   you'll need to uncomment the follow lines:
+### 2. Docker Compose configuration
+
+It's recommended `metrics_port_policy` to be the most restricted as possible,
+bound to a single IP address.
+
+To do that, edit `docker-compose.yaml` and ensure that the `prometheus` container have
+a fixed IP like the `172.19.0.100` from the example above. This can be done by
+uncommenting the following lines:
 
 ```yaml
 services:
@@ -169,7 +186,10 @@ services:
           - subnet: 172.19.0.0/24
 ```
 
-Then stop and restart all containers for the configuration to take effect.
+### 3. Applying the configuration
+
+Once you have set the configuration, stop and then restart all containers for
+the configuration to take effect.
 
 The metrics should then be automatically available on Prometheus, Alertmanager
 and Grafana.

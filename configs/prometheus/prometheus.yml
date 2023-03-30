@@ -20,18 +20,20 @@ global:
   scrape_interval: 15s
 
 scrape_configs:
+  # The Onionprobe metrics exporter
   - job_name: 'onionprobe'
     static_configs:
       - targets: ['onionprobe:9935']
 
-  # Enable this if you want to collect metrics from
-  # the Tor probing process.
+  # The Tor metrics exporter from the onionprobe tor process
   #
-  # This requires metrics_port and metrics_port_policy
-  # configured at your Onionprobe config.
-  #- job_name: 'tor'
-  #  static_configs:
-  #    - targets: ['onionprobe:9936']
+  # This will only be effective if metrics_port and metrics_port_policy
+  # parameters are properly configured at your Onionprobe config, otherwise
+  # it will only show a harmless error on the targets status page in at the
+  # Prometheus dashboard.
+  - job_name: 'tor'
+    static_configs:
+      - targets: ['onionprobe:9936']
 
 alerting:
   alertmanagers:

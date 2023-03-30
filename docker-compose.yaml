@@ -35,7 +35,8 @@ services:
     restart: always
 
     # Use a static network IP to allow Prometheus to collect MetricsPort data
-    # from onionprobe's Tor process.
+    # from onionprobe's Tor process. This allows specifying a more restricted
+    # metrics_port_policy at the Onionprobe configuration.
     #networks:
     #  default:
     #    ipv4_address: 172.19.0.100
@@ -201,7 +202,8 @@ volumes:
   tor: {}
 
 # Use a static network range to allow Prometheus to collect MetricsPort data
-# from onionprobe's Tor process.
+# from onionprobe's Tor process. This allows specifying a more restricted
+# metrics_port_policy at the Onionprobe configuration.
 #networks:
 #  default:
 #    ipam:
