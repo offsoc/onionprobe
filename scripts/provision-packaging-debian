@@ -6,7 +6,7 @@
 # Parameters
 DIRNAME="`dirname $0`"
 BASEPATH="$DIRNAME/.."
-DEPENDENCIES_PACKAGING_DEBIAN="sbuild-debian-developer-setup piuparts"
+DEPENDENCIES_PACKAGING_DEBIAN="sbuild-debian-developer-setup piuparts git-buildpackage"
 
 # Check for sudo
 if [ "`whoami`" != "root" ]; then
