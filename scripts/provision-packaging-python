@@ -15,4 +15,5 @@ fi
 
 # Python packaging
 $SUDO apt-get update
+$SUDO apt-get upgrade -y
 $SUDO apt-get install -y $DEPENDENCIES_PACKAGING_PYTHON

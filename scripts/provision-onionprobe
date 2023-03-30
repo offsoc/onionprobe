@@ -16,13 +16,14 @@ if [ "`whoami`" != "root" ]; then
 fi
 
 # Install basic requirements
-$SUDO apt update
-$SUDO apt install -y $REQUIREMENTS
+$SUDO apt-get update
+$SUDO apt-get upgrade -y
+$SUDO apt-get install -y $REQUIREMENTS
 
 # Configure Tor's Debian repository and keyring
 $SUDO $BASEPATH/scripts/get-tor-debian-key /usr/share/keyrings/tor-archive-keyring.gpg || exit 1
 $SUDO cp $BASEPATH/configs/apt/tor.list /etc/apt/sources.list.d/tor.list
-$SUDO apt update
+$SUDO apt-get update
 
 # Install dependencies
-$SUDO apt install -y $DEPENDENCIES
+$SUDO apt-get install -y $DEPENDENCIES

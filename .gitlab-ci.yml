@@ -24,7 +24,8 @@ debian:
     - apt-get install -y git
     - git submodule update --init --recursive
     - scripts/provision-packaging-debian
-    - make sbuild
+    - sbuild-update -udcar u
+    - sbuild -c unstable-amd64-sbuild
     - rm -rf /srv/chroot
   artifacts:
     paths:
