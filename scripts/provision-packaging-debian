@@ -13,6 +13,9 @@ if [ "`whoami`" != "root" ]; then
   SUDO="sudo"
 fi
 
+# Ensure a non-interactive package installation
+export DEBIAN_FRONTEND=noninteractive
+
 # Debian packaging
 $SUDO apt-get update
 $SUDO apt-get install -y $DEPENDENCIES_PACKAGING_DEBIAN
