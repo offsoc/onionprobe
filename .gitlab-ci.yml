@@ -27,7 +27,7 @@ debian:
     - scripts/provision-packaging-debian
     - make build-debian-test-package
     - mkdir -p dist
-    - mv onionprobe_* dist
+    - mv ../onionprobe_* dist
   artifacts:
     paths:
       - dist

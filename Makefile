@@ -81,9 +81,11 @@ upload-python-package:
 update_sbuild:
 	@sudo sbuild-update -udcar u
 
-build-debian-test-package:
-	@#dpkg-buildpackage -rfakeroot --no-sign
-	@mk-build-deps debian/control
+mk-build-deps:
+	@mk-build-deps --install debian/control
+
+build-debian-test-package: mk-build-deps
+	@dpkg-buildpackage -rfakeroot --no-sign
 
 sbuild: update_sbuild
 	@#sbuild -c stable-amd64-sbuild
