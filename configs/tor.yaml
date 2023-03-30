@@ -84,12 +84,17 @@ metrics_port: ''
 #
 #   metrics_port_policy: 'accept 172.19.0.100'
 #   metrics_port_policy: 'accept 127.0.0.1,accept 172.19.0.100'
-#   metrics_port_policy: 'accept private'
 #   metrics_port_policy: 'accept *'
 #
-# This should work by default for Docker containers in the 172.16.0.0/12 subnet:
+# This should work by default for Docker containers in the 172.16.0.0/12 subnet
+# (not recommended):
 #
 #   metrics_port_policy: 'accept 172.16.0.0/12'
+#
+# This should work by default for a local network, including local Docker
+# containers (not recommended):
+#
+#   metrics_port_policy: 'accept 192.168.0.0/16,accept 10.0.0.0/8,accept 172.16.0.0/12'
 #
 metrics_port_policy: 'reject *'
 

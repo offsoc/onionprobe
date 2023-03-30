@@ -2,6 +2,9 @@
 #
 # Test configuration for Onionprobe.
 #
+# WARNING: this configuration is meant only for research, development and
+# testing, not for production, as it contains non-recommended configurations.
+#
 # Content may vary and endpoints selected usually have descriptor or connection
 # errors.
 #
@@ -42,10 +45,10 @@ prometheus_exporter_port: 9935
 # connection is unencrypted (HTTP) hence consider using a tool like stunnel to
 # secure the link from this port to the server.
 #
-# The following should work by default for Docker containers in the
-# 172.16.0.0/12 subnet.
+# The folloing should work by default for a local network, including local
+# Docker containers (not recommended):
 metrics_port: '0.0.0.0:9936'
-metrics_port_policy: 'accept 172.16.0.0/12'
+metrics_port_policy: 'accept 192.168.0.0/16,accept 10.0.0.0/8,accept 172.16.0.0/12'
 
 # Endpoint configuration
 # Usually includes Onion Services with miscellaneous errors.

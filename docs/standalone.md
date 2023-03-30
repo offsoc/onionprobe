@@ -146,6 +146,15 @@ metrics_port: '0.0.0.0:9936'
 metrics_port_policy: 'accept 172.16.0.0/12'
 ```
 
+Another basic, **non-recommended** example:
+
+```yaml
+# The folloing should work by default for a local network, including local
+# Docker containers (not recommended):
+metrics_port: '0.0.0.0:9936'
+metrics_port_policy: 'accept 192.168.0.0/16,accept 10.0.0.0/8,accept 172.16.0.0/12'
+```
+
 A safer, more restricted and **recommended** example:
 
 
