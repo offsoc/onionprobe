@@ -25,9 +25,8 @@ debian:
     - apt-get install -y git
     - git submodule update --init --recursive
     - scripts/provision-packaging-debian
-    - make build-debian-test-package
     - mkdir -p dist
-    - mv ../onionprobe_* dist
+    - TMP=dist make build-debian-test-package
   artifacts:
     paths:
       - dist
