@@ -27,6 +27,11 @@
   with `MetricsPortPolicy` and consider using your operating systems firewall
   features for defense in depth.
 
+  We recommend, for the prometheus format, that the only address that can
+  access this port should be the Prometheus server itself. Remember that the
+  connection is unencrypted (HTTP) hence consider using a tool like stunnel to
+  secure the link from this port to the server.
+
 * TLS certificate verification:
   * Added a global `tls_verify` flag to check certificates during HTTP tests.
     Set it to `false` to ignore TLS certificate verification.

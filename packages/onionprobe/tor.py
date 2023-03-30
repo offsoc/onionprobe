@@ -189,8 +189,18 @@ class OnionprobeTor:
 
         # Helper function to print bootstrap lines
         def print_bootstrap_lines(line):
-            if "Bootstrapped " in line:
+            level = self.get_config('log_level')
+
+            if '[debug]' in line:
                 self.log(term.format(line), 'debug')
+            elif '[info]' in line:
+                self.log(term.format(line), 'info')
+            elif '[notice]' in line:
+                self.log(term.format(line), 'info')
+            elif '[warn]' in line:
+                self.log(term.format(line), 'warning')
+            elif '[err]' in line:
+                self.log(term.format(line), 'error')
 
         try:
             self.log('Initializing Tor process...')
@@ -204,14 +214,19 @@ class OnionprobeTor:
                 'ControlPort'          : tor_address + ':' + str(self.get_config('control_port')),
                 'HashedControlPassword': self.hash_password(control_password),
                 'CircuitStreamTimeout' : str(self.get_config('circuit_stream_timeout')),
-
-                #'Log'                 : [
-                #    'NOTICE stdout',
-                #    ],
                 }
 
-            if metrics_policy is not None and metrics_port != '' and metrics_port != 0:
-                config['MetricsPort'] = tor_address + ':' + str(metrics_port)
+            # Log config
+            #config['Log'] = [
+            #    'DEBUG  stdout',
+            #    'INFO   stdout',
+            #    'NOTICE stdout',
+            #    'WARN   stdout',
+            #    'ERR    stdout',
+            #    ]
+
+            if metrics_port is not None and metrics_port != '' and metrics_port != 0:
+                config['MetricsPort'] = str(metrics_port)
 
             if metrics_port_policy is not None and metrics_port_policy != '':
                 config['MetricsPortPolicy'] = str(metrics_port_policy)

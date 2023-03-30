@@ -77,13 +77,14 @@ config = {
             },
 
         'metrics_port': {
-            'help'    : 'Tor Metrics port (MetricsPort). A value of 0 means it is disabled',
-            'default' : 0,
+            'help'    : 'Tor Metrics port (MetricsPort). An empty value means it is disabled',
+            'default' : '',
             'action'  : 'store',
             },
 
         'metrics_port_policy': {
-            'help'    : 'Tor Metrics port policy (MetricsPortPolicy). An empty value means it is disabled',
+            'help'    : """Tor Metrics port policy (MetricsPortPolicy).
+                           An empty value means it is disabled'""".strip(),
             'default' : 'reject *',
             'action'  : 'store',
             },
