@@ -39,6 +39,7 @@ stop-containers:
 configs:
 	@./packages/real-world-onion-sites.py
 	@./packages/securedrop.py
+	@./packages/tpo.py
 
 #
 # Documentation
