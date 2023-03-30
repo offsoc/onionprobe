@@ -2,3 +2,32 @@
 include:
   - local: '.gitlab-ci-pages.yml'
   - local: '.gitlab-ci-slides.yml'
+
+python:
+  image: debian:bullseye
+  script:
+    - apt-get update
+    - apt-get install -y git
+    - git submodule update --init --recursive
+    - scripts/provision-packaging-python
+    - make build-python-package
+  artifacts:
+    paths:
+      - dist
+  only:
+    - main
+
+debian:
+  image: debian:bullseye
+  script:
+    - apt-get update
+    - apt-get install -y git
+    - git submodule update --init --recursive
+    - scripts/provision-packaging-debian
+    - make sbuild
+    - rm -rf /srv/chroot
+  artifacts:
+    paths:
+      - /srv
+  only:
+    - main
