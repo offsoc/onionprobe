@@ -6,7 +6,7 @@
 # Parameters
 DIRNAME="`dirname $0`"
 BASEPATH="$DIRNAME/.."
-REQUIREMENTS="ca-certificates apt-transport-https wget gnupg"
+REQUIREMENTS="ca-certificates apt-transport-https wget gnupg make"
 DEPENDENCIES="python3-prometheus-client python3-stem python3-cryptography python3-yaml python3-requests python3-socks"
 DEPENDENCIES="$DEPENDENCIES deb.torproject.org-keyring tor"
 
