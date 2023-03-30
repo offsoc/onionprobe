@@ -139,33 +139,35 @@ you'll need to edit a number of files:
    `metrics_port` and `metrics_port_policy` to some sane values.
    Examples:
 
-    metrics_port: '172.19.0.100:9936'
-    metrics_port_policy: 'accept 172.19.0.100'
+```yaml
+metrics_port: '172.19.0.100:9936'
+metrics_port_policy: 'accept 172.19.0.100'
+```
 
 3. At `docker-compose.yaml`, ensure that the `prometheus` container have
    a fixed IP like the `172.19.0.100` from the example above. For that,
    you'll need to uncomment the follow lines:
 
-    ```yaml
-    services:
-      prometheus:
-        [...]
-        # Use a static network IP to allow Prometheus to collect MetricsPort data
-        # from onionprobe's Tor process.
-        networks:
-          default:
-            ipv4_address: 172.19.0.100
+```yaml
+services:
+  prometheus:
+    [...]
+    # Use a static network IP to allow Prometheus to collect MetricsPort data
+    # from onionprobe's Tor process.
+    networks:
+      default:
+        ipv4_address: 172.19.0.100
 
-      [...]
+  [...]
 
-      # Use a static network range to allow Prometheus to collect MetricsPort data
-      # from onionprobe's Tor process.
-      networks:
-        default:
-          ipam:
-            config:
-              - subnet: 172.19.0.0/24
-      ```
+  # Use a static network range to allow Prometheus to collect MetricsPort data
+  # from onionprobe's Tor process.
+  networks:
+    default:
+      ipam:
+        config:
+          - subnet: 172.19.0.0/24
+```
 
 Then stop and restart all containers for the configuration to take effect.
 
