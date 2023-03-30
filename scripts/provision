@@ -6,27 +6,13 @@
 # Parameters
 DIRNAME="`dirname $0`"
 BASEPATH="$DIRNAME/.."
-REQUIREMENTS="ca-certificates apt-transport-https"
-DEPENDENCIES="python3-prometheus-client python3-stem python3-cryptography python3-yaml python3-requests python3-socks"
-DEPENDENCIES="$DEPENDENCIES deb.torproject.org-keyring tor"
-DEPENDENCIES_PACKAGING_PYTHON="python3-venv python3-build python3-keyrings.alt twine"
-DEPENDENCIES_PACKAGING_DEBIAN="sbuild-debian-developer-setup piuparts"
 TORRC="/etc/tor/torrc"
 
 # Update submodules
 git submodule update --init --recursive
 
-# Install basic requirements
-sudo apt update
-sudo apt install -y $REQUIREMENTS
-
-# Configure Tor's Debian repository and keyring
-sudo $BASEPATH/scripts/get-tor-debian-key /usr/share/keyrings/tor-archive-keyring.gpg || exit 1
-sudo cp $BASEPATH/configs/apt/tor.list /etc/apt/sources.list.d/tor.list
-sudo apt update
-
-# Install dependencies
-sudo apt install -y $DEPENDENCIES
+# Provision Onionprobe requirements
+$DIRNAME/provision-onionprobe
 
 # Configure Tor
 # This is mainly intended to test Onionprobe using a system-wide Tor daemon,
@@ -44,40 +30,18 @@ if ! grep "^ControlPort" $TORRC; then
 fi
 
 # Docker and docker-compose from distribution
+sudo apt-get update
 sudo apt-get install -y docker.io docker-compose
 
 # Put the regular user into docker group
 sudo usermod -a -G docker $(whoami)
 
-# Docs
+# Provision documentation requirements
 $BASEPATH/vendors/onion-mkdocs/scripts/provision-docs-build
 $BASEPATH/vendors/onion-tex-slim/scripts/provision-docs-build
 
-# Python packaging
-sudo apt-get install -y $DEPENDENCIES_PACKAGING_PYTHON
+# Provision Python packaging requirements
+$DIRNAME/provision-packaging-python
 
-# Debian packaging
-sudo apt-get install -y $DEPENDENCIES_PACKAGING_DEBIAN
-
-# Sbuild chroot for unstable
-if [ ! -e "/srv/chroot/unstable-amd64-sbuild" ]; then
-  #sudo sbuild-debian-developer-setup --distribution=unstable
-  sudo sbuild-createchroot  --include=eatmydata,gnupg unstable /srv/chroot/unstable-amd64-sbuild http://deb.debian.org/debian
-fi
-
-# Sbuild chroot for stable
-#if [ ! -e "/srv/chroot/stable-amd64-sbuild" ]; then
-#  sudo sbuild-createchroot --include=eatmydata,gnupg stable   /srv/chroot/stable-amd64-sbuild   http://deb.debian.org/debian
-#  sudo sbuild-debian-developer-setup --distribution=stable
-#fi
-
-sudo sbuild-adduser $LOGNAME
-
-if [ ! -e "$HOME/.sbuildrc" ]; then
-  cp /usr/share/doc/sbuild/examples/example.sbuildrc $HOME/.sbuildrc
-fi
-
-# This allows one to build Debian packages inside a KVMX virtual machine
-#if [ -d "/srv/onionprobe" ]; then
-#  sudo chown user. /srv/onionprobe
-#fi
+# Provision Debian packaging requirements
+$DIRNAME/provision-packaging-debian

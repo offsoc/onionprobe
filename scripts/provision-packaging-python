@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#
+# Helper script to setup a Python packaging environment
+#
+
+# Parameters
+DIRNAME="`dirname $0`"
+BASEPATH="$DIRNAME/.."
+DEPENDENCIES_PACKAGING_PYTHON="python3-venv python3-build python3-keyrings.alt twine"
+
+# Python packaging
+sudo apt-get update
+sudo apt-get install -y $DEPENDENCIES_PACKAGING_PYTHON
