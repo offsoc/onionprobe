@@ -10,14 +10,19 @@ REQUIREMENTS="ca-certificates apt-transport-https"
 DEPENDENCIES="python3-prometheus-client python3-stem python3-cryptography python3-yaml python3-requests python3-socks"
 DEPENDENCIES="$DEPENDENCIES deb.torproject.org-keyring tor"
 
+# Check for sudo
+if [ "`whoami`" != "root" ]; then
+  SUDO="sudo"
+fi
+
 # Install basic requirements
-sudo apt update
-sudo apt install -y $REQUIREMENTS
+$SUDO apt update
+$SUDO apt install -y $REQUIREMENTS
 
 # Configure Tor's Debian repository and keyring
-sudo $BASEPATH/scripts/get-tor-debian-key /usr/share/keyrings/tor-archive-keyring.gpg || exit 1
-sudo cp $BASEPATH/configs/apt/tor.list /etc/apt/sources.list.d/tor.list
-sudo apt update
+$SUDO $BASEPATH/scripts/get-tor-debian-key /usr/share/keyrings/tor-archive-keyring.gpg || exit 1
+$SUDO cp $BASEPATH/configs/apt/tor.list /etc/apt/sources.list.d/tor.list
+$SUDO apt update
 
 # Install dependencies
-sudo apt install -y $DEPENDENCIES
+$SUDO apt install -y $DEPENDENCIES

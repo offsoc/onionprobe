@@ -8,6 +8,11 @@ DIRNAME="`dirname $0`"
 BASEPATH="$DIRNAME/.."
 TORRC="/etc/tor/torrc"
 
+# Check for sudo
+if [ "`whoami`" != "root" ]; then
+  SUDO="sudo"
+fi
+
 # Update submodules
 git submodule update --init --recursive
 
@@ -22,19 +27,19 @@ if ! grep "^ControlPort" $TORRC; then
   control_pass="$(grep "^control_password" $BASEPATH/onionprobe.yaml | cut -d "'" -f 2)"
   hashed_pass="`tor --hash-password $control_pass`"
 
-  echo "SocksPort   19050"                  | sudo tee -a $TORRC > /dev/null
-  echo "ControlPort 19051"                  | sudo tee -a $TORRC > /dev/null
-  echo "HashedControlPassword $hashed_pass" | sudo tee -a $TORRC > /dev/null
+  echo "SocksPort   19050"                  | $SUDO tee -a $TORRC > /dev/null
+  echo "ControlPort 19051"                  | $SUDO tee -a $TORRC > /dev/null
+  echo "HashedControlPassword $hashed_pass" | $SUDO tee -a $TORRC > /dev/null
 
-  sudo service tor restart
+  $SUDO service tor restart
 fi
 
 # Docker and docker-compose from distribution
-sudo apt-get update
-sudo apt-get install -y docker.io docker-compose
+$SUDO apt-get update
+$SUDO apt-get install -y docker.io docker-compose
 
 # Put the regular user into docker group
-sudo usermod -a -G docker $(whoami)
+$SUDO usermod -a -G docker $(whoami)
 
 # Provision documentation requirements
 $BASEPATH/vendors/onion-mkdocs/scripts/provision-docs-build
