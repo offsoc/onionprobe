@@ -10,6 +10,7 @@ python:
     - apt-get install -y git
     - git submodule update --init --recursive
     - scripts/provision-packaging-python
+    - mkdir -p dist
     - make build-python-package
   artifacts:
     paths:
@@ -24,12 +25,12 @@ debian:
     - apt-get install -y git
     - git submodule update --init --recursive
     - scripts/provision-packaging-debian
-    - sbuild-update -udcar u
-    - sbuild -c unstable-amd64-sbuild
-    - rm -rf /srv/chroot
+    - make build-debian-test-package
+    - mkdir -p dist
+    - mv ../onionprobe_* dist
   artifacts:
     paths:
-      - /srv
+      - dist
   only:
     - main
 

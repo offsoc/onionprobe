@@ -81,8 +81,8 @@ upload-python-package:
 update_sbuild:
 	@sudo sbuild-update -udcar u
 
-#build-debian-test-package:
-#	@dpkg-buildpackage -rfakeroot --no-sign
+build-debian-test-package:
+	@dpkg-buildpackage -rfakeroot --no-sign
 
 sbuild: update_sbuild
 	@#sbuild -c stable-amd64-sbuild
