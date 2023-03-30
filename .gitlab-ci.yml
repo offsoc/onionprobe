@@ -19,7 +19,8 @@ python:
     - main
 
 debian:
-  image: debian:bullseye
+  # Using bullseye support due to the pybuild-plugin-pyproject package
+  image: debian:bullseye-backports
   script:
     - apt-get update
     - apt-get install -y git
