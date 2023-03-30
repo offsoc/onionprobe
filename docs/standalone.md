@@ -108,3 +108,70 @@ Prometheus as the data source.
 Grafana already comes with a basic default dashboard as it's homepage:
 
 ![](assets/dashboard.png "Grafana Onion Services Dashboard")
+
+## Enabling Tor's metrics Prometheus exporter
+
+For debugging and research purposes, Onionprobe support Tor's `MetricsPort` and
+`MetricsPortPolicy` configuration parameters, along with a Prometheus,
+Alertmanager and Grafana integrations.
+
+These Tor parameters are available on Onionprobe as `metrics_port` and
+`metrics_port_policy` configuration or command line parameters.
+
+WARNING: Before enabling this, it is important to understand that exposing
+tor metrics publicly is dangerous to the Tor network users. Please take extra
+precaution and care when opening this port. Set a very strict access policy
+with `MetricsPortPolicy` and consider using your operating systems firewall
+features for defense in depth.
+
+We recommend, for the prometheus format, that the only address that can
+access this port should be the Prometheus server itself. Remember that the
+connection is unencrypted (HTTP) hence consider using a tool like stunnel to
+secure the link from this port to the server.
+
+These settings are disabled by default. To enable it in the monitoring node,
+you'll need to edit a number of files:
+
+1. At `configs/prometheus/prometheys.yml`, uncomment the `tor` job block at the
+   `scrape_configs` section.
+
+2. At the Onionprobe config you're using (like `configs/tor.yaml`), set
+   `metrics_port` and `metrics_port_policy` to some sane values.
+   Examples:
+
+    metrics_port: '172.19.0.100:9936'
+    metrics_port_policy: 'accept 172.19.0.100'
+
+3. At `docker-compose.yaml`, ensure that the `prometheus` container have
+   a fixed IP like the `172.19.0.100` from the example above. For that,
+   you'll need to uncomment the follow lines:
+
+    ```yaml
+    services:
+      prometheus:
+        [...]
+        # Use a static network IP to allow Prometheus to collect MetricsPort data
+        # from onionprobe's Tor process.
+        networks:
+          default:
+            ipv4_address: 172.19.0.100
+
+      [...]
+
+      # Use a static network range to allow Prometheus to collect MetricsPort data
+      # from onionprobe's Tor process.
+      networks:
+        default:
+          ipam:
+            config:
+              - subnet: 172.19.0.0/24
+      ```
+
+Then stop and restart all containers for the configuration to take effect.
+
+The metrics should then be automatically available on Prometheus, Alertmanager
+and Grafana.
+
+Check the [MetricsPort documentation][] for more information.
+
+[MetricsPort documentation]: https://support.torproject.org/relay-operators/relay-bridge-overloaded/#metricsport
