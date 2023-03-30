@@ -26,7 +26,9 @@ ENV SHELL="/bin/bash"
 
 WORKDIR ${APP_BASE}/${APP}
 
+# Install basic dependencies
 RUN apt-get update && \
+    apt-get upgrade -y && \
     apt-get install -y \
     apt-transport-https \
     ca-certificates \
@@ -37,7 +39,7 @@ COPY scripts/get-tor-debian-key /usr/local/bin
 RUN  /usr/local/bin/get-tor-debian-key /usr/share/keyrings/tor-archive-keyring.gpg
 RUN  rm /usr/local/bin/get-tor-debian-key
 
-# Install dependencies
+# Install Tor and dependencies
 # Package basez is installed to allow generation of Client Authorization keys
 # inside the container
 RUN apt-get update && \

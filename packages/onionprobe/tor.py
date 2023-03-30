@@ -189,26 +189,51 @@ class OnionprobeTor:
 
         # Helper function to print bootstrap lines
         def print_bootstrap_lines(line):
-            if "Bootstrapped " in line:
+            level = self.get_config('log_level')
+
+            if '[debug]' in line:
                 self.log(term.format(line), 'debug')
+            elif '[info]' in line:
+                self.log(term.format(line), 'info')
+            elif '[notice]' in line:
+                self.log(term.format(line), 'info')
+            elif '[warn]' in line:
+                self.log(term.format(line), 'warning')
+            elif '[err]' in line:
+                self.log(term.format(line), 'error')
 
         try:
             self.log('Initializing Tor process...')
 
-            tor_address      = self.get_config('tor_address')
-            control_password = self.get_config('control_password', self.gen_control_password())
-            self.tor         = stem.process.launch_tor_with_config(
-                    config = {
-                        'SocksPort'            : tor_address + ':' + str(self.get_config('socks_port')),
-                        'ControlPort'          : tor_address + ':' + str(self.get_config('control_port')),
-                        'HashedControlPassword': self.hash_password(control_password),
-                        'CircuitStreamTimeout' : str(self.get_config('circuit_stream_timeout')),
+            tor_address         = self.get_config('tor_address')
+            control_password    = self.get_config('control_password', self.gen_control_password())
+            metrics_port        = self.get_config('metrics_port')
+            metrics_port_policy = self.get_config('metrics_port_policy')
+            config              = {
+                'SocksPort'            : tor_address + ':' + str(self.get_config('socks_port')),
+                'ControlPort'          : tor_address + ':' + str(self.get_config('control_port')),
+                'HashedControlPassword': self.hash_password(control_password),
+                'CircuitStreamTimeout' : str(self.get_config('circuit_stream_timeout')),
+                }
 
-                        #'Log'                 : [
-                        #    'NOTICE stdout',
-                        #    ],
-                        },
-                        init_msg_handler = print_bootstrap_lines,
+            # Log config
+            #config['Log'] = [
+            #    'DEBUG  stdout',
+            #    'INFO   stdout',
+            #    'NOTICE stdout',
+            #    'WARN   stdout',
+            #    'ERR    stdout',
+            #    ]
+
+            if metrics_port is not None and metrics_port != '' and metrics_port != 0:
+                config['MetricsPort'] = str(metrics_port)
+
+            if metrics_port_policy is not None and metrics_port_policy != '':
+                config['MetricsPortPolicy'] = str(metrics_port_policy)
+
+            self.tor = stem.process.launch_tor_with_config(
+                    config           = config,
+                    init_msg_handler = print_bootstrap_lines,
                     )
 
         except OSError as e:

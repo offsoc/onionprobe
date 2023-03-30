@@ -29,10 +29,25 @@ ENV ONIONPROBE_CONFIG="/srv/onionprobe/configs/tor.yaml"
 ENV PYTHONPATH="/usr/lib/python3/dist-packages:/srv/onionprobe/packages"
 
 RUN apt-get update && \
+    apt-get upgrade -y && \
     apt-get install -y \
+    apt-transport-https \
+    ca-certificates \
+    wget gnupg \
     python3-prometheus-client python3-stem python3-cryptography \
     python3-bs4 python3-yaml python3-pytest python3-requests \
-    python3-socks tor \
+    python3-socks
+
+COPY configs/apt/tor.list /etc/apt/sources.list.d/tor.list
+COPY scripts/get-tor-debian-key /usr/local/bin
+RUN  /usr/local/bin/get-tor-debian-key /usr/share/keyrings/tor-archive-keyring.gpg
+RUN  rm /usr/local/bin/get-tor-debian-key
+
+# Install Tor and dependencies
+RUN apt-get update && \
+    apt-get install -y \
+    deb.torproject.org-keyring \
+    tor \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR ${APP_BASE}/${APP}

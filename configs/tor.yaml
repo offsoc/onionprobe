@@ -56,6 +56,25 @@ control_port: 19051
 # Whether to run continuously
 loop: true
 
+# Tor Metrics port (MetricsPort)
+# An empty value means it is disabled
+#
+# WARNING: Before enabling this, it is important to understand that exposing
+# tor metrics publicly is dangerous to the Tor network users. Please take extra
+# precaution and care when opening this port. Set a very strict access policy
+# with `metrics_port_policy` and consider using your operating systems firewall
+# features for defense in depth.
+#
+# We recommend, for the prometheus format, that the only address that can
+# access this port should be the Prometheus server itself. Remember that the
+# connection is unencrypted (HTTP) hence consider using a tool like stunnel to
+# secure the link from this port to the server.
+metrics_port: ''
+
+# Tor Metrics port policy (MetricsPortPolicy)
+# An empty value means it is disabled
+metrics_port_policy: 'reject *'
+
 # Whether to enable Prometheus exporter functionality
 # Setting it to true automatically enables countinuos run (loop)
 prometheus_exporter: true

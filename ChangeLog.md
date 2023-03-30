@@ -12,6 +12,26 @@
 
 ### Features
 
+* Support for Tor metrics Prometheus exporter via `MetricsPort` and `MetricsPortPolicy`
+  settings, available respectively as `metrics_port` and `metrics_port_policy`
+  configuration or command line parameters.
+
+  These settings are disabled by default. If you plan to use this with the
+  standalone monitoring node, you may also want to edit `configs/prometheus/prometheys.yml`
+  and uncomment Tor's Prometheus configuration so this data becomes available at
+  Prometheus, Alertmanager and Grafana.
+
+  WARNING: Before enabling this, it is important to understand that exposing
+  tor metrics publicly is dangerous to the Tor network users. Please take extra
+  precaution and care when opening this port. Set a very strict access policy
+  with `MetricsPortPolicy` and consider using your operating systems firewall
+  features for defense in depth.
+
+  We recommend, for the prometheus format, that the only address that can
+  access this port should be the Prometheus server itself. Remember that the
+  connection is unencrypted (HTTP) hence consider using a tool like stunnel to
+  secure the link from this port to the server.
+
 * TLS certificate verification:
   * Added a global `tls_verify` flag to check certificates during HTTP tests.
     Set it to `false` to ignore TLS certificate verification.
