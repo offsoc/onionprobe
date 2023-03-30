@@ -36,8 +36,10 @@ shuffle: true
 sleep: 5
 socks_port: 19050
 tor_address: 127.0.0.1
-metrics_port: '0.0.0.0:9936'
+
+# Enable this if you want to export metrics from the Tor probing process.
+#metrics_port: '0.0.0.0:9936'
 #metrics_port_policy: 'reject *,accept 127.0.0.1,accept 172.19.0.100'
 #metrics_port_policy: 'accept *'
 #metrics_port_policy: 'accept 127.0.0.1,accept 172.19.0.100'
-metrics_port_policy: 'accept 172.19.0.100'
+#metrics_port_policy: 'accept 172.19.0.100'

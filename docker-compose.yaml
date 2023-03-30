@@ -26,9 +26,9 @@ services:
     restart: always
     # Use a static network IP to allow Prometheus to collect MetricsPort data
     # from onionprobe's Tor process.
-    networks:
-      default:
-        ipv4_address: 172.19.0.100
+    #networks:
+    #  default:
+    #    ipv4_address: 172.19.0.100
     # This needs a newer Docker Compose (>= 1.28)
     #profiles: ["prometheus", "all"]
 
@@ -152,8 +152,8 @@ volumes:
 
 # Use a static network range to allow Prometheus to collect MetricsPort data
 # from onionprobe's Tor process.
-networks:
-  default:
-    ipam:
-      config:
-        - subnet: 172.19.0.0/24
+#networks:
+#  default:
+#    ipam:
+#      config:
+#        - subnet: 172.19.0.0/24
