@@ -83,14 +83,6 @@ endpoints:
       path: /
     port: 80
     protocol: http
-  Claudio Guarnieri:
-    address: 7dw7foypguycptlodmkscnziw5a65ilivzz6ajiei3yhe3gsfojlqwad.onion
-    paths:
-    - allowed_statuses:
-      - 200
-      path: /
-    port: 80
-    protocol: http
   Dagbladet:
     address: udgkmwzb5jmucs2r2cjtfscgf6s6d6otbt2qfiinovtwknsxk5oyzeid.onion
     paths:
@@ -133,6 +125,14 @@ endpoints:
     protocol: http
   Institute for Quantitative Social Science at Harvard University:
     address: 5kcyaqagvnrvyan7y5ntzreqsn2msowqlmtoo46qju2pctlbkzzztxqd.onion
+    paths:
+    - allowed_statuses:
+      - 200
+      path: /
+    port: 80
+    protocol: http
+  K-Tipp:
+    address: tukldpfzdizsrfyvdljnipmvix2dcb5hmfoemcidkw7bq56wxblk6did.onion
     paths:
     - allowed_statuses:
       - 200
@@ -189,14 +189,6 @@ endpoints:
     protocol: http
   Public Intelligence:
     address: z4gd5t2g6u6kqeqjeddvmvlhhjtjgslg4elh4ztnct7snskcd7phbiyd.onion
-    paths:
-    - allowed_statuses:
-      - 200
-      path: /
-    port: 80
-    protocol: http
-  Stavanger Aftenblad:
-    address: 4beybcv5e7xya4xu2nzdqkohawm32imugjtatkvmp2xwgfhcoj64slid.onion
     paths:
     - allowed_statuses:
       - 200
@@ -307,6 +299,7 @@ endpoints:
       path: /
     port: 80
     protocol: http
+get_certificate_info: true
 http_connect_max_retries: 3
 http_connect_timeout: 30
 http_read_timeout: 30
@@ -314,6 +307,8 @@ interval: 5
 launch_tor: true
 log_level: info
 loop: true
+metrics_port: ''
+metrics_port_policy: reject *
 new_circuit: false
 prometheus_exporter: true
 prometheus_exporter_port: 9935
@@ -322,4 +317,8 @@ rounds: 0
 shuffle: true
 sleep: 5
 socks_port: 19050
+test_tls_connection: true
+tls_connect_max_retries: 3
+tls_connect_timeout: 30
+tls_verify: true
 tor_address: 127.0.0.1

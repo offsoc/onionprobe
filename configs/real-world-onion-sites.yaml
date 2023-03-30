@@ -1179,6 +1179,7 @@ endpoints:
       path: /
     port: 443
     protocol: https
+get_certificate_info: true
 http_connect_max_retries: 3
 http_connect_timeout: 30
 http_read_timeout: 30
@@ -1186,6 +1187,8 @@ interval: 5
 launch_tor: true
 log_level: info
 loop: true
+metrics_port: ''
+metrics_port_policy: reject *
 new_circuit: false
 prometheus_exporter: true
 prometheus_exporter_port: 9935
@@ -1194,4 +1197,8 @@ rounds: 0
 shuffle: true
 sleep: 5
 socks_port: 19050
+test_tls_connection: true
+tls_connect_max_retries: 3
+tls_connect_timeout: 30
+tls_verify: true
 tor_address: 127.0.0.1
