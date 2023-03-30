@@ -56,3 +56,6 @@ $DIRNAME/provision-packaging-python
 
 # Provision Debian packaging requirements
 $DIRNAME/provision-packaging-debian
+
+# Provision Debian packaging requirements: sbuild
+$DIRNAME/provision-packaging-sbuild
