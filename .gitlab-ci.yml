@@ -19,8 +19,10 @@ python:
     - main
 
 debian:
-  # Using bullseye support due to the pybuild-plugin-pyproject package
-  image: debian:bullseye-backports
+  # Using bookworm support due to the pybuild-plugin-pyproject package
+  #image: debian:bullseye
+  #image: debian:bullseye-backports
+  image: debian:bookworm
   script:
     - apt-get update
     - apt-get install -y git
