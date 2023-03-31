@@ -111,6 +111,9 @@
     than 200.
   * Custom metric indicating if the status code is expected or not.
 
+* CI/CD: added jobs to test building debian and python packages, as well as
+  configurations and slides.
+
 ## v1.0.0 - 2022-05-31
 
 ### Breaking changes
