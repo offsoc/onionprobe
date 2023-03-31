@@ -82,7 +82,7 @@ update_sbuild:
 	@sudo sbuild-update -udcar u
 
 mk-build-deps:
-	@mk-build-deps --install debian/control
+	@mk-build-deps --install --tool='apt-get -y' debian/control
 
 build-debian-test-package: mk-build-deps
 	@dpkg-buildpackage -rfakeroot --no-sign
