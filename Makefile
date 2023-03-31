@@ -51,10 +51,13 @@ manpage:
 	@./packages/manpage.py
 
 compile-docs: manpage
-	mkdocs build
+	@cp docs/man/onionprobe.1.md docs/man/onionprobe.1.md.orig
+	@sed -i -e '1i\\# ONIONPROBE(1) Onionprobe User Manual' -e 's|^#|##|g' -e '/^%/d' docs/man/onionprobe.1.md
+	@mkdocs build
+	@cp docs/man/onionprobe.1.md.orig docs/man/onionprobe.1.md
 
 serve-docs:
-	mkdocs serve
+	@mkdocs serve
 
 watch-docs:
 	@./scripts/watch-docs

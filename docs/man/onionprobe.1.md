@@ -847,7 +847,8 @@ Onionprobe currently has the following limitations:
 
 # SEE ALSO
 
-The *README* file distributed with Onionprobe contains the full documentation.
+The *docs/* folder distributed with Onionprobe contains the full documentation,
+which should also be available at <https://tpo.pages.torproject.net/onion-services/onionprobe/>.
 
 The Onionprobe source code and all documentation may be downloaded from
 <https://gitlab.torproject.org/onion-services/onionprobe>.
