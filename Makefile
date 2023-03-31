@@ -45,12 +45,12 @@ configs:
 # Documentation
 #
 
-docs: manpage compile-docs
+docs: compile-docs
 
 manpage:
 	@./packages/manpage.py
 
-compile-docs:
+compile-docs: manpage
 	mkdocs build
 
 serve-docs:
