@@ -279,6 +279,9 @@ def cmdline_parser():
         else:
             config[argument]['type'] = type(config[argument]['default'])
 
+            if not isinstance(config[argument]['default'], bool) and config[argument]['default'] != '':
+                config[argument]['help'] += ' (default: %(default)s)'
+
             parser.add_argument('--' + argument, **config[argument])
 
     return parser

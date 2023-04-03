@@ -10,6 +10,8 @@
 * Command-line URL parsing:
   https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/merge_requests/17
 
+* Display default values for most options on `onionprobe --help`.
+
 ### Features
 
 * Support for Tor metrics Prometheus exporter via `MetricsPort` and `MetricsPortPolicy`
