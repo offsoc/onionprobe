@@ -16,7 +16,7 @@ PGUSER="${PGUSER:-grafana}"
 set +e
 
 # Check for version data
-if [ ! -e "$VOLUMES/$CONTAINER/_data/PG_VERSION" ]; then
+if ! sudo ls "$VOLUMES/$CONTAINER/_data/PG_VERSION" 2> /dev/null; then
   echo "$BASENAME: cannot find $VOLUMES/$CONTAINER/_data/PG_VERSION, aborting."
   exit 1
 fi
