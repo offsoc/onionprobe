@@ -23,13 +23,13 @@ This procedure is based on the [tianon/docker-postgres-upgrade][]
 approach[^docker-postgres-upgrade] and needs to be done whenever Onionprobe is
 upgraded to a new [postgres image][] version:
 
-### Stop the monitoring node
+#### Stop the monitoring node
 
 Just run
 
     docker compose down
 
-### Run the upgrade script
+#### Run the upgrade script
 
 This handy script may do all the heavy lifting for you:
 
@@ -46,7 +46,7 @@ also makes a backup of the old PostgreSQL data. You can manually remove those
 later after checking that the upgrade procedure works. Just follow the script
 output for instructions or check it's source code.
 
-### Start the monitoring node
+#### Start the monitoring node
 
 Simply start the standalone monitoring node again after the upgrade procedure:
 
