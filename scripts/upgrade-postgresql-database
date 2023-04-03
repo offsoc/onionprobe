@@ -79,7 +79,7 @@ docker rm postgres-upgrade-testing
 # Configure
 # See https://github.com/tianon/docker-postgres-upgrade/issues/1
 echo "Updating $NEW/data/pg_hba.conf..."
-echo "host all all all scram-sha-256" sudo tee -a $NEW/data/pg_hba.conf
+echo "host all all all scram-sha-256" | sudo tee -a $NEW/data/pg_hba.conf
 
 # Backup
 echo "Backing up the old $VOLUMES/$CONTAINER/_data..."
