@@ -4,7 +4,7 @@
 
 ### Fixes
 
-* Stick to a PostgreSQL docker image.
+* Stick to a PostgreSQL docker image:
   See https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/70
 
 * Command-line URL parsing:
