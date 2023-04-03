@@ -74,6 +74,13 @@ metrics = {
     #        ['name', 'address', 'port', 'reachable']
     #    ),
 
+    'onion_service_tls_security_level': Gauge(
+            'onion_service_tls_security_level',
+            "An integer representing the SSL security level for the context." + \
+                    "See SSL_CTX_get_security_level(3) manpage for details.",
+            ['name', 'address', 'port']
+        ),
+
     'onion_service_status_code': Gauge(
             'onion_service_status_code',
             'Register Onion Service connection HTTP status code',

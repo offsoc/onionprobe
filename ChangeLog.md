@@ -86,6 +86,10 @@
     * `onion_service_certificate_info`: Register miscellaneous TLS certificate
       information for a given Onion Service such as version and fingerprints.
 
+    * `onion_service_tls_security_level`: Tracks the SSL security level in use.
+      Needs Python 3.10+ to work. See SSL_CTX_get_security_level(3) manpage for details:
+      https://www.openssl.org/docs/manmaster/man3/SSL_CTX_get_security_level.html
+
     * `onion_service_tls_info`: Register miscellaneous TLS information for a
       given Onion Service such as version and ciphers.
 

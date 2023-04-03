@@ -116,6 +116,10 @@ class OnionprobeTLS:
 
                     self.info_metric('onion_service_tls', info, labels)
 
+                    # Requires Python 3.10+
+                    if hasattr(context, 'security_level'):
+                        self.set_metric('onion_service_tls_security_level', context.security_level, labels)
+
         except ssl.SSLZeroReturnError as e:
             result = False
             error  = e.reason
