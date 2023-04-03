@@ -35,7 +35,7 @@ This handy script may do all the heavy lifting for you:
 
     ./scripts/upgrade-postgresql-database
 
-By default it searches for the `onionprobe_postgres` service containers, but
+By default it searches for the `onionprobe_postgres` service container, but
 you can pass the name of your custom container as the optional command line
 parameter:
 
