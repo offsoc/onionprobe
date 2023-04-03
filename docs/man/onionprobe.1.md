@@ -1,6 +1,6 @@
 % ONIONPROBE(1) Onionprobe User Manual
 % Silvio Rhatto <rhatto@torproject.org>
-% Mar 31, 2023
+% Apr 03, 2023
 
 # NAME
 
@@ -41,59 +41,59 @@ onion services endpoints and paths, optionally exporting to Prometheus.
                             Read options from configuration file. All command line parameters can be specified inside a YAML file. Additional command line parameters override those set in the configuration file.
       -v, --version         show program's version number and exit
       --circuit_stream_timeout CIRCUIT_STREAM_TIMEOUT
-                            Sets how many seconds until a stream is detached from a circuit and try a new circuit
+                            Sets how many seconds until a stream is detached from a circuit and try a new circuit (default: 60)
       --control_password CONTROL_PASSWORD
-                            Set Tor control password or use a password prompt (system-wide Tor service) or auto-generate a temporary password (built-in Tor service)
+                            Set Tor control password or use a password prompt (system-wide Tor service) or auto-generate a temporary password (built-in Tor service) (default: None)
       --control_port CONTROL_PORT
-                            Tor control port
+                            Tor control port (default: 19051)
       --descriptor_max_retries DESCRIPTOR_MAX_RETRIES
-                            Max retries when fetching a descriptor
+                            Max retries when fetching a descriptor (default: 5)
       --descriptor_timeout DESCRIPTOR_TIMEOUT
-                            Timeout in seconds when retrieving an Onion Service descriptor
+                            Timeout in seconds when retrieving an Onion Service descriptor (default: 30)
       -e [ONION-ADDRESS1 ...], --endpoints [ONION-ADDRESS1 ...]
                             Add endpoints to the test list
       --get_certificate_info, --no-get_certificate_info
                             Whether to get certificate information when testing TLS/HTTPS endpoints. Requires --test_tls_connection to take effect. (default: True)
       --http_connect_max_retries HTTP_CONNECT_MAX_RETRIES
-                            Max retries when doing a HTTP/HTTPS connection to an Onion Service
+                            Max retries when doing a HTTP/HTTPS connection to an Onion Service (default: 3)
       --http_connect_timeout HTTP_CONNECT_TIMEOUT
-                            Connection timeout for HTTP/HTTPS requests
+                            Connection timeout for HTTP/HTTPS requests (default: 30)
       --http_read_timeout HTTP_READ_TIMEOUT
-                            Read timeout for HTTP/HTTPS requests
-      --interval INTERVAL   Max random interval in seconds between probing each endpoint
+                            Read timeout for HTTP/HTTPS requests (default: 30)
+      --interval INTERVAL   Max random interval in seconds between probing each endpoint (default: 60)
       --launch_tor, --no-launch_tor
                             Whether to launch it's own Tor daemon (set to false to use the system-wide Tor process) (default: True)
       --log_level LOG_LEVEL
-                            Log level : debug, info, warning, error or critical
+                            Log level : debug, info, warning, error or critical (default: info)
       --loop, --no-loop     Run Onionprobe continuously (default: False)
       --metrics_port METRICS_PORT
                             Tor Metrics port (MetricsPort). An empty value means it is disabled
       --metrics_port_policy METRICS_PORT_POLICY
-                            Tor Metrics port policy (MetricsPortPolicy). An empty value means it is disabled'
+                            Tor Metrics port policy (MetricsPortPolicy). An empty value means it is disabled' (default: reject *)
       --new_circuit, --no-new_circuit
                             Get a new circuit for every stream (default: False)
       --prometheus_exporter, --no-prometheus_exporter
                             Enable Prometheus exporting functionality (default: False)
       --prometheus_exporter_port PROMETHEUS_EXPORTER_PORT
-                            Set the Prometheus exporter port
+                            Set the Prometheus exporter port (default: 9935)
       --randomize, --no-randomize
                             Randomize the interval between each probing (default: True)
-      --rounds ROUNDS       Run only a limited number of rounds (i.e., the number of times that Onionprobe tests all the configured endpoints). Requires the "loop" option to be enabled. Set to 0 to disable this limit.
+      --rounds ROUNDS       Run only a limited number of rounds (i.e., the number of times that Onionprobe tests all the configured endpoints). Requires the "loop" option to be enabled. Set to 0 to disable this limit. (default: 0)
       --shuffle, --no-shuffle
                             Shuffle the list of endpoints at each probing round (default: True)
-      --sleep SLEEP         Max random interval in seconds to wait between each round of tests
+      --sleep SLEEP         Max random interval in seconds to wait between each round of tests (default: 60)
       --socks_port SOCKS_PORT
-                            Tor SOCKS port
+                            Tor SOCKS port (default: 19050)
       --test_tls_connection, --no-test_tls_connection
                             Whether to run a specific test for TLS endpoints (default: True)
       --tls_connect_max_retries TLS_CONNECT_MAX_RETRIES
-                            Max retries when doing a TLS connection to an Onion Service
+                            Max retries when doing a TLS connection to an Onion Service (default: 3)
       --tls_connect_timeout TLS_CONNECT_TIMEOUT
-                            Connection timeout for TLS connections
+                            Connection timeout for TLS connections (default: 30)
       --tls_verify, --no-tls_verify
                             Whether to verify TLS/HTTPS certificates (default: True)
       --tor_address TOR_ADDRESS
-                            Tor listening address if the system-wide service is used
+                            Tor listening address if the system-wide service is used (default: 127.0.0.1)
 
     Examples:
 
@@ -114,6 +114,8 @@ onion services endpoints and paths, optionally exporting to Prometheus.
             Register if the Onion Service is reachable: value is 1 for reachability and 0 otherwise
       onion_service_connection_attempts:
             Register the number of attempts when trying to connect to an Onion Service in a probing round
+      onion_service_tls_security_level:
+            An integer representing the SSL security level for the context.See SSL_CTX_get_security_level(3) manpage for details.
       onion_service_status_code:
             Register Onion Service connection HTTP status code
       onion_service_unexpected_status_code:
