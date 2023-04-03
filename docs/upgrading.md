@@ -27,7 +27,7 @@ upgraded to a new [postgres image][] version:
 
 Just run
 
-    docker compose down
+    docker-compose down
 
 #### Run the upgrade script
 
