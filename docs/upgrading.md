@@ -31,7 +31,7 @@ Just run
 
 #### Run the upgrade script
 
-This handy script may do all the heavy lifting for you:
+This handy script may do all the heavy lifting for you (requires `sudo`):
 
     ./scripts/upgrade-postgresql-database
 
