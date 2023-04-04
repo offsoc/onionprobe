@@ -70,7 +70,7 @@ share-docs: compile
 #
 
 clean:
-	@find -name __pycache__ -exec rm -rf {} \; || true
+	@find -name __pycache__ -exec rm -rf {} \; &> /dev/null || true
 
 build-python-package: clean
 	@python3 -m build

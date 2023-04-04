@@ -14,9 +14,9 @@ Set the version number:
 
 Update the version in some files, like:
 
-* `debian/changelog` (via `dch -i`)
-* `packages/onionprobe/config.py`
-* `setup.cfg`
+    dch -i # debian/changelog
+    $EDITOR packages/onionprobe/config.py
+    $EDITOR setup.cfg
 
 ### Regenerate the manpage
 
@@ -24,8 +24,20 @@ Update the version in some files, like:
 
 ### Register the changes
 
-* Update the ChangeLog.
-* Commit and tag. Push changes and tags.
+Update the ChangeLog:
+
+    $EDITOR ChangeLog
+
+Commit and tag:
+
+    git diff # review
+    git commit -a -m "Feat: Onionprobe $ONIONPROBE_VERSION"
+    git tag -s $ONIONPROBE_VERSION -m "Onionprobe $ONIONPROBE_VERSION"
+
+Push changes and tags. Example:
+
+    git push origin        && git push upstream
+    git push origin --tags && git push upstream --tags
 
 ### Build packages
 
@@ -37,8 +49,8 @@ Build and then upload the Python package in the Test PyPi instance:
 Try the test package in a fresh virtual machine, eg:
 
     sudo apt-get install -y python3-pip tor
-    pip install -i https://test.pypi.org/simple/ \
-                --extra-index-url https://pypi.org/simple \
+    pip install -i https://pypi.org/simple/ \
+                --extra-index-url https://test.pypi.org/simple \
                 onionprobe==$ONIONPROBE_VERSION
 
 Make sure to test after installation. If the the package works as expected,
