@@ -14,7 +14,7 @@ Set the version number:
 
 Update the version in some files, like:
 
-* `debian/changelog`
+* `debian/changelog` (via `dch -i`)
 * `packages/onionprobe/config.py`
 * `setup.cfg`
 
