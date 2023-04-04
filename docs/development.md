@@ -1,4 +1,4 @@
-# Onionprobe development
+# Development
 
 Onionprobe development guidelines and workflow are listed here.
 
