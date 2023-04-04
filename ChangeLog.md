@@ -8,6 +8,11 @@
   * Apply workaround for "Invalid dashboard UID in the request error on custom
     home dashboard": https://github.com/grafana/grafana/issues/54574
 
+* Docker:
+  * Stick to specific upstream image versions to avoid unexpected upgrade issues.
+
+  * Change the `onionprobe` image version scheme to match semantic versioning.
+
 ## v1.1.0 - 2023-04-03
 
 ### Fixes
