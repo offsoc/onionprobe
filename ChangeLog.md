@@ -13,6 +13,9 @@
 
   * Change the `onionprobe` image version scheme to match semantic versioning.
 
+* PostgreSQL upgrade script (`upgrade-postgresql-database`):
+  * Misc fixes.
+
 ## v1.1.0 - 2023-04-03
 
 ### Fixes
