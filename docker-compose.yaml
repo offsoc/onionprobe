@@ -7,7 +7,7 @@ version: '3'
 
 services:
   prometheus:
-    image: docker.io/prom/prometheus
+    image: docker.io/prom/prometheus:v2.43.0
 
     volumes:
       - ./${PROMETHEUS_CONFIG:-configs/prometheus/prometheus.yml}:/etc/prometheus/prometheus.yml
@@ -46,7 +46,7 @@ services:
     #profiles: ["prometheus", "all"]
 
   alertmanager:
-    image: docker.io/prom/alertmanager
+    image: docker.io/prom/alertmanager:v0.25.0
 
     volumes:
       - ./${ALERTMANAGER_CONFIG:-configs/alertmanager/alertmanager.yml}:/etc/alertmanager/alertmanager.yml
@@ -83,7 +83,7 @@ services:
     #profiles: [ "grafana", "all" ]
 
   grafana:
-    image: docker.io/grafana/grafana
+    image: docker.io/grafana/grafana:9.4.7
 
     volumes:
       - ./${GRAFANA_PROVISIONING:-configs/grafana/provisioning}:/etc/grafana/provisioning
