@@ -1,5 +1,13 @@
 # Onionprobe ChangeLog
 
+## v1.1.1 - Unreleased
+
+### Fixes
+
+* Grafana dashboard:
+  * Apply workaround for "Invalid dashboard UID in the request error on custom
+    home dashboard": https://github.com/grafana/grafana/issues/54574
+
 ## v1.1.0 - 2023-04-03
 
 ### Fixes
