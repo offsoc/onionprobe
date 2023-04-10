@@ -1,5 +1,5 @@
 nav:
-  - README.md
+  - Home: README.md
   - requirements.md
   - installation.md
   - usage.md
