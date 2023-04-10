@@ -6,10 +6,10 @@ slides:
     - git submodule update --init --recursive
     - vendors/onion-tex-slim/scripts/provision-docs-build
     - make -C docs/slides all
-    - mkdir public
-    - find docs/slides -name '*.pdf' -exec cp {} public \;
+    - mkdir slides
+    - rsync -av --prune-empty-dirs --include='*/' --include='*.pdf' --exclude='*' docs/slides/ slides/
   artifacts:
     paths:
-      - public
+      - slides
   only:
     - main
