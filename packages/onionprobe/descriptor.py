@@ -117,7 +117,7 @@ class OnionprobeDescriptor:
 
         else:
             # Debuging the outer layer
-            self.log("Outer descriptor layer contents (decrypted):\n" + str(descriptor), 'debug')
+            self.log("Outer wrapper descriptor layer contents (decrypted):\n" + str(descriptor), 'debug')
 
             # Ensure it's converted to the v3 format
             #
@@ -131,7 +131,7 @@ class OnionprobeDescriptor:
             inner = descriptor.decrypt(pubkey)
 
             # Debuging the inner layer
-            self.log("Inner descriptor layer contents (decrypted):\n" + inner._raw_contents, 'debug')
+            self.log("Second layer of encryption descriptor contents (decrypted):\n" + inner._raw_contents, 'debug')
 
             # Get introduction points
             # See https://stem.torproject.org/api/descriptor/hidden_service.html#stem.descriptor.hidden_service.IntroductionPointV3
