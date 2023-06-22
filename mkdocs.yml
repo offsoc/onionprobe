@@ -33,6 +33,13 @@ theme:
         icon: material/brightness-4
         name: Switch to light mode
 
+  # Do not use external fonts
+  # Useful for offline operation, GDPR compliance and privacy in general
+  # May be replaced in the future by the built-in privacy plugin
+  # See https://squidfunk.github.io/mkdocs-material/setup/changing-the-fonts/#autoloading
+  #     https://squidfunk.github.io/mkdocs-material/setup/ensuring-data-privacy/#built-in-privacy-plugin
+  font: false
+
 extra_css:
   - site.css
 
