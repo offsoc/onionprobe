@@ -1,5 +1,22 @@
 # Onionprobe ChangeLog
 
+## v1.1.2 - 2023-09-28
+
+### Fixes
+
+* Make the tor process quiet when generating hashed passwords (reported by
+  @anarcat): https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/81
+
+* CI/CD: use rsync to copy slide artifacts, preserving the folder structure.
+
+* Minor documentation improvements.
+
+### Features
+
+* Debug outer and inner layer descriptor contents.
+
+* Decrease Prometheus certificate expiration alerts to 7 days in advance.
+
 ## v1.1.1 - 2023-04-04
 
 ### Fixes

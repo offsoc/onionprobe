@@ -1,3 +1,9 @@
+onionprobe (1.1.2) unstable; urgency=medium
+
+  * New upstream version.
+
+ -- Silvio Rhatto <rhatto@torproject.org>  Thu, 28 Sep 2023 18:10:45 -0300
+
 onionprobe (1.1.1) unstable; urgency=medium
 
   * New upstream version.
