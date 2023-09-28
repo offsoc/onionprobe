@@ -166,7 +166,7 @@ class OnionprobeTor:
         import subprocess
 
         tor    = shutil.which('tor')
-        result = subprocess.check_output([tor, '--hash-password', password], text=True)
+        result = subprocess.check_output([tor, '--quiet', '--hash-password', password], text=True)
 
         return result
 
