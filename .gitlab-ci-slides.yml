@@ -4,7 +4,7 @@ slides:
     - apt-get update
     - apt-get install -y git
     - git submodule update --init --recursive
-    - vendors/onion-tex-slim/scripts/provision-docs-build
+    - vendors/onion-tex-slim/scripts/onion-tex-slim-provision-build
     - make -C docs/slides all
     - mkdir slides
     - rsync -av --prune-empty-dirs --include='*/' --include='*.pdf' --exclude='*' docs/slides/ slides/

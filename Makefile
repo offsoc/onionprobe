@@ -53,17 +53,8 @@ manpage:
 compile-docs: manpage
 	@cp docs/man/onionprobe.1.md docs/man/onionprobe.1.md.orig
 	@sed -i -e '1i\\# ONIONPROBE(1) Onionprobe User Manual' -e 's|^#|##|g' -e '/^%/d' docs/man/onionprobe.1.md
-	@pipenv run mkdocs build
+	@make onion-mkdocs-build
 	@mv docs/man/onionprobe.1.md.orig docs/man/onionprobe.1.md
-
-serve-docs:
-	@pipenv run mkdocs serve
-
-watch-docs:
-	@./scripts/watch-docs
-
-share-docs: compile
-	@onionshare-cli --disable_csp --website public
 
 #
 # Packaging
@@ -99,3 +90,14 @@ sbuild: update_sbuild
 #
 
 release: clean configs docs
+
+#
+# Other
+#
+
+# Process any other Makefile whose filename matches Makefile.*
+# See https://www.gnu.org/software/make/manual/html_node/Include.html
+#
+# Some of those files might even contain local customizations/overrides
+# that can be .gitignore'd, like a Makefile.local for example.
+-include Makefile.*
