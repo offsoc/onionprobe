@@ -1,5 +1,5 @@
 pages:
-  image: debian:bullseye
+  image: debian:bookworm
   script:
     - apt-get update
     - apt-get install -y git
@@ -10,5 +10,5 @@ pages:
   artifacts:
     paths:
       - public
-  only:
-    - main
+  #only:
+  #  - main

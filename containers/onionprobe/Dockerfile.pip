@@ -17,7 +17,7 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #
 
-FROM debian:bullseye
+FROM debian:bookworm
 MAINTAINER Silvio Rhatto <rhatto@torproject.org>
 
 ENV APP="onionprobe"

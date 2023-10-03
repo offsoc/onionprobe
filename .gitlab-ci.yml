@@ -4,7 +4,7 @@ include:
   - local: '.gitlab-ci-slides.yml'
 
 python:
-  image: debian:bullseye
+  image: debian:bookworm
   script:
     - apt-get update
     - apt-get install -y git
@@ -15,13 +15,13 @@ python:
   artifacts:
     paths:
       - dist
-  only:
-    - main
+  #only:
+  #  - main
 
 debian:
   # Using bookworm support due to the pybuild-plugin-pyproject package
-  #image: debian:bullseye
-  #image: debian:bullseye-backports
+  #image: debian:bookworm
+  #image: debian:bookworm-backports
   image: debian:bookworm
   script:
     - apt-get update
@@ -34,11 +34,11 @@ debian:
   artifacts:
     paths:
       - dist
-  only:
-    - main
+  #only:
+  #  - main
 
 configs:
-  image: debian:bullseye
+  image: debian:bookworm
   script:
     - apt-get update
     - apt-get install -y git
@@ -50,11 +50,11 @@ configs:
   artifacts:
     paths:
       - dist
-  only:
-    - main
+  #only:
+  #  - main
 
 #manpage:
-#  image: debian:bullseye
+#  image: debian:bookworm
 #  script:
 #    - apt-get update
 #    - apt-get install -y git
