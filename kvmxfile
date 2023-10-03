@@ -6,7 +6,7 @@
 hostname="onionprobe"
 
 # Which base box you should use. Leave unconfigured to use kvmx-create instead.
-#basebox="bullseye"
+#basebox="bookworm"
 
 # First user name
 user="user"
@@ -178,7 +178,7 @@ domain="example.org"
 arch="amd64"
 
 # Box distribution when bootstraping a new image
-version="bullseye"
+version="bookworm"
 
 # Debian mirror
 mirror="https://deb.debian.org/debian/"
