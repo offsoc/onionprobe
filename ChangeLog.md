@@ -1,5 +1,13 @@
 # Onionprobe ChangeLog
 
+## v1.1.3 - Unreleased
+
+### Fixes
+
+* Upgrade CI to Debian Bookworm.
+
+* Upgraded `vendors/onion-mkdocs`.
+
 ## v1.1.2 - 2023-09-28
 
 ### Fixes
