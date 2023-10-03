@@ -48,8 +48,8 @@ $SUDO apt-get install -y docker.io docker-compose
 $SUDO usermod -a -G docker $(whoami)
 
 # Provision documentation requirements
-$BASEPATH/vendors/onion-mkdocs/scripts/provision-docs-build
-$BASEPATH/vendors/onion-tex-slim/scripts/provision-docs-build
+$BASEPATH/vendors/onion-mkdocs/scripts/onion-mkdocs-provision-build
+$BASEPATH/vendors/onion-tex-slim/scripts/onion-tex-slim-provision-build
 
 # Provision Python packaging requirements
 $DIRNAME/provision-packaging-python
