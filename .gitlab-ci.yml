@@ -8,7 +8,8 @@ python:
   script:
     - apt-get update
     - apt-get install -y git
-    - git submodule update --init --recursive
+    - git submodule sync
+    - git submodule update --init --recursive --depth 1
     - scripts/provision-packaging-python
     - mkdir -p dist
     - make build-python-package
@@ -26,7 +27,8 @@ debian:
   script:
     - apt-get update
     - apt-get install -y git
-    - git submodule update --init --recursive
+    - git submodule sync
+    - git submodule update --init --recursive --depth 1
     - scripts/provision-packaging-debian
     - make build-debian-test-package
     - mkdir -p dist
@@ -42,7 +44,8 @@ configs:
   script:
     - apt-get update
     - apt-get install -y git
-    - git submodule update --init --recursive
+    - git submodule sync
+    - git submodule update --init --recursive --depth 1
     - scripts/provision-onionprobe
     - make configs
     - mkdir -p dist
@@ -58,7 +61,8 @@ configs:
 #  script:
 #    - apt-get update
 #    - apt-get install -y git
-#    - git submodule update --init --recursive
+#    - git submodule sync
+#    - git submodule update --init --recursive --depth 1
 #    - scripts/provision-onionprobe
 #    - make manpage
 #    - mkdir -p dist
