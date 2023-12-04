@@ -45,6 +45,8 @@ configs:
 # Documentation
 #
 
+ONION_MKDOCS_PATH = vendors/onion-mkdocs
+
 docs: compile-docs
 
 manpage:
