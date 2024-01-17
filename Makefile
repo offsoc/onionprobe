@@ -97,9 +97,6 @@ release: clean configs docs
 # Other
 #
 
-# Process any other Makefile whose filename matches Makefile.*
+# Include Onion MkDocs Makefiles.
 # See https://www.gnu.org/software/make/manual/html_node/Include.html
-#
-# Some of those files might even contain local customizations/overrides
-# that can be .gitignore'd, like a Makefile.local for example.
--include Makefile.*
+-include vendors/onion-mkdocs/Makefile.onion-mkdocs
