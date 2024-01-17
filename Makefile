@@ -97,6 +97,6 @@ release: clean configs docs
 # Other
 #
 
-# Include Onion MkDocs Makefiles.
+# Include the Onion MkDocs Makefile
 # See https://www.gnu.org/software/make/manual/html_node/Include.html
 -include vendors/onion-mkdocs/Makefile.onion-mkdocs
