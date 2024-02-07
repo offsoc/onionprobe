@@ -68,11 +68,13 @@ Announce the new release:
 Template:
 
 ```
+Subject: [RELEASE] Onionprobe [security] release $ONIONPROBE_VERSION
+
 Greetings,
 
-We just released Onionprobe $ONIONPROBE_VERSION, [fixing a security issue].
+We just released Onionprobe $ONIONPROBE_VERSION.
 
-[Please upgrade as soon as possible!]
+[This release fixes a security issue. Please upgrade as soon as possible!]
 
 ChangeLog is below.
 
