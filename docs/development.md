@@ -57,3 +57,27 @@ Make sure to test after installation. If the the package works as expected,
 upload it to PyPi:
 
     make upload-python-package
+
+### Announcement
+
+Announce the new release:
+
+* Send a message to the [tor-announce][] mailing list.
+* Post a message to the [Tor Forum][].
+
+Template:
+
+```
+Greetings,
+
+We just released Onionprobe $ONIONPROBE_VERSION, [fixing a security issue].
+
+[Please upgrade as soon as possible!]
+
+ChangeLog is below.
+
+$CHANGELOG
+```
+
+[tor-announce]: https://lists.torproject.org/cgi-bin/mailman/listinfo/tor-announce
+[Tor Forum]: https://forum.torproject.org
