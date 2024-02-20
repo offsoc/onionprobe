@@ -6,7 +6,7 @@ This section documents the Onionprobe API.
 
 Onionprobe can be easily run as a library.
 
-If you [installed it](installation.md) as a package, you can just import it
+If you [installed it](../installation.md) as a package, you can just import it
 directly on your code like any other installed Python package:
 
 ```python
@@ -28,5 +28,5 @@ if __name__ == "__main__":
     run_from_cmdline()
 ```
 
-The [package API page](api/onionprobe.md) details all the available
+The [package API page](onionprobe.md) details all the available
 modules and functionality for developing with Onionprobe.
