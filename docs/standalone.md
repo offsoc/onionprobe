@@ -69,11 +69,11 @@ Authorization](https://community.torproject.org/onion-services/advanced/client-a
 0. Enter in the `tor` service container: `docker exec -ti onionprobe_tor_1 /bin/bash`.
 1. Setup your client credentials [according to the docs](https://community.torproject.org/onion-services/advanced/client-auth/).
    The `tor` service container already comes with all programs to generate it.
-   Onionprobe ships with a handy
-   [generate-auth-keys-for-all-onion-services](scripts/generate-auth-keys-for-all-onion-services)
+   Onionprobe ships with a handy [generate-auth-keys-for-all-onion-services][]
    available at the `tor` service container and which can be invoked with
-  `docker exec -ti onionprobe_tor_1 /usr/local/bin/generate-auth-keys-for-all-onion-services`
-  (it also accepts an optional auth name parameter allowing multiple credentials to be deployed).
+   `docker exec -ti onionprobe_tor_1
+   /usr/local/bin/generate-auth-keys-for-all-onion-services`
+   (it also accepts an optional auth name parameter allowing multiple credentials to be deployed).
 2. Place the `.auth` files at the Onion Services `authorized_clients` folder if you did not
    created them with the `generate-auth-keys-for-all-onion-services` script:
     * Prometheus: `/var/lib/tor/prometheus/authorized_clients`.
@@ -90,6 +90,8 @@ Note that the Grafana dashboard also comes with it's own user management system,
 whose default user and password is `admin`. You might change this default user
 and not setup the Client Authorization for Grafana, or maybe use both depending
 or your security needs.
+
+[generate-auth-keys-for-all-onion-services]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/blob/main/scripts/generate-auth-keys-for-all-onion-services
 
 ## Managing the monitoring node with systemd
 
