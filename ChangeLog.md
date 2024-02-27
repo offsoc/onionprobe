@@ -2,6 +2,13 @@
 
 ## v1.1.3 - Unreleased
 
+### Features
+
+* Added debug messages for HS_DESC events:
+  * Descriptor reachability.
+
+  * HSDir used.
+
 ### Fixes
 
 * Upgrade CI to Debian Bookworm.

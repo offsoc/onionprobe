@@ -172,7 +172,8 @@ class OnionprobeDescriptor:
 
         Sets the onion_service_descriptor_reachable metric.
 
-        See https://gitlab.torproject.org/tpo/core/torspec/-/blob/main/control-spec.txt
+        See https://spec.torproject.org/control-spec/replies.html#HS_DESC
+            https://spec.torproject.org/control-spec/replies.html#HS_DESC_CONTENT
 
         :type  event : stem.response.events.HSDescEvent
         :param stream: HS_DESC event
@@ -201,6 +202,12 @@ class OnionprobeDescriptor:
             reason = event.reason
 
             self.set_metric('onion_service_descriptor_reachable', 0, labels)
+
+        # Descriptor reachability
+        self.log("Descriptor reachability: " + str(reason), 'debug')
+
+        # Log the HSDir
+        self.log("HSDir: " + str(event.directory), 'debug')
 
         self.info_metric('onion_service_descriptor', {
             'hsdir': event.directory,
