@@ -10,7 +10,7 @@ A package should be available for [Debian bookworm][].
 
 An Arch Linux package is [available on AUR][][^arch-linux-package]:
 
-It's also possible to run it directly from the Git repository:
+It's also possible to run it directly from the [Git repository][]:
 
     git clone https://gitlab.torproject.org/tpo/onion-services/onionprobe
     cd onionprobe
@@ -18,3 +18,4 @@ It's also possible to run it directly from the Git repository:
 [Debian bookworm]: https://www.debian.org/releases/bookworm/
 [available on AUR]: https://aur.archlinux.org/packages/onionprobe-git
 [^arch-linux-package]: See also https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/16
+[Git repository]: https://gitlab.torproject.org/tpo/onion-services/onionprobe
