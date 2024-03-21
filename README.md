@@ -13,4 +13,4 @@ The full documentation is available in the [docs/][] folder and at the
 [Onionprobe website][].
 
 [docs/]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/tree/main/docs
-[Onionprobe website]: https://tpo.pages.torproject.net/onion-services/onionprobe/
+[Onionprobe website]: https://community.torproject.org/onion-services/ecosystem/apps/web/onionprobe/
