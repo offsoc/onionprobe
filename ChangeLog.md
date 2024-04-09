@@ -4,10 +4,14 @@
 
 ### Features
 
+* Enhanced Grafana Dashboard ([tpo/onion-services/onionprobe#80][]).
+
 * Added debug messages for HS_DESC events:
   * Descriptor reachability.
 
   * HSDir used.
+
+[tpo/onion-services/onionprobe#80]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/80
 
 ### Fixes
 
