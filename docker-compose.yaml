@@ -83,7 +83,7 @@ services:
     #profiles: [ "grafana", "all" ]
 
   grafana:
-    image: docker.io/grafana/grafana:9.4.7
+    image: docker.io/grafana/grafana:9.5.18
 
     volumes:
       - ./${GRAFANA_PROVISIONING:-configs/grafana/provisioning}:/etc/grafana/provisioning

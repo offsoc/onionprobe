@@ -75,7 +75,7 @@ Authorization](https://community.torproject.org/onion-services/advanced/client-a
    /usr/local/bin/generate-auth-keys-for-all-onion-services`
    (it also accepts an optional auth name parameter allowing multiple credentials to be deployed).
 2. Place the `.auth` files at the Onion Services `authorized_clients` folder if you did not
-   created them with the `generate-auth-keys-for-all-onion-services` script:
+   create them with the `generate-auth-keys-for-all-onion-services` script:
     * Prometheus: `/var/lib/tor/prometheus/authorized_clients`.
     * Alertmanager: `/var/lib/tor/alertmanager/authorized_clients`.
     * Grafana: `/var/lib/tor/grafana/authorized_clients`.
@@ -107,9 +107,23 @@ Once your monitoring node is up and running, you can create your dashboards an
 visualizations as usual, getting the data compiled by Onionprobe using
 Prometheus as the data source.
 
-Grafana already comes with a basic default dashboard as it's homepage:
+Grafana already comes with a basic default dashboard as it's homepage.
 
-![](assets/dashboard.png "Grafana Onion Services Dashboard")
+Overview:
+
+![](assets/dashboard/overview.png "Grafana Dashboard - Overview")
+
+Onion Service latency:
+
+![](assets/dashboard/latency.png "Grafana Dashboard - Latency")
+
+Onion Service descriptors:
+
+![](assets/dashboard/descriptors.png "Grafana Dashboard - Descriptors")
+
+Introduction Points:
+
+![](assets/dashboard/intros.png "Grafana Dashboard - Introduction Points")
 
 ## Enabling Tor's Prometheus metrics exporter
 
