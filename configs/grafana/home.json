@@ -56,15 +56,19 @@
           "decimals": 0,
           "mappings": [],
           "thresholds": {
-            "mode": "absolute",
+            "mode": "percentage",
             "steps": [
               {
                 "color": "green",
                 "value": null
               },
               {
-                "color": "red",
+                "color": "#EAB839",
                 "value": 10
+              },
+              {
+                "color": "red",
+                "value": 20
               }
             ]
           },
@@ -364,9 +368,21 @@
                   {
                     "targetBlank": true,
                     "title": "",
-                    "url": "http://${__data.fields.Address}"
+                    "url": "https://${__data.fields.Address}:${__data.fields.port}"
                   }
                 ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "port"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
               }
             ]
           }
@@ -419,7 +435,7 @@
               "__name__": true,
               "instance": true,
               "job": true,
-              "port": true
+              "port": false
             },
             "indexByName": {
               "Time": 0,
@@ -674,12 +690,278 @@
       "type": "stat"
     },
     {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "smooth",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 14,
+        "x": 0,
+        "y": 11
+      },
+      "id": 45,
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "count(onion_service_reachable != 1)",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Unreachable instances",
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Time"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "dateTimeAsIso"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Address"
+            },
+            "properties": [
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "targetBlank": true,
+                    "title": "",
+                    "url": "${__data.fields.protocol}﻿://﻿${__data.fields.Address}﻿:${__data.fields.port}${__data.fields.path}"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "protocol"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "port"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "path"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 10,
+        "x": 14,
+        "y": 11
+      },
+      "id": 46,
+      "options": {
+        "cellHeight": "sm",
+        "footer": {
+          "countRows": false,
+          "fields": "",
+          "reducer": [
+            "sum"
+          ],
+          "show": false
+        },
+        "showHeader": true
+      },
+      "pluginVersion": "9.5.18",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "onion_service_reachable != 1",
+          "format": "table",
+          "instant": true,
+          "legendFormat": "__auto",
+          "range": false,
+          "refId": "A"
+        }
+      ],
+      "title": "Unreachable instances",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Value": true,
+              "__name__": true,
+              "instance": true,
+              "job": true,
+              "path": false,
+              "port": false,
+              "protocol": false
+            },
+            "indexByName": {
+              "Time": 0,
+              "Value": 9,
+              "__name__": 1,
+              "address": 6,
+              "instance": 8,
+              "job": 7,
+              "name": 2,
+              "path": 3,
+              "port": 5,
+              "protocol": 4
+            },
+            "renameByName": {
+              "Time": "Date",
+              "__name__": "",
+              "address": "Address",
+              "name": "Name"
+            }
+          }
+        }
+      ],
+      "type": "table"
+    },
+    {
       "collapsed": false,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 11
+        "y": 19
       },
       "id": 14,
       "panels": [],
@@ -719,7 +1001,7 @@
         "h": 6,
         "w": 3,
         "x": 0,
-        "y": 12
+        "y": 20
       },
       "id": 38,
       "options": {
@@ -786,7 +1068,7 @@
         "h": 6,
         "w": 3,
         "x": 3,
-        "y": 12
+        "y": 20
       },
       "id": 40,
       "options": {
@@ -882,7 +1164,7 @@
         "h": 18,
         "w": 9,
         "x": 6,
-        "y": 12
+        "y": 20
       },
       "id": 36,
       "options": {
@@ -999,7 +1281,7 @@
         "h": 18,
         "w": 9,
         "x": 15,
-        "y": 12
+        "y": 20
       },
       "id": 2,
       "options": {
@@ -1091,7 +1373,7 @@
         "h": 6,
         "w": 3,
         "x": 0,
-        "y": 18
+        "y": 26
       },
       "id": 34,
       "options": {
@@ -1162,7 +1444,7 @@
         "h": 6,
         "w": 3,
         "x": 3,
-        "y": 18
+        "y": 26
       },
       "id": 28,
       "options": {
@@ -1233,7 +1515,7 @@
         "h": 6,
         "w": 3,
         "x": 0,
-        "y": 24
+        "y": 32
       },
       "id": 32,
       "options": {
@@ -1300,7 +1582,7 @@
         "h": 6,
         "w": 3,
         "x": 3,
-        "y": 24
+        "y": 32
       },
       "id": 30,
       "options": {
@@ -1392,9 +1674,45 @@
                   {
                     "targetBlank": true,
                     "title": "",
-                    "url": "http://${__data.fields.Address}"
+                    "url": "${__data.fields.protocol}://${__data.fields.Address}:${__data.fields.port}${__data.fields.path}"
                   }
                 ]
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "port"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "path"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "protocol"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
               }
             ]
           }
@@ -1404,7 +1722,7 @@
         "h": 12,
         "w": 24,
         "x": 0,
-        "y": 30
+        "y": 38
       },
       "id": 41,
       "options": {
@@ -1444,9 +1762,9 @@
             "excludeByName": {
               "instance": true,
               "job": true,
-              "path": true,
-              "port": true,
-              "protocol": true
+              "path": false,
+              "port": false,
+              "protocol": false
             },
             "indexByName": {
               "Time": 0,
@@ -1460,8 +1778,10 @@
               "protocol": 7
             },
             "renameByName": {
+              "Time": "Date",
               "Value": "Latency (seconds)",
               "address": "Address",
+              "instance": "",
               "name": "Name"
             }
           }
@@ -1475,7 +1795,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 42
+        "y": 50
       },
       "id": 43,
       "panels": [],
@@ -1585,7 +1905,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 43
+        "y": 51
       },
       "id": 44,
       "options": {
@@ -1641,6 +1961,8 @@
               "state": 7
             },
             "renameByName": {
+              "Time": "Date",
+              "__name__": "",
               "address": "Address",
               "hsdir": "HSDir",
               "instance": "",
@@ -1658,7 +1980,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 51
+        "y": 59
       },
       "id": 26,
       "panels": [],
@@ -1726,7 +2048,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 52
+        "y": 60
       },
       "id": 42,
       "options": {
@@ -1850,7 +2172,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 52
+        "y": 60
       },
       "id": 16,
       "options": {
