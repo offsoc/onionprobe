@@ -114,6 +114,18 @@ metrics = {
             ['name', 'address', 'reachable']
         ),
 
+    'onion_service_descriptor_revision_counter': Gauge(
+            'onion_service_descriptor_revision_counter',
+            'Register Onion Service descriptor revision counter',
+            ['name', 'address']
+        ),
+
+    'onion_service_descriptor_lifetime': Gauge(
+            'onion_service_descriptor_lifetime',
+            'Register Onion Service descriptor lifetime',
+            ['name', 'address']
+        ),
+
     'onion_service_introduction_points_number': Gauge(
             'onion_service_introduction_points_number',
             'Register the number of introduction points in the Onion Service descriptor',
