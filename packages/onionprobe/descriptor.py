@@ -130,6 +130,16 @@ class OnionprobeDescriptor:
             # Decrypt the inner layer
             inner = descriptor.decrypt(pubkey)
 
+            if descriptor.lifetime:
+                self.log("Descriptor lifetime : " + str(descriptor.lifetime))
+                self.set_metric('onion_service_descriptor_lifetime',
+                                descriptor.lifetime, labels)
+
+            if descriptor.revision_counter:
+                self.log("Descriptor revision counter: " + str(descriptor.revision_counter))
+                self.set_metric('onion_service_descriptor_revision_counter',
+                                descriptor.revision_counter, labels)
+
             # Debuging the inner layer
             self.log("Second layer of encryption descriptor contents (decrypted):\n" + inner._raw_contents, 'debug')
 
