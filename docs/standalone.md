@@ -13,13 +13,14 @@ Compose](https://docs.docker.com/compose/) with:
 
 By default, the monitoring node periodically compiles the Onionprobe configuration
 from the official Tor Project Onion Services into `contrib/tpo.yaml`, by using
-the [tpo.py script][packages.tpo].
+the [tpo.py script][].
 
 This and other configurations can be changed by creating an `.env` file in the
 toplevel project folder.
 
 Check the [sample .env][] for an example.
 
+[tpo.py script]: api/helpers.md#tpo
 [sample .env]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/blob/main/configs/env.sample
 
 ## Starting the monitoring node
