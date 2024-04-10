@@ -9,6 +9,7 @@ nav:
   - upgrading.md
   - structure.md
   - api
+  - ChangeLog: changelog.md
   - acknowledgements.md
   - alternatives.md
   - issues.md
