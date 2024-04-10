@@ -8,7 +8,7 @@ breaking changes.
 
 The following subsections documents other upgrade procedures, such as database updates.
 
-[Semantic Versioning 2.0.2]: https://semver.org/spec/v2.0.0.html
+[Semantic Versioning 2.0.0]: https://semver.org/spec/v2.0.0.html
 [ChangeLog]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/blob/main/ChangeLog.md
 
 ## Standalone monitoring node
@@ -19,17 +19,19 @@ Upgrade procedures for the [standalone monitoring node](standalone.md).
 
 ### PostgreSQL database
 
+#### Major upgrades
+
 This procedure is based on the [tianon/docker-postgres-upgrade][]
 approach[^docker-postgres-upgrade] and needs to be done whenever Onionprobe is
 upgraded to a new [postgres image][] version:
 
-#### Stop the monitoring node
+##### Stop the monitoring node
 
 Just run
 
     docker-compose down
 
-#### Run the upgrade script
+##### Run the upgrade script
 
 This handy script may do all the heavy lifting for you (requires `sudo`):
 
@@ -46,7 +48,7 @@ also makes a backup of the old PostgreSQL data. You can manually remove those
 later after checking that the upgrade procedure works. Just follow the script
 output for instructions or check it's source code.
 
-#### Start the monitoring node
+##### Start the monitoring node
 
 Simply start the standalone monitoring node again after the upgrade procedure:
 
@@ -56,3 +58,36 @@ Simply start the standalone monitoring node again after the upgrade procedure:
 [tpo/onion-services/onionprobe#70]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/70
 [postgres image]: https://hub.docker.com/_/postgres
 [^docker-postgres-upgrade]: See [tpo/onion-services/onionprobe#70][] for more information.
+
+#### Collation upgrades
+
+During system upgrades, it might also be needed to upgrade the collation
+version of the PostgreSQL databases.
+
+Run the following commands if you're getting warnings such as `The collation in
+the database was created using version A.B.B, but the operating system provides
+version X.Y.Z`:
+
+    $ docker exec -ti onionprobe_postgres_1 psql -U grafana
+    grafana=# ALTER DATABASE grafana REFRESH COLLATION VERSION;
+    NOTICE:  changing version from 2.31 to 2.36
+    ALTER DATABASE
+    grafana=# ALTER DATABASE template1 REFRESH COLLATION VERSION;
+    NOTICE:  changing version from 2.31 to 2.36
+    ALTER DATABASE
+    grafana=# ALTER DATABASE postgres REFRESH COLLATION VERSION;
+    NOTICE:  changing version from 2.31 to 2.36
+    ALTER DATABASE
+    grafana=#
+
+References:
+
+* [postgresql - Collation version mismatch - Database Administrators Stack Exchange](https://dba.stackexchange.com/questions/324649/collation-version-mismatch)
+* [PostgreSQL: Documentation: 16: ALTER COLLATION](https://www.postgresql.org/docs/current/sql-altercollation.html)
+
+### Tor
+
+Sometimes an image upgrade changes the `debian-tor`'s `UID` and `GID`, which
+may require a manual ownership fix in the Docker volume data:
+
+    sudo chown -R 101:103 /var/lib/docker/volumes/onionprobe-instance_tor/_data
