@@ -98,7 +98,7 @@
   connection is unencrypted (HTTP) hence consider using a tool like stunnel to
   secure the link from this port to the server.
 
-  Check the [standalone monitoring node docs](docs/standalone.md) for
+  Check the [standalone monitoring node docs](standalone.md) for
   detailed instructions in how to enable this additional metric collection.
 
 * TLS certificate verification:
