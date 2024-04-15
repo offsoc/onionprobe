@@ -970,7 +970,7 @@
       },
       "id": 14,
       "panels": [],
-      "title": "Latency",
+      "title": "Performance",
       "type": "row"
     },
     {
@@ -1626,6 +1626,67 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 9,
+        "w": 6,
+        "x": 0,
+        "y": 38
+      },
+      "id": 48,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "9.5.18",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "count(onion_service_descriptor_is_single==1)/count(onion_service_descriptor_is_single)*100",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Single Onion Services",
+      "type": "gauge"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
       "description": "Onionsites with latency over 20 seconds.",
       "fieldConfig": {
         "defaults": {
@@ -1724,9 +1785,9 @@
         ]
       },
       "gridPos": {
-        "h": 12,
-        "w": 24,
-        "x": 0,
+        "h": 9,
+        "w": 18,
+        "x": 6,
         "y": 38
       },
       "id": 41,
@@ -1800,7 +1861,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 50
+        "y": 47
       },
       "id": 43,
       "panels": [],
@@ -1910,7 +1971,7 @@
         "h": 8,
         "w": 24,
         "x": 0,
-        "y": 51
+        "y": 48
       },
       "id": 44,
       "options": {
@@ -1985,7 +2046,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 59
+        "y": 56
       },
       "id": 26,
       "panels": [],
@@ -2053,7 +2114,7 @@
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 60
+        "y": 57
       },
       "id": 42,
       "options": {
@@ -2177,7 +2238,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 60
+        "y": 57
       },
       "id": 16,
       "options": {
@@ -2238,80 +2299,6 @@
         }
       ],
       "type": "table"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 68
-      },
-      "id": 47,
-      "panels": [],
-      "title": "Performance",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "prometheus",
-        "uid": "PBFA97CFB590B2093"
-      },
-      "description": "",
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              }
-            ]
-          },
-          "unit": "percent"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 5,
-        "x": 0,
-        "y": 69
-      },
-      "id": 48,
-      "options": {
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "showThresholdLabels": false,
-        "showThresholdMarkers": true
-      },
-      "pluginVersion": "9.5.18",
-      "targets": [
-        {
-          "datasource": {
-            "type": "prometheus",
-            "uid": "PBFA97CFB590B2093"
-          },
-          "editorMode": "code",
-          "expr": "count(onion_service_descriptor_is_single==1)/count(onion_service_descriptor_is_single)*100",
-          "legendFormat": "__auto",
-          "range": true,
-          "refId": "A"
-        }
-      ],
-      "title": "Single Onion Services",
-      "type": "gauge"
     }
   ],
   "refresh": "5m",
