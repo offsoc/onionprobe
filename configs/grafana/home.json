@@ -174,7 +174,7 @@
           "refId": "A"
         }
       ],
-      "title": "Onionsites monitored",
+      "title": "Total services",
       "type": "stat"
     },
     {
@@ -983,7 +983,7 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
-      "description": "Minimal onionsite latency in seconds. Each onionsite is averaged over 30 minutes.",
+      "description": "Minimal Onion Service latency in seconds. Each onionsite is averaged over 30 minutes.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1042,7 +1042,7 @@
           "refId": "A"
         }
       ],
-      "title": "Min. Onionsite latency",
+      "title": "Min. service latency",
       "type": "stat"
     },
     {
@@ -1109,7 +1109,7 @@
           "refId": "A"
         }
       ],
-      "title": "Min. descriptor latency",
+      "title": "Min. desc. latency",
       "type": "stat"
     },
     {
@@ -1414,7 +1414,7 @@
           "refId": "A"
         }
       ],
-      "title": "Avg. Onionsite latency",
+      "title": "Avg. service latency",
       "type": "stat"
     },
     {
@@ -1485,7 +1485,7 @@
           "refId": "A"
         }
       ],
-      "title": "Avg. descriptor latency",
+      "title": "Avg. desc. latency",
       "type": "stat"
     },
     {
@@ -1556,7 +1556,7 @@
           "refId": "A"
         }
       ],
-      "title": "High. Onionsite latency",
+      "title": "High. service latency",
       "type": "stat"
     },
     {
@@ -1623,7 +1623,7 @@
           "refId": "A"
         }
       ],
-      "title": "High. descriptor latency",
+      "title": "High. desc. latency",
       "type": "stat"
     },
     {
