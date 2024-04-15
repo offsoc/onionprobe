@@ -118,7 +118,7 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
-      "description": "",
+      "description": "The total number of onionsites already tested in the current Onionprobe run",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -182,6 +182,7 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
+      "description": "Unreachable onionsite instances (either the descriptor is not available or the service seems offline)",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -238,12 +239,12 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "count(onion_service_reachable==0) or vector(0)",
+          "expr": "count(onion_service_reachable == 0) or vector(0)",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "Unreachable instances",
+      "title": "Offline instances",
       "type": "stat"
     },
     {
@@ -318,7 +319,7 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
-      "description": "Expiring TLS certificates in the next 180 days",
+      "description": "Expiring or already expired TLS certificates, up to 180 days ahead",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -427,7 +428,7 @@
           "refId": "A"
         }
       ],
-      "title": "Expiring TLS certificates",
+      "title": "TLS certificate expirations",
       "transformations": [
         {
           "id": "organize",
@@ -493,6 +494,7 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
+      "description": "Unexpected HTTP status codes",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -554,7 +556,7 @@
           "refId": "A"
         }
       ],
-      "title": "HTTPS status",
+      "title": "HTTP errors",
       "type": "stat"
     },
     {
@@ -562,6 +564,7 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
+      "description": "Unreachable descriptors",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -623,7 +626,7 @@
           "refId": "A"
         }
       ],
-      "title": "Unreachable descriptors",
+      "title": "Missing descriptors",
       "type": "stat"
     },
     {
@@ -698,6 +701,7 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
+      "description": "Total number of unreachable instances (either missing descriptor or service offline)",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -791,6 +795,7 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
+      "description": "List of unreachable instances (either missing descriptor or service offline)",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1626,7 +1631,7 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
-      "description": "",
+      "description": "Percentage of Onion Services using the single circuit hop mode, from the total probed",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1873,7 +1878,7 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
-      "description": "",
+      "description": "List of missing descriptors in the HSDirs",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2058,6 +2063,7 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
+      "description": "Minimum, average and maximum introduction points number",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2174,6 +2180,7 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
+      "description": "Minimum, average and maximum introduction points number",
       "fieldConfig": {
         "defaults": {
           "color": {
