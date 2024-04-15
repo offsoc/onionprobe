@@ -8,6 +8,8 @@
     * From the outer descriptor wrapper:
         * `descriptor-lifetime`.
         * `revision-counter`.
+    * From the second layer of encryption:
+        * `single-onion-service`.
 
 * Enhanced Grafana Dashboard ([tpo/onion-services/onionprobe#80][]).
 
