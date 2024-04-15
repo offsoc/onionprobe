@@ -57,7 +57,7 @@
           "mappings": [],
           "noValue": "0%",
           "thresholds": {
-            "mode": "percentage",
+            "mode": "absolute",
             "steps": [
               {
                 "color": "green",
@@ -166,8 +166,10 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "editorMode": "builder",
-          "expr": "count(onion_service_probe_status_info)",
+          "editorMode": "code",
+          "exemplar": false,
+          "expr": "count(onion_service_probe_status_info) or vector(0)",
+          "instant": false,
           "range": true,
           "refId": "A"
         }
@@ -236,7 +238,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "count(onion_service_reachable==0)",
+          "expr": "count(onion_service_reachable==0) or vector(0)",
           "range": true,
           "refId": "A"
         }
@@ -301,8 +303,8 @@
             "type": "prometheus",
             "uid": "PBFA97CFB590B2093"
           },
-          "editorMode": "builder",
-          "expr": "count(onion_service_valid_certificate == 0)",
+          "editorMode": "code",
+          "expr": "count(onion_service_valid_certificate == 0) or vector(0)",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -547,7 +549,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "count(onion_service_unexpected_status_code == 1)",
+          "expr": "count(onion_service_unexpected_status_code == 1) or vector(0)",
           "range": true,
           "refId": "A"
         }
@@ -616,7 +618,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "count(onion_service_descriptor_reachable == 0)",
+          "expr": "count(onion_service_descriptor_reachable == 0) or vector(0)",
           "range": true,
           "refId": "A"
         }
@@ -682,7 +684,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "count(onion_service_certificate_expiry_seconds < 86400 * 7)",
+          "expr": "count(onion_service_certificate_expiry_seconds < 86400 * 7) or vector(0)",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -1355,7 +1357,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "#EAB839",
@@ -1425,7 +1428,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "#EAB839",
@@ -1495,7 +1499,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "#EAB839",
@@ -1565,7 +1570,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1638,7 +1644,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -1823,7 +1830,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2029,7 +2037,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2121,7 +2130,8 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green"
+                "color": "green",
+                "value": null
               },
               {
                 "color": "red",
@@ -2228,6 +2238,80 @@
         }
       ],
       "type": "table"
+    },
+    {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 68
+      },
+      "id": 47,
+      "panels": [],
+      "title": "Performance",
+      "type": "row"
+    },
+    {
+      "datasource": {
+        "type": "prometheus",
+        "uid": "PBFA97CFB590B2093"
+      },
+      "description": "",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              }
+            ]
+          },
+          "unit": "percent"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 8,
+        "w": 5,
+        "x": 0,
+        "y": 69
+      },
+      "id": 48,
+      "options": {
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "showThresholdLabels": false,
+        "showThresholdMarkers": true
+      },
+      "pluginVersion": "9.5.18",
+      "targets": [
+        {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
+          "editorMode": "code",
+          "expr": "count(onion_service_descriptor_is_single==1)/count(onion_service_descriptor_is_single)*100",
+          "legendFormat": "__auto",
+          "range": true,
+          "refId": "A"
+        }
+      ],
+      "title": "Single Onion Services",
+      "type": "gauge"
     }
   ],
   "refresh": "5m",
