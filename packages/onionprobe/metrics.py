@@ -158,8 +158,8 @@ metrics = {
             ['name', 'address']
         ),
 
-    'onion_service_pow_v1_expiration': Gauge(
-            'onion_service_pow_v1_expiration',
+    'onion_service_pow_v1_expiration_seconds': Gauge(
+            'onion_service_pow_v1_expiration_seconds',
             'The Proof of Work (PoW) seed expiration time for the v1 scheme',
             ['name', 'address']
         ),

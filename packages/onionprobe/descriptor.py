@@ -121,9 +121,9 @@ class OnionprobeDescriptor:
                 pow_data_v1['seed'],
                 ))
 
-            self.set_metric('onion_service_pow_v1_seed',       effort,                     labels)
-            self.set_metric('onion_service_pow_v1_effort',     int(pow_data_v1['effort']), labels)
-            self.set_metric('onion_service_pow_v1_expiration', int(expiration),            labels)
+            self.set_metric('onion_service_pow_v1_seed',               effort,                     labels)
+            self.set_metric('onion_service_pow_v1_effort',             int(pow_data_v1['effort']), labels)
+            self.set_metric('onion_service_pow_v1_expiration_seconds', int(expiration),            labels)
 
     def get_descriptor(self, endpoint, config, attempt = 1):
         """
