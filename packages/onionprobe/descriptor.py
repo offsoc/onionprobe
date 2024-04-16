@@ -177,15 +177,16 @@ class OnionprobeDescriptor:
             self.set_metric('onion_service_descriptor_latency_seconds',
                             elapsed, labels)
 
-            # Register HSDir latency
-            [ hsdir_id, hsdir_name ] = str(self.hsdirs[config['address']]).split('~')
+            if config['address'] in self.hsdirs:
+                # Register HSDir latency
+                [ hsdir_id, hsdir_name ] = str(self.hsdirs[config['address']]).split('~')
 
-            #self.log('HSDir ID: {}, HSDir name: {}'.format(hsdir_id, hsdir_name))
-            self.set_metric('hsdir_latency_seconds',
-                            elapsed, {
-                                'name': hsdir_name,
-                                'id'  : hsdir_id,
-                                })
+                #self.log('HSDir ID: {}, HSDir name: {}'.format(hsdir_id, hsdir_name))
+                self.set_metric('hsdir_latency_seconds',
+                                elapsed, {
+                                    'name': hsdir_name,
+                                    'id'  : hsdir_id,
+                                    })
 
             # Debuging the outer layer
             self.log("Outer wrapper descriptor layer contents (decrypted):\n" + str(descriptor), 'debug')
