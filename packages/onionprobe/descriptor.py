@@ -152,10 +152,11 @@ class OnionprobeDescriptor:
             #    self.log(introduction_point.link_specifiers, 'debug')
 
             if 'introduction_points' in dir(inner):
+                self.log("Number of introduction points: " + str(len(inner.introduction_points)))
                 self.set_metric('onion_service_introduction_points_number',
                                 len(inner.introduction_points), labels)
 
-            elapsed = self.elapsed(init_time, True)
+            elapsed = self.elapsed(init_time, True, "descriptor fetch")
 
             self.set_metric('onion_service_descriptor_latency_seconds',
                             elapsed, labels)
@@ -217,10 +218,10 @@ class OnionprobeDescriptor:
             self.set_metric('onion_service_descriptor_reachable', 0, labels)
 
         # Descriptor reachability
-        self.log("Descriptor reachability: " + str(reason), 'debug')
+        self.log("Descriptor reachability: " + str(reason))
 
         # Log the HSDir
-        self.log("HSDir: " + str(event.directory), 'debug')
+        self.log("HSDir used: " + str(event.directory))
 
         self.info_metric('onion_service_descriptor', {
             'hsdir': event.directory,

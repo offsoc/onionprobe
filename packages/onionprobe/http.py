@@ -135,7 +135,7 @@ class OnionprobeHTTP:
 
             # Fetch results and calculate the elapsed time
             result  = requests.get(url, proxies=proxies, timeout=timeout, verify=tls_verify)
-            elapsed = self.elapsed(init_time, True)
+            elapsed = self.elapsed(init_time, True, "http fetch")
 
             # Update metrics
             self.set_metric('onion_service_latency_seconds', elapsed, labels)
