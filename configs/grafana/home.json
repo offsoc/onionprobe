@@ -1678,7 +1678,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "count(onion_service_descriptor_is_single==1)/count(onion_service_descriptor_is_single)*100",
+          "expr": "count(onion_service_is_single==1)/count(onion_service_is_single)*100",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
