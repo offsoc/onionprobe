@@ -57,7 +57,7 @@ class OnionprobeTime:
         self.metrics['onionprobe_state'].state('sleeping')
         time.sleep(value)
 
-    def elapsed(self, init_time, verbose = False):
+    def elapsed(self, init_time, verbose = False, label = ''):
         """
         Calculate the time elapsed since an initial time.
 
@@ -68,6 +68,11 @@ class OnionprobeTime:
         :param verbose: If verbose is True, logs the elapsed time.
                         Defaults to False.
 
+        :type  label: str
+        :param label: A label to add in the elapsed time log message.
+                      Only used if verbose is set to true.
+                      Defaults to an empty string.
+
         :rtype: int
         :return: Number of elapsed time in seconds
         """
@@ -77,7 +82,10 @@ class OnionprobeTime:
 
         # Log the elapsed time
         if verbose:
-            self.log("Elapsed time: " + str(elapsed))
+            if label != '':
+                label = ' (' + str(label) + ')'
+
+            self.log("Elapsed time" + label + ": " + str(elapsed))
 
         return timedelta.total_seconds(elapsed)
 

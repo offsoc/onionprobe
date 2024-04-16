@@ -13,10 +13,15 @@
 
 * Enhanced Grafana Dashboard ([tpo/onion-services/onionprobe#80][]).
 
-* Added debug messages for HS_DESC events:
-  * Descriptor reachability.
+* Improved elapsed time log message.
 
-  * HSDir used.
+* New log messages for:
+  * Number of introduction points.
+
+  * HS_DESC events:
+    * Descriptor reachability.
+ 
+    * HSDir used.
 
 [tpo/onion-services/onionprobe#78]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/78
 [tpo/onion-services/onionprobe#80]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/80
