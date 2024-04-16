@@ -141,8 +141,7 @@ class OnionprobeDescriptor:
                                 descriptor.revision_counter, labels)
 
             self.log("Single service mode is set to " + str(inner.is_single_service))
-            self.set_metric('onion_service_descriptor_is_single',
-                            inner.is_single_service, labels)
+            self.set_metric('onion_service_is_single', inner.is_single_service, labels)
 
             # Debuging the inner layer
             self.log("Second layer of encryption descriptor contents (decrypted):\n" + inner._raw_contents, 'debug')
