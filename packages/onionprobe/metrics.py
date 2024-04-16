@@ -126,8 +126,8 @@ metrics = {
             ['name', 'address']
         ),
 
-    'onion_service_descriptor_is_single': Gauge(
-            'onion_service_descriptor_is_single',
+    'onion_service__is_single': Gauge(
+            'onion_service__is_single',
             "Indicates whether the server is using the single hop Onion Service circuit mode: value is " + \
                     "1 if this is a single onion service, 0 otherwise",
             ['name', 'address']
