@@ -2460,7 +2460,7 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
-      "description": "Mininum, average and maximum effort seem in all monitored Onion Services",
+      "description": "Mininum, average and maximum effort for the PoW v1 scheme as seem in all monitored Onion Services",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2569,7 +2569,7 @@
           "refId": "C"
         }
       ],
-      "title": "PoW Effort",
+      "title": "PoW v1 effort",
       "type": "timeseries"
     }
   ],
