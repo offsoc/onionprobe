@@ -190,6 +190,9 @@ class OnionprobeDescriptor:
             # Debuging the outer layer
             self.log("Outer wrapper descriptor layer contents (decrypted):\n" + str(descriptor), 'debug')
 
+            self.set_metric('onion_service_descriptor_outer_wrapper_size_bytes',
+                    len(str(descriptor).encode('utf-8')), labels)
+
             # Ensure it's converted to the v3 format
             #
             # See https://github.com/torproject/stem/issues/96
@@ -200,6 +203,9 @@ class OnionprobeDescriptor:
 
             # Decrypt the inner layer
             inner = descriptor.decrypt(pubkey)
+
+            self.set_metric('onion_service_descriptor_second_layer_size_bytes',
+                    len(str(inner._raw_contents).encode('utf-8')), labels)
 
             if descriptor.lifetime:
                 self.log("Descriptor lifetime: " + str(descriptor.lifetime))
