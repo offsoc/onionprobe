@@ -126,6 +126,18 @@ metrics = {
             ['name', 'address']
         ),
 
+    'onion_service_descriptor_outer_wrapper_size_bytes': Gauge(
+            'onion_service_descriptor_outer_wrapper_size_bytes',
+            'Register Onion Service outer wrapper descriptor size (decrypted)',
+            ['name', 'address']
+        ),
+
+    'onion_service_descriptor_second_layer_size_bytes': Gauge(
+            'onion_service_descriptor_second_layer_size_bytes',
+            'Register Onion Service second layer descriptor size (decrypted)',
+            ['name', 'address']
+        ),
+
     'onion_service_is_single': Gauge(
             'onion_service_is_single',
             "Indicates whether the server is using the single hop Onion Service circuit mode: value is " + \
