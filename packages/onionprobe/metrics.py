@@ -212,6 +212,12 @@ metrics = {
             ['name', 'address', 'port']
         ),
 
+    'hsdir_latency_seconds': Gauge(
+            'hsdir_latency_seconds',
+            'Register HSDir latency in seconds to fetch a descriptor',
+            ['name', 'id', ]
+        ),
+
     #
     # Probing counters
     #
