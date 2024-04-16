@@ -29,6 +29,8 @@
 
 ### Fixes
 
+* Calculate the elapsed time for descriptors right after fetching.
+
 * Updated the [SecureDrop list][].
 
 * Upgraded Grafana image to 9.5.18.
