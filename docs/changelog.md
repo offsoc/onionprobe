@@ -11,6 +11,7 @@
     * From the second layer of encryption:
         * `single-onion-service`.
         * `pow-params`.
+    * HSDir latency when fetching descriptors.
 
 * Enhanced Grafana Dashboard ([tpo/onion-services/onionprobe#80][]).
 
