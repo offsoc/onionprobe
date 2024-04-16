@@ -3310,7 +3310,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "count(onion_service_pow_enabled == 1) / count(onion_service_pow_enabled) * 100",
+          "expr": "(count(onion_service_pow_enabled == 1) / count(onion_service_pow_enabled) * 100) or vector(0)",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -3376,7 +3376,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "count(onion_service_pow_enabled == 1)",
+          "expr": "count(onion_service_pow_enabled == 1) or vector(0)",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
