@@ -209,8 +209,8 @@ class OnionprobeDescriptor:
 
             if descriptor.lifetime:
                 self.log("Descriptor lifetime: " + str(descriptor.lifetime))
-                self.set_metric('onion_service_descriptor_lifetime',
-                                descriptor.lifetime, labels)
+                self.set_metric('onion_service_descriptor_lifetime_seconds',
+                                descriptor.lifetime * 60, labels)
 
             if descriptor.revision_counter:
                 self.log("Descriptor revision counter: " + str(descriptor.revision_counter))

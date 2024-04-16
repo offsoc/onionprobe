@@ -120,21 +120,21 @@ metrics = {
             ['name', 'address']
         ),
 
-    'onion_service_descriptor_lifetime': Gauge(
-            'onion_service_descriptor_lifetime',
-            'Register Onion Service descriptor lifetime',
+    'onion_service_descriptor_lifetime_seconds': Gauge(
+            'onion_service_descriptor_lifetime_seconds',
+            'Register Onion Service descriptor lifetime in seconds',
             ['name', 'address']
         ),
 
     'onion_service_descriptor_outer_wrapper_size_bytes': Gauge(
             'onion_service_descriptor_outer_wrapper_size_bytes',
-            'Register Onion Service outer wrapper descriptor size (decrypted)',
+            'Register Onion Service outer wrapper descriptor size in bytes (decrypted)',
             ['name', 'address']
         ),
 
     'onion_service_descriptor_second_layer_size_bytes': Gauge(
             'onion_service_descriptor_second_layer_size_bytes',
-            'Register Onion Service second layer descriptor size (decrypted)',
+            'Register Onion Service second layer descriptor size in bytes (decrypted)',
             ['name', 'address']
         ),
 
