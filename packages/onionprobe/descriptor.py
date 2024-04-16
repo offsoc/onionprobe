@@ -20,6 +20,9 @@
 
 # Dependencies
 import logging
+import datetime
+import base64
+import re
 
 try:
     import stem
@@ -69,6 +72,58 @@ class OnionprobeDescriptor:
                 return (name, endpoints[name])
 
         return False
+
+    def parse_pow_params(self, inner_text, labels):
+        """
+        Parse the Proof of Work (PoW) parameters from a descriptor.
+
+        :type  inner_text: str
+        :param inner_text: The decrypted raw inner descriptor layer plaintext for the endpoint.
+
+        :type  labels: dict
+        :param labels: Metrics labels
+
+        :rtype:  None
+        :return: This method does not return any special value.
+        """
+
+        pow_params    = re.compile(r"^pow-params .*$", re.MULTILINE)
+        pow_params_v1 = re.compile(
+                r"^pow-params v1 (?P<seed>[^ ]*) (?P<effort>[0-9]*) (?P<expiration>[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2})$",
+                re.MULTILINE)
+
+        pow_parsed    = pow_params.search(inner_text)
+        pow_parsed_v1 = pow_params_v1.search(inner_text)
+
+        if pow_parsed:
+            self.log("Proof of Work (PoW) params found in the descriptor")
+            self.set_metric('onion_service_pow_enabled', 1, labels)
+        else:
+            self.log("Proof of Work (PoW) params not found in the descriptor")
+            self.set_metric('onion_service_pow_enabled', 0, labels)
+
+        if pow_parsed_v1:
+            pow_data_v1 = pow_parsed_v1.groupdict()
+            expiration  = int(datetime.datetime.fromisoformat(pow_data_v1['expiration']).timestamp())
+
+            # For the purposes of this proposal, all cryptographic algorithms
+            # are assumed to produce and consume byte strings, even if
+            # internally they operate on some other data type like 64-bit
+            # words. This is conventionally little endian order for Blake2b,
+            # which contrasts with Tor's typical use of big endian.
+            #
+            # -- https://spec.torproject.org/hspow-spec/v1-equix.html
+            effort = int.from_bytes(base64.b64decode(pow_data_v1['seed']), 'little')
+
+            self.log('PoW v1 set with effort {}, expiration {} and seed {}'.format(
+                pow_data_v1['effort'],
+                pow_data_v1['expiration'],
+                pow_data_v1['seed'],
+                ))
+
+            self.set_metric('onion_service_pow_v1_seed',               effort,                     labels)
+            self.set_metric('onion_service_pow_v1_effort',             int(pow_data_v1['effort']), labels)
+            self.set_metric('onion_service_pow_v1_expiration_seconds', int(expiration),            labels)
 
     def get_descriptor(self, endpoint, config, attempt = 1):
         """
@@ -155,6 +210,9 @@ class OnionprobeDescriptor:
                 self.log("Number of introduction points: " + str(len(inner.introduction_points)))
                 self.set_metric('onion_service_introduction_points_number',
                                 len(inner.introduction_points), labels)
+
+            # Parse PoW parameters
+            self.parse_pow_params(inner._raw_contents, labels)
 
             elapsed = self.elapsed(init_time, True, "descriptor fetch")
 

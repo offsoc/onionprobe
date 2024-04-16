@@ -139,6 +139,31 @@ metrics = {
             ['name', 'address']
         ),
 
+    'onion_service_pow_enabled': Gauge(
+            'onion_service_pow_enabled',
+            "Whether Proof of Work (PoW) defense is enabled in the Onion Service: value is " + \
+                    "1 when PoW is enabled, 0 otherwise",
+            ['name', 'address']
+        ),
+
+    'onion_service_pow_v1_seed': Gauge(
+            'onion_service_pow_v1_seed',
+            'The Proof of Work (PoW) decoded seed for the v1 scheme',
+            ['name', 'address']
+        ),
+
+    'onion_service_pow_v1_effort': Gauge(
+            'onion_service_pow_v1_effort',
+            'The Proof of Work (PoW) suggested effort for the v1 scheme',
+            ['name', 'address']
+        ),
+
+    'onion_service_pow_v1_expiration_seconds': Gauge(
+            'onion_service_pow_v1_expiration_seconds',
+            'The Proof of Work (PoW) seed expiration time for the v1 scheme',
+            ['name', 'address']
+        ),
+
     'onion_service_match_pattern_matched': Gauge(
             'onion_service_pattern_matched',
             "Register whether a regular expression pattern is matched when " + \

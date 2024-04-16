@@ -10,6 +10,7 @@
         * `revision-counter`.
     * From the second layer of encryption:
         * `single-onion-service`.
+        * `pow-params`.
 
 * Enhanced Grafana Dashboard ([tpo/onion-services/onionprobe#80][]).
 
