@@ -161,7 +161,7 @@ class OnionprobeDescriptor:
             # Try to get the descriptor
             descriptor = self.controller.get_hidden_service_descriptor(pubkey, timeout=timeout)
 
-        except (stem.DescriptorUnavailable, stem.Timeout, stem.ControllerError, ValueError)  as e:
+        except (stem.DescriptorUnavailable, stem.Timeout, stem.ControllerError, ValueError) as e:
             reachable = 0
             inner     = False
             retries   = self.get_config('descriptor_max_retries')
