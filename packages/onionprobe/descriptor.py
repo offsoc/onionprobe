@@ -171,6 +171,12 @@ class OnionprobeDescriptor:
                 return self.get_descriptor(endpoint, config, attempt + 1)
 
         else:
+            # Calculate the elapsed time
+            elapsed = self.elapsed(init_time, True, "descriptor fetch")
+
+            self.set_metric('onion_service_descriptor_latency_seconds',
+                            elapsed, labels)
+
             # Debuging the outer layer
             self.log("Outer wrapper descriptor layer contents (decrypted):\n" + str(descriptor), 'debug')
 
@@ -213,11 +219,6 @@ class OnionprobeDescriptor:
 
             # Parse PoW parameters
             self.parse_pow_params(inner._raw_contents, labels)
-
-            elapsed = self.elapsed(init_time, True, "descriptor fetch")
-
-            self.set_metric('onion_service_descriptor_latency_seconds',
-                            elapsed, labels)
 
         finally:
             if inner is False:
