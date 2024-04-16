@@ -2934,6 +2934,7 @@
             "mode": "thresholds"
           },
           "mappings": [],
+          "noValue": "0",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -3266,7 +3267,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "dark-red",
                 "value": null
               },
               {
@@ -3274,7 +3275,7 @@
                 "value": 20
               },
               {
-                "color": "red",
+                "color": "dark-green",
                 "value": 80
               }
             ]
