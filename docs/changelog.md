@@ -22,13 +22,17 @@
 
   * HS_DESC events:
     * Descriptor reachability.
- 
+
     * HSDir used.
 
 [tpo/onion-services/onionprobe#78]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/78
 [tpo/onion-services/onionprobe#80]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/80
 
 ### Fixes
+
+* Disable stem logging if log level is below debug. Workaround for [stem issue #112][].
+
+* Exit codes now reflects reality ([tpo/onion-services/onionprobe#64][]).
 
 * Calculate the elapsed time for descriptors right after fetching.
 
@@ -40,6 +44,8 @@
 
 * Upgraded `vendors/onion-mkdocs`.
 
+[stem issue #112]: https://github.com/torproject/stem/issues/112
+[tpo/onion-services/onionprobe#64]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/64
 [SecureDrop list]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/blob/main/configs/securedrop.yaml
 
 ## v1.1.2 - 2023-09-28
