@@ -74,7 +74,6 @@ configs:
 #    - main
 
 release_job:
-  stage: release
   image: registry.gitlab.com/gitlab-org/release-cli:latest
   rules:
     # Run this job when a tag is created
