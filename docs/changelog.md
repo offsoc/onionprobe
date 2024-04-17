@@ -30,6 +30,8 @@
 
 ### Fixes
 
+* Display Tor bootstrap messages only for the debug log level.
+
 * Disable stem logging if log level is below debug. Workaround for [stem issue #112][].
 
 * Exit codes now reflects reality ([tpo/onion-services/onionprobe#64][]).

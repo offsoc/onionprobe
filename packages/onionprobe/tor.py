@@ -198,9 +198,9 @@ class OnionprobeTor:
             if '[debug]' in line:
                 self.log(term.format(line), 'debug')
             elif '[info]' in line:
-                self.log(term.format(line), 'info')
+                self.log(term.format(line), 'debug')
             elif '[notice]' in line:
-                self.log(term.format(line), 'info')
+                self.log(term.format(line), 'debug')
             elif '[warn]' in line:
                 self.log(term.format(line), 'warning')
             elif '[err]' in line:
