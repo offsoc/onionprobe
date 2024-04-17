@@ -177,9 +177,12 @@ class OnionprobeDescriptor:
             self.set_metric('onion_service_descriptor_latency_seconds',
                             elapsed, labels)
 
-            if config['address'] in self.hsdirs:
+            # Update the HSDir latency metric
+            if self.get_pubkey_from_address(config['address']) in self.hsdirs:
                 # Register HSDir latency
-                [ hsdir_id, hsdir_name ] = str(self.hsdirs[config['address']]).split('~')
+                [ hsdir_id, hsdir_name ] = str(
+                        self.hsdirs[self.get_pubkey_from_address(
+                            config['address'])]).split('~')
 
                 #self.log('HSDir ID: {}, HSDir name: {}'.format(hsdir_id, hsdir_name))
                 self.set_metric('hsdir_latency_seconds',
@@ -310,4 +313,4 @@ class OnionprobeDescriptor:
             self.hsdirs = {}
 
         # Register the HSDir where the descriptor was fetched
-        self.hsdirs[event.address + '.onion'] = str(event.directory).split('$')[1]
+        self.hsdirs[event.address] = str(event.directory).split('$')[1]
