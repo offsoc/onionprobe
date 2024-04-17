@@ -36,7 +36,12 @@ class OnionprobeMain:
         If runs continuously, waits before starting the next round.
 
         If not, just returns.
+
+        :rtype:  bol
+        :return: True on success, false if at least one of the probes fails.
         """
+
+        status = True
 
         # Check if should loop
         if self.get_config('loop'):
@@ -47,7 +52,10 @@ class OnionprobeMain:
                 self.log('Starting round %s, probing all defined endpoints...' % (iteration))
 
                 # Call for a round
-                self.round()
+                result = self.round()
+
+                if result is False:
+                    status = False
 
                 # Check rounds
                 if rounds > 0 and iteration >= rounds:
@@ -65,7 +73,9 @@ class OnionprobeMain:
 
         else:
             # Single pass, only one round
-            self.round()
+            status = self.round()
+
+        return status
 
     def round(self):
         """
@@ -75,10 +85,16 @@ class OnionprobeMain:
         which is optionally shuffled.
 
         Each endpoint is then probed.
+
+        :rtype:  bol
+        :return: True on success, false if at least one of the probes fails.
         """
 
         # Shuffle the deck
         endpoints = sorted(self.get_config('endpoints'))
+
+        # Hold general probe status
+        status = True
 
         if self.get_config('shuffle'):
             # Reinitializes the random number generator to avoid predictable
@@ -93,6 +109,16 @@ class OnionprobeMain:
 
             result = self.probe(endpoint)
 
+            if result is None or result is False:
+                status = False
+            else:
+                for item in result:
+                    if result[item] == False:
+                        status = False
+                        break
+
             # Wait if not last endpoint
             if key != len(endpoints) - 1:
                 self.wait(self.get_config('interval'))
+
+        return status
