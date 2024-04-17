@@ -97,6 +97,7 @@ def run(args):
     #signal.signal(signal.SIGINT, finish_handler)
     signal.signal(signal.SIGTERM, finish_handler)
 
+    # Exit status (shell convention means 0 is success, failure otherwise)
     status = 0
 
     # Dispatch
@@ -104,7 +105,7 @@ def run(args):
         probe = Onionprobe(args)
 
         if probe.initialize() is not False:
-            probe.run()
+            status = 0 if probe.run() else 1
         else:
             status = 1
 

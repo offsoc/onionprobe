@@ -54,6 +54,10 @@ class OnionprobeTor:
         import socket
         control_address = socket.gethostbyname(control_address)
 
+        # Workaround for https://github.com/torproject/stem/issues/112
+        if self.get_config('log_level') != 'debug':
+            stem.util.log.get_logger().propagate = False
+
         if self.get_config('launch_tor'):
             if self.launch_tor() is False:
                 self.log("Error initializing Tor", "critical")
