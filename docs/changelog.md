@@ -13,7 +13,40 @@
         * `pow-params`.
     * HSDir latency when fetching descriptors.
 
-* Enhanced Grafana Dashboard ([tpo/onion-services/onionprobe#80][]).
+* Enhanced Grafana Dashboard ([tpo/onion-services/onionprobe#80][]) with the
+  following new visualizations:
+    * Overview:
+        * Current failure rate of onionsites.
+        * Total expiring certificates in the next 7 days.
+        * List of certificate expirations up to the next 180 days.
+        * List of unreachable instances.
+        * Graph with the total unreachable instances.
+        * List of invalid HTTPS certificates.
+        * List of services with HTTPS errors.
+    * Performance:
+        * Total of minimum, average and maximum service connection latency.
+        * Total of minimum, average and maximum descriptor fetch latency.
+        * Chart of minimum, average and maximum service connection latency.
+        * Chart of minimum, average and maximum descriptor fetch latency.
+        * Rate of services using the single hop mode, relative to the total services monitored.
+        * List of slow services.
+    * Descriptors:
+        * List of services missing a published descriptor.
+        * Chart of the minimum, average and maximum descriptor sizes (decrypted outer layer).
+        * Chart of the minimum, average and maximum descriptor sizes (decrypted second layer).
+    * Introduction points:
+        * Chart of minimum, average and maximum number of introduction points per service.
+        * List of services and it's number of introduction points.
+    * HSDir:
+        * Total number of HSDirs tested.
+        * Chart of minimum, average and maximum HSDir latency for fetching descriptors.
+        * List of HSDirs sorted by descriptor fetch latency.
+    * Proof of Work (PoW):
+        * Ratio of services with PoW enabled, relative to the total services monitored.
+        * Total number of services with PoW enabled.
+        * Chart of minimum, average and maximum PoW v1 effort seem.
+        * List of services with PoW enabled.
+        * List of services with PoW enabled with effort greater than zero.
 
 * Improved elapsed time log message.
 

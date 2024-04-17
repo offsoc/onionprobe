@@ -2980,12 +2980,16 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
+                "color": "dark-red",
                 "value": null
               },
               {
-                "color": "red",
-                "value": 80
+                "color": "#EAB839",
+                "value": 50
+              },
+              {
+                "color": "dark-green",
+                "value": 100
               }
             ]
           }
@@ -3156,7 +3160,7 @@
         "type": "prometheus",
         "uid": "PBFA97CFB590B2093"
       },
-      "description": "HSDir latency in seconds when fetching descriptors. Each HSDir latency is averaged over a 30 minutes interval.",
+      "description": "HSDir latency in seconds when fetching descriptors. Each HSDir latency is averaged over a 6 hour interval.",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3251,7 +3255,7 @@
           },
           "editorMode": "code",
           "exemplar": false,
-          "expr": "sort_desc(avg_over_time(hsdir_latency_seconds[30m]))",
+          "expr": "sort_desc(avg_over_time(hsdir_latency_seconds[6h]))",
           "format": "table",
           "instant": true,
           "interval": "",
