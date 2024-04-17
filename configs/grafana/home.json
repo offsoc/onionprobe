@@ -85,6 +85,8 @@
       },
       "id": 24,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -94,9 +96,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -157,9 +160,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -229,9 +234,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -295,9 +302,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -411,7 +420,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -541,9 +550,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -611,9 +622,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -677,9 +690,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -708,6 +723,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -721,6 +737,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "smooth",
             "lineWidth": 1,
             "pointSize": 5,
@@ -738,7 +755,6 @@
             }
           },
           "mappings": [],
-          "noValue": "0",
           "thresholds": {
             "mode": "absolute",
             "steps": [
@@ -911,7 +927,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -1091,7 +1107,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -1279,7 +1295,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -1393,9 +1409,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -1460,9 +1478,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -1491,6 +1511,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1504,6 +1525,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1608,6 +1630,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -1621,6 +1644,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -1765,9 +1789,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -1836,9 +1862,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -1907,9 +1935,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -1974,9 +2004,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -2026,6 +2058,8 @@
       },
       "id": 48,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -2035,9 +2069,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -2175,7 +2210,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -2358,7 +2393,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -2424,6 +2459,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -2437,6 +2473,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -2542,6 +2579,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -2555,6 +2593,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -2673,6 +2712,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -2686,6 +2726,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "smooth",
             "lineWidth": 1,
             "pointSize": 5,
@@ -2863,7 +2904,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -2970,9 +3011,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -3001,6 +3044,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -3014,6 +3058,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -3197,7 +3242,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -3292,6 +3337,8 @@
       },
       "id": 50,
       "options": {
+        "minVizHeight": 75,
+        "minVizWidth": 75,
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -3301,9 +3348,10 @@
           "values": false
         },
         "showThresholdLabels": false,
-        "showThresholdMarkers": true
+        "showThresholdMarkers": true,
+        "sizing": "auto"
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -3367,9 +3415,11 @@
           "fields": "",
           "values": false
         },
-        "textMode": "auto"
+        "showPercentChange": false,
+        "textMode": "auto",
+        "wideLayout": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -3398,6 +3448,7 @@
             "mode": "palette-classic"
           },
           "custom": {
+            "axisBorderShow": false,
             "axisCenteredZero": false,
             "axisColorMode": "text",
             "axisLabel": "",
@@ -3411,6 +3462,7 @@
               "tooltip": false,
               "viz": false
             },
+            "insertNulls": false,
             "lineInterpolation": "linear",
             "lineWidth": 1,
             "pointSize": 5,
@@ -3606,7 +3658,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -3757,7 +3809,7 @@
         },
         "showHeader": true
       },
-      "pluginVersion": "9.5.18",
+      "pluginVersion": "10.4.2",
       "targets": [
         {
           "datasource": {
@@ -3807,8 +3859,7 @@
   ],
   "refresh": "5m",
   "revision": 1,
-  "schemaVersion": 38,
-  "style": "dark",
+  "schemaVersion": 39,
   "tags": [
     "tor",
     "onion services"
