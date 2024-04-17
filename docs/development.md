@@ -39,6 +39,10 @@ Push changes and tags. Example:
     git push origin        && git push upstream
     git push origin --tags && git push upstream --tags
 
+Once a tag is pushed, a [GitLab release][] is created.
+
+[GitLab release]: https://docs.gitlab.com/ee/user/project/releases/
+
 ### Build packages
 
 Build and then upload the Python package in the Test PyPi instance:

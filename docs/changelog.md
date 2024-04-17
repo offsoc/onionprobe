@@ -25,14 +25,17 @@
 
     * HSDir used.
 
+* Create a GitLab release at every new tag ([tpo/onion-services/onionprobe#82][]).
+
 [tpo/onion-services/onionprobe#78]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/78
 [tpo/onion-services/onionprobe#80]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/80
+[tpo/onion-services/onionprobe#82]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/82
 
 ### Fixes
 
 * Display Tor bootstrap messages only for the debug log level.
 
-* Disable stem logging if log level is below debug. Workaround for [stem issue #112][].
+* Disable stem logging if log level is below debug ([tpo/onion-services/onionprobe#63][]).
 
 * Exit codes now reflects reality ([tpo/onion-services/onionprobe#64][]).
 
@@ -46,7 +49,7 @@
 
 * Upgraded `vendors/onion-mkdocs`.
 
-[stem issue #112]: https://github.com/torproject/stem/issues/112
+[tpo/onion-services/onionprobe#63]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/63
 [tpo/onion-services/onionprobe#64]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/64
 [SecureDrop list]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/blob/main/configs/securedrop.yaml
 
