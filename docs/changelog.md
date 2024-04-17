@@ -33,6 +33,8 @@
 
 ### Fixes
 
+* Support for a wider range of [pyca/cryptography][] versions at `setup.cfg`.
+
 * Display Tor bootstrap messages only for the debug log level.
 
 * Disable stem logging if log level is below debug ([tpo/onion-services/onionprobe#63][]).
@@ -43,12 +45,13 @@
 
 * Updated the [SecureDrop list][].
 
-* Upgraded Grafana image to 9.5.18.
+* Upgraded Grafana image to 10.4.2.
 
 * Upgrade CI to Debian Bookworm.
 
 * Upgraded `vendors/onion-mkdocs`.
 
+[pyca/cryptography]: https://cryptography.io
 [tpo/onion-services/onionprobe#63]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/63
 [tpo/onion-services/onionprobe#64]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/64
 [SecureDrop list]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/blob/main/configs/securedrop.yaml
