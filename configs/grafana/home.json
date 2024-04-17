@@ -797,7 +797,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "count(onion_service_reachable != 1)",
+          "expr": "count(onion_service_reachable != 1) or vector(0)",
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
@@ -2534,7 +2534,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "min(onion_service_descriptor_outer_wrapper_size_bytes)",
+          "expr": "min(onion_service_descriptor_outer_wrapper_size_bytes) or vector(0)",
           "legendFormat": "Minimum size",
           "range": true,
           "refId": "A"
@@ -2545,7 +2545,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "avg(onion_service_descriptor_outer_wrapper_size_bytes)",
+          "expr": "avg(onion_service_descriptor_outer_wrapper_size_bytes) or vector(0)",
           "hide": false,
           "legendFormat": "Average size",
           "range": true,
@@ -2557,7 +2557,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "max(onion_service_descriptor_outer_wrapper_size_bytes)",
+          "expr": "max(onion_service_descriptor_outer_wrapper_size_bytes) or vector(0)",
           "hide": false,
           "legendFormat": "Maximum size",
           "range": true,
@@ -2654,7 +2654,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "min(onion_service_descriptor_second_layer_size_bytes)",
+          "expr": "min(onion_service_descriptor_second_layer_size_bytes) or vector(0)",
           "legendFormat": "Miminum size",
           "range": true,
           "refId": "A"
@@ -2665,7 +2665,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "avg(onion_service_descriptor_second_layer_size_bytes)",
+          "expr": "avg(onion_service_descriptor_second_layer_size_bytes) or vector(0)",
           "hide": false,
           "legendFormat": "Average size",
           "range": true,
@@ -2677,7 +2677,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "max(onion_service_descriptor_second_layer_size_bytes)",
+          "expr": "max(onion_service_descriptor_second_layer_size_bytes) or vector(0)",
           "hide": false,
           "legendFormat": "Maximum size",
           "range": true,
@@ -2786,7 +2786,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "min(avg_over_time(onion_service_introduction_points_number[30m]))",
+          "expr": "min(avg_over_time(onion_service_introduction_points_number[30m])) or vector(0)",
           "legendFormat": "Minimum # of intro points",
           "range": true,
           "refId": "A"
@@ -2797,7 +2797,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "avg(avg_over_time(onion_service_introduction_points_number[30m]))",
+          "expr": "avg(avg_over_time(onion_service_introduction_points_number[30m])) or vector(0)",
           "hide": false,
           "legendFormat": "Average # of intro points",
           "range": true,
@@ -2809,7 +2809,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "max(avg_over_time(onion_service_introduction_points_number[30m]))",
+          "expr": "max(avg_over_time(onion_service_introduction_points_number[30m])) or vector(0)",
           "hide": false,
           "legendFormat": "Max # of intro points",
           "range": true,
@@ -3118,7 +3118,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "min(avg_over_time(hsdir_latency_seconds[30m]))",
+          "expr": "min(avg_over_time(hsdir_latency_seconds[30m])) or vector(0)",
           "legendFormat": "Minimum latency",
           "range": true,
           "refId": "A"
@@ -3129,7 +3129,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "avg(avg_over_time(hsdir_latency_seconds[30m]))",
+          "expr": "avg(avg_over_time(hsdir_latency_seconds[30m])) or vector(0)",
           "hide": false,
           "legendFormat": "Average latency",
           "range": true,
@@ -3141,7 +3141,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "max(avg_over_time(hsdir_latency_seconds[30m]))",
+          "expr": "max(avg_over_time(hsdir_latency_seconds[30m])) or vector(0)",
           "hide": false,
           "legendFormat": "Maximum latency",
           "range": true,
