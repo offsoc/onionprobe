@@ -8,7 +8,7 @@ nav:
   - configurations.md
   - upgrading.md
   - structure.md
-  - api
+  - API: api
   - ChangeLog: changelog.md
   - acknowledgements.md
   - alternatives.md
