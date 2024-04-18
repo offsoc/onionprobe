@@ -59,6 +59,8 @@
 * Create a GitLab release at every new tag (experimental)
   ([tpo/onion-services/onionprobe#82][]).
 
+* Running lintian on CI to check the generated Debian package.
+
 [tpo/onion-services/onionprobe#78]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/78
 [tpo/onion-services/onionprobe#80]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/80
 [tpo/onion-services/onionprobe#82]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/82
