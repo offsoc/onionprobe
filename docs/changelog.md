@@ -65,6 +65,8 @@
 
 ### Fixes
 
+* Use the correct copyright line in source files.
+
 * Support for a wider range of [pyca/cryptography][] versions at `setup.cfg`.
 
 * Display Tor bootstrap messages only for the debug log level.

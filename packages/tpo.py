@@ -4,7 +4,7 @@
 # Compile an Onionprobe configuration file from The Tor Project official
 # Onion Services list.
 #
-# Copyright (C) 2022 Silvio Rhatto <rhatto@torproject.org>
+# Copyright (C) 2022 The Tor Project, Inc.
 #
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published
