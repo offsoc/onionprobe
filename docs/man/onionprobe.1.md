@@ -1,6 +1,6 @@
 % ONIONPROBE(1) Onionprobe User Manual
 % Silvio Rhatto <rhatto@torproject.org>
-% Sep 28, 2023
+% Apr 18, 2024
 
 # NAME
 
@@ -8,14 +8,30 @@ Onionprobe - a test and monitoring tool for Onion Services sites
 
 # SYNOPSIS
 
-onionprobe [-h] [-c CONFIG] [-v] [--circuit_stream_timeout CIRCUIT_STREAM_TIMEOUT] [--control_password CONTROL_PASSWORD] [--control_port CONTROL_PORT]
-                  [--descriptor_max_retries DESCRIPTOR_MAX_RETRIES] [--descriptor_timeout DESCRIPTOR_TIMEOUT] [-e [ONION-ADDRESS1 ...]]
-                  [--get_certificate_info | --no-get_certificate_info] [--http_connect_max_retries HTTP_CONNECT_MAX_RETRIES]
-                  [--http_connect_timeout HTTP_CONNECT_TIMEOUT] [--http_read_timeout HTTP_READ_TIMEOUT] [--interval INTERVAL] [--launch_tor | --no-launch_tor]
-                  [--log_level LOG_LEVEL] [--loop | --no-loop] [--metrics_port METRICS_PORT] [--metrics_port_policy METRICS_PORT_POLICY]
-                  [--new_circuit | --no-new_circuit] [--prometheus_exporter | --no-prometheus_exporter] [--prometheus_exporter_port PROMETHEUS_EXPORTER_PORT]
-                  [--randomize | --no-randomize] [--rounds ROUNDS] [--shuffle | --no-shuffle] [--sleep SLEEP] [--socks_port SOCKS_PORT]
-                  [--test_tls_connection | --no-test_tls_connection] [--tls_connect_max_retries TLS_CONNECT_MAX_RETRIES] [--tls_connect_timeout TLS_CONNECT_TIMEOUT]
+onionprobe [-h] [-c CONFIG] [-v]
+                  [--circuit_stream_timeout CIRCUIT_STREAM_TIMEOUT]
+                  [--control_password CONTROL_PASSWORD]
+                  [--control_port CONTROL_PORT]
+                  [--descriptor_max_retries DESCRIPTOR_MAX_RETRIES]
+                  [--descriptor_timeout DESCRIPTOR_TIMEOUT]
+                  [-e [ONION-ADDRESS1 ...]]
+                  [--get_certificate_info | --no-get_certificate_info]
+                  [--http_connect_max_retries HTTP_CONNECT_MAX_RETRIES]
+                  [--http_connect_timeout HTTP_CONNECT_TIMEOUT]
+                  [--http_read_timeout HTTP_READ_TIMEOUT]
+                  [--interval INTERVAL] [--launch_tor | --no-launch_tor]
+                  [--log_level LOG_LEVEL] [--loop | --no-loop]
+                  [--metrics_port METRICS_PORT]
+                  [--metrics_port_policy METRICS_PORT_POLICY]
+                  [--new_circuit | --no-new_circuit]
+                  [--prometheus_exporter | --no-prometheus_exporter]
+                  [--prometheus_exporter_port PROMETHEUS_EXPORTER_PORT]
+                  [--randomize | --no-randomize] [--rounds ROUNDS]
+                  [--shuffle | --no-shuffle] [--sleep SLEEP]
+                  [--socks_port SOCKS_PORT]
+                  [--test_tls_connection | --no-test_tls_connection]
+                  [--tls_connect_max_retries TLS_CONNECT_MAX_RETRIES]
+                  [--tls_connect_timeout TLS_CONNECT_TIMEOUT]
                   [--tls_verify | --no-tls_verify] [--tor_address TOR_ADDRESS]
 
 
@@ -29,80 +45,115 @@ onion services endpoints and paths, optionally exporting to Prometheus.
 
 # FULL INVOCATION, OPTIONS, EXAMPLES AND METRICS
 
-    onionprobe [-h] [-c CONFIG] [-v] [--circuit_stream_timeout CIRCUIT_STREAM_TIMEOUT] [--control_password CONTROL_PASSWORD] [--control_port CONTROL_PORT]
-                      [--descriptor_max_retries DESCRIPTOR_MAX_RETRIES] [--descriptor_timeout DESCRIPTOR_TIMEOUT] [-e [ONION-ADDRESS1 ...]]
-                      [--get_certificate_info | --no-get_certificate_info] [--http_connect_max_retries HTTP_CONNECT_MAX_RETRIES]
-                      [--http_connect_timeout HTTP_CONNECT_TIMEOUT] [--http_read_timeout HTTP_READ_TIMEOUT] [--interval INTERVAL] [--launch_tor | --no-launch_tor]
-                      [--log_level LOG_LEVEL] [--loop | --no-loop] [--metrics_port METRICS_PORT] [--metrics_port_policy METRICS_PORT_POLICY]
-                      [--new_circuit | --no-new_circuit] [--prometheus_exporter | --no-prometheus_exporter] [--prometheus_exporter_port PROMETHEUS_EXPORTER_PORT]
-                      [--randomize | --no-randomize] [--rounds ROUNDS] [--shuffle | --no-shuffle] [--sleep SLEEP] [--socks_port SOCKS_PORT]
-                      [--test_tls_connection | --no-test_tls_connection] [--tls_connect_max_retries TLS_CONNECT_MAX_RETRIES] [--tls_connect_timeout TLS_CONNECT_TIMEOUT]
+    onionprobe [-h] [-c CONFIG] [-v]
+                      [--circuit_stream_timeout CIRCUIT_STREAM_TIMEOUT]
+                      [--control_password CONTROL_PASSWORD]
+                      [--control_port CONTROL_PORT]
+                      [--descriptor_max_retries DESCRIPTOR_MAX_RETRIES]
+                      [--descriptor_timeout DESCRIPTOR_TIMEOUT]
+                      [-e [ONION-ADDRESS1 ...]]
+                      [--get_certificate_info | --no-get_certificate_info]
+                      [--http_connect_max_retries HTTP_CONNECT_MAX_RETRIES]
+                      [--http_connect_timeout HTTP_CONNECT_TIMEOUT]
+                      [--http_read_timeout HTTP_READ_TIMEOUT]
+                      [--interval INTERVAL] [--launch_tor | --no-launch_tor]
+                      [--log_level LOG_LEVEL] [--loop | --no-loop]
+                      [--metrics_port METRICS_PORT]
+                      [--metrics_port_policy METRICS_PORT_POLICY]
+                      [--new_circuit | --no-new_circuit]
+                      [--prometheus_exporter | --no-prometheus_exporter]
+                      [--prometheus_exporter_port PROMETHEUS_EXPORTER_PORT]
+                      [--randomize | --no-randomize] [--rounds ROUNDS]
+                      [--shuffle | --no-shuffle] [--sleep SLEEP]
+                      [--socks_port SOCKS_PORT]
+                      [--test_tls_connection | --no-test_tls_connection]
+                      [--tls_connect_max_retries TLS_CONNECT_MAX_RETRIES]
+                      [--tls_connect_timeout TLS_CONNECT_TIMEOUT]
                       [--tls_verify | --no-tls_verify] [--tor_address TOR_ADDRESS]
 
     Test and monitor onion services
 
-    optional arguments:
+    options:
       -h, --help            show this help message and exit
       -c CONFIG, --config CONFIG
-                            Read options from configuration file. All command line parameters can be specified inside a YAML file. Additional command line parameters
-                            override those set in the configuration file.
+                            Read options from configuration file. All command line
+                            parameters can be specified inside a YAML file.
+                            Additional command line parameters override those set
+                            in the configuration file.
       -v, --version         show program's version number and exit
       --circuit_stream_timeout CIRCUIT_STREAM_TIMEOUT
-                            Sets how many seconds until a stream is detached from a circuit and try a new circuit (default: 60)
+                            Sets how many seconds until a stream is detached from
+                            a circuit and try a new circuit (default: 60)
       --control_password CONTROL_PASSWORD
-                            Set Tor control password or use a password prompt (system-wide Tor service) or auto-generate a temporary password (built-in Tor service)
-                            (default: None)
+                            Set Tor control password or use a password prompt
+                            (system-wide Tor service) or auto-generate a temporary
+                            password (built-in Tor service) (default: None)
       --control_port CONTROL_PORT
                             Tor control port (default: 19051)
       --descriptor_max_retries DESCRIPTOR_MAX_RETRIES
                             Max retries when fetching a descriptor (default: 5)
       --descriptor_timeout DESCRIPTOR_TIMEOUT
-                            Timeout in seconds when retrieving an Onion Service descriptor (default: 30)
+                            Timeout in seconds when retrieving an Onion Service
+                            descriptor (default: 30)
       -e [ONION-ADDRESS1 ...], --endpoints [ONION-ADDRESS1 ...]
                             Add endpoints to the test list
       --get_certificate_info, --no-get_certificate_info
-                            Whether to get certificate information when testing TLS/HTTPS endpoints. Requires --test_tls_connection to take effect. (default: True)
+                            Whether to get certificate information when testing
+                            TLS/HTTPS endpoints. Requires --test_tls_connection to
+                            take effect.
       --http_connect_max_retries HTTP_CONNECT_MAX_RETRIES
-                            Max retries when doing a HTTP/HTTPS connection to an Onion Service (default: 3)
+                            Max retries when doing a HTTP/HTTPS connection to an
+                            Onion Service (default: 3)
       --http_connect_timeout HTTP_CONNECT_TIMEOUT
-                            Connection timeout for HTTP/HTTPS requests (default: 30)
+                            Connection timeout for HTTP/HTTPS requests (default:
+                            30)
       --http_read_timeout HTTP_READ_TIMEOUT
                             Read timeout for HTTP/HTTPS requests (default: 30)
-      --interval INTERVAL   Max random interval in seconds between probing each endpoint (default: 60)
+      --interval INTERVAL   Max random interval in seconds between probing each
+                            endpoint (default: 60)
       --launch_tor, --no-launch_tor
-                            Whether to launch it's own Tor daemon (set to false to use the system-wide Tor process) (default: True)
+                            Whether to launch it's own Tor daemon (set to false to
+                            use the system-wide Tor process)
       --log_level LOG_LEVEL
-                            Log level : debug, info, warning, error or critical (default: info)
-      --loop, --no-loop     Run Onionprobe continuously (default: False)
+                            Log level : debug, info, warning, error or critical
+                            (default: info)
+      --loop, --no-loop     Run Onionprobe continuously
       --metrics_port METRICS_PORT
-                            Tor Metrics port (MetricsPort). An empty value means it is disabled
+                            Tor Metrics port (MetricsPort). An empty value means
+                            it is disabled
       --metrics_port_policy METRICS_PORT_POLICY
-                            Tor Metrics port policy (MetricsPortPolicy). An empty value means it is disabled' (default: reject *)
+                            Tor Metrics port policy (MetricsPortPolicy). An empty
+                            value means it is disabled' (default: reject *)
       --new_circuit, --no-new_circuit
-                            Get a new circuit for every stream (default: False)
+                            Get a new circuit for every stream
       --prometheus_exporter, --no-prometheus_exporter
-                            Enable Prometheus exporting functionality (default: False)
+                            Enable Prometheus exporting functionality
       --prometheus_exporter_port PROMETHEUS_EXPORTER_PORT
                             Set the Prometheus exporter port (default: 9935)
       --randomize, --no-randomize
-                            Randomize the interval between each probing (default: True)
-      --rounds ROUNDS       Run only a limited number of rounds (i.e., the number of times that Onionprobe tests all the configured endpoints). Requires the "loop" option
-                            to be enabled. Set to 0 to disable this limit. (default: 0)
+                            Randomize the interval between each probing
+      --rounds ROUNDS       Run only a limited number of rounds (i.e., the number
+                            of times that Onionprobe tests all the configured
+                            endpoints). Requires the "loop" option to be enabled.
+                            Set to 0 to disable this limit. (default: 0)
       --shuffle, --no-shuffle
-                            Shuffle the list of endpoints at each probing round (default: True)
-      --sleep SLEEP         Max random interval in seconds to wait between each round of tests (default: 60)
+                            Shuffle the list of endpoints at each probing round
+      --sleep SLEEP         Max random interval in seconds to wait between each
+                            round of tests (default: 60)
       --socks_port SOCKS_PORT
                             Tor SOCKS port (default: 19050)
       --test_tls_connection, --no-test_tls_connection
-                            Whether to run a specific test for TLS endpoints (default: True)
+                            Whether to run a specific test for TLS endpoints
       --tls_connect_max_retries TLS_CONNECT_MAX_RETRIES
-                            Max retries when doing a TLS connection to an Onion Service (default: 3)
+                            Max retries when doing a TLS connection to an Onion
+                            Service (default: 3)
       --tls_connect_timeout TLS_CONNECT_TIMEOUT
                             Connection timeout for TLS connections (default: 30)
       --tls_verify, --no-tls_verify
-                            Whether to verify TLS/HTTPS certificates (default: True)
+                            Whether to verify TLS/HTTPS certificates
       --tor_address TOR_ADDRESS
-                            Tor listening address if the system-wide service is used (default: 127.0.0.1)
+                            Tor listening address if the system-wide service is
+                            used (default: 127.0.0.1)
 
     Examples:
 
@@ -135,8 +186,26 @@ onion services endpoints and paths, optionally exporting to Prometheus.
             Register if the Onion Service descriptor is available: value is 1 for reachability and 0 otherwise
       onion_service_descriptor_fetch_attempts:
             Register the number of attempts required when trying to get an Onion Service descriptor in a probing round
+      onion_service_descriptor_revision_counter:
+            Register Onion Service descriptor revision counter
+      onion_service_descriptor_lifetime_seconds:
+            Register Onion Service descriptor lifetime in seconds
+      onion_service_descriptor_outer_wrapper_size_bytes:
+            Register Onion Service outer wrapper descriptor size in bytes (decrypted)
+      onion_service_descriptor_second_layer_size_bytes:
+            Register Onion Service second layer descriptor size in bytes (decrypted)
+      onion_service_is_single:
+            Indicates whether the server is using the single hop Onion Service circuit mode: value is 1 if this is a single onion service, 0 otherwise
       onion_service_introduction_points_number:
             Register the number of introduction points in the Onion Service descriptor
+      onion_service_pow_enabled:
+            Whether Proof of Work (PoW) defense is enabled in the Onion Service: value is 1 when PoW is enabled, 0 otherwise
+      onion_service_pow_v1_seed:
+            The Proof of Work (PoW) decoded seed for the v1 scheme
+      onion_service_pow_v1_effort:
+            The Proof of Work (PoW) suggested effort for the v1 scheme
+      onion_service_pow_v1_expiration_seconds:
+            The Proof of Work (PoW) seed expiration time for the v1 scheme
       onion_service_pattern_matched:
             Register whether a regular expression pattern is matched when connection to the Onion Service: value is 1 for matched pattern and 0 otherwise
       onion_service_valid_certificate:
@@ -149,6 +218,8 @@ onion services endpoints and paths, optionally exporting to Prometheus.
             Register how many seconds are left before the certificate expire.Negative values indicate how many seconds passed after the certificate already expired.
       onion_service_certificate_match_hostname:
             Register whether a provided server certificate matches the server hostname in a TLS connection: value is 1 for matched hostname and 0 otherwise. Check is done both on the commonName and subjectAltName fields. A value of 1 does not mean necessarily that the certificate is CA-validated.
+      hsdir_latency_seconds:
+            Register HSDir latency in seconds to fetch a descriptor
       onion_service_fetch_requests:
             Counts the total number of requests to access an Onion Service
       onion_service_fetch_error:
@@ -838,6 +909,11 @@ This is a sample configuration file that can be adapted:
           - path: /
             allowed_statuses: [ 200 ]
 
+
+# EXIT STATUS
+
+If any tested endpoint had a failure on any probing, then the exit status is 1.
+Otherwise, the exit status is 0.
 
 # FILES
 
