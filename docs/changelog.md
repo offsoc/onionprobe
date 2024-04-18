@@ -86,7 +86,7 @@
 * Upgraded PostgreSQL image to 16.
   Please run the [needed upgrading steps](upgrading.md#major-upgrades).
 
-* Upgraded CI and container images to Debian Bookworm.
+* Upgraded CI and container images to Debian bookworm.
 
 * Upgraded `vendors/onion-mkdocs`.
 
