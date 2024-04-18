@@ -80,6 +80,13 @@
 
 * Upgraded Grafana image to 10.4.2.
 
+* Upgraded Alertmanager image to 0.27.0.
+
+* Upgraded Prometheus image to 2.51.2.
+
+* Upgraded PostgreSQL image to 16.
+  Please run the [needed upgrading steps](upgrading.md#major-upgrades).
+
 * Upgrade CI to Debian Bookworm.
 
 * Upgraded `vendors/onion-mkdocs`.
