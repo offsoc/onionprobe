@@ -48,17 +48,16 @@
         * List of services with PoW enabled.
         * List of services with PoW enabled with effort greater than zero.
 
-* Improved elapsed time log message.
+* Improved log message for elapsed time.
 
 * New log messages for:
-  * Number of introduction points.
+    * Number of introduction points.
+    * HS_DESC events:
+        * Descriptor reachability.
+        * HSDir used.
 
-  * HS_DESC events:
-    * Descriptor reachability.
-
-    * HSDir used.
-
-* Create a GitLab release at every new tag ([tpo/onion-services/onionprobe#82][]).
+* Create a GitLab release at every new tag (experimental)
+  ([tpo/onion-services/onionprobe#82][]).
 
 [tpo/onion-services/onionprobe#78]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/78
 [tpo/onion-services/onionprobe#80]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/80
@@ -87,7 +86,7 @@
 * Upgraded PostgreSQL image to 16.
   Please run the [needed upgrading steps](upgrading.md#major-upgrades).
 
-* Upgrade CI to Debian Bookworm.
+* Upgraded CI and container images to Debian Bookworm.
 
 * Upgraded `vendors/onion-mkdocs`.
 
