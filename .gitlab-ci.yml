@@ -31,8 +31,9 @@ debian:
     - git submodule update --init --recursive --depth 1
     - scripts/provision-packaging-debian
     - make build-debian-test-package
-    - lintian -v --pedantic ../onionprobe_*.deb
-    - piuparts ../onionprobe_*.deb
+    - lintian --allow-root -v --pedantic ../onionprobe_*.deb
+    # Piuparts is disabled due to https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/87
+    #- piuparts ../onionprobe_*.deb
     - mkdir -p dist
     - mv ../onionprobe_* dist
   artifacts:
