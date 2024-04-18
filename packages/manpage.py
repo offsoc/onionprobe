@@ -67,6 +67,9 @@ def generate():
     output     = os.path.join(basepath, 'docs', 'man', 'onionprobe.1.md')
     config     = os.path.join(basepath, 'configs', 'tor.yaml')
 
+    # Assume a 80 columm terminal to compile the usage and help texts
+    os.environ["COLUMNS"] = "80"
+
     # Initialize the command line parser
     parser     = cmdline_parser()
 
