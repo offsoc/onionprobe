@@ -51,7 +51,7 @@ docs: compile-docs
 
 manpage:
 	@./packages/manpage.py
-	@sed -e '1i\\# ONIONPROBE(1) Onionprobe User Manual' -e 's|^#|##|g' -e '/^%/d' docs/man/onionprobe.1.txt > docs/man/README.md
+	@sed -e '1i\\# Manual page' -e 's|^#|##|g' -e '/^%/d' docs/man/onionprobe.1.txt > docs/man/README.md
 
 compile-docs: manpage
 	@make onion-mkdocs-build
