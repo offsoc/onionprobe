@@ -1,12 +1,10 @@
-% ONIONPROBE(1) Onionprobe User Manual
-% Silvio Rhatto <rhatto@torproject.org>
-% Apr 18, 2024
+# ONIONPROBE(1) Onionprobe User Manual
 
-# NAME
+## NAME
 
 Onionprobe - a test and monitoring tool for Onion Services sites
 
-# SYNOPSIS
+## SYNOPSIS
 
 onionprobe [-h] [-c CONFIG] [-v]
                   [--circuit_stream_timeout CIRCUIT_STREAM_TIMEOUT]
@@ -35,7 +33,7 @@ onionprobe [-h] [-c CONFIG] [-v]
                   [--tls_verify | --no-tls_verify] [--tor_address TOR_ADDRESS]
 
 
-# DESCRIPTION
+## DESCRIPTION
 
 Onionprobe is a tool for testing and monitoring the status of Tor Onion
 Services sites.
@@ -43,7 +41,7 @@ Services sites.
 It can run a single time or continuously to probe a set of
 onion services endpoints and paths, optionally exporting to Prometheus.
 
-# FULL INVOCATION, OPTIONS, EXAMPLES AND METRICS
+## FULL INVOCATION, OPTIONS, EXAMPLES AND METRICS
 
     onionprobe [-h] [-c CONFIG] [-v]
                       [--circuit_stream_timeout CIRCUIT_STREAM_TIMEOUT]
@@ -256,7 +254,7 @@ onion services endpoints and paths, optionally exporting to Prometheus.
             Register information about the last test made to a given Onion Service, including POSIX timestamp
 
 
-# CONFIGURATION FILE FORMAT
+## CONFIGURATION FILE FORMAT
 
 This is a sample configuration file that can be adapted:
 
@@ -910,17 +908,17 @@ This is a sample configuration file that can be adapted:
             allowed_statuses: [ 200 ]
 
 
-# EXIT STATUS
+## EXIT STATUS
 
 If any tested endpoint had a failure on any probing, then the exit status is 1.
 Otherwise, the exit status is 0.
 
-# FILES
+## FILES
 
 /etc/onionprobe
 :  System-wide Onionprobe configuration files.
 
-# LIMITATIONS
+## LIMITATIONS
 
 Onionprobe currently has the following limitations:
 
@@ -932,7 +930,7 @@ Onionprobe currently has the following limitations:
 3. For other limitations, check the list of issues  available at the Onionprobe
    source code repository.
 
-# SEE ALSO
+## SEE ALSO
 
 The *docs/* folder distributed with Onionprobe contains the full documentation,
 which should also be available at <https://tpo.pages.torproject.net/onion-services/onionprobe/>.

@@ -5,3 +5,4 @@ __pycache__
 docs/man/onionprobe.1
 contrib
 public
+.cache

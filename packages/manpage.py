@@ -63,8 +63,8 @@ def generate():
     """
 
     # Set inputs and outputs
-    template   = os.path.join(basepath, 'docs', 'man', 'onionprobe.1.md.tmpl')
-    output     = os.path.join(basepath, 'docs', 'man', 'onionprobe.1.md')
+    template   = os.path.join(basepath, 'docs', 'man', 'onionprobe.1.txt.tmpl')
+    output     = os.path.join(basepath, 'docs', 'man', 'onionprobe.1.txt')
     config     = os.path.join(basepath, 'configs', 'tor.yaml')
 
     # Assume a 80 columm terminal to compile the usage and help texts

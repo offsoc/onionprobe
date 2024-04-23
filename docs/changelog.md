@@ -67,6 +67,9 @@
 
 ### Fixes
 
+* Manpage generation is now compatible with the Onion Services
+  Ecosystem Portal ([tpo/onion-services/ecosystem#1][]).
+
 * Use the correct copyright line in source files.
 
 * Support for a wider range of [pyca/cryptography][] versions at `setup.cfg`.
@@ -94,6 +97,7 @@
 
 * Upgraded `vendors/onion-mkdocs`.
 
+[tpo/onion-services/ecosystem#1]: https://gitlab.torproject.org/tpo/onion-services/ecosystem/-/issues/1
 [pyca/cryptography]: https://cryptography.io
 [tpo/onion-services/onionprobe#63]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/63
 [tpo/onion-services/onionprobe#64]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/64
