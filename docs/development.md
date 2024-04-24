@@ -56,6 +56,7 @@ Try the test package in a fresh virtual machine, eg:
     sudo apt-get install -y python3-pip tor
     pip install -i https://pypi.org/simple/ \
                 --extra-index-url https://test.pypi.org/simple \
+                --break-system-packages \
                 onionprobe==$ONIONPROBE_VERSION
 
 Make sure to test after installation. If the the package works as expected,
@@ -77,11 +78,16 @@ Subject: [RELEASE] Onionprobe [security] release $ONIONPROBE_VERSION
 
 Greetings,
 
-We just released Onionprobe $ONIONPROBE_VERSION.
+We just released Onionprobe $ONIONPROBE_VERSION, a tool for testing and
+monitoring the status of Onion Services:
+https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/blob/main/docs/upgrading.md
 
 [This release fixes a security issue. Please upgrade as soon as possible!]
 
-ChangeLog is below.
+[This release requires a database migration for those using the monitoring node:]
+[https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/blob/main/docs/upgrading.md]
+
+# ChangeLog
 
 $CHANGELOG
 ```
