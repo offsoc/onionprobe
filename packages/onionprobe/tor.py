@@ -207,7 +207,7 @@ class OnionprobeTor:
                 self.log(term.format(line), 'error')
 
         try:
-            self.log('Initializing Tor process...')
+            self.log('Initializing Tor process (might take a while to bootstrap)...')
 
             tor_address         = self.get_config('tor_address')
             control_password    = self.get_config('control_password', self.gen_control_password())
