@@ -50,7 +50,7 @@ RUN apt-get update && \
 
 COPY containers/tor/torrc ${APP_BASE}/${APP}/torrc
 
-RUN chown -R debian-tor. ${APP_BASE}/${APP}/torrc
+RUN chown -R debian-tor: ${APP_BASE}/${APP}/torrc
 
 RUN chmod 600 ${APP_BASE}/${APP}/torrc
 
