@@ -10,12 +10,13 @@ Release cycle workflow.
 
 Set the version number:
 
-    ONIONPROBE_VERSION=1.1.0
+    ONIONPROBE_VERSION=1.2.0
 
 Update the version in some files, like:
 
     dch -i # debian/changelog
     $EDITOR packages/onionprobe/config.py
+    $EDITOR docker-compose.yml
     $EDITOR setup.cfg
 
 ### Regenerate the manpage
