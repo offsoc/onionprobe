@@ -1,5 +1,13 @@
 # Onionprobe ChangeLog
 
+## v1.2.1 - Unreleased
+
+### Fixes
+
+* Updated [development procedure](development.md).
+
+* Improved verbosity for the Tor initialization log message.
+
 ## v1.2.0 - 2024-04-24
 
 ### Features
