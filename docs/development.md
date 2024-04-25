@@ -68,9 +68,9 @@ upload it to PyPi:
 
 Announce the new release:
 
+* Post a message to the [Tor Forum][].
 * Send a message to the [tor-announce][] mailing list ONLY in special cases,
   like important security issues.
-* Post a message to the [Tor Forum][].
 
 Template:
 
