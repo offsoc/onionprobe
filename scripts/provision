@@ -51,7 +51,7 @@ $SUDO apt-get install -y docker.io docker-compose
 $SUDO usermod -a -G docker $(whoami)
 
 # Fetch an up-to-date Onion MkDocs codebase
-if [ -e "vendors/onion-mkdocs" ]; then
+if [ ! -e "vendors/onion-mkdocs" ]; then
   git clone https://gitlab.torproject.org/tpo/web/onion-mkdocs.git $BASEDIR/vendors/onion-mkdocs
 else
   git -C $BASEDIR/vendors/onion-mkdocs pull
