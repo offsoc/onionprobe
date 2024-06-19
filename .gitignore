@@ -6,3 +6,4 @@ docs/man/onionprobe.1
 contrib
 public
 .cache
+vendors/onion-mkdocs
