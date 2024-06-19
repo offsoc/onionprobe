@@ -16,6 +16,9 @@ fi
 # Update submodules
 git -C $BASEPATH submodule update --init --recursive
 
+# Make sure the  vendors folder is available
+mkdir -p $BASEDIR/vendors
+
 # Provision Onionprobe requirements
 $DIRNAME/provision-onionprobe
 
@@ -46,6 +49,13 @@ $SUDO apt-get install -y docker.io docker-compose
 
 # Put the regular user into docker group
 $SUDO usermod -a -G docker $(whoami)
+
+# Fetch an up-to-date Onion MkDocs codebase
+if [ -e "vendors/onion-mkdocs" ]; then
+  git clone https://gitlab.torproject.org/tpo/web/onion-mkdocs.git $BASEDIR/vendors/onion-mkdocs
+else
+  git -C $BASEDIR/vendors/onion-mkdocs pull
+fi
 
 # Provision documentation requirements
 $BASEPATH/vendors/onion-mkdocs/scripts/onion-mkdocs-provision-build
