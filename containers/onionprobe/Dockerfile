@@ -56,4 +56,4 @@ COPY . ${APP_BASE}/${APP}
 
 USER debian-tor
 
-ENTRYPOINT exec /srv/onionprobe/onionprobe -c ${ONIONPROBE_CONFIG}
+ENTRYPOINT exec ${APP_BASE}/${APP}/onionprobe -c ${ONIONPROBE_CONFIG}
