@@ -6,7 +6,7 @@ Related software and libraries with useful routines:
 * [sbws](https://gitlab.torproject.org/tpo/network-health/sbws)
 * [Stem](https://stem.torproject.org/)
 * [txtorcon](https://txtorcon.readthedocs.io/en/latest/)
-* [Onionbalance](https://onionbalance.readthedocs.io/en/latest/)
+* [Onionbalance](https://onionservices.torproject.org/apps/base/onionbalance/)
 * [hs-health](https://gitlab.com/hs-health/hs-health)
 
 Relevant issues:
