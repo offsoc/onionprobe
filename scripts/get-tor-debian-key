@@ -34,8 +34,8 @@ wget -qO- "$URL" | gpg --dearmor | tee "$CANDIDATE" > /dev/null || exit 1
 # downloading, since we cannot assume that the .asc file has the correct
 # fingerprint just because it's in the filename.
 #
-# Then the only information we need to protect is the actual key fingerprint.
-KEY_FPR="`cat $CANDIDATE | gpg --with-fingerprint --with-colons 2> /dev/null | grep '^fpr' | cut -d : -f 10`"
+# Then we need to check the actual key fingerprint.
+KEY_FPR="`cat $CANDIDATE | gpg --with-fingerprint --with-colons 2> /dev/null | grep '^fpr' | cut -d : -f 10 | head -1`"
 
 # Compare the actual fingerprint with the one we're looking for
 if [ "$KEY_FPR" == "$FINGERPRINT" ]; then
