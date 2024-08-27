@@ -68,7 +68,7 @@ upload it to PyPi:
 
 Announce the new release:
 
-* Post a message to the [Tor Forum][].
+* Post a message to the [Tor Forum][], using the [onionprobe-announce tag][].
 * Send a message to the [tor-announce][] mailing list ONLY in special cases,
   like important security issues.
 
@@ -95,3 +95,4 @@ $CHANGELOG
 
 [tor-announce]: https://lists.torproject.org/cgi-bin/mailman/listinfo/tor-announce
 [Tor Forum]: https://forum.torproject.org
+[onionprobe-announce tag]: https://forum.torproject.org/tag/onionprobe-announce
