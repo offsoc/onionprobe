@@ -4,6 +4,12 @@
 
 ### Fixes
 
+* Upgraded PostgreSQL image to 17.
+  Please run the [needed upgrading steps](upgrading.md#major-upgrades).
+
+* PostgreSQL upgrade script (`upgrade-postgresql-database`):
+  * Minor fixes.
+
 * Updated [development procedure](development.md).
 
 * Improved verbosity for the Tor initialization log message.
