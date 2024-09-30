@@ -5,6 +5,7 @@
 
 # Parameters
 DIRNAME="`dirname $0`"
+BASENAME="`basename $0`"
 BASEPATH="$DIRNAME/.."
 TMP="${TMP:-/tmp}"
 WORK="`mktemp -d -p $TMP`"
@@ -23,7 +24,7 @@ fi
 
 # Set versions
 OLD="`sudo cat $VOLUMES/$CONTAINER/_data/PG_VERSION`"
-NEW="`grep 'image: postgres:' $BASEPATH/docker-compose.yaml | cut -d : -f 3`"
+NEW="`grep 'image: docker.io/postgres:' $BASEPATH/docker-compose.yaml | cut -d : -f 3`"
 
 if [ -z "$OLD" ] || [ -z "$NEW" ]; then
   echo "$BASENAME: cannot set old and new PostgreSQL versions, aborting."
