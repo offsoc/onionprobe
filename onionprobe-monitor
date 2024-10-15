@@ -1,0 +1,121 @@
+#!/usr/bin/env sh
+#
+# Onionprobe standalone monitoring node manager
+#
+# Copyright (C) 2024 The Tor Project, Inc.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published
+# by the Free Software Foundation, either version 3 of the License,
+# or any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+# Parameters
+BASENAME="`basename $0`"
+DIRNAME="`dirname $0`"
+ACTION="$1"
+BASEPATH="$DIRNAME"
+CONTAINER_RUNTIME="${CONTAINER_RUNTIME:-podman}"
+COMPOSE_PROJECT_NAME="${COMPOSE_PROJECT_NAME:-onionprobe}"
+
+# Load the environment file if available
+if [ -f "$BASEPATH/.env" ]; then
+  . $BASEPATH/.env
+fi
+
+# We need to be explicity on the project name since Podman Compose
+# does not honor this paramenter on .env files, as of 2024-10-15:
+# https://github.com/containers/podman-compose/issues/475
+COMPOSE_CMD="${CONTAINER_RUNTIME}-compose -p ${COMPOSE_PROJECT_NAME}"
+
+# Status
+onionprobe_monitor_ps() {
+  ${COMPOSE_CMD} ps $*
+}
+
+# Pull images
+onionprobe_monitor_pull() {
+  ${COMPOSE_CMD} pull $*
+}
+
+# Build services
+onionprobe_monitor_build() {
+  ${COMPOSE_CMD} build
+}
+
+# Bring services up
+onionprobe_monitor_up() {
+  ${COMPOSE_CMD} up -d --remove-orphans
+}
+
+# Bring services up
+onionprobe_monitor_down() {
+  ${COMPOSE_CMD} down $*
+}
+
+# Stop services
+onionprobe_monitor_stop() {
+  ${COMPOSE_CMD} stop $*
+}
+
+# Restart services
+onionprobe_monitor_restart() {
+  onionprobe_monitor_stop $*
+  onionprobe_monitor_up
+}
+
+# Reload services
+onionprobe_monitor_reload() {
+  onionprobe_monitor_pull --quiet
+  onionprobe_monitor_build
+  onionprobe_monitor_up
+}
+
+# Show service log
+onionprobe_monitor_logs() {
+  ${COMPOSE_CMD} logs -f
+}
+
+# Get the hostname the existing services
+onionprobe_monitor_hostnames() {
+  for service in prometheus alertmanager grafana onionprobe; do
+    echo -n "${service}: "
+
+    ${CONTAINER_RUNTIME} exec -ti ${COMPOSE_PROJECT_NAME}_tor_1 \
+      cat /var/lib/tor/${service}/hostname
+  done
+}
+
+# Generate restricted discovery (aka client authorization) keys
+onionprobe_monitor_genkeys() {
+   ${CONTAINER_RUNTIME} exec -ti ${COMPOSE_PROJECT_NAME}_tor_1 \
+     /usr/local/bin/generate-auth-keys-for-all-onion-services $*
+}
+
+# Usage
+onionprobe_monitor_usage() {
+  echo "usage: ${BASENAME} <action> [args]"
+  echo ""
+  echo "available actions:"
+  echo ""
+  grep "^onionprobe_monitor_" $0 | cut -d ' ' -f 1 | \
+    sed -e 's/onionprobe_monitor_//' -e 's/()//' | \
+    sort | xargs -L 6 | column -t -c 6 | sed -e 's/^/\t/'
+  echo ""
+  echo "Check documentation for details: https://onionservices.torproject.org/apps/web/onionprobe/standalone/"
+}
+
+# Dispatch
+if type onionprobe_monitor_${ACTION} 2> /dev/null | grep -q "onionprobe_monitor_$ACTION "; then
+  shift
+  onionprobe_monitor_${ACTION} $*
+else
+  onionprobe_monitor_usage
+fi

@@ -33,15 +33,18 @@ RuntimeDirectory=onionprobe-monitor
 WorkingDirectory=/var/lib/onionprobe-monitor
 
 #ExecStartPre=-/usr/bin/docker-compose pull --quiet
-ExecStart=/usr/bin/docker-compose up -d --remove-orphans
+#ExecStart=/usr/bin/docker-compose up -d --remove-orphans
+ExecStart=/var/lib/onionprobe-monitor/onionprobe-monitor up
 
-ExecStop=/usr/bin/docker-compose down
+#ExecStop=/usr/bin/docker-compose down
+ExecStart=/var/lib/onionprobe-monitor/onionprobe-monitor down
 
 # Reload
 #ExecReload=/usr/bin/docker-compose restart
-ExecReload=/usr/bin/docker-compose pull --quiet
-ExecReload=/usr/bin/docker-compose build
-ExecReload=/usr/bin/docker-compose up -d --remove-orphans
+#ExecReload=/usr/bin/docker-compose pull --quiet
+#ExecReload=/usr/bin/docker-compose build
+#ExecReload=/usr/bin/docker-compose up -d --remove-orphans
+ExecStart=/var/lib/onionprobe-monitor/onionprobe-monitor reload
 
 [Install]
 WantedBy=multi-user.target

@@ -7,6 +7,10 @@
 DIRNAME="`dirname $0`"
 BASEPATH="$DIRNAME/.."
 TORRC="/etc/tor/torrc"
+CONTAINER_RUNTIME="${CONTAINER_RUNTIME:-podman}"
+
+# Load the environment file if available
+[ -f "$BASEPATH/.env" ] && source $BASEPATH/.env
 
 # Check for sudo
 if [ "`whoami`" != "root" ]; then
@@ -42,13 +46,20 @@ if ! grep -q "^ControlPort" $TORRC; then
   $SUDO service tor restart
 fi
 
-# Docker and docker-compose from distribution
+# System upgrade
 $SUDO apt-get update
 $SUDO apt-get upgrade -y
-$SUDO apt-get install -y docker.io docker-compose
 
-# Put the regular user into docker group
-$SUDO usermod -a -G docker $(whoami)
+# Podman
+if [ "$CONTAINER_RUNTIME" == "podman" ]; then
+  $SUDO apt-get install -y podman podman-compose
+else
+  # Docker and docker-compose from distribution
+  $SUDO apt-get install -y docker.io docker-compose
+
+  # Put the regular user into docker group
+  $SUDO usermod -a -G docker $(whoami)
+fi
 
 # Fetch an up-to-date Onion MkDocs codebase
 if [ ! -e "vendors/onion-mkdocs" ]; then
