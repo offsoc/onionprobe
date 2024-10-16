@@ -16,27 +16,8 @@
 
 .PHONY: configs docs
 
-# The container runtime
-CONTAINER_RUNTIME = podman
-
 # Include the environment file so Makefile to include custom configs and overrides
 -include .env
-
-#
-# Containers
-#
-
-run-containers:
-	@$(CONTAINER_RUNTIME)-compose up -d
-
-watch-containers:
-	@watch $(CONTAINER_RUNTIME)-compose ps
-
-log-containers:
-	@$(CONTAINER_RUNTIME)-compose logs -f
-
-stop-containers:
-	@$(CONTAINER_RUNTIME)-compose down
 
 #
 # Configs

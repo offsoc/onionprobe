@@ -52,7 +52,7 @@ output for instructions or check it's source code.
 
 Simply start the standalone monitoring node again after the upgrade procedure:
 
-    make run-containers
+    ./onionprobe-monitor start
 
 [tianon/docker-postgres-upgrade]: https://github.com/tianon/docker-postgres-upgrade
 [tpo/onion-services/onionprobe#70]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/70

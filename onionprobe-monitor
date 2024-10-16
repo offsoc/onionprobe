@@ -40,6 +40,11 @@ onionprobe_monitor_ps() {
   ${COMPOSE_CMD} ps $*
 }
 
+# Watch services
+onionprobe_monitor_watch() {
+  watch ${COMPOSE_CMD} ps $*
+}
+
 # Pull images
 onionprobe_monitor_pull() {
   ${COMPOSE_CMD} pull $*
@@ -53,6 +58,16 @@ onionprobe_monitor_build() {
 # Bring services up
 onionprobe_monitor_up() {
   ${COMPOSE_CMD} up -d --remove-orphans
+}
+
+# Alias for "up"
+onionprobe_monitor_run() {
+  onionprobe_monitor_up $*
+}
+
+# Alias for "up"
+onionprobe_monitor_start() {
+  onionprobe_monitor_up $*
 }
 
 # Bring services up
