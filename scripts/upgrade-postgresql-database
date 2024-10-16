@@ -9,12 +9,22 @@ BASENAME="`basename $0`"
 BASEPATH="$DIRNAME/.."
 TMP="${TMP:-/tmp}"
 WORK="`mktemp -d -p $TMP`"
-VOLUMES="/var/lib/docker/volumes"
 CONTAINER="${1:-onionprobe_postgres}"
+CONTAINER_RUNTIME="${CONTAINER_RUNTIME:-docker}"
 PGUSER="${PGUSER:-grafana}"
 
 # Abort on any error
 set +e
+
+# Load the environment file if available
+[ -f "$BASEPATH/.env" ] && source $BASEPATH/.env
+
+# Determine the volumes' folder
+if [ "$CONTAINER_RUNTIME" == "podman" ]; then
+  VOLUMES="/var/lib/containers/storage"
+else
+  VOLUMES="/var/lib/docker/volumes"
+fi
 
 # Check for version data
 if ! sudo ls "$VOLUMES/$CONTAINER/_data/PG_VERSION" &> /dev/null; then
@@ -47,8 +57,8 @@ chmod 700 $NEW/data
 
 # Download
 echo "Downloading the needed images..."
-docker pull "postgres:$OLD"
-docker pull "postgres:$NEW"
+$CONTAINER_RUNTIME pull "postgres:$OLD"
+$CONTAINER_RUNTIME pull "postgres:$NEW"
 
 # Copy
 echo "Copying data from $VOLUMES/$CONTAINER/_data into $OLD/data..."
@@ -56,26 +66,26 @@ sudo cp -a $VOLUMES/$CONTAINER/_data/ $OLD/data
 
 # Upgrade
 echo "Running the upgrade image..."
-docker run --rm \
+$CONTAINER_RUNTIME run --rm \
   -e PGUSER=$PGUSER -e POSTGRES_INITDB_ARGS=--username=$PGUSER \
   -v "$WORK":/var/lib/postgresql \
   "tianon/postgres-upgrade:$OLD-to-$NEW" \
   --link
-docker rm postgres-upgrade-testing
+$CONTAINER_RUNTIME rm postgres-upgrade-testing
 
 # Test
 # See https://github.com/tianon/docker-postgres-upgrade/issues/70
 echo "Running a test PostgreSQL $NEW container..."
-docker run -dit \
+$CONTAINER_RUNTIME run -dit \
   -e PGUSER=$PGUSER -e POSTGRES_INITDB_ARGS=--username=$PGUSER \
   --name postgres-upgrade-testing \
   -e POSTGRES_PASSWORD=password \
   -v "$WORK/$NEW/data":/var/lib/postgresql/data \
 "postgres:$NEW"
 sleep 5
-docker logs --tail 100 postgres-upgrade-testing
-docker stop postgres-upgrade-testing
-docker rm postgres-upgrade-testing
+$CONTAINER_RUNTIME logs --tail 100 postgres-upgrade-testing
+$CONTAINER_RUNTIME stop postgres-upgrade-testing
+$CONTAINER_RUNTIME rm postgres-upgrade-testing
 
 # Configure
 # See https://github.com/tianon/docker-postgres-upgrade/issues/1

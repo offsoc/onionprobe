@@ -16,21 +16,8 @@
 
 .PHONY: configs docs
 
-#
-# Containers
-#
-
-run-containers:
-	@docker-compose up -d
-
-watch-containers:
-	@watch docker-compose ps
-
-log-containers:
-	@docker-compose logs -f
-
-stop-containers:
-	@docker-compose down
+# Include the environment file so Makefile to include custom configs and overrides
+-include .env
 
 #
 # Configs

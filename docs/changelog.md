@@ -2,6 +2,24 @@
 
 ## v1.2.1 - Unreleased
 
+### Features
+
+* [Standalone monitoring node](standalone.md):
+  * Added support for [Podman][] and [Podman Compose][].
+    It can be enable by setting `CONTAINER_RUNTIME=podman` in the `.env` file.
+    For backwards compatibility,
+    [Docker][] is still the default container runtime.
+
+  * New `onionprobe-monitor` script acting as a wrapper for interacting with
+    the container runtime. Given that [Podman][] and [Docker][] have a few
+    differences, it made sense to create a thin wrapper around them, to handle
+    things like [Podman not honoring some Compose variables in .env files][podman-env].
+
+[Docker]: https://docker.com
+[Podman]: https://podman.io
+[Podman Compose]: https://github.com/containers/podman-compose
+[podman-env]: https://github.com/containers/podman-compose/issues/475
+
 ### Fixes
 
 * Upgraded PostgreSQL image to 17.
