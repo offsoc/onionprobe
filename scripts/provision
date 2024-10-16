@@ -53,6 +53,9 @@ $SUDO apt-get upgrade -y
 # Podman
 if [ "$CONTAINER_RUNTIME" == "podman" ]; then
   $SUDO apt-get install -y podman podman-compose
+
+  mkdir -p $HOME/.config/containers/containers.conf.d/
+  cp $BASEDIR/configs/podman/containers.conf $HOME/.config/containers/containers.conf.d/
 else
   # Docker and docker-compose from distribution
   $SUDO apt-get install -y docker.io docker-compose
