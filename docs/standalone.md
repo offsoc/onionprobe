@@ -75,7 +75,7 @@ if you're running locally:
 
 * The built-in Prometheus   dashboard: http://localhost:9090
 * The built-in Alertmanager dashboard: http://localhost:9093
-* The built-in Grafana      dashboard: http://localhost:3030
+* The built-in Grafana      dashboard: http://localhost:3000
 * The built-in Onionprobe   Prometheus exporter: http://localhost:9935
 
 These services are also automatically exported as Onion Services,
