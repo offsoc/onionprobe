@@ -110,8 +110,34 @@ onionprobe_monitor_hostnames() {
 
 # Generate restricted discovery (aka client authorization) keys
 onionprobe_monitor_genkeys() {
-   ${CONTAINER_RUNTIME} exec -ti ${COMPOSE_PROJECT_NAME}_tor_1 \
-     /usr/local/bin/generate-auth-keys-for-all-onion-services $*
+  ${CONTAINER_RUNTIME} exec -ti ${COMPOSE_PROJECT_NAME}_tor_1 \
+    /usr/local/bin/generate-auth-keys-for-all-onion-services $*
+}
+
+# Show restricted discovery (aka client authorization) keys
+onionprobe_monitor_showkeys() {
+  local user="${1:-admin}"
+
+  for service in prometheus alertmanager grafana onionprobe; do
+    echo -n "${user}@${service}: "
+
+    ${CONTAINER_RUNTIME} exec -ti ${COMPOSE_PROJECT_NAME}_tor_1 \
+      test -f /var/lib/tor/${service}/authorized_clients/${user}.priv && \
+    ${CONTAINER_RUNTIME} exec -ti ${COMPOSE_PROJECT_NAME}_tor_1 \
+      cat /var/lib/tor/${service}/authorized_clients/${user}.priv
+  done
+}
+
+# Remove restricted discovery (aka client authorization) keys
+onionprobe_monitor_removekeys() {
+  local user="${1:-admin}"
+
+  for service in prometheus alertmanager grafana onionprobe; do
+    echo -n "${user}@${service}: "
+
+    ${CONTAINER_RUNTIME} exec -ti ${COMPOSE_PROJECT_NAME}_tor_1 \
+      rm -f /var/lib/tor/${service}/authorized_clients/${user}.*
+  done
 }
 
 # Execute a command inside a container

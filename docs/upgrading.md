@@ -29,7 +29,7 @@ upgraded to a new [postgres image][] version:
 
 Just run
 
-    docker-compose down
+    ./onionprobe-monitor down
 
 ##### Run the upgrade script
 
@@ -68,7 +68,7 @@ Run the following commands if you're getting warnings such as `The collation in
 the database was created using version A.B.B, but the operating system provides
 version X.Y.Z`:
 
-    $ docker exec -ti onionprobe_postgres_1 psql -U grafana
+    $ ./onionprobe-monitor exec postgres psql -U grafana
     grafana=# ALTER DATABASE grafana REFRESH COLLATION VERSION;
     NOTICE:  changing version from 2.31 to 2.36
     ALTER DATABASE
@@ -91,3 +91,7 @@ Sometimes an image upgrade changes the `debian-tor`'s `UID` and `GID`, which
 may require a manual ownership fix in the Docker volume data:
 
     sudo chown -R 101:103 /var/lib/docker/volumes/onionprobe-instance_tor/_data
+
+The same, for the case of Podman volume data:
+
+    sudo chown -R 101:103 $HOME/.local/share/containers/storage/volumes/onionprobe_tor/_data

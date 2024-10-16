@@ -99,6 +99,8 @@ You can protect them by [setting up Client
 Authorization](https://community.torproject.org/onion-services/advanced/client-auth/):
 
 1. Run `./onionprobe-monitor genkeys`.
+   This script accepts an optional username argument (defaulting to `admin`):
+   `./onionspray-monitor genkeys myuser`.
 2. Restart the `tor` service container from the host to ensure that this new
    configuration is applied:
 
@@ -136,6 +138,20 @@ in another machine:
 3. Restart the `tor` service container from the host to ensure that this new
    configuration is applied:
 
+        ./onionprobe-monitor restart tor
+
+In either case, the private keys for each service can be displayed using
+
+        ./onionprobe-monitor showkeys
+
+By default, keys are shown for the `admin` user.
+To get keys for a specific user, specify it in the command line, like:
+
+        ./onionprobe-monitor showkeys myuser
+
+Credentials may be removed:
+
+        ./onionprobe-monitor removekeys myuser
         ./onionprobe-monitor restart tor
 
 !!! note
