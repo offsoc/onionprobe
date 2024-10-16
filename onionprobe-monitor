@@ -114,6 +114,31 @@ onionprobe_monitor_genkeys() {
      /usr/local/bin/generate-auth-keys-for-all-onion-services $*
 }
 
+# Execute a command inside a container
+onionprobe_monitor_exec() {
+  local container="${1}"
+  local command="${2:-/bin/sh}"
+  local instance="${INSTANCE:-1}"
+
+  if [ -z "$container" ]; then
+    echo "usage: $BASENAME exec <container> <command> [args]"
+    exit 1
+  fi
+
+  if [ ! -z "$2" ]; then
+    shift 2
+  elif [ ! -z "$1" ]; then
+    shift
+  fi
+
+  ${CONTAINER_RUNTIME} exec -ti ${COMPOSE_PROJECT_NAME}_${container}_${instance} ${command} $*
+}
+
+# Alias for "exec"
+onionprobe_monitor_shell() {
+  onionprobe_monitor_exec $*
+}
+
 # Usage
 onionprobe_monitor_usage() {
   echo "usage: ${BASENAME} <action> [args]"
