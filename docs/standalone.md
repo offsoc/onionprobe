@@ -34,7 +34,7 @@ The container runtime is configured at the `.env` file, with the
 
 !!! info
 
-    The default container runtime is [Podman][].
+    The default container runtime is [Docker][].
 
 [Docker]: https://docker.com
 [Podman]: https://podman.io

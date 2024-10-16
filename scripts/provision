@@ -7,7 +7,7 @@
 DIRNAME="`dirname $0`"
 BASEPATH="$DIRNAME/.."
 TORRC="/etc/tor/torrc"
-CONTAINER_RUNTIME="${CONTAINER_RUNTIME:-podman}"
+CONTAINER_RUNTIME="${CONTAINER_RUNTIME:-docker}"
 
 # Load the environment file if available
 [ -f "$BASEPATH/.env" ] && source $BASEPATH/.env

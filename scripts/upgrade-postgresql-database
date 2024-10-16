@@ -10,7 +10,7 @@ BASEPATH="$DIRNAME/.."
 TMP="${TMP:-/tmp}"
 WORK="`mktemp -d -p $TMP`"
 CONTAINER="${1:-onionprobe_postgres}"
-CONTAINER_RUNTIME="${CONTAINER_RUNTIME:-podman}"
+CONTAINER_RUNTIME="${CONTAINER_RUNTIME:-docker}"
 PGUSER="${PGUSER:-grafana}"
 
 # Abort on any error
