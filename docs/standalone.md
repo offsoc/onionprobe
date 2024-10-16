@@ -1,13 +1,23 @@
 # Standalone monitoring node
 
-Onionprobe comes with full monitoring environment based on [Docker
-Compose](https://docs.docker.com/compose/) with:
+Onionprobe comes with full monitoring environment based on the
+[Compose Specification][] with:
 
-* An Onionprobe instance continuously monitoring endpoints.
-* Metrics are exported to a [Prometheus](https://prometheus.io) instance.
-* Alerts are managed using [Alertmanager](https://prometheus.io/docs/alerting/latest/alertmanager/).
-* A [Grafana](https://grafana.com) Dashboard is available for browsing the
+* An Onionprobe container instance continuously monitoring endpoints.
+* Metrics are exported to a [Prometheus][] instance.
+* Alerts are managed using [Alertmanager][].
+* A [Grafana][] Dashboard is available for browsing the
   metrics and using a PostgreSQL service container as the database backend.
+
+The monitoring node can run with any tool implementing the [Compose
+Specification][], such as [Docker Compose][] or [Podman Compose][].
+
+[Compose Speficiation]: https://compose-spec.io
+[Prometheus]: https://prometheus.io
+[Alertmanager]: https://prometheus.io/docs/alerting/latest/alertmanager/
+[Grafana]: https://grafana.com
+[Docker Compose]: https://docs.docker.com/compose/
+[Podman Compose]: https://github.com/containers/podman-compose
 
 ## Configuring the monitoring node
 
@@ -25,9 +35,11 @@ Check the [sample .env][] for an example.
 
 ## Choosing the container runtime
 
-The monitoring node can run with either [Docker][] or [Podman][] (with [Podman
-Compose][]). Refer to upstream documentation for how to do the basic setup for
-each of these runtimes.
+The monitoring node can run with either [Docker][] (with [Docker Compose][]) or
+[Podman][] (with [Podman Compose][]).
+
+Refer to upstream documentation for how to do the basic setup for each of these
+runtimes.
 
 The container runtime is configured at the `.env` file, with the
 `CONTAINER_RUNTIME` variable.
@@ -38,7 +50,12 @@ The container runtime is configured at the `.env` file, with the
 
 [Docker]: https://docker.com
 [Podman]: https://podman.io
-[Podman Compose]: https://github.com/containers/podman-compose
+
+## The Onionprobe Monitor script
+
+The monitoring node can be operated directly using [Docker Compose][] or
+[Podman Compose][], but a convenience script named `onionprobe-monitor` is
+offered as a thing wrapper to the container runtime implementation.
 
 ## Starting the monitoring node
 
@@ -81,7 +98,7 @@ By default, all dashboards and the are accessible without credentials.
 You can protect them by [setting up Client
 Authorization](https://community.torproject.org/onion-services/advanced/client-auth/):
 
-0. Enter in the `tor` service container: `podman exec -ti onionprobe_tor_1 /bin/bash`.
+0. Enter in the `tor` service container: `./onionprobe-monitor shell tor`.
 1. Setup your client credentials [according to the docs](https://community.torproject.org/onion-services/advanced/client-auth/).
    The `tor` service container already comes with all programs to generate it.
    Onionprobe ships with a handy [generate-auth-keys-for-all-onion-services][]
@@ -89,8 +106,9 @@ Authorization](https://community.torproject.org/onion-services/advanced/client-a
    `./onionprobe-monitor genkeys`.
    (it also accepts an optional auth name parameter, thus allowing multiple
    credentials to be deployed).
-2. Place the `.auth` files at the Onion Services `authorized_clients` folder if you did not
-   create them with the `generate-auth-keys-for-all-onion-services` script:
+2. Place the `.auth` files at the Onion Services `authorized_clients` folder of the
+   `tor` container, in case you did not create them with the
+   `generate-auth-keys-for-all-onion-services` script:
     * Prometheus: `/var/lib/tor/prometheus/authorized_clients`.
     * Alertmanager: `/var/lib/tor/alertmanager/authorized_clients`.
     * Grafana: `/var/lib/tor/grafana/authorized_clients`.
@@ -100,10 +118,12 @@ Authorization](https://community.torproject.org/onion-services/advanced/client-a
 
         ./onionprobe-monitor restart tor
 
-Note that the Grafana dashboard also comes with it's own user management system,
-whose default user and password is `admin`. You might change this default user
-and not setup the Client Authorization for Grafana, or maybe use both depending
-or your security needs.
+!!! note
+
+    The Grafana dashboard also comes with it's own user management
+    system, whose default user and password is `admin`. You might change this
+    default user and not setup the Client Authorization for Grafana, or maybe
+    use both depending or your security needs.
 
 [generate-auth-keys-for-all-onion-services]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/blob/main/scripts/generate-auth-keys-for-all-onion-services
 
