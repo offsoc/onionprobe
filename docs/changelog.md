@@ -12,7 +12,7 @@
 
   * New `onionprobe-monitor` script acting as a wrapper for interacting with
     the container runtime. Given that [Podman][] and [Docker][] have a few
-    differences, it made sense creating a thin wrapper around then, to handle
+    differences, it made sense to create a thin wrapper around them, to handle
     things like [Podman not honoring some Compose variables in .env files][podman-env].
 
 [Docker]: https://docker.com

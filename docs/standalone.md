@@ -1,7 +1,7 @@
 # Standalone monitoring node
 
 Onionprobe comes with full monitoring environment based on the
-[Compose Specification][] with:
+[Compose Specification][], and with:
 
 * An Onionprobe container instance continuously monitoring endpoints.
 * Metrics are exported to a [Prometheus][] instance.
@@ -12,7 +12,7 @@ Onionprobe comes with full monitoring environment based on the
 The monitoring node can run with any tool implementing the [Compose
 Specification][], such as [Docker Compose][] or [Podman Compose][].
 
-[Compose Speficiation]: https://compose-spec.io
+[Compose Specification]: https://compose-spec.io
 [Prometheus]: https://prometheus.io
 [Alertmanager]: https://prometheus.io/docs/alerting/latest/alertmanager/
 [Grafana]: https://grafana.com
@@ -38,7 +38,7 @@ Check the [sample .env][] for an example.
 The monitoring node can run with either [Docker][] (with [Docker Compose][]) or
 [Podman][] (with [Podman Compose][]).
 
-Refer to upstream documentation for how to do the basic setup for each of these
+Refer to upstream documentation on how to do the basic setup for each of these
 runtimes.
 
 The container runtime is configured at the `.env` file, with the
@@ -55,7 +55,7 @@ The container runtime is configured at the `.env` file, with the
 
 The monitoring node can be operated directly using [Docker Compose][] or
 [Podman Compose][], but a convenience script named `onionprobe-monitor` is
-offered as a thing wrapper to the container runtime implementation.
+offered as a thin wrapper to the container runtime implementation.
 
 ## Starting the monitoring node
 
@@ -98,17 +98,37 @@ By default, all dashboards and the are accessible without credentials.
 You can protect them by [setting up Client
 Authorization](https://community.torproject.org/onion-services/advanced/client-auth/):
 
-0. Enter in the `tor` service container: `./onionprobe-monitor shell tor`.
-1. Setup your client credentials [according to the docs](https://community.torproject.org/onion-services/advanced/client-auth/).
+1. Run `./onionprobe-monitor genkeys`.
+2. Restart the `tor` service container from the host to ensure that this new
+   configuration is applied:
+
+        ./onionprobe-monitor restart tor
+
+<!--
+Doing this manually:
+
+1. Enter in the `tor` service container: `./onionprobe-monitor shell tor`.
+2. Setup your client credentials [according to the
+   docs](https://community.torproject.org/onion-services/advanced/client-auth/).
    The `tor` service container already comes with all programs to generate it.
    Onionprobe ships with a handy [generate-auth-keys-for-all-onion-services][]
    available at the `tor` service container and which can be invoked with
-   `./onionprobe-monitor genkeys`.
+   `./onionprobe-monitor /usr/local/bin/generate-auth-keys-for-all-onion-services`.
    (it also accepts an optional auth name parameter, thus allowing multiple
    credentials to be deployed).
+3. Restart the `tor` service container from the host to ensure that this new
+   configuration is applied:
+
+        ./onionprobe-monitor restart tor
+-->
+
+Copying existing client authorization keys, in case you generated the keys
+in another machine:
+
+1. Setup your client credentials [according to the
+   docs](https://community.torproject.org/onion-services/advanced/client-auth/).
 2. Place the `.auth` files at the Onion Services `authorized_clients` folder of the
-   `tor` container, in case you did not create them with the
-   `generate-auth-keys-for-all-onion-services` script:
+   `tor` container:
     * Prometheus: `/var/lib/tor/prometheus/authorized_clients`.
     * Alertmanager: `/var/lib/tor/alertmanager/authorized_clients`.
     * Grafana: `/var/lib/tor/grafana/authorized_clients`.
