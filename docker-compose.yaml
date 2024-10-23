@@ -42,7 +42,7 @@ services:
     #    ipv4_address: 172.19.0.100
 
     # Profiles
-    # This needs a newer Docker Compose (>= 1.28)
+    # This needs a newer Docker Compose (>= 1.28) or Podman Compose (>= 1.1.0)
     #profiles: ["prometheus", "all"]
 
   alertmanager:
@@ -62,7 +62,7 @@ services:
     restart: always
 
     # Profiles
-    # This needs a newer Docker Compose (>= 1.28)
+    # This needs a newer Docker Compose (>= 1.28) or Podman Compose (>= 1.1.0)
     #profiles: ["alertmanager", "all"]
 
   postgres:
@@ -79,7 +79,7 @@ services:
     restart: always
 
     # Profiles
-    # This needs a newer Docker Compose (>= 1.28)
+    # This needs a newer Docker Compose (>= 1.28) or Podman Compose (>= 1.1.0)
     #profiles: [ "grafana", "all" ]
 
   grafana:
@@ -119,7 +119,7 @@ services:
       - postgres
 
     # Profile
-    # This needs a newer Docker Compose (>= 1.28)
+    # This needs a newer Docker Compose (>= 1.28) or Podman Compose (>= 1.1.0)
     #profiles: ["grafana", "all"]
 
   tor:
@@ -136,7 +136,7 @@ services:
     restart: always
 
     # Profile
-    # This needs a newer Docker Compose (>= 1.28)
+    # This needs a newer Docker Compose (>= 1.28) or Podman Compose (>= 1.1.0)
     #profiles: ["tor", "all"]
 
   # Service that periodically compiles an Onionprobe configuration
@@ -159,7 +159,7 @@ services:
     restart: always
 
     # Profile
-    # This needs a newer Docker Compose (>= 1.28)
+    # This needs a newer Docker Compose (>= 1.28) or Podman Compose (>= 1.1.0)
     #profiles: ["configurator", "all"]
 
   onionprobe:
@@ -191,7 +191,7 @@ services:
       - configurator
 
     # Profile
-    # This needs a newer Docker Compose (>= 1.28)
+    # This needs a newer Docker Compose (>= 1.28) or Podman Compose (>= 1.1.0)
     #profiles: ["onionprobe", "all"]
 
 volumes:
