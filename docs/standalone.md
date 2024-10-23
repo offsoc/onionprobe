@@ -167,7 +167,7 @@ Credentials may be removed:
 
 The monitoring node can be managed with systemd.
 A [sample service file][] is provided
-and can be adapted..
+and can be adapted.
 
 [sample service file]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/blob/main/configs/systemd/onionprobe-monitor.service
 
