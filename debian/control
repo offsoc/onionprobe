@@ -11,7 +11,7 @@ Build-Depends:
  pandoc
 X-Python-3-Version: >= 3.5
 Standards-Version: 4.6.0.1
-Homepage: https://tpo.pages.torproject.net/onion-services/onionprobe
+Homepage: https://onionservices.torproject.org/apps/web/onionprobe
 Vcs-Git: https://gitlab.torproject.org/tpo/onion-services/onionprobe.git
 Vcs-Browser: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/tree/main
 
