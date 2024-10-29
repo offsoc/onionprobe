@@ -19,6 +19,16 @@ Specification][], such as [Docker Compose][] or [Podman Compose][].
 [Docker Compose]: https://docs.docker.com/compose/
 [Podman Compose]: https://github.com/containers/podman-compose
 
+## Requirements
+
+The standalone node have the following resource requirements:
+
+* A machine with at least 2GB of RAM.
+* At least 2GB disk space for the container images.
+* At least 500MB disk space for the container volumes (but that really depends
+  on the number of onionsites you monitor, and for how long you want to keep
+  this data).
+
 ## Configuring the monitoring node
 
 By default, the monitoring node periodically compiles the Onionprobe configuration
