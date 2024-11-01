@@ -1,6 +1,5 @@
 #
-# Systemd service file to run the Onionprobe monitoring node using Docker
-# Compose
+# Systemd service file to run the Onionprobe monitoring node
 #
 # Copyright (C) 2022 The Tor Project, Inc.
 #
@@ -27,24 +26,24 @@ Type=oneshot
 RemainAfterExit=yes
 
 # User, groups and dirs
-User=onionprobe-monitor
-Group=onionprobe-monitor
-RuntimeDirectory=onionprobe-monitor
-WorkingDirectory=/var/lib/onionprobe-monitor
+User=onionprobe
+Group=onionprobe
+RuntimeDirectory=onionprobe
+WorkingDirectory=/var/lib/onionprobe
 
 #ExecStartPre=-/usr/bin/docker-compose pull --quiet
 #ExecStart=/usr/bin/docker-compose up -d --remove-orphans
-ExecStart=/var/lib/onionprobe-monitor/onionprobe-monitor up
+ExecStart=/var/lib/onionprobe/onionprobe-monitor up
 
 #ExecStop=/usr/bin/docker-compose down
-ExecStart=/var/lib/onionprobe-monitor/onionprobe-monitor down
+ExecStart=/var/lib/onionprobe/onionprobe-monitor down
 
 # Reload
 #ExecReload=/usr/bin/docker-compose restart
 #ExecReload=/usr/bin/docker-compose pull --quiet
 #ExecReload=/usr/bin/docker-compose build
 #ExecReload=/usr/bin/docker-compose up -d --remove-orphans
-ExecStart=/var/lib/onionprobe-monitor/onionprobe-monitor reload
+ExecStart=/var/lib/onionprobe/onionprobe-monitor reload
 
 [Install]
 WantedBy=multi-user.target
