@@ -4,6 +4,9 @@
 
 ### Features
 
+* The [installation page](installation.md) updated to include a reference to
+  the new [Onionprobe Ansible Role][].
+
 * [Standalone monitoring node](standalone.md):
   * Added support for [Podman][] and [Podman Compose][] ([tpo/onion-services/onionprobe#97][]).
     It can be enable by setting `CONTAINER_RUNTIME=podman` in the `.env` file.
@@ -16,6 +19,7 @@
     to create a thin wrapper around them, to handle things like [Podman not
     honoring some Compose variables in .env files][podman-env].
 
+[Onionprobe Ansible Role]: https://gitlab.torproject.org/tpo/onion-services/ansible/onionprobe-role
 [Docker]: https://docker.com
 [Podman]: https://podman.io
 [Podman Compose]: https://github.com/containers/podman-compose
@@ -23,6 +27,8 @@
 [tpo/onion-services/onionprobe#97]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/97
 
 ### Fixes
+
+* Updated the sample systemd service unit ([tpo/onion-services/onionprobe!72][]).
 
 * Upgraded PostgreSQL image to 17.
   Please run the [needed upgrading steps](upgrading.md#major-upgrades).
@@ -33,6 +39,8 @@
 * Updated [development procedure](development.md).
 
 * Improved verbosity for the Tor initialization log message.
+
+[tpo/onion-services/onionprobe!72]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/merge_requests/72
 
 ## v1.2.0 - 2024-04-24
 
