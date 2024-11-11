@@ -16,8 +16,15 @@
 
 .PHONY: configs docs
 
-# Include the environment file so Makefile to include custom configs and overrides
--include .env
+# Include the environment file so Makefile to include custom configs and
+# overrides
+#
+# Not doing that anymore since the .env file might have quotes, and thus be
+# incompatible with the Makefile format.
+#
+# Also, all procedures using settings from the .env file are now done through
+# the onionprobe-monitor script.
+#-include .env
 
 #
 # Configs
