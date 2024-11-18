@@ -30,6 +30,8 @@
 
 * Updated the sample systemd service unit ([tpo/onion-services/onionprobe!72][]).
 
+* Upgraded Prometheus image to [3.0.0][prometheus-3.0.0].
+
 * Upgraded PostgreSQL image to 17.
   Please run the [needed upgrading steps](upgrading.md#major-upgrades).
 
@@ -41,6 +43,7 @@
 * Improved verbosity for the Tor initialization log message.
 
 [tpo/onion-services/onionprobe!72]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/merge_requests/72
+[prometheus-3.0.0]: https://prometheus.io/blog/2024/11/14/prometheus-3-0/
 
 ## v1.2.0 - 2024-04-24
 
