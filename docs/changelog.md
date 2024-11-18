@@ -32,11 +32,11 @@
 
 * Upgraded Prometheus image to [3.0.0][prometheus-3.0.0].
 
-* Upgraded PostgreSQL image to 17.
-  Please run the [needed upgrading steps](upgrading.md#major-upgrades).
+* PostgreSQL:
+    * Upgraded image to version 17.
+      Please run the [needed upgrading steps](upgrading.md#major-upgrades).
 
-* PostgreSQL upgrade script (`upgrade-postgresql-database`):
-  * Minor fixes.
+    * Minor fixes at `upgrade-postgresql-database`.
 
 * Updated [development procedure](development.md).
 
