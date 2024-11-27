@@ -51,7 +51,8 @@ Build and then upload the Python package in the Test PyPi instance:
     make build-python-package
     make upload-python-test-package
 
-Try the test package in a fresh virtual machine, eg:
+Try the test package in a fresh virtual machine, which can be installed
+directly from [Test PyPI](https://test.pypi.org):
 
     sudo apt-get install -y python3-pip tor
     pip install -i https://pypi.org/simple/ \
@@ -70,7 +71,7 @@ Announce the new release:
 
 * Post a message to the [Tor Forum][], using the [onionprobe-announce tag][].
 * Send a message to the [tor-announce][] mailing list ONLY in special cases,
-  like important security issues.
+  like important security issues (severity `HIGH` or `CRITICAL`).
 
 Template:
 
@@ -85,8 +86,8 @@ https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/blob/main/docs/upg
 
 [This release fixes a security issue. Please upgrade as soon as possible!]
 
-[This release requires a database migration for those using the monitoring node:]
-[https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/blob/main/docs/upgrading.md]
+[This release [also] requires a database migration for those using the monitoring node:]
+[https://onionservices.torproject.org/apps/web/onionprobe/upgrading/]
 
 # ChangeLog
 
