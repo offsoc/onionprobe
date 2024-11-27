@@ -8,16 +8,16 @@
   the new [Onionprobe Ansible Role][].
 
 * [Standalone monitoring node](standalone.md):
-  * Added support for [Podman][] and [Podman Compose][] ([tpo/onion-services/onionprobe#97][]).
-    It can be enable by setting `CONTAINER_RUNTIME=podman` in the `.env` file.
-    For backwards compatibility,
-    [Docker][] is still the default container runtime.
+    * Added support for [Podman][] and [Podman Compose][] ([tpo/onion-services/onionprobe#97][]).
+      It can be enable by setting `CONTAINER_RUNTIME=podman` in the `.env` file.
+      For backwards compatibility,
+      [Docker][] is still the default container runtime.
 
-  * New `onionprobe-monitor` script acting as a wrapper for interacting with
-    the container runtime ([tpo/onion-services/onionprobe#97][]).
-    Given that [Podman][] and [Docker][] have a few differences, it made sense
-    to create a thin wrapper around them, to handle things like [Podman not
-    honoring some Compose variables in .env files][podman-env].
+    * New `onionprobe-monitor` script acting as a wrapper for interacting with
+      the container runtime ([tpo/onion-services/onionprobe#97][]).
+      Given that [Podman][] and [Docker][] have a few differences, it made sense
+      to create a thin wrapper around them, to handle things like [Podman not
+      honoring some Compose variables in .env files][podman-env].
 
 [Onionprobe Ansible Role]: https://gitlab.torproject.org/tpo/onion-services/ansible/onionprobe-role
 [Docker]: https://docker.com
