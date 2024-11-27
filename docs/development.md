@@ -10,7 +10,7 @@ Release cycle workflow.
 
 Set the version number:
 
-    ONIONPROBE_VERSION=1.2.0
+    ONIONPROBE_VERSION=1.2.1
 
 Update the version in some files, like:
 

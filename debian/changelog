@@ -1,3 +1,9 @@
+onionprobe (1.2.1) unstable; urgency=medium
+
+  * New upstream version.
+
+ -- Silvio Rhatto <rhatto@riseup.net>  Wed, 27 Nov 2024 11:11:04 -0300
+
 onionprobe (1.2.0) unstable; urgency=medium
 
   * New upstream version.
