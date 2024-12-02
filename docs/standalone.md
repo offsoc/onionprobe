@@ -12,12 +12,19 @@ Onionprobe comes with full monitoring environment based on the
 The monitoring node can run with any tool implementing the [Compose
 Specification][], such as [Docker Compose][] or [Podman Compose][].
 
+!!! tip Onionprobe Ansible Role
+
+    The Standalone monitoring node can be easily configured
+    with [Ansible][] through the [Onionprobe Role][].
+
 [Compose Specification]: https://compose-spec.io
 [Prometheus]: https://prometheus.io
 [Alertmanager]: https://prometheus.io/docs/alerting/latest/alertmanager/
 [Grafana]: https://grafana.com
 [Docker Compose]: https://docs.docker.com/compose/
 [Podman Compose]: https://github.com/containers/podman-compose
+[Ansible]: https://ansible.com
+[Onionprobe Role]: https://gitlab.torproject.org/tpo/onion-services/ansible/onionprobe-role
 
 ## Requirements
 
