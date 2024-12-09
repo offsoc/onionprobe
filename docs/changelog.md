@@ -2,10 +2,17 @@
 
 ## v1.3.0 - Unreleased
 
+### Fixes
+
+* [Standalone monitoring node](standalone.md):
+  * The `start` action in the `onionprobe-monitor` script now pulls and build
+    images.
+
 ### Features
 
-* Grafana dashboard got a new time series: number of missing Onion Service
-  descriptors in HSDirs.
+* [Standalone monitoring node](standalone.md):
+  * Grafana dashboard got a new time series: number of missing Onion Service
+    descriptors in HSDirs.
 
 ## v1.2.1 - 2024-11-27
 

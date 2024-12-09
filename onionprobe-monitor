@@ -57,6 +57,8 @@ onionprobe_monitor_build() {
 
 # Bring services up
 onionprobe_monitor_up() {
+  onionprobe_monitor_pull --quiet
+  onionprobe_monitor_build
   ${COMPOSE_CMD} up -d --remove-orphans
 }
 
@@ -88,8 +90,6 @@ onionprobe_monitor_restart() {
 
 # Reload services
 onionprobe_monitor_reload() {
-  onionprobe_monitor_pull --quiet
-  onionprobe_monitor_build
   onionprobe_monitor_up
 }
 
