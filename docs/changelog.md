@@ -1,5 +1,12 @@
 # Onionprobe ChangeLog
 
+## v1.3.0 - Unreleased
+
+### Features
+
+* Grafana dashboard got a new time series: number of missing Onion Service
+  descriptors in HSDirs.
+
 ## v1.2.1 - 2024-11-27
 
 ### Features
