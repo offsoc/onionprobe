@@ -69,7 +69,7 @@ upload it to PyPi:
 
 Announce the new release:
 
-* Post a message to the [Tor Forum][], using the [onionprobe-announce tag][].
+* Post a message to the [Tor Forum][], using the [onion-services-announce tag][].
 * Send a message to the [tor-announce][] mailing list ONLY in special cases,
   like important security issues (severity `HIGH` or `CRITICAL`).
 
@@ -80,14 +80,15 @@ Subject: [RELEASE] Onionprobe [security] release $ONIONPROBE_VERSION
 
 Greetings,
 
-We just released Onionprobe $ONIONPROBE_VERSION, a tool for testing and
-monitoring the status of Onion Services:
-https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/blob/main/docs/upgrading.md
+We just released [Onionprobe][] $ONIONPROBE_VERSION, a tool for testing and
+monitoring the status of Onion Services.
 
 [This release fixes a security issue. Please upgrade as soon as possible!]
 
 [This release [also] requires a database migration for those using the monitoring node:]
 [https://onionservices.torproject.org/apps/web/onionprobe/upgrading/]
+
+[Onionprobe]: https://onionservices.torproject.org/apps/web/onionprobe
 
 # ChangeLog
 
@@ -96,4 +97,4 @@ $CHANGELOG
 
 [tor-announce]: https://lists.torproject.org/cgi-bin/mailman/listinfo/tor-announce
 [Tor Forum]: https://forum.torproject.org
-[onionprobe-announce tag]: https://forum.torproject.org/tag/onionprobe-announce
+[onion-services-announce tag]: https://forum.torproject.org/tag/onion-services-announce
