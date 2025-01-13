@@ -5,8 +5,12 @@
 ### Fixes
 
 * [Standalone monitoring node](standalone.md):
-  * The `start` action in the `onionprobe-monitor` script now pulls and build
+  * The `start` action in the `onionprobe-monitor` script now pulls and builds
     images.
+
+  * Failure rate was erroneously being reported at 1% when all services
+    were working, when the excepted would be a reported value of 0%.
+    This is now fixed.
 
 ### Features
 
