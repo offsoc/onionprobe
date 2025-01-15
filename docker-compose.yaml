@@ -46,7 +46,7 @@ services:
     #profiles: ["prometheus", "all"]
 
   alertmanager:
-    image: docker.io/prom/alertmanager:v0.27.0
+    image: docker.io/prom/alertmanager:v0.28.0
 
     volumes:
       - ./${ALERTMANAGER_CONFIG:-configs/alertmanager/alertmanager.yml}:/etc/alertmanager/alertmanager.yml
