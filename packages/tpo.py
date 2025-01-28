@@ -21,9 +21,14 @@
 
 # Dependencies
 import os
-import json
 import argparse
 import urllib.parse
+
+try:
+    import yaml
+except ImportError:
+    print("Please install pyaml first!")
+    raise ImportError
 
 from onionprobe.config import OnionprobeConfigCompiler, basepath, cmdline_parser_compiler, cmdline_compiler
 
@@ -70,8 +75,6 @@ class TPOSites(OnionprobeConfigCompiler):
 
         """
 
-        data = {}
-
         # Get the Onion Service database from a remote API
         if os.path.exists(self.databases[database]):
             print('Using list of %s database endpoints from %s...' % (
@@ -93,9 +96,7 @@ class TPOSites(OnionprobeConfigCompiler):
                 # Some error happened: do not proceed generating the config
                 exit(1)
 
-            for line in result.text.split('\n'):
-                if line != '':
-                    data.update(json.loads(line))
+            data = yaml.load(result.text, yaml.CLoader)
 
         endpoints = {}
 
