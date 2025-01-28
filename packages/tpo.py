@@ -81,8 +81,7 @@ class TPOSites(OnionprobeConfigCompiler):
                 database, self.databases[database]))
 
             with open(self.databases[database], 'r') as result:
-                for line in result.readlines():
-                    items = data.update(json.loads(line))
+                data = yaml.load(result.readlines(), yaml.CLoader)
 
         else:
             try:
