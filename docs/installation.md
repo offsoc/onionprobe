@@ -145,6 +145,10 @@ with:
                         python3-cryptography python3-yaml      \
                         python3-requests python3-socks tor
 
+The Onionprobe can then run directly from the working copy:
+
+    ./onionprobe
+
 A [convenience script][debian-script] is provided, which also installs
 the official `tor` package:
 
@@ -154,8 +158,8 @@ the official `tor` package:
 
 ### Local installation from source using Python packages
 
-Onionprobe's [Python][] dependencies can also be installed directly from
-[PyPI][pypi].
+Onionprobe's [Python][] dependencies can be installed directly from
+[PyPI][pypi], by setting up a [virtualenv][]:
 
 The recommended way is to clone setup a [virtualenv][]:
 
@@ -164,7 +168,7 @@ The recommended way is to clone setup a [virtualenv][]:
     source venv/bin/activate
     pip3 install .
 
-Then Onionprobe can then run directly from the working copy:
+The Onionprobe can then run directly from the working copy:
 
     ./onionprobe
 
