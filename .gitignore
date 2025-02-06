@@ -1,5 +1,7 @@
 .env
+venv
 dist
+build
 __pycache__
 *.egg-info/
 docs/man/onionprobe.1
