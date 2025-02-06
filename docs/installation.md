@@ -2,7 +2,7 @@
 
 ## Debian package
 
-A package for Onionprobe should be available for [Debian][]-like systems.
+A package for Onionprobe should be available on [Debian][]-like systems.
 
     sudo apt install onionprobe
 
@@ -49,7 +49,7 @@ via [pipx][]:
 
 [pipx]: https://pipx.pypa.io/stable/
 
-### Using pip and a virtualen
+### Using pip and a virtualenv
 
 Another installation option is to use [pip][] with a [virtualenv][]:
 
@@ -86,6 +86,33 @@ without a [virtualenv][], but **this might conflict with system-wide installed
 [Python][] packages**, and therefore is not usually recommended:
 
     pip install onionprobe --break-system-packages
+
+### Python package installation from source
+
+!!! warning "Conflict with system-wide packages"
+
+    The following procedure might create conflict with system-wide Python
+    software installed through the operating system package manager,
+    and therefore is not recommended except if you know what you're doing.
+
+To install the [Python][] package from source, first get the code and
+install it using [pip][]:
+
+    sudo apt install -y python3-pip
+    git clone https://gitlab.torproject.org/tpo/onion-services/onionbalance
+    cd onionprobe
+    python3 -m pip install . --break-system-packages
+
+The Onionprobe executable will be available usually at your `$HOME/.local/bin`
+folder.
+
+System-wide installation from source is also possible. The simpler way
+is to invoke the last command above with `sudo`.
+
+    sudo python3 -m pip install . --break-system-packages
+
+For system-wide installations, the Onionprobe executable should be available in
+a path like `/usr/local/bin/onionprobe`.
 
 ## Ansible role
 
@@ -150,20 +177,3 @@ Then Onionprobe can then run directly from the working copy:
     This means that that a command like `source venv/bin/activate`
     should be user before running Oniobalance, like after system
     reboots, fresh command line shells or inside scripts.
-
-### Global installation from source
-
-!!! warning "Conflict with system-wide packages"
-
-    The following procedure might create conflict with system-wide Python
-    software installed through the operating system package manager,
-    and therefore is not recommended except if you know what you're doing.
-
-System-wide installation for source is also possible. The simpler way
-is to just use [pip][] to do everything:
-
-    sudo apt install -y python3-pip
-    sudo python3 -m pip install . --break-system-packages
-
-The Onionprobe executable should be available in a path like
-`/usr/local/bin/onionprobe`.
