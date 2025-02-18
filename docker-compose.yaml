@@ -7,7 +7,7 @@ version: '3'
 
 services:
   prometheus:
-    image: docker.io/prom/prometheus:v3.1.0
+    image: docker.io/prom/prometheus:v3.2.0
 
     volumes:
       - ./${PROMETHEUS_CONFIG:-configs/prometheus/prometheus.yml}:/etc/prometheus/prometheus.yml
