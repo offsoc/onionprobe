@@ -115,7 +115,7 @@ promtool:
   script:
     - promtool check config configs/prometheus/prometheus.yml
     - echo checking for password leaks...
-    - grep password prometheus-ci.yml | grep -q '[[:space:]]*password:[[:space:]]*REDACTED$'
+    - grep password configs/prometheus/prometheus.yml | grep -q '[[:space:]]*password:[[:space:]]*REDACTED$'
     - promtool test rules configs/prometheus/*rules*
 
 #
