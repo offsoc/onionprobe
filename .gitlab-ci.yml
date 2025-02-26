@@ -114,7 +114,7 @@ promtool:
     entrypoint: [""]
   script:
     - promtool check config configs/prometheus/prometheus.yml
-    - promtool test rules configs/prometheus/*rules*
+    - promtool test rules configs/prometheus/test.yml
 
 #
 # Release
