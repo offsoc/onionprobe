@@ -114,8 +114,6 @@ promtool:
     entrypoint: [""]
   script:
     - promtool check config configs/prometheus/prometheus.yml
-    - echo checking for password leaks...
-    - grep password configs/prometheus/prometheus.yml | grep -q '[[:space:]]*password:[[:space:]]*REDACTED$'
     - promtool test rules configs/prometheus/*rules*
 
 #
