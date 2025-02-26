@@ -18,6 +18,11 @@
   * Grafana dashboard got a new time series: number of missing Onion Service
     descriptors in HSDirs.
 
+* Added tests for the Prometheus configuration
+  ([tpo/onion-services/onionprobe!90][]).
+
+[tpo/onion-services/onionprobe!90]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/merge_requests/90
+
 ## v1.2.1 - 2024-11-27
 
 ### Features
