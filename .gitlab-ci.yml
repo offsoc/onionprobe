@@ -3,7 +3,12 @@ include:
   - local: '.gitlab-ci-pages.yml'
   - local: '.gitlab-ci-slides.yml'
 
+#
+# Python
+#
+
 python:
+  stage: build
   image: debian:bookworm
   script:
     - apt-get update
@@ -19,7 +24,12 @@ python:
   #only:
   #  - main
 
+#
+# Debian
+#
+
 debian:
+  stage: build
   # Using bookworm support due to the pybuild-plugin-pyproject package
   #image: debian:bookworm
   #image: debian:bookworm-backports
@@ -42,8 +52,13 @@ debian:
   #only:
   #  - main
 
+#
+# Configuration
+#
+
 configs:
   image: debian:bookworm
+  stage: build
   script:
     - apt-get update
     - apt-get install -y git
@@ -59,8 +74,13 @@ configs:
   #only:
   #  - main
 
+#
+# Documentation
+#
+
 #manpage:
 #  image: debian:bookworm
+#  stage: build
 #  script:
 #    - apt-get update
 #    - apt-get install -y git
@@ -75,6 +95,32 @@ configs:
 #      - dist
 #  only:
 #    - main
+
+#
+# Prometheus
+# Thanks https://gitlab.torproject.org/tpo/tpa/prometheus-alerts
+#
+
+pint:
+  stage: test
+  image: ghcr.io/cloudflare/pint
+  script:
+    - pint lint configs/prometheus/*rules*
+
+promtool:
+  stage: test
+  image:
+    name: quay.io/prometheus/prometheus
+    entrypoint: [""]
+  script:
+    - promtool check config configs/prometheus/prometheus.yml
+    - echo checking for password leaks...
+    - grep password prometheus-ci.yml | grep -q '[[:space:]]*password:[[:space:]]*REDACTED$'
+    - promtool test rules configs/prometheus/*rules*
+
+#
+# Release
+#
 
 release:
   image: registry.gitlab.com/gitlab-org/release-cli:latest
