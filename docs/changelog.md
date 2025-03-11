@@ -5,6 +5,8 @@
 ### Fixes
 
 * [Standalone monitoring node](standalone.md):
+  * *SECURITY*: use an internal network by default.
+
   * The `start` action in the `onionprobe-monitor` script now pulls and builds
     images.
 
