@@ -5,12 +5,23 @@
 ### Fixes
 
 * [Standalone monitoring node](standalone.md):
+  * *SECURITY*: use an internal network by default:
+    * By default, Prometheus, Alertmanager, Grafana and the Onionprobe exporter are accessible
+      only from localhost or through Onion Services.
+    * This prevents exposing these services to the internet in systems that aren't firewalled.
+    * This can be customized via the `ONIONPROBE_LISTEN_ADDR` environment variable used by
+      the [Compose][] configuration.
+    * Thanks to [@gus][] for spotting the issue.
+
   * The `start` action in the `onionprobe-monitor` script now pulls and builds
     images.
 
   * Failure rate was erroneously being reported at 1% when all services
     were working, when the excepted would be a reported value of 0%.
     This is now fixed.
+
+[Compose]: https://docs.docker.com/reference/compose-file/
+[@gus]: https://gitlab.torproject.org/gus
 
 ### Features
 
