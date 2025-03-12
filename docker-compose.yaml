@@ -26,7 +26,7 @@ services:
     ports:
       # By default, restrict access only to localhost, so this service is not
       # accidentally exposed to the internet
-      - 127.0.0.1:9090:9090
+      - ${ONIONPROBE_LISTEN_ADDR:-127.0.0.1}:9090:9090
 
     command:
       - '--config.file=/etc/prometheus/prometheus.yml'
@@ -62,7 +62,7 @@ services:
     ports:
       # By default, restrict access only to localhost, so this service is not
       # accidentally exposed to the internet
-      - 127.0.0.1:9093:9093
+      - ${ONIONPROBE_LISTEN_ADDR:-127.0.0.1}:9093:9093
 
     command:
       - "--config.file=/etc/alertmanager/alertmanager.yml"
@@ -127,7 +127,7 @@ services:
     ports:
       # By default, restrict access only to localhost, so this service is not
       # accidentally exposed to the internet
-      - 127.0.0.1:3000:3000
+      - ${ONIONPROBE_LISTEN_ADDR:-127.0.0.1}:3000:3000
 
     restart: always
 
@@ -206,13 +206,13 @@ services:
       #
       # By default, restrict access only to localhost, so this service is not
       # accidentally exposed to the internet
-      - 127.0.0.1:9935:9935
+      - ${ONIONPROBE_LISTEN_ADDR:-127.0.0.1}:9935:9935
 
       # Tor Metrics Prometheus exporter
       #
       # By default, restrict access only to localhost, so this service is not
       # accidentally exposed to the internet
-      - 127.0.0.1:9936:9936
+      - ${ONIONPROBE_LISTEN_ADDR:-127.0.0.1}:9936:9936
 
     environment:
       ONIONPROBE_CONFIG: /srv/onionprobe/${ONIONPROBE_CONFIG:-contrib/tpo.yaml}
