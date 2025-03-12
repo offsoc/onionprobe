@@ -31,7 +31,7 @@ except ImportError:
 # The Onionprobe version string
 # Uses Semantic Versioning 2.0.0
 # See https://semver.org
-onionprobe_version = '1.2.1'
+onionprobe_version = '1.3.0'
 
 # The base path for this project
 basepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), os.pardir, os.pardir) + os.sep
