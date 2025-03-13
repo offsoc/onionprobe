@@ -1,5 +1,5 @@
 slides:
-  image: debian:bookworm
+  image: containers.torproject.org/tpo/tpa/base-images/debian:stable
   stage: build
   script:
     - apt-get update

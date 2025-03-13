@@ -9,7 +9,7 @@ include:
 
 python:
   stage: build
-  image: debian:bookworm
+  image: containers.torproject.org/tpo/tpa/base-images/debian:stable
   script:
     - apt-get update
     - apt-get install -y git
@@ -33,7 +33,8 @@ debian:
   # Using bookworm support due to the pybuild-plugin-pyproject package
   #image: debian:bookworm
   #image: debian:bookworm-backports
-  image: debian:bookworm
+  #image: debian:bookworm
+  image: containers.torproject.org/tpo/tpa/base-images/debian:stable
   script:
     - apt-get update
     - apt-get install -y git
@@ -57,7 +58,7 @@ debian:
 #
 
 configs:
-  image: debian:bookworm
+  image: containers.torproject.org/tpo/tpa/base-images/debian:stable
   stage: build
   script:
     - apt-get update
@@ -79,7 +80,7 @@ configs:
 #
 
 #manpage:
-#  image: debian:bookworm
+#  image: containers.torproject.org/tpo/tpa/base-images/debian:stable
 #  stage: build
 #  script:
 #    - apt-get update
