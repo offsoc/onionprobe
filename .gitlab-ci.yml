@@ -43,8 +43,9 @@ debian:
     - scripts/provision-packaging-debian
     - make build-debian-test-package
     - apt-get install -y lintian
-    - ls /usr/bin/lintian
+    - ls -l /usr/bin/lintian
     - which lintian
+    - echo $PATH
     - /usr/bin/lintian --allow-root -v --pedantic ../onionprobe_*.deb
     # Piuparts is disabled due to https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/87
     #- piuparts ../onionprobe_*.deb
