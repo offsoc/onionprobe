@@ -42,6 +42,8 @@ debian:
     - git submodule update --init --recursive --depth 1
     - scripts/provision-packaging-debian
     - ls -l /usr/bin/lintian
+    - du -hs /usr/share
+    - ls -l /usr/share
     - ls -l /usr/share/lintian
     - ls -l /usr/share/lintian/bin
     - ls -l /usr/share/lintian/bin/lintian
