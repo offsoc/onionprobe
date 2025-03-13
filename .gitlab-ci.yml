@@ -46,11 +46,11 @@ debian:
     # https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/105
     - dpkg -l lintian
     - dpkg -L lintian
+    - touch /usr/share/lintian/test
     - ls -l /usr/bin/lintian
     - ls -l /usr/share
     - ls -l /usr/share/lintian
     - ls -l /usr/share/lintian/bin
-    - touch /usr/share/lintian/test
     - lintian --allow-root -v --pedantic ../onionprobe_*.deb
     # Piuparts is disabled due to https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/87
     #- piuparts ../onionprobe_*.deb
