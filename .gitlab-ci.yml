@@ -44,9 +44,11 @@ debian:
     - make build-debian-test-package
     # Lintian debugging
     # https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/105
+    #- touch /usr/share/lintian/test
+    - apt-get purge lintian -y
+    - apt-get install lintian -y
     - dpkg -l lintian
     - dpkg -L lintian
-    - touch /usr/share/lintian/test
     - ls -l /usr/bin/lintian
     - ls -l /usr/share
     - ls -l /usr/share/lintian
