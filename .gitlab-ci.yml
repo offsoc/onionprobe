@@ -41,14 +41,12 @@ debian:
     - git submodule sync
     - git submodule update --init --recursive --depth 1
     - scripts/provision-packaging-debian
-    - make build-debian-test-package
-    - dpkg -L lintian
-    - apt install -y apt-utils
-    - apt install --reinstall lintian -y
     - ls -l /usr/bin/lintian
     - ls -l /usr/share/lintian
     - ls -l /usr/share/lintian/bin
     - ls -l /usr/share/lintian/bin/lintian
+    - make build-debian-test-package
+    - dpkg -L lintian
     - /usr/share/lintian/bin/lintian --allow-root -v --pedantic ../onionprobe_*.deb
     # Piuparts is disabled due to https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/87
     #- piuparts ../onionprobe_*.deb
