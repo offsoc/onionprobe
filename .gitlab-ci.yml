@@ -2,6 +2,8 @@
 include:
   - local: '.gitlab-ci-pages.yml'
   - local: '.gitlab-ci-slides.yml'
+  - project: tpo/tpa/ci-templates
+    file: scripts/apt.yml
 
 #
 # Python
@@ -10,6 +12,8 @@ include:
 python:
   stage: build
   image: containers.torproject.org/tpo/tpa/base-images/debian:stable
+  before_script:
+    - !reference [.apt-init]
   script:
     - apt-get update
     - apt-get install -y git
@@ -35,6 +39,8 @@ debian:
   #image: debian:bookworm-backports
   #image: debian:bookworm
   image: containers.torproject.org/tpo/tpa/base-images/debian:stable
+  before_script:
+    - !reference [.apt-init]
   script:
     - apt-get update
     - apt-get install -y git
@@ -81,6 +87,8 @@ debian:
 configs:
   image: containers.torproject.org/tpo/tpa/base-images/debian:stable
   stage: build
+  before_script:
+    - !reference [.apt-init]
   script:
     - apt-get update
     - apt-get install -y git
@@ -103,6 +111,8 @@ configs:
 #manpage:
 #  image: containers.torproject.org/tpo/tpa/base-images/debian:stable
 #  stage: build
+#  before_script:
+#    - !reference [.apt-init]
 #  script:
 #    - apt-get update
 #    - apt-get install -y git
