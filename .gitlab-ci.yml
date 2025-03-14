@@ -98,8 +98,10 @@ lintian:
     #- echo -e "\e[0Ksection_end:`date +%s`:install_lintian\r\e[0K"
 
     # On installing only the dependencies of a package: https://stackoverflow.com/a/41428445
+    #                                                   https://askubuntu.com/a/699934
     - echo -e "\e[0Ksection_start:`date +%s`:install_lintian_debug\r\e[0KInstalling lintian with verbose output"
-    - apt-get install $(apt-cache depends --recurse --no-suggests --no-conflicts --no-breaks --no-replaces --no-enhances lintian | grep "^\w" | sort -u | grep -v lintian)
+    - apt-get install aptitude
+    - aptitude search '!~i?reverse-depends("^lintian$")' -F "%p" | xargs aptitude install -y
     - apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true download lintian -y
     - dpkg --debug=73663 -i lintian_*.deb
     - dpkg-reconfigure --terse lintian
