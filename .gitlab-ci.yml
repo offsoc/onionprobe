@@ -42,9 +42,9 @@ python:
   - mkdir -p dist
   - mv ../onionprobe_* dist
 
-bookworm:
+debian_stable:
   stage: build
-  image: containers.torproject.org/tpo/tpa/base-images/debian:bookworm
+  image: containers.torproject.org/tpo/tpa/base-images/debian:stable
   before_script:
     - !reference [.apt-init]
   script:
@@ -55,9 +55,22 @@ bookworm:
   #only:
   #  - main
 
-sid:
+debian_sid:
   stage: build
   image: containers.torproject.org/tpo/tpa/base-images/debian:sid
+  before_script:
+    - !reference [.apt-init]
+  script:
+    - !reference [.debian-package]
+  artifacts:
+    paths:
+      - dist
+  #only:
+  #  - main
+
+ubuntu_lts:
+  stage: build
+  image: containers.torproject.org/tpo/tpa/base-images/ubuntu:lts
   before_script:
     - !reference [.apt-init]
   script:
@@ -72,7 +85,7 @@ lintian:
   image: containers.torproject.org/tpo/tpa/base-images/debian:sid
   stage: test
   needs:
-    - job: sid
+    - job: debian_sid
       artifacts: true
   before_script:
     - !reference [.apt-init]
@@ -108,6 +121,8 @@ lintian:
   #only:
   #  - main
 
+# Currently broken
+# https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/87
 piuparts:
   image: containers.torproject.org/tpo/tpa/base-images/debian:sid
   stage: test
@@ -118,8 +133,6 @@ piuparts:
     - !reference [.apt-init]
   script:
     - scripts/provision-packaging-debian
-    # Needs Debian sid
-    # https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/87
     - piuparts dist/onionprobe_*.deb
   #only:
   #  - main
