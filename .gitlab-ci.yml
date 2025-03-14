@@ -116,7 +116,7 @@ piuparts:
     # Manually ignore /var/cache/debconf/tmp.ci.
     # This explicit ignore option might be removed in the future.
     # Details at https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1092667
-    - piuparts -i var/cache/debconf/tmp.ci/ dist/onionprobe_*.deb
+    - piuparts -i var/cache/debconf/tmp.ci dist/onionprobe_*.deb
   #only:
   #  - main
 
