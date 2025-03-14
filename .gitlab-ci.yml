@@ -98,6 +98,7 @@ lintian:
     #- echo -e "\e[0Ksection_end:`date +%s`:install_lintian\r\e[0K"
 
     - echo -e "\e[0Ksection_start:`date +%s`:install_lintian_debug\r\e[0KInstalling lintian with verbose output"
+    - apt-get install apt-rdepends
     - apt-get install $(apt-rdepends lintian|grep -v "^ " |grep -v "^lintian$") # https://stackoverflow.com/a/27469489
     - apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true download lintian -y
     - dpkg --debug=73663 -i lintian_*.deb
