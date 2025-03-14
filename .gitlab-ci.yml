@@ -46,7 +46,7 @@ debian:
     # https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/105
     #- touch /usr/share/lintian/test
     - df -h
-    - apt-get install apt-utils -y
+    - apt-get install apt-utils find -y
     - apt-get purge lintian -y
     #- DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true install lintian -y
     - DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true download lintian -y
@@ -58,10 +58,11 @@ debian:
     - dpkg -l lintian
     - dpkg -L lintian
     - ls /var/lib/dpkg/info/lintian.*
+    - find /usr/share/doc/lintian
+    - find /usr/share/lintian
     - ls -l /usr/bin/lintian
-    - ls -l /usr/share
-    - ls -l /usr/share/lintian
-    - ls -l /usr/share/lintian/bin
+    #- ls -l /usr/share/lintian
+    #- ls -l /usr/share/lintian/bin
     - lintian --allow-root -v --pedantic ../onionprobe_*.deb
     # Piuparts is disabled due to https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/87
     #- piuparts ../onionprobe_*.deb
