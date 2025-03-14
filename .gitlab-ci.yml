@@ -92,20 +92,22 @@ lintian:
   before_script:
     - !reference [.apt-init]
   script:
+    - echo -e "\e[0Ksection_start:`date +%s`:install_lintian\r\e[0KInstalling lintian"
     - apt-get update
     - apt-get install -y lintian
+    - echo -e "\e[0Ksection_end:`date +%s`:install_lintian\r\e[0K"
 
     # Lintian debugging
-    - echo -e "\e[0Ksection_start:`date +%s`:insta_lintian\r\e[0KChecking lintian installation tests"
-    # https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/105
-    - apt-get purge lintian -y
-    #- DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true install lintian -y
-    - DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true download lintian -y
-    #- ls -l /var/cache/apt/archives/lintian_*.deb
-    #- DEBIAN_FRONTEND=noninteractive dpkg --debug=73663 -i /var/cache/apt/archives/lintian_*.deb
-    - DEBIAN_FRONTEND=noninteractive dpkg --debug=73663 -i lintian_*.deb
-    - DEBIAN_FRONTEND=noninteractive dpkg-reconfigure --terse lintian
-    - echo -e "\e[0Ksection_end:`date +%s`:install_lintian\r\e[0K"
+    #- echo -e "\e[0Ksection_start:`date +%s`:reinstall_lintian\r\e[0KReinstalling lintian"
+    ## https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/105
+    #- apt-get purge lintian -y
+    ##- DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true install lintian -y
+    #- DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true download lintian -y
+    ##- ls -l /var/cache/apt/archives/lintian_*.deb
+    ##- DEBIAN_FRONTEND=noninteractive dpkg --debug=73663 -i /var/cache/apt/archives/lintian_*.deb
+    #- DEBIAN_FRONTEND=noninteractive dpkg --debug=73663 -i lintian_*.deb
+    #- DEBIAN_FRONTEND=noninteractive dpkg-reconfigure --terse lintian
+    #- echo -e "\e[0Ksection_end:`date +%s`:reinstall_lintian\r\e[0K"
     - echo -e "\e[0Ksection_start:`date +%s`:dpkg_lintian\r\e[0KChecking lintian installation through dpkg"
     - grep lintian /var/log/dpkg.log
     - dpkg -l lintian
