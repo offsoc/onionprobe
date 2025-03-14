@@ -51,25 +51,25 @@ debian:
     # Lintian debugging
     # https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/105
     #- touch /usr/share/lintian/test
-    - df -h
-    - apt-get install apt-utils findutils -y
-    - apt-get purge lintian -y
+    #- df -h
+    #- apt-get install apt-utils findutils -y
+    #- apt-get purge lintian -y
     #- DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true install lintian -y
-    - DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true download lintian -y
+    #- DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true download lintian -y
     #- ls -l /var/cache/apt/archives/lintian_*.deb
     #- DEBIAN_FRONTEND=noninteractive dpkg --debug=73663 -i /var/cache/apt/archives/lintian_*.deb
-    - DEBIAN_FRONTEND=noninteractive dpkg --debug=73663 -i lintian_*.deb
-    - DEBIAN_FRONTEND=noninteractive dpkg-reconfigure --terse lintian
-    - grep lintian /var/log/dpkg.log
-    - dpkg -l lintian
-    - dpkg -L lintian
-    - ls /var/lib/dpkg/info/lintian.*
-    - find /usr/share/doc/lintian
-    - find /usr/share/lintian
-    - ls -l /usr/bin/lintian
+    #- DEBIAN_FRONTEND=noninteractive dpkg --debug=73663 -i lintian_*.deb
+    #- DEBIAN_FRONTEND=noninteractive dpkg-reconfigure --terse lintian
+    #- grep lintian /var/log/dpkg.log
+    #- dpkg -l lintian
+    #- dpkg -L lintian
+    #- ls /var/lib/dpkg/info/lintian.*
+    #- find /usr/share/doc/lintian
+    #- find /usr/share/lintian
+    #- ls -l /usr/bin/lintian
     #- ls -l /usr/share/lintian
     #- ls -l /usr/share/lintian/bin
-    - lintian --allow-root -v --pedantic ../onionprobe_*.deb
+    #- lintian --allow-root -v --pedantic ../onionprobe_*.deb
     # Piuparts is disabled due to https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/87
     #- piuparts ../onionprobe_*.deb
     - mkdir -p dist
@@ -79,6 +79,39 @@ debian:
       - dist
   #only:
   #  - main
+
+lintian:
+  image: containers.torproject.org/tpo/tpa/base-images/debian:stable
+  needs:
+    - job: debian
+      artifacts: true
+  before_script:
+    - !reference [.apt-init]
+  script:
+    - apt-get update
+    - apt-get install -y lintian
+    # Lintian debugging
+    # https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/105
+    #- touch /usr/share/lintian/test
+    - df -h
+    - apt-get install apt-utils findutils -y
+    #- apt-get purge lintian -y
+    #- DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true install lintian -y
+    #- DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true download lintian -y
+    #- ls -l /var/cache/apt/archives/lintian_*.deb
+    #- DEBIAN_FRONTEND=noninteractive dpkg --debug=73663 -i /var/cache/apt/archives/lintian_*.deb
+    #- DEBIAN_FRONTEND=noninteractive dpkg --debug=73663 -i lintian_*.deb
+    #- DEBIAN_FRONTEND=noninteractive dpkg-reconfigure --terse lintian
+    - grep lintian /var/log/dpkg.log
+    - dpkg -l lintian
+    - dpkg -L lintian
+    - ls /var/lib/dpkg/info/lintian.*
+    - find /usr/share/doc/lintian
+    - find /usr/share/lintian
+    - ls -l /usr/bin/lintian
+    #- ls -l /usr/share/lintian
+    #- ls -l /usr/share/lintian/bin
+    - lintian --allow-root -v --pedantic dist/onionprobe_*.deb
 
 #
 # Configuration
