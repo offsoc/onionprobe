@@ -102,19 +102,19 @@ lintian:
 
 # Currently broken
 # https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/87
-#piuparts:
-#  image: containers.torproject.org/tpo/tpa/base-images/debian:sid
-#  stage: test
-#  needs:
-#    - job: sid
-#      artifacts: true
-#  before_script:
-#    - !reference [.apt-init]
-#  script:
-#    - scripts/provision-packaging-debian
-#    - piuparts dist/onionprobe_*.deb
-#  #only:
-#  #  - main
+piuparts:
+  image: containers.torproject.org/tpo/tpa/base-images/debian:sid
+  stage: test
+  needs:
+    - job: sid
+      artifacts: true
+  before_script:
+    - !reference [.apt-init]
+  script:
+    - scripts/provision-packaging-debian
+    - piuparts dist/onionprobe_*.deb
+  #only:
+  #  - main
 
 #
 # Configuration
