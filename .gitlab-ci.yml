@@ -81,49 +81,24 @@ ubuntu_lts:
   #only:
   #  - main
 
-# Currently broken
-# https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/105
-#lintian:
-#  image: containers.torproject.org/tpo/tpa/base-images/debian:sid
-#  stage: test
-#  needs:
-#    - job: debian_sid
-#      artifacts: true
-#  before_script:
-#    - !reference [.apt-init]
-#  script:
-#    - apt-get update
-#    - apt-get install -y lintian
-#    #- echo -e "\e[0Ksection_start:`date +%s`:insta_lintian\r\e[0KChecking lintian installation tests"
-#    # Lintian debugging
-#    # https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/105
-#    #- apt-get purge lintian -y
-#    #- DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true install lintian -y
-#    #- DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true download lintian -y
-#    #- ls -l /var/cache/apt/archives/lintian_*.deb
-#    #- DEBIAN_FRONTEND=noninteractive dpkg --debug=73663 -i /var/cache/apt/archives/lintian_*.deb
-#    #- DEBIAN_FRONTEND=noninteractive dpkg --debug=73663 -i lintian_*.deb
-#    #- DEBIAN_FRONTEND=noninteractive dpkg-reconfigure --terse lintian
-#    #- echo -e "\e[0Ksection_end:`date +%s`:install_lintian\r\e[0K"
-#    - echo -e "\e[0Ksection_start:`date +%s`:dpkg_lintian\r\e[0KChecking lintian installation through dpkg"
-#    - grep lintian /var/log/dpkg.log
-#    - dpkg -l lintian
-#    - dpkg -L lintian
-#    - echo -e "\e[0Ksection_end:`date +%s`:dpkg_lintian\r\e[0K"
-#    - echo -e "\e[0Ksection_start:`date +%s`:fs_lintian\r\e[0KChecking lintian installation through the filesystem"
-#    #- touch /usr/share/lintian/test
-#    - apt-get install apt-utils findutils -y
-#    - df -h
-#    - ls /var/lib/dpkg/info/lintian.*
-#    - find /usr/share/doc/lintian
-#    - find /usr/share/lintian
-#    - ls -l /usr/bin/lintian
-#    - echo -e "\e[0Ksection_end:`date +%s`:fs_lintian\r\e[0K"
-#    #- ls -l /usr/share/lintian
-#    #- ls -l /usr/share/lintian/bin
-#    - lintian --allow-root -v --pedantic dist/onionprobe_*.deb
-#  #only:
-#  #  - main
+lintian:
+  image: containers.torproject.org/tpo/tpa/base-images/debian:sid
+  stage: test
+  needs:
+    - job: debian_sid
+      artifacts: true
+  before_script:
+    - !reference [.apt-init]
+  script:
+    - apt-get update
+    # As of 2025-03-14, it's required to ask dpkg to include /usr/share/lintian/*
+    # when using the image from containers.torproject.org/tpo/tpa/base-images.
+    # This requirement might be removed in the future.
+    # Details at https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/105
+    - apt-get install -o Dpkg::Options::="--path-include=/usr/share/lintian/*" -y lintian
+    - lintian --allow-root -v --pedantic dist/onionprobe_*.deb
+  #only:
+  #  - main
 
 # Currently broken
 # https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/87
