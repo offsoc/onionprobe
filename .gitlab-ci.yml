@@ -32,48 +32,36 @@ python:
 # Debian
 #
 
-debian:
+.debian-package:
+  - apt-get update
+  - apt-get install -y git
+  - git submodule sync
+  - git submodule update --init --recursive --depth 1
+  - scripts/provision-packaging-debian
+  - make build-debian-test-package
+  - mkdir -p dist
+  - mv ../onionprobe_* dist
+
+bookworm:
   stage: build
-  # Using bookworm support due to the pybuild-plugin-pyproject package
-  #image: debian:bookworm
-  #image: debian:bookworm-backports
-  #image: debian:bookworm
-  image: containers.torproject.org/tpo/tpa/base-images/debian:stable
+  image: containers.torproject.org/tpo/tpa/base-images/debian:bookworm
   before_script:
     - !reference [.apt-init]
   script:
-    - apt-get update
-    - apt-get install -y git
-    - git submodule sync
-    - git submodule update --init --recursive --depth 1
-    - scripts/provision-packaging-debian
-    - make build-debian-test-package
-    # Lintian debugging
-    # https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/105
-    #- touch /usr/share/lintian/test
-    #- df -h
-    #- apt-get install apt-utils findutils -y
-    #- apt-get purge lintian -y
-    #- DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true install lintian -y
-    #- DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true download lintian -y
-    #- ls -l /var/cache/apt/archives/lintian_*.deb
-    #- DEBIAN_FRONTEND=noninteractive dpkg --debug=73663 -i /var/cache/apt/archives/lintian_*.deb
-    #- DEBIAN_FRONTEND=noninteractive dpkg --debug=73663 -i lintian_*.deb
-    #- DEBIAN_FRONTEND=noninteractive dpkg-reconfigure --terse lintian
-    #- grep lintian /var/log/dpkg.log
-    #- dpkg -l lintian
-    #- dpkg -L lintian
-    #- ls /var/lib/dpkg/info/lintian.*
-    #- find /usr/share/doc/lintian
-    #- find /usr/share/lintian
-    #- ls -l /usr/bin/lintian
-    #- ls -l /usr/share/lintian
-    #- ls -l /usr/share/lintian/bin
-    #- lintian --allow-root -v --pedantic ../onionprobe_*.deb
-    # Piuparts is disabled due to https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/87
-    #- piuparts ../onionprobe_*.deb
-    - mkdir -p dist
-    - mv ../onionprobe_* dist
+    - !reference [.debian-package]
+  artifacts:
+    paths:
+      - dist
+  #only:
+  #  - main
+
+sid:
+  stage: build
+  image: containers.torproject.org/tpo/tpa/base-images/debian:sid
+  before_script:
+    - !reference [.apt-init]
+  script:
+    - !reference [.debian-package]
   artifacts:
     paths:
       - dist
@@ -81,9 +69,10 @@ debian:
   #  - main
 
 lintian:
-  image: containers.torproject.org/tpo/tpa/base-images/debian:stable
+  image: containers.torproject.org/tpo/tpa/base-images/debian:sid
+  stage: test
   needs:
-    - job: debian
+    - job: sid
       artifacts: true
   before_script:
     - !reference [.apt-init]
@@ -112,6 +101,25 @@ lintian:
     #- ls -l /usr/share/lintian
     #- ls -l /usr/share/lintian/bin
     - lintian --allow-root -v --pedantic dist/onionprobe_*.deb
+  #only:
+  #  - main
+
+piuparts:
+  image: containers.torproject.org/tpo/tpa/base-images/debian:sid
+  stage: test
+  needs:
+    - job: sid
+      artifacts: true
+  before_script:
+    - !reference [.apt-init]
+  script:
+    - apt-get update
+    - apt-get install -y piuparts
+    # Needs Debian sid
+    # https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/87
+    - piuparts dist/onionprobe_*.deb
+  #only:
+  #  - main
 
 #
 # Configuration
