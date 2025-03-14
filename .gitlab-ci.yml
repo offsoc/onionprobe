@@ -45,14 +45,15 @@ debian:
     # Lintian debugging
     # https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/105
     #- touch /usr/share/lintian/test
+    - df -h
     - apt-get purge lintian -y
-    - apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true install lintian -y
+    - DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true install lintian -y
     - ls -l /var/cache/apt/archives/lintian_*.deb
     - dpkg -l lintian
-    - dpkg --debug=73773 -i /var/cache/apt/archives/lintian_*.deb
+    - DEBIAN_FRONTEND=noninteractive dpkg --debug=73773 -i /var/cache/apt/archives/lintian_*.deb
     - grep lintian /var/log/dpkg.log
     - dpkg -L lintian
-    - dpkg-reconfigure --terse lintian
+    - DEBIAN_FRONTEND=noninteractive dpkg-reconfigure --terse lintian
     - ls /var/lib/dpkg/info/lintian.*
     - ls -l /usr/bin/lintian
     - ls -l /usr/share
