@@ -112,6 +112,7 @@ piuparts:
     - !reference [.apt-init]
   script:
     - scripts/provision-packaging-debian
+    - apt-get install debootstrap -y
     - piuparts dist/onionprobe_*.deb
   #only:
   #  - main
