@@ -98,9 +98,10 @@ lintian:
     #- echo -e "\e[0Ksection_end:`date +%s`:install_lintian\r\e[0K"
 
     - echo -e "\e[0Ksection_start:`date +%s`:install_lintian_debug\r\e[0KInstalling lintian with verbose output"
-    - DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true download lintian -y
-    - DEBIAN_FRONTEND=noninteractive dpkg --debug=73663 -i lintian_*.deb
-    - DEBIAN_FRONTEND=noninteractive dpkg-reconfigure --terse lintian
+    - apt-get build-dep lintian -y
+    - apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true download lintian -y
+    - dpkg --debug=73663 -i lintian_*.deb
+    - dpkg-reconfigure --terse lintian
     - echo -e "\e[0Ksection_end:`date +%s`:install_lintian_debug\r\e[0K"
 
     - echo -e "\e[0Ksection_start:`date +%s`:dpkg_lintian\r\e[0KChecking lintian installation through dpkg"
