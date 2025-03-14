@@ -92,27 +92,23 @@ lintian:
   before_script:
     - !reference [.apt-init]
   script:
-    - echo -e "\e[0Ksection_start:`date +%s`:install_lintian\r\e[0KInstalling lintian"
-    - apt-get update
-    - apt-get install -y lintian
-    - echo -e "\e[0Ksection_end:`date +%s`:install_lintian\r\e[0K"
+    #- echo -e "\e[0Ksection_start:`date +%s`:install_lintian\r\e[0KInstalling lintian the usual way"
+    #- apt-get update
+    #- apt-get install -y lintian
+    #- echo -e "\e[0Ksection_end:`date +%s`:install_lintian\r\e[0K"
 
-    # Lintian debugging
-    #- echo -e "\e[0Ksection_start:`date +%s`:reinstall_lintian\r\e[0KReinstalling lintian"
-    ## https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/105
-    #- apt-get purge lintian -y
-    ##- DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true install lintian -y
-    #- DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true download lintian -y
-    ##- ls -l /var/cache/apt/archives/lintian_*.deb
-    ##- DEBIAN_FRONTEND=noninteractive dpkg --debug=73663 -i /var/cache/apt/archives/lintian_*.deb
-    #- DEBIAN_FRONTEND=noninteractive dpkg --debug=73663 -i lintian_*.deb
-    #- DEBIAN_FRONTEND=noninteractive dpkg-reconfigure --terse lintian
-    #- echo -e "\e[0Ksection_end:`date +%s`:reinstall_lintian\r\e[0K"
+    - echo -e "\e[0Ksection_start:`date +%s`:install_lintian_debug\r\e[0KInstalling lintian with verbose output"
+    - DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true download lintian -y
+    - DEBIAN_FRONTEND=noninteractive dpkg --debug=73663 -i lintian_*.deb
+    - DEBIAN_FRONTEND=noninteractive dpkg-reconfigure --terse lintian
+    - echo -e "\e[0Ksection_end:`date +%s`:install_lintian_debug\r\e[0K"
+
     - echo -e "\e[0Ksection_start:`date +%s`:dpkg_lintian\r\e[0KChecking lintian installation through dpkg"
     - grep lintian /var/log/dpkg.log
     - dpkg -l lintian
     - dpkg -L lintian
     - echo -e "\e[0Ksection_end:`date +%s`:dpkg_lintian\r\e[0K"
+
     - echo -e "\e[0Ksection_start:`date +%s`:fs_lintian\r\e[0KChecking lintian installation through the filesystem"
     - apt-get install apt-utils findutils -y
     - df -h
@@ -121,8 +117,8 @@ lintian:
     - find /usr/share/doc/lintian
     - find /usr/share/lintian
     - ls -l /usr/bin/lintian
-    #- ls -l /usr/share/lintian
-    #- ls -l /usr/share/lintian/bin
+    - ls -l /usr/share/lintian
+    - ls -l /usr/share/lintian/bin
     - echo -e "\e[0Ksection_end:`date +%s`:fs_lintian\r\e[0K"
 
     - lintian --allow-root -v --pedantic dist/onionprobe_*.deb
