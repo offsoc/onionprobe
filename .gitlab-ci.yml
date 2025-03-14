@@ -51,8 +51,8 @@ debian:
     #- DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true install lintian -y
     - DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true download lintian -y
     #- ls -l /var/cache/apt/archives/lintian_*.deb
-    #- DEBIAN_FRONTEND=noninteractive dpkg --debug=73773 -i /var/cache/apt/archives/lintian_*.deb
-    - DEBIAN_FRONTEND=noninteractive dpkg --debug=73773 -i lintian_*.deb
+    #- DEBIAN_FRONTEND=noninteractive dpkg --debug=73673 -i /var/cache/apt/archives/lintian_*.deb
+    - DEBIAN_FRONTEND=noninteractive dpkg --debug=73673 -i lintian_*.deb
     - DEBIAN_FRONTEND=noninteractive dpkg-reconfigure --terse lintian
     - grep lintian /var/log/dpkg.log
     - dpkg -l lintian
