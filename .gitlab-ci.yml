@@ -117,8 +117,7 @@ piuparts:
   before_script:
     - !reference [.apt-init]
   script:
-    - apt-get update
-    - apt-get install -y piuparts
+    - scripts/provision-packaging-debian
     # Needs Debian sid
     # https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/87
     - piuparts dist/onionprobe_*.deb
