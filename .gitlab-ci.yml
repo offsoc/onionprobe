@@ -106,7 +106,7 @@ piuparts:
   image: containers.torproject.org/tpo/tpa/base-images/debian:sid
   stage: test
   needs:
-    - job: sid
+    - job: debian_sid
       artifacts: true
   before_script:
     - !reference [.apt-init]
