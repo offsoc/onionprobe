@@ -102,19 +102,23 @@ lintian:
 
 # Currently broken
 # https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/87
-#piuparts:
-#  image: containers.torproject.org/tpo/tpa/base-images/debian:sid
-#  stage: test
-#  needs:
-#    - job: sid
-#      artifacts: true
-#  before_script:
-#    - !reference [.apt-init]
-#  script:
-#    - scripts/provision-packaging-debian
-#    - piuparts dist/onionprobe_*.deb
-#  #only:
-#  #  - main
+piuparts:
+  image: containers.torproject.org/tpo/tpa/base-images/debian:sid
+  stage: test
+  needs:
+    - job: debian_sid
+      artifacts: true
+  before_script:
+    - !reference [.apt-init]
+  script:
+    - scripts/provision-packaging-debian
+    - apt-get install debootstrap -y
+    # Manually ignore /var/cache/debconf/tmp.ci.
+    # This explicit ignore option might be removed in the future.
+    # Details at https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1092667
+    - piuparts --ignore /var/cache/debconf/tmp.ci/ dist/onionprobe_*.deb
+  #only:
+  #  - main
 
 #
 # Configuration
