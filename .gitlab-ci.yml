@@ -83,22 +83,22 @@ ubuntu_lts:
 
 # Currently broken
 # https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/105
-lintian:
-  image: containers.torproject.org/tpo/tpa/base-images/debian:sid
-  stage: test
-  needs:
-    - job: debian_sid
-      artifacts: true
-  before_script:
-    - !reference [.apt-init]
-  script:
-    - echo -e "\e[0Ksection_start:`date +%s`:install_lintian\r\e[0KInstalling lintian"
-    - apt-get update
-    - apt-get install -y lintian
-    - echo -e "\e[0Ksection_end:`date +%s`:install_lintian\r\e[0K"
-    - lintian --allow-root -v --pedantic dist/onionprobe_*.deb
-  #only:
-  #  - main
+#lintian:
+#  image: containers.torproject.org/tpo/tpa/base-images/debian:sid
+#  stage: test
+#  needs:
+#    - job: debian_sid
+#      artifacts: true
+#  before_script:
+#    - !reference [.apt-init]
+#  script:
+#    - echo -e "\e[0Ksection_start:`date +%s`:install_lintian\r\e[0KInstalling lintian"
+#    - apt-get update
+#    - apt-get install -y lintian
+#    - echo -e "\e[0Ksection_end:`date +%s`:install_lintian\r\e[0K"
+#    - lintian --allow-root -v --pedantic dist/onionprobe_*.deb
+#  #only:
+#  #  - main
 
 # Currently broken
 # https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/87
