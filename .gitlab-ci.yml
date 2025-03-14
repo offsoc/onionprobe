@@ -46,7 +46,7 @@ debian:
     # https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/105
     #- touch /usr/share/lintian/test
     - df -h
-    - apt-get install apt-utils find -y
+    - apt-get install apt-utils findutils -y
     - apt-get purge lintian -y
     #- DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true install lintian -y
     - DEBIAN_FRONTEND=noninteractive apt-get -o Debug::pkgDPkgProgressReporting=true -o Debug::pkgPackageManager=true -o Debug::pkgDPkgPM=true download lintian -y
