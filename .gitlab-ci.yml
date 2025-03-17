@@ -81,6 +81,55 @@ ubuntu_lts:
   #only:
   #  - main
 
+# Chroot inside a GitLab CI job is not working
+# Initially tracked at
+# https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/94
+#sbuild_sid:
+#  stage: build
+#  image: containers.torproject.org/tpo/tpa/base-images/debian:sid
+#  before_script:
+#    - !reference [.apt-init]
+#  script:
+#    # As of 2025-03-14, it's required to ask dpkg to include /usr/share/lintian/*
+#    # when using the image from containers.torproject.org/tpo/tpa/base-images.
+#    # This requirement might be removed in the future.
+#    # Details at https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/105
+#    - apt-get install -o Dpkg::Options::="--path-include=/usr/share/lintian/*" -y sbuild mmdebstrap uidmap piuparts lintian autopkgtest build-essential debhelper-compat zstd
+#    - apt-get install -y dh-python pybuild-plugin-pyproject python3-setuptools pandoc
+#    - mkdir -p ~/.cache/sbuild ~/.config/sbuild
+#    - cp configs/sbuild.pl ~/.config/sbuild/config.pl
+#    - mmdebstrap --include=ca-certificates --skip=output/dev --variant=buildd unstable ~/.cache/sbuild/unstable-amd64.tar.zst https://deb.debian.org/debian
+#    # Adding subuids for root avoids the following errors:
+#    #
+#    #   No entry for root in /etc/subuid
+#    #   invalid idmap
+#    #   E: Error creating chroot session: skipping onionprobe
+#    - usermod --add-subuids 100000-165535 root
+#    - usermod --add-subgids 100000-165535 root
+#    - sbuild --verbose
+#  tags:
+#    - osuosl
+#    # Restrict architectures until the following issue is addressed:
+#    # https://gitlab.torproject.org/tpo/tpa/base-images/-/issues/3
+#    - x86_64
+#  #artifacts:
+#  #  paths:
+#  #    - dist
+#  #only:
+#  #  - main
+
+#autopkgtest:
+#  stage: test
+#  image: containers.torproject.org/tpo/tpa/base-images/debian:sid
+#  needs:
+#    - job: debian_sid
+#      artifacts: true
+#  before_script:
+#    - !reference [.apt-init]
+#  script:
+#    - apt-get install autopkgtest autodep8 -y
+#    - autopkgtest dist/onionprobe_*.deb -- null
+
 lintian:
   image: containers.torproject.org/tpo/tpa/base-images/debian:sid
   stage: test
