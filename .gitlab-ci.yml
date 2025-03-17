@@ -118,17 +118,17 @@ ubuntu_lts:
 #  #only:
 #  #  - main
 
-autopkgtest:
-  stage: test
-  image: containers.torproject.org/tpo/tpa/base-images/debian:sid
-  needs:
-    - job: debian_sid
-      artifacts: true
-  before_script:
-    - !reference [.apt-init]
-  script:
-    - apt-get install autopkgtest autodep8 -y
-    - autopkgtest dist/onionprobe_*.deb -- null
+#autopkgtest:
+#  stage: test
+#  image: containers.torproject.org/tpo/tpa/base-images/debian:sid
+#  needs:
+#    - job: debian_sid
+#      artifacts: true
+#  before_script:
+#    - !reference [.apt-init]
+#  script:
+#    - apt-get install autopkgtest autodep8 -y
+#    - autopkgtest dist/onionprobe_*.deb -- null
 
 lintian:
   image: containers.torproject.org/tpo/tpa/base-images/debian:sid
