@@ -127,7 +127,7 @@ autopkgtest:
   before_script:
     - !reference [.apt-init]
   script:
-    - apt-get install autopkgtest -y
+    - apt-get install autopkgtest autodep8 -y
     - autopkgtest dist/onionprobe_*.deb -- null
 
 lintian:
