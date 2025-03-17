@@ -87,7 +87,7 @@ sbuild_sid:
   before_script:
     - !reference [.apt-init]
   script:
-    - sudo apt-get install sbuild -y
+    - apt-get install sbuild -y
     - sbuild-update -udcar u
     - sbuild -c unstable-amd64-sbuild
   #artifacts:
