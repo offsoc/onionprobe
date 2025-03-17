@@ -89,7 +89,7 @@ sbuild_sid:
   script:
     - sudo apt-get install sbuild -y
     - sbuild-update -udcar u
-	  - sbuild -c unstable-amd64-sbuild
+    - sbuild -c unstable-amd64-sbuild
   #artifacts:
   #  paths:
   #    - dist
