@@ -98,6 +98,11 @@ sbuild_sid:
     - mmdebstrap --include=ca-certificates --skip=output/dev --variant=buildd unstable ~/.cache/sbuild/unstable-amd64.tar.zst https://deb.debian.org/debian
     - usermod --add-subuids 100000-165535 root
     - sbuild --verbose
+  tags:
+    - osuosl
+    # Restrict architectures until the following issue is addressed:
+    # https://gitlab.torproject.org/tpo/tpa/base-images/-/issues/3
+    - x86_64
   #artifacts:
   #  paths:
   #    - dist
