@@ -115,6 +115,18 @@ sbuild_sid:
   #only:
   #  - main
 
+autopkgtest_sid:
+  stage: build
+  image: containers.torproject.org/tpo/tpa/base-images/debian:sid
+  needs:
+    - job: debian_sid
+      artifacts: true
+  before_script:
+    - !reference [.apt-init]
+  script:
+    - apt-get install autopkgtest -y
+    - autopkgtest dist/onionprobe_*.deb -- null
+
 lintian:
   image: containers.torproject.org/tpo/tpa/base-images/debian:sid
   stage: test
