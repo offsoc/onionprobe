@@ -118,7 +118,7 @@ ubuntu_lts:
 #  #only:
 #  #  - main
 
-autopkgtest_sid:
+autopkgtest:
   stage: test
   image: containers.torproject.org/tpo/tpa/base-images/debian:sid
   needs:
