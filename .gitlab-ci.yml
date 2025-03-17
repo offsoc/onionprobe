@@ -119,7 +119,7 @@ ubuntu_lts:
 #  #  - main
 
 autopkgtest_sid:
-  stage: build
+  stage: test
   image: containers.torproject.org/tpo/tpa/base-images/debian:sid
   needs:
     - job: debian_sid
