@@ -100,25 +100,30 @@ lintian:
   #only:
   #  - main
 
-# Currently broken
-# https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/94
-#piuparts:
-#  image: containers.torproject.org/tpo/tpa/base-images/debian:sid
-#  stage: test
-#  needs:
-#    - job: debian_sid
-#      artifacts: true
-#  before_script:
-#    - !reference [.apt-init]
-#  script:
-#    - scripts/provision-packaging-debian
-#    - apt-get install debootstrap -y
-#    # Manually ignore /var/cache/debconf/tmp.ci.
-#    # This explicit ignore option might be removed in the future.
-#    # Details at https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1092667
-#    - piuparts --ignore /var/cache/debconf/tmp.ci/ dist/onionprobe_*.deb
-#  #only:
-#  #  - main
+piuparts:
+  image: containers.torproject.org/tpo/tpa/base-images/debian:sid
+  stage: test
+  needs:
+    - job: debian_sid
+      artifacts: true
+  before_script:
+    - !reference [.apt-init]
+  script:
+    - scripts/provision-packaging-debian
+    - apt-get install debootstrap -y
+    # Manually ignore /var/cache/debconf/tmp.ci.
+    # This explicit ignore option might be removed in the future.
+    # Details at https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1092667
+    - piuparts --ignore /var/cache/debconf/tmp.ci/ dist/onionprobe_*.deb
+  # As of 2025-03-17, this job currently does not run successfully on TPA runners:
+  # https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/94
+  tags:
+    - osuosl
+    # Restrict architectures until the following issue is addressed:
+    # https://gitlab.torproject.org/tpo/tpa/base-images/-/issues/3
+    - x86_64
+  #only:
+  #  - main
 
 #
 # Configuration
