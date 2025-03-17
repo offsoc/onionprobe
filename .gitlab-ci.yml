@@ -115,8 +115,9 @@ piuparts:
     # This explicit ignore option might be removed in the future.
     # Details at https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=1092667
     - piuparts --ignore /var/cache/debconf/tmp.ci/ dist/onionprobe_*.deb
-  # As of 2025-03-17, this job currently does not run successfully on TPA runners:
-  # https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/94
+  # As of 2025-03-17, this job currently does not run successfully on TPA runners.
+  # This constraint might be lifted once the following issue is fixed:
+  # https://gitlab.torproject.org/tpo/tpa/team/-/issues/42087
   tags:
     - osuosl
     # Restrict architectures until the following issue is addressed:
