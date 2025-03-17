@@ -96,6 +96,10 @@ sbuild_sid:
     - mkdir -p ~/.cache/sbuild ~/.config/sbuild
     - cp configs/sbuild.pl ~/.config/sbuild/config.pl
     - mmdebstrap --include=ca-certificates --skip=output/dev --variant=buildd unstable ~/.cache/sbuild/unstable-amd64.tar.zst https://deb.debian.org/debian
+    # Adding subuids for root avoids the following errors:
+    #
+    #   No entry for root in /etc/subuid
+    #   invalid idmap
     - usermod --add-subuids 100000-165535 root
     - sbuild --verbose
   tags:
