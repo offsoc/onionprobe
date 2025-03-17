@@ -91,7 +91,7 @@ sbuild_sid:
     # when using the image from containers.torproject.org/tpo/tpa/base-images.
     # This requirement might be removed in the future.
     # Details at https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/105
-    - apt-get install -o Dpkg::Options::="--path-include=/usr/share/lintian/*" -y sbuild mmdebstrap uidmap piuparts lintian
+    - apt-get install -o Dpkg::Options::="--path-include=/usr/share/lintian/*" -y sbuild mmdebstrap uidmap piuparts lintian zstd
     - mkdir -p ~/.cache/sbuild ~/.config/sbuild
     - cp configs/sbuild.pl ~/.config/sbuild/config.pl
     - mmdebstrap --include=ca-certificates --skip=output/dev --variant=buildd unstable ~/.cache/sbuild/unstable-amd64.tar.zst https://deb.debian.org/debian
