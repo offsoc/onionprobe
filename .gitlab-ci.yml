@@ -81,6 +81,21 @@ ubuntu_lts:
   #only:
   #  - main
 
+sbuild_sid:
+  stage: build
+  image: containers.torproject.org/tpo/tpa/base-images/debian:sid
+  before_script:
+    - !reference [.apt-init]
+  script:
+    - sudo apt-get install sbuild -y
+    - sbuild-update -udcar u
+	  - sbuild -c unstable-amd64-sbuild
+  #artifacts:
+  #  paths:
+  #    - dist
+  #only:
+  #  - main
+
 lintian:
   image: containers.torproject.org/tpo/tpa/base-images/debian:sid
   stage: test
