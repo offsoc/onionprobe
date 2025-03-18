@@ -12,6 +12,7 @@ services:
     volumes:
       - ./${PROMETHEUS_CONFIG:-configs/prometheus/prometheus.yml}:/etc/prometheus/prometheus.yml
       - ./${PROMETHEUS_RULES:-configs/prometheus/prometheus-rules.yml}:/etc/prometheus/prometheus-rules.yml
+      - ./${PROMETHEUS_TESTS:-configs/prometheus/prometheus-tests.yml}:/etc/prometheus/prometheus-tests.yml
       - prometheus:/prometheus
 
     networks:
