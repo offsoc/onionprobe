@@ -6,7 +6,7 @@
 # Parameters
 DIRNAME="`dirname $0`"
 BASEPATH="$DIRNAME/.."
-DEPENDENCIES_PACKAGING_DEBIAN="piuparts git-buildpackage equivs lintian"
+DEPENDENCIES_PACKAGING_DEBIAN="git-buildpackage equivs"
 
 # Check for sudo
 if [ "`whoami`" != "root" ]; then
