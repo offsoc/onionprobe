@@ -1,0 +1,127 @@
+---
+# Sample Prometheus test rule file to be used with Docker Compose.
+#
+# Copyright (C) 2025 The Tor Project, Inc.
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published
+# by the Free Software Foundation, either version 3 of the License,
+# or any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+rule_files:
+  - prometheus-rules.yml
+
+tests:
+  # Descriptor reachability tests
+  - interval: 1m
+    input_series:
+      - series: 'onion_service_descriptor_reachable{address="testn5cs76tk2hk3mwoqkugkwwcljp4c6gpzoclwou7mmobiqabn5wid.onion", alertname="Onion Service descriptor unreachable", instance="onionprobe:9935", job="onionprobe", name="Test", severity="critical"}'
+        values: 0x250
+    alert_rule_test:
+      - eval_time: 30m
+        alertname: Onion Service descriptor unreachable
+        exp_alerts:
+          - exp_labels:
+              severity  : critical
+              address   : testn5cs76tk2hk3mwoqkugkwwcljp4c6gpzoclwou7mmobiqabn5wid.onion
+              alertname : "Onion Service descriptor unreachable"
+              instance  : onionprobe:9935
+              job       : onionprobe
+              name      : Test
+            exp_annotations:
+              summary: Onion Service descriptor reachability
+
+  # Invalid certificate tests
+  - interval: 1m
+    input_series:
+      - series: 'onion_service_valid_certificate{address="testn5cs76tk2hk3mwoqkugkwwcljp4c6gpzoclwou7mmobiqabn5wid.onion", alertname="Invalid certificate for the Onion Service", instance="onionprobe:9935", job="onionprobe", name="Test", path="/", port="443", protocol="https", severity="critical"}'
+        values: 0x250
+    alert_rule_test:
+      - eval_time: 30m
+        alertname: Invalid certificate for the Onion Service
+        exp_alerts:
+          - exp_labels:
+              severity  : critical
+              address   : testn5cs76tk2hk3mwoqkugkwwcljp4c6gpzoclwou7mmobiqabn5wid.onion
+              alertname : "Invalid certificate for the Onion Service"
+              instance  : onionprobe:9935
+              job       : onionprobe
+              name      : Test
+              path      : /
+              port      : 443
+              protocol  : https
+            exp_annotations:
+              summary: Certificate validity
+
+  # Certificate expiration tests
+  - interval: 1m
+    input_series:
+      - series: 'onion_service_certificate_expiry_seconds{address="testn5cs76tk2hk3mwoqkugkwwcljp4c6gpzoclwou7mmobiqabn5wid.onion", alertname="Expiring certificate for the Onion Service", instance="onionprobe:9935", job="onionprobe", name="Test", port="443", severity="page"}'
+        # 86400 * 7, decrementing 60 seconds every minute, 250 times
+        values: 604800-60x250
+    alert_rule_test:
+      - eval_time: 30m
+        alertname: Expiring certificate for the Onion Service
+        exp_alerts:
+          - exp_labels:
+              severity  : page
+              address   : testn5cs76tk2hk3mwoqkugkwwcljp4c6gpzoclwou7mmobiqabn5wid.onion
+              alertname: Expiring certificate for the Onion Service
+              instance  : onionprobe:9935
+              job       : onionprobe
+              name      : Test
+              port      : 443
+            exp_annotations:
+              summary: Certificate expiration
+
+  # Reachability tests
+  - interval: 1m
+    input_series:
+      - series: 'onion_service_reachable{address="testn5cs76tk2hk3mwoqkugkwwcljp4c6gpzoclwou7mmobiqabn5wid.onion", alertname="Onion Service unreachable", instance="onionprobe:9935", job="onionprobe", name="Test", path="/", port="443", protocol="https", severity="critical"}'
+        values: 0x250
+    alert_rule_test:
+      - eval_time: 30m
+        alertname: Onion Service unreachable
+        exp_alerts:
+          - exp_labels:
+              severity  : critical
+              address   : testn5cs76tk2hk3mwoqkugkwwcljp4c6gpzoclwou7mmobiqabn5wid.onion
+              alertname : "Onion Service descriptor unreachable"
+              instance  : onionprobe:9935
+              job       : onionprobe
+              name      : Test
+              path      : /
+              port      : 443
+              protocol  : https
+            exp_annotations:
+              summary: Onion Service reachability
+
+  # Status code tests
+  - interval: 1m
+    input_series:
+      - series: 'onion_service_unexpected_status_code{address="testn5cs76tk2hk3mwoqkugkwwcljp4c6gpzoclwou7mmobiqabn5wid.onion", alertname="Status code", instance="onionprobe:9935", job="onionprobe", name="Test", path="/", port="443", protocol="https", severity="critical"}'
+        values: 1x250
+    alert_rule_test:
+      - eval_time: 30m
+        alertname: Status code
+        exp_alerts:
+          - exp_labels:
+              severity  : critical
+              address   : testn5cs76tk2hk3mwoqkugkwwcljp4c6gpzoclwou7mmobiqabn5wid.onion
+              alertname : "Status code"
+              instance  : onionprobe:9935
+              job       : onionprobe
+              name      : Test
+              path      : /
+              port      : 443
+              protocol  : https
+            exp_annotations:
+              summary: Unexpected HTTP status code
