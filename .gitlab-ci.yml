@@ -240,7 +240,7 @@ promtool:
     entrypoint: [""]
   script:
     - promtool check config configs/prometheus/prometheus.yml
-    - promtool test rules configs/prometheus/test.yml
+    - promtool test rules configs/prometheus/prometheus-tests.yml
 
 #
 # Release
