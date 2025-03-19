@@ -1,4 +1,4 @@
-# Manual page
+# Onionprobe manual page
 
 ## NAME
 
