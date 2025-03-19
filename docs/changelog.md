@@ -1,5 +1,18 @@
 # Onionprobe ChangeLog
 
+## v1.4.0 - unreleased
+
+### Features
+
+* Prometheus alerting improvements:
+    * Tests for Prometheus alerting rules ([tpo/onion-services/onionprobe#102][]).
+* Documentation:
+    * [Troubleshooting page](troubleshooting.md).
+    * [Development](development.md): new section about Prometheus alerts
+      development and testing.
+
+[tpo/onion-services/onionprobe#102]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/102
+
 ## v1.3.0 - 2025-03-12
 
 ### Fixes

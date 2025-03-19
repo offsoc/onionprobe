@@ -101,9 +101,9 @@ $CHANGELOG
 
 ## Testing
 
-### Writing and trying unit tests for Prometheus
+### Writing and trying alerts and unit tests for Prometheus
 
-The [Prometheus][] alerts shipped by Onionprobe are tested by the `prom` [CI job][].
+The [Prometheus][] alerts shipped by Onionprobe are tested by the `promtool` [CI job][].
 The configuration is available under the [configs/prometheus][] folder.
 
 #### Workflow
@@ -119,6 +119,9 @@ A quick workflow to try tests before pushing to CI can be set with the
 [CI job]: https://docs.gitlab.com/ee/ci
 [configs/prometheus]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/tree/main/configs/prometheus
 [standalone]: standalone.md
+
+Once the new alerts and corresponding unit tests are updated, don't forget to
+also update the [troubleshooting docs](troubleshooting.md).
 
 #### References
 

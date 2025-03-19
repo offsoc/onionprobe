@@ -7,6 +7,7 @@ nav:
   - standalone.md
   - configurations.md
   - upgrading.md
+  - Troubleshooting: troubleshooting.md
   - structure.md
   - API: api
   - ChangeLog: changelog.md
