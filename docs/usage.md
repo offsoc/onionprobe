@@ -1,4 +1,4 @@
-# Usage
+# Onionprobe usage
 
 Simply ask Onionprobe to try an Onion Service site:
 

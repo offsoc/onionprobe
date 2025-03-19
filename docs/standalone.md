@@ -1,4 +1,4 @@
-# Standalone monitoring node
+# Onionprobe standalone monitoring node
 
 Onionprobe comes with full monitoring environment based on the
 [Compose Specification][], and with:

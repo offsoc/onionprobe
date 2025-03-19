@@ -1,4 +1,4 @@
-# Upgrading
+# Upgrading Onionprobe
 
 Onionprobe adopts the [Semantic Versioning 2.0.0][], which means that any major
 version might have breaking changes on previous installations.

@@ -1,4 +1,4 @@
-# Contacts, announcements, requests and bug reporting
+# Onionprobe: contacts, announcements, requests and bug reporting
 
 ## Announcements
 

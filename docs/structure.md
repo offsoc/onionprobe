@@ -1,4 +1,4 @@
-# Folder structure and files
+# Onionprobe repository folder structure and files
 
 Relevant folders and files in this repository:
 

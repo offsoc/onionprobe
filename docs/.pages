@@ -1,19 +1,19 @@
 nav:
   - Intro: README.md
-  - requirements.md
-  - installation.md
-  - usage.md
+  - Requirements: requirements.md
+  - Installation: installation.md
+  - Usage: usage.md
   - Manual page: man
-  - standalone.md
-  - configurations.md
-  - upgrading.md
+  - Standalone: standalone.md
+  - Configurations: configurations.md
+  - Upgrading: upgrading.md
   - Troubleshooting: troubleshooting.md
-  - structure.md
+  - Folder structure and files: structure.md
   - API: api
   - ChangeLog: changelog.md
-  - acknowledgements.md
-  - alternatives.md
-  - issues.md
-  - development.md
-  - references.md
+  - Acknowledgements: acknowledgements.md
+  - Alternatives: alternatives.md
+  - Issues: issues.md
+  - Development: development.md
+  - References: references.md
   - Contact and bug reporting: contact.md

@@ -1,4 +1,4 @@
-# Compiled configurations
+# Compiled configurations for Onionprobe
 
 Besides the [sample config][] containing sites listed at
 https://onion.torproject.org, Onionprobe comes also with other example configs:

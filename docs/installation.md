@@ -1,4 +1,4 @@
-# Installation
+# Onionprobe installation
 
 ## Debian package
 

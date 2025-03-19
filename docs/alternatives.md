@@ -1,4 +1,4 @@
-# Alternatives
+# Alternatives to Onionprobe
 
 * [OnionScan](https://onionscan.org/)
 * [Webmon](https://webmon.dev.akito.ooo/) has support for Onion Services

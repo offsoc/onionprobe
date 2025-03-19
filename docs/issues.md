@@ -1,4 +1,4 @@
-# Known issues
+# Known Onionprobe issues
 
 Check the [issue tracker][] for known issues.
 
