@@ -98,3 +98,33 @@ $CHANGELOG
 [tor-announce]: https://lists.torproject.org/cgi-bin/mailman/listinfo/tor-announce
 [Tor Forum]: https://forum.torproject.org
 [onion-services-announce tag]: https://forum.torproject.org/tag/onion-services-announce
+
+## Testing
+
+### Writing and trying unit tests for Prometheus
+
+The [Prometheus][] alerts shipped by Onionprobe are tested by the `prom` [CI job][].
+The configuration is available under the [configs/prometheus][] folder.
+
+#### Workflow
+
+A quick workflow to try tests before pushing to CI can be set with the
+[standalone][] node:
+
+    ./onionprobe-monitor up
+    ./onionprobe-monitor shell prometheus
+    promtool test rules /etc/prometheus/prometheus-tests.yml
+
+[Prometheus]: https://prometheus.io/
+[CI job]: https://docs.gitlab.com/ee/ci
+[configs/prometheus]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/tree/main/configs/prometheus
+[standalone]: standalone.md
+
+#### References
+
+References for understanding and writing unit tests for [Prometheus][]:
+
+* [Unit Testing for Rules | Prometheus](https://prometheus.io/docs/prometheus/latest/configuration/unit_testing_rules/)
+* [Sleep Soundly: Reliable Alerting with Unit Testing in Prometheus | by Rubén Cougil Grande | Medium](https://medium.com/@rcougil/sleep-soundly-realiable-alerting-with-unit-testing-in-prometheus-260c652a3f9)
+* [A Guide to Unit Testing Prometheus Alerts - Aviator Blog](https://www.aviator.co/blog/a-guide-to-unit-testing-prometheus-alerts/#)
+* [Testing alerts - prometheus · Wiki · The Tor Project / TPA / TPA team · GitLab](https://gitlab.torproject.org/tpo/tpa/team/-/wikis/service/prometheus#testing-alerts)
