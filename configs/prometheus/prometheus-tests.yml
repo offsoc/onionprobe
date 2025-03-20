@@ -20,6 +20,76 @@ rule_files:
   - prometheus-rules.yml
 
 tests:
+  # Onionprobe
+  - interval: 1m
+    # Use for series, one for each Onionprobe state
+    # No two states can be active at the same time.
+    #
+    # Failure happens when the series stales, meaning that Onionprobe became
+    # unreachable.
+    #
+    # These series simulates:
+    #
+    # * Onionprobe being operational for the first 4 minutes.
+    # * Onionprobe becomes unresponsible for 16 minutes.
+    # * A restart in the Onionprobe service making it reachable on minute 20.
+    input_series:
+      - series: 'onionprobe_state{instance="onionprobe:9935", job="onionprobe", onionprobe_state="starting"}'
+        values: 1 0 0 0 _x15 1
+      - series: 'onionprobe_state{instance="onionprobe:9935", job="onionprobe", onionprobe_state="probing"}'
+        values: 0 1 0 0 _x15 0
+      - series: 'onionprobe_state{instance="onionprobe:9935", job="onionprobe", onionprobe_state="sleeping"}'
+        values: 0 0 1 0 _x15 0
+      - series: 'onionprobe_state{instance="onionprobe:9935", job="onionprobe", onionprobe_state="stopping"}'
+        values: 0 0 0 1 _x15 0
+    alert_rule_test:
+      - eval_time: 1m
+        alertname: Onionprobe not responding
+        exp_alerts: []
+      - eval_time: 2m
+        alertname: Onionprobe not responding
+        exp_alerts: []
+      - eval_time: 3m
+        alertname: Onionprobe not responding
+        exp_alerts: []
+      - eval_time: 4m
+        alertname: Onionprobe not responding
+        exp_alerts: []
+      - eval_time: 5m
+        alertname: Onionprobe not responding
+        exp_alerts: []
+      - eval_time: 6m
+        alertname: Onionprobe not responding
+        exp_alerts: []
+      - eval_time: 12m
+        alertname: Onionprobe not responding
+        exp_alerts: []
+      # In addition to the wait time ("for: 5m") in the alert configuration,
+      # there's also an additional time before the series is marked as stale.
+      #
+      # Hence, this alert should fire 5 minutes after the series is marked as
+      # stale by Prometheus It takes some minutes before stale samples leads to
+      # a staleness:
+      # https://prometheus.io/docs/prometheus/latest/querying/basics/#staleness
+      #
+      # The staleness timeout seems not to be exactly 5 minutes, otherwise
+      # the alert would trigger only on minute 15.
+      - eval_time: 13m
+        alertname: Onionprobe not responding
+        exp_alerts:
+          - exp_labels:
+              severity  : critical
+              alertname : "Onionprobe not responding"
+            exp_annotations:
+              summary: >
+                Onionprobe is unreachable
+              description: >
+                Unable to determine Onionprobe state
+              playbook: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#onionprobe-not-responding'
+      - eval_time: 19m
+        alertname: Onionprobe not responding
+        exp_alerts: []
+
   # General reachability tests
   - interval: 1m
     input_series:

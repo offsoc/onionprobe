@@ -17,6 +17,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 groups:
+- name: Onionprobe
+  rules:
+    - alert: Onionprobe not responding
+      expr: sum(onionprobe_state OR on() vector(0)) == 0
+      for: 5m
+      labels:
+        severity: critical
+      annotations:
+        summary: >
+          Onionprobe is unreachable
+        description: >
+          Unable to determine Onionprobe state
+        playbook: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#onionprobe-not-responding'
+
 - name: Onion Services
   rules:
     - alert: Onion Service unreachable
