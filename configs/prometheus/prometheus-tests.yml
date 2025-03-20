@@ -24,8 +24,11 @@ tests:
   - interval: 1m
     input_series:
       - series: 'onion_service_reachable{address="testn5cs76tk2hk3mwoqkugkwwcljp4c6gpzoclwou7mmobiqabn5wid.onion", alertname="Onion Service unreachable", instance="onionprobe:9935", job="onionprobe", name="Test", path="/", port="443", protocol="https", severity="critical"}'
-        values: 0x250
+        values: 0x30
     alert_rule_test:
+      - eval_time: 10m
+        alertname: Onion Service unreachable
+        exp_alerts: []
       - eval_time: 30m
         alertname: Onion Service unreachable
         exp_alerts:
@@ -52,8 +55,11 @@ tests:
   - interval: 1m
     input_series:
       - series: 'onion_service_descriptor_reachable{address="testn5cs76tk2hk3mwoqkugkwwcljp4c6gpzoclwou7mmobiqabn5wid.onion", alertname="Onion Service descriptor unreachable", instance="onionprobe:9935", job="onionprobe", name="Test", severity="critical"}'
-        values: 0x250
+        values: 0x30
     alert_rule_test:
+      - eval_time: 10m
+        alertname: Onion Service descriptor unreachable
+        exp_alerts: []
       - eval_time: 30m
         alertname: Onion Service descriptor unreachable
         exp_alerts:
@@ -78,7 +84,7 @@ tests:
   - interval: 1m
     input_series:
       - series: 'onion_service_valid_certificate{address="testn5cs76tk2hk3mwoqkugkwwcljp4c6gpzoclwou7mmobiqabn5wid.onion", alertname="Invalid certificate for the Onion Service", instance="onionprobe:9935", job="onionprobe", name="Test", path="/", port="443", protocol="https", severity="critical"}'
-        values: 0x250
+        values: 0x30
     alert_rule_test:
       - eval_time: 30m
         alertname: Invalid TLS certificate for the Onion Service
@@ -107,10 +113,17 @@ tests:
   - interval: 1m
     input_series:
       - series: 'onion_service_certificate_expiry_seconds{address="testn5cs76tk2hk3mwoqkugkwwcljp4c6gpzoclwou7mmobiqabn5wid.onion", alertname="Expiring certificate for the Onion Service", instance="onionprobe:9935", job="onionprobe", name="Test", port="443", severity="page"}'
-        # 86400 * 7, decrementing 60 seconds every minute, 250 times
-        values: 604800-60x250
+        # Series: (86400 * 7)  +  (60 * 10), decrementing 60 seconds every minute, 30 times
+        #          a week         ten minutes
+        #
+        # Series starts with the value for a certificate expiring in one week plus ten minutes.
+        # The alert should fire in eleven minutes.
+        values: 605400-60x30
     alert_rule_test:
-      - eval_time: 30m
+      - eval_time: 10m
+        alertname: Expiring TLS certificate for the Onion Service
+        exp_alerts: []
+      - eval_time: 11m
         alertname: Expiring TLS certificate for the Onion Service
         exp_alerts:
           - exp_labels:
@@ -137,6 +150,9 @@ tests:
       - series: 'onion_service_unexpected_status_code{address="testn5cs76tk2hk3mwoqkugkwwcljp4c6gpzoclwou7mmobiqabn5wid.onion", alertname="Status code", instance="onionprobe:9935", job="onionprobe", name="Test", path="/", port="443", protocol="https", severity="critical"}'
         values: 1x250
     alert_rule_test:
+      - eval_time: 10m
+        alertname: Unexpected HTTP status code
+        exp_alerts: []
       - eval_time: 30m
         alertname: Unexpected HTTP status code
         exp_alerts:
