@@ -4,8 +4,10 @@
 
 ### Features
 
-* Prometheus alerting improvements:
-    * Tests for Prometheus alerting rules ([tpo/onion-services/onionprobe#102][]).
+* Prometheus alerting improvements ([tpo/onion-services/onionprobe#102][]):
+    * Tests for Prometheus alerting rules.
+    * New alert "Onionprobe not responding", detecting issues with the
+      Onionprobe operation itself.
 * Documentation:
     * [Troubleshooting page](troubleshooting.md).
     * [Development](development.md): new section about Prometheus alerts
