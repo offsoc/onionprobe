@@ -90,11 +90,7 @@ ubuntu_lts:
 #  before_script:
 #    - !reference [.apt-init]
 #  script:
-#    # As of 2025-03-14, it's required to ask dpkg to include /usr/share/lintian/*
-#    # when using the image from containers.torproject.org/tpo/tpa/base-images.
-#    # This requirement might be removed in the future.
-#    # Details at https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/105
-#    - apt-get install -o Dpkg::Options::="--path-include=/usr/share/lintian/*" -y sbuild mmdebstrap uidmap piuparts lintian autopkgtest build-essential debhelper-compat zstd
+#    - apt-get install -y sbuild mmdebstrap uidmap piuparts lintian autopkgtest build-essential debhelper-compat zstd
 #    - apt-get install -y dh-python pybuild-plugin-pyproject python3-setuptools pandoc
 #    - mkdir -p ~/.cache/sbuild ~/.config/sbuild
 #    - cp configs/sbuild.pl ~/.config/sbuild/config.pl
@@ -140,11 +136,7 @@ lintian:
     - !reference [.apt-init]
   script:
     - apt-get update
-    # As of 2025-03-14, it's required to ask dpkg to include /usr/share/lintian/*
-    # when using the image from containers.torproject.org/tpo/tpa/base-images.
-    # This requirement might be removed in the future.
-    # Details at https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/105
-    - apt-get install -o Dpkg::Options::="--path-include=/usr/share/lintian/*" -y lintian
+    - apt-get install -y lintian
     - lintian --allow-root -v --pedantic dist/onionprobe_*.deb
   #only:
   #  - main
