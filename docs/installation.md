@@ -35,7 +35,7 @@ manager. Example: in a [Debian][]-like system, run
     sudo apt install -y tor
 
 [Python]: https://python.org
-[through PyPI]: https://pypi.org/project/onionprobe
+[pypi]: https://pypi.org/project/onionprobe
 
 Once the [Tor daemon][] is installed, proceed installing the [Python][] package.
 Some options are detailed below.
