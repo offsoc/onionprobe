@@ -125,3 +125,21 @@ configured for each path tested on each Onion Service.
 
 An unexpected status code might mean that the application served by the
 Onion Service is malfunctioning.
+
+### Onionprobe not responding
+
+When [Prometheus][] is unable to determine Onionprobe's state, this
+alert is fired.
+
+Possible causes include:
+
+* Onionprobe crashed or is not responding.
+* A networking error between the [Prometheus][] server and the Onionprobe
+  instance.
+
+If this alert triggers:
+
+1. Check if Onionprobe is running.
+2. Check if Onionprobe is serving [Prometheus][] metrics.
+3. Check whether Onionprobe's metrics endpoint is reachable from the
+   [Prometheus][] server.

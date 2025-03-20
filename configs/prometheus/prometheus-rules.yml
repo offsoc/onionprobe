@@ -17,6 +17,20 @@
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 groups:
+- name: Onionprobe
+  rules:
+    - alert: Onionprobe not responding
+      expr: sum(onionprobe_state OR on() vector(0)) == 0
+      for: 5m
+      labels:
+        severity: critical
+      annotations:
+        summary: >
+          Onionprobe is unreachable
+        description: >
+          Unable to determine Onionprobe state
+        troubleshooting: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#onionprobe-not-responding'
+
 - name: Onion Services
   rules:
     - alert: Onion Service unreachable
@@ -29,7 +43,7 @@ groups:
           Onion Service unreachable: {{ $labels.address }}
         description: >
           Onionprobe was unable to connect to the Onion Service: {{ $labels.address }}
-        playbook: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#onion-service-unreachable'
+        troubleshooting: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#onion-service-unreachable'
 
     - alert: Onion Service descriptor unreachable
       expr: onion_service_descriptor_reachable != 1
@@ -42,11 +56,10 @@ groups:
         description: >
           The Onion Service descriptor for {{ $labels.address}} has become
           unreachable from Onionprobe.
-        playbook: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#onion-service-descriptor-unreachable'
+        troubleshooting: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#onion-service-descriptor-unreachable'
 
     - alert: Invalid TLS certificate for the Onion Service
       expr: onion_service_valid_certificate != 1
-      for: 30m
       labels:
         severity: critical
       annotations:
@@ -54,7 +67,7 @@ groups:
           Invalid TLS certificate for the Onion Service: {{ $labels.address }}
         description: >
           The TLS certificate for the Onion Service {{ $labels.address }} is invalid
-        playbook: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#invalid-tls-certificate-for-the-onion-service'
+        troubleshooting: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#invalid-tls-certificate-for-the-onion-service'
 
     - alert: Expiring TLS certificate for the Onion Service
       expr: onion_service_certificate_expiry_seconds < 86400 * 7
@@ -66,7 +79,7 @@ groups:
         description: >
           The TLS certificate for the Onion Service {{ $labels.address }} will
           expie in less than a week.
-        playbook: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#expiring-tls-certificate-for-the-onion-service'
+        troubleshooting: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#expiring-tls-certificate-for-the-onion-service'
 
     - alert: Unexpected HTTP status code
       expr: onion_service_unexpected_status_code == 1
@@ -79,4 +92,4 @@ groups:
         description: >
           Onionprobe got an unexpected HTTP status code when trying to connect
           to {{ $labels.address }}
-        playbook: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#unexpected-http-status-code'
+        troubleshooting: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#unexpected-http-status-code'
