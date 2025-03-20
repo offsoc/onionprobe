@@ -441,7 +441,7 @@ endpoints:
       - path: /
         allowed_statuses: [ 200 ]
   onionservices.torproject.org:
-    address: ttevhjjsjxz6uqqcjkbig5cycd7n7xv7cmd6f5fcvrqaaa7f3bj36wad.onion
+    address: 'ttevhjjsjxz6uqqcjkbig5cycd7n7xv7cmd6f5fcvrqaaa7f3bj36wad.onion'
     protocol: http
     port: 80
     paths:
