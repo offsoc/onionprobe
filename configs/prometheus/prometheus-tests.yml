@@ -85,7 +85,7 @@ tests:
                 Onionprobe is unreachable
               description: >
                 Unable to determine Onionprobe state
-              playbook: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#onionprobe-not-responding'
+              troubleshooting: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#onionprobe-not-responding'
       - eval_time: 19m
         alertname: Onionprobe not responding
         exp_alerts: []
@@ -119,7 +119,7 @@ tests:
               description: >
                 Onionprobe was unable to connect to the Onion Service:
                 testn5cs76tk2hk3mwoqkugkwwcljp4c6gpzoclwou7mmobiqabn5wid.onion
-              playbook: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#onion-service-unreachable'
+              troubleshooting: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#onion-service-unreachable'
 
   # Descriptor reachability tests
   - interval: 1m
@@ -148,7 +148,7 @@ tests:
                 The Onion Service descriptor for
                 testn5cs76tk2hk3mwoqkugkwwcljp4c6gpzoclwou7mmobiqabn5wid.onion
                 has become unreachable from Onionprobe.
-              playbook: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#onion-service-descriptor-unreachable'
+              troubleshooting: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#onion-service-descriptor-unreachable'
 
   # Invalid certificate tests
   - interval: 1m
@@ -177,7 +177,7 @@ tests:
                 The TLS certificate for the Onion Service
                 testn5cs76tk2hk3mwoqkugkwwcljp4c6gpzoclwou7mmobiqabn5wid.onion
                 is invalid
-              playbook: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#invalid-tls-certificate-for-the-onion-service'
+              troubleshooting: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#invalid-tls-certificate-for-the-onion-service'
 
   # Certificate expiration tests
   - interval: 1m
@@ -212,7 +212,7 @@ tests:
                 The TLS certificate for the Onion Service
                 testn5cs76tk2hk3mwoqkugkwwcljp4c6gpzoclwou7mmobiqabn5wid.onion
                 will expie in less than a week.
-              playbook: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#expiring-tls-certificate-for-the-onion-service'
+              troubleshooting: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#expiring-tls-certificate-for-the-onion-service'
 
   # Status code tests
   - interval: 1m
@@ -243,4 +243,4 @@ tests:
               description: >
                 Onionprobe got an unexpected HTTP status code when trying to
                 connect to testn5cs76tk2hk3mwoqkugkwwcljp4c6gpzoclwou7mmobiqabn5wid.onion
-              playbook: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#unexpected-http-status-code'
+              troubleshooting: 'https://onionservices.torproject.org/apps/web/onionprobe/troubleshooting/#unexpected-http-status-code'
