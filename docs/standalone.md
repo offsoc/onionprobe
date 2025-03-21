@@ -292,7 +292,7 @@ services:
   # Use a static network range to allow Prometheus to collect MetricsPort data
   # from onionprobe's Tor process.
   networks:
-    default:
+    onionprobe:
       ipam:
         config:
           - subnet: 172.19.0.0/24
