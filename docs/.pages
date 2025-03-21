@@ -1,5 +1,7 @@
 nav:
   - Intro: README.md
+  - Features: features.md
+  - How it works: how.md
   - Requirements: requirements.md
   - Installation: installation.md
   - Usage: usage.md
