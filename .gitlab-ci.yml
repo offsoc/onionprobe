@@ -163,6 +163,10 @@ piuparts:
     # Restrict architectures until the following issue is addressed:
     # https://gitlab.torproject.org/tpo/tpa/base-images/-/issues/3
     - x86_64
+  # As of 2025-03-25, there's no available runners for this job
+  # https://gitlab.torproject.org/tpo/tpa/team/-/issues/41295#note_3177052
+  rules:
+    - when: never
   #only:
   #  - main
 
