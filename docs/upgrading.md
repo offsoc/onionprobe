@@ -11,9 +11,12 @@ The following subsections documents other upgrade procedures, such as database u
 [Semantic Versioning 2.0.0]: https://semver.org/spec/v2.0.0.html
 [ChangeLog]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/blob/main/ChangeLog.md
 
+## Codebase upgrade
+
 ## Standalone monitoring node
 
-Upgrade procedures for the [standalone monitoring node](standalone.md).
+Upgrade procedures specific for the [standalone monitoring
+node](standalone.md).
 
 [PostgreSQL]: https://postgresql.org
 
