@@ -13,7 +13,7 @@ as well as on important information.
 * General discussion and support: [onion-services tag][] at the [Tor Forum][].
 * Mailing list: [tor-dev@lists.torproject.org][].
 * [IRC][]: #tor-dev at [OFTC][].
-* Details in how contact us are available in [this broader contact
+* Details in how to contact are available in [this broader contact
   page](https://onionservices.torproject.org/contact/).
 
 [onion-services tag]: https://forum.torproject.org/tag/onion-services
