@@ -271,6 +271,7 @@ class OnionprobeCertificate:
             # https://docs.python.org/3.12/whatsnew/changelog.html#id202
             # https://github.com/python/cpython/issues/94199#issuecomment-1165682234
             # https://github.com/python/cpython/pull/94224
+            # https://bugs.python.org/issue43880
             if 'match_hostname' in dir(ssl):
                 # Still available
                 # https://docs.python.org/3.11/library/ssl.html#ssl.match_hostname
@@ -280,8 +281,18 @@ class OnionprobeCertificate:
                 except ssl.CertificateError as e:
                     match_hostname = 0
             else:
+                # FIXME: use a built-in replacement for ssl.match_hostname, based
+                # on https://github.com/brandon-rhodes/backports.ssl_match_hostname
+                # or in the implementation from Python 3.11, both licensed under
+                # Python Software Foundation License Version 2 (compatible with
+                # GPLv3).
+                #
+                # We cannot just ignore this check, since we're using the following
+                # on tls.py:
+                #
+                #   context.check_hostname = False
+                #   context.verify_mode    = ssl.CERT_NONE
                 pass
-                # FIXME
 
             self.info_metric('onion_service_certificate', self.get_cert_info(cert, 'flat'), labels)
 
