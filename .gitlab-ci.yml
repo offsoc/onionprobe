@@ -244,8 +244,9 @@ run_python:
     - apt-get update
     - apt-get install -y python3-pip
     - pip install --break-system-packages dist/onionprobe*.whl
-    - $HOME/.local/bin/onionprobe -e http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion
-    - $HOME/.local/bin/onionprobe -e https://v236xhqtyullodhf26szyjepvkbv6iitrhjgrqj4avaoukebkk6n6syd.onion
+    - pip show onionprobe
+    - onionprobe -e http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion
+    - onionprobe -e https://v236xhqtyullodhf26szyjepvkbv6iitrhjgrqj4avaoukebkk6n6syd.onion
 
 run_sid:
   image: containers.torproject.org/tpo/tpa/base-images/debian:sid
