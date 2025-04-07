@@ -266,11 +266,22 @@ class OnionprobeCertificate:
                     'port'    : config['port'],
                     }
 
-            try:
-                match = ssl.match_hostname(info, config['address'])
+            # Since Python 3.12, ssl.match_hostname is not available anymore:
+            # https://docs.python.org/3.12/library/ssl.html
+            # https://docs.python.org/3.12/whatsnew/changelog.html#id202
+            # https://github.com/python/cpython/issues/94199#issuecomment-1165682234
+            # https://github.com/python/cpython/pull/94224
+            if 'match_hostname' in dir(ssl):
+                # Still available
+                # https://docs.python.org/3.11/library/ssl.html#ssl.match_hostname
+                try:
+                    match = ssl.match_hostname(info, config['address'])
 
-            except ssl.CertificateError as e:
-                match_hostname = 0
+                except ssl.CertificateError as e:
+                    match_hostname = 0
+            else:
+                pass
+                # FIXME
 
             self.info_metric('onion_service_certificate', self.get_cert_info(cert, 'flat'), labels)
 
