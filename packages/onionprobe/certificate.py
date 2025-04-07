@@ -266,33 +266,39 @@ class OnionprobeCertificate:
                     'port'    : config['port'],
                     }
 
-            # Since Python 3.12, ssl.match_hostname is not available anymore:
-            # https://docs.python.org/3.12/library/ssl.html
-            # https://docs.python.org/3.12/whatsnew/changelog.html#id202
-            # https://github.com/python/cpython/issues/94199#issuecomment-1165682234
-            # https://github.com/python/cpython/pull/94224
-            # https://bugs.python.org/issue43880
+            # Since Python 3.12, ssl.match_hostname is not available anymore.
+            #
+            # Details at
+            #
+            #   https://docs.python.org/3.12/library/ssl.html
+            #   https://docs.python.org/3.12/whatsnew/changelog.html#id202
+            #   https://github.com/python/cpython/issues/94199#issuecomment-1165682234
+            #   https://github.com/python/cpython/pull/94224
+            #   https://bugs.python.org/issue43880
+            #
+            # We cannot just ignore this check, since we're using the following
+            # on tls.py:
+            #
+            #   context.check_hostname = False
+            #   context.verify_mode    = ssl.CERT_NONE
+            #
             if 'match_hostname' in dir(ssl):
                 # Still available
                 # https://docs.python.org/3.11/library/ssl.html#ssl.match_hostname
-                try:
-                    match = ssl.match_hostname(info, config['address'])
-
-                except ssl.CertificateError as e:
-                    match_hostname = 0
+                ssl_match_hostname = ssl.match_hostname
             else:
-                # FIXME: use a built-in replacement for ssl.match_hostname, based
-                # on https://github.com/brandon-rhodes/backports.ssl_match_hostname
-                # or in the implementation from Python 3.11, both licensed under
-                # Python Software Foundation License Version 2 (compatible with
-                # GPLv3).
+                # Use a built-in replacement for ssl.match_hostname, based on
+                # the implementation from Python 3.11.
                 #
-                # We cannot just ignore this check, since we're using the following
-                # on tls.py:
-                #
-                #   context.check_hostname = False
-                #   context.verify_mode    = ssl.CERT_NONE
-                pass
+                # Check also
+                # https://github.com/brandon-rhodes/backports.ssl_match_hostname
+                from .ssl import match_hostname as match_hostname
+
+            try:
+                match = ssl_match_hostname(info, config['address'])
+
+            except ssl.CertificateError as e:
+                match_hostname = 0
 
             self.info_metric('onion_service_certificate', self.get_cert_info(cert, 'flat'), labels)
 
