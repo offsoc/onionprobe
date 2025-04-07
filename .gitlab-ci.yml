@@ -222,6 +222,10 @@ configs:
 # Run tests
 #
 
+.run_onionprobe:
+  - onionprobe -e http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion
+  - onionprobe -e https://v236xhqtyullodhf26szyjepvkbv6iitrhjgrqj4avaoukebkk6n6syd.onion
+
 run_source:
   image: containers.torproject.org/tpo/tpa/base-images/debian:sid
   stage: test
@@ -229,8 +233,8 @@ run_source:
     - !reference [.apt-init]
   script:
     - scripts/provision-onionprobe
-    - ./onionprobe -e http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion
-    - ./onionprobe -e https://v236xhqtyullodhf26szyjepvkbv6iitrhjgrqj4avaoukebkk6n6syd.onion
+    - export PATH=.:$PATH
+    - !reference [.run_onionprobe]
 
 run_python:
   image: containers.torproject.org/tpo/tpa/base-images/debian:sid
@@ -245,8 +249,7 @@ run_python:
     - apt-get install -y python3-pip tor
     - pip install --break-system-packages dist/onionprobe*.whl
     - pip show onionprobe
-    - onionprobe -e http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion
-    - onionprobe -e https://v236xhqtyullodhf26szyjepvkbv6iitrhjgrqj4avaoukebkk6n6syd.onion
+    - !reference [.run_onionprobe]
 
 run_sid:
   image: containers.torproject.org/tpo/tpa/base-images/debian:sid
@@ -266,8 +269,7 @@ run_sid:
     - dpkg -i dist/onionprobe_*.deb
 
     # Test
-    - onionprobe -e http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion
-    - onionprobe -e https://v236xhqtyullodhf26szyjepvkbv6iitrhjgrqj4avaoukebkk6n6syd.onion
+    - !reference [.run_onionprobe]
 
 #
 # Prometheus
