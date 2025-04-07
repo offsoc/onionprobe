@@ -100,6 +100,47 @@ class OnionprobeCertificate:
 
         return tuple(result)
 
+    def get_cert_validity_interval(self, cert, timestamp=False):
+        """
+        Handle deprecation transition on certificate validity.
+
+        cryptography.x509.Certificate.not_valid_before and
+        cryptography.x509.Certificate.not_valid_after deprecated in favor of
+        cryptography.x509.Certificate.not_valid_before_utc and
+        cryptography.x509.Certificate.not_valid_after_utc
+
+        Details:
+
+        https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/92
+        https://cryptography.io/en/44.0.2/x509/reference/#cryptography.x509.Certificate.not_valid_before
+        https://cryptography.io/en/44.0.2/x509/reference/#cryptography.x509.Certificate.not_valid_before_utc
+        https://cryptography.io/en/44.0.2/x509/reference/#cryptography.x509.Certificate.not_valid_after
+        https://cryptography.io/en/44.0.2/x509/reference/#cryptography.x509.Certificate.not_valid_after_utc
+
+        :type  cert: cryptography.x509.Certificate
+        :param cert: The X.509 Certificate object.
+
+        :type  timestamp: bol
+        :param timestamp: Whether the return values should be converted to a timestamp.
+                          Defaults to False.
+
+        :rtype: typle
+        :return: Pair of certificate not valid before and not valid after timestamps.
+
+        """
+
+        if 'not_valid_before_utc' in dir(cert):
+            not_valid_before = cert.not_valid_before_utc
+            not_valid_after  = cert.not_valid_after_utc
+        else:
+            not_valid_before = cert.not_valid_before
+            not_valid_after  = cert.not_valid_after
+
+        if timestamp:
+            return (not_valid_before.timestamp(), not_valid_after.timestamp())
+
+        return (not_valid_before, not_valid_after)
+
     def get_cert_info(self, cert, format = 'tree'):
         """
         Get basic information from a X.509 certificate.
@@ -131,6 +172,8 @@ class OnionprobeCertificate:
         # Date format is the same from ssl.cert_time_to_seconds
         date_format = '%b %d %H:%M:%S %Y %Z'
 
+        (not_valid_before, not_valid_after) = self.get_cert_validity_interval(cert)
+
         # The info dictionary
         info = {
                 'issuer'           : self.get_cert_rdns(cert, 'issuer'),
@@ -139,9 +182,9 @@ class OnionprobeCertificate:
 
                 # Convert to aware datetime formats since
                 # cryptography.x509.Certificate uses naive objects by default
-                'notAfter'         : cert.not_valid_after.replace(
+                'notAfter'         : not_valid_after.replace(
                     tzinfo=timezone.utc).strftime(date_format),
-                'notBefore'        : cert.not_valid_before.replace(
+                'notBefore'        : not_valid_before.replace(
                     tzinfo=timezone.utc).strftime(date_format),
 
                 'serialNumber'     : str(cert.serial_number),
@@ -174,7 +217,9 @@ class OnionprobeCertificate:
 
         """
 
-        not_valid_after = cert.not_valid_after.replace(tzinfo=timezone.utc).timestamp()
+        (not_valid_before, not_valid_after) = self.get_cert_validity_interval(cert)
+
+        not_valid_after = not_valid_after.replace(tzinfo=timezone.utc).timestamp()
         now             = datetime.now(timezone.utc).timestamp()
 
         return int(not_valid_after - now)
@@ -209,8 +254,9 @@ class OnionprobeCertificate:
             pem_cert         = ssl.DER_cert_to_PEM_cert(der_cert)
             cert             = load_pem_x509_certificate(bytes(pem_cert, 'utf-8'))
             result           = cert
-            not_valid_before = cert.not_valid_before.timestamp()
-            not_valid_after  = cert.not_valid_after.timestamp()
+
+            (not_valid_before, not_valid_after) = self.get_cert_validity_interval(cert, timestamp=True)
+
             info             = self.get_cert_info(cert)
             expiry           = self.get_certificate_expiration(cert)
             match_hostname   = 1
