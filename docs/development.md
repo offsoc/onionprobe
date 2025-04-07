@@ -46,24 +46,44 @@ Once a tag is pushed, a [GitLab release][] is created.
 
 ### Build packages
 
-Build and then upload the Python package in the Test PyPi instance:
+Build the Python package:
 
     make build-python-package
+
+Test this package in a fresh virtual machine. Example:
+
+    sudo apt-get install -y python3-pip tor
+    pip install --break-system-packages dist/onionprobe-$VERSION.whl
+    $HOME/.local/bin/onionprobe --version
+    $HOME/.local/bin/onionprobe -e \
+      http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion
+    $HOME/.local/bin/onionprobe -e \
+      https://v236xhqtyullodhf26szyjepvkbv6iitrhjgrqj4avaoukebkk6n6syd.onion
+
+If the package worked, upload it to the [Test PyPI][] instance:
+
     make upload-python-test-package
 
-Try the test package in a fresh virtual machine, which can be installed
-directly from [Test PyPI](https://test.pypi.org):
+Try again the test package by fecthing it from [Test PyPI][], in another fresh
+virtual machine:
 
     sudo apt-get install -y python3-pip tor
     pip install -i https://pypi.org/simple/ \
                 --extra-index-url https://test.pypi.org/simple \
                 --break-system-packages \
                 onionprobe==$ONIONPROBE_VERSION
+    $HOME/.local/bin/onionprobe --version
+    $HOME/.local/bin/onionprobe -e \
+      http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion
+    $HOME/.local/bin/onionprobe -e \
+      https://v236xhqtyullodhf26szyjepvkbv6iitrhjgrqj4avaoukebkk6n6syd.onion
 
-Make sure to test after installation. If the the package works as expected,
+If the the package works as expected,
 upload it to PyPi:
 
     make upload-python-package
+
+[Test PyPI]: https://test.pypi.org
 
 ### Announcement
 
