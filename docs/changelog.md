@@ -2,18 +2,33 @@
 
 ## v1.4.0 - unreleased
 
+### Fixes
+
+* Fix `CryptographyDeprecationWarning` on TLS certificate handling
+  ([tpo/onion-services/onionprobe#92][]).
+
+[tpo/onion-services/onionprobe#92]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/92
+
 ### Features
 
 * Prometheus alerting improvements ([tpo/onion-services/onionprobe#102][]):
     * Tests for Prometheus alerting rules.
     * New alert "Onionprobe not responding", detecting issues with the
       Onionprobe operation itself.
+
 * Documentation:
     * [Troubleshooting page](troubleshooting.md).
     * [Development](development.md): new section about Prometheus alerts
       development and testing.
 
+* Test Onionprobe on CI ([tpo/onion-services/onionprobe!107][],
+  [tpo/onion-services/onionprobe!108][]).
+
+* Upgraded Grafana image to 11.6.0.
+
 [tpo/onion-services/onionprobe#102]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/102
+[tpo/onion-services/onionprobe!107]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/merge_requests/107
+[tpo/onion-services/onionprobe!108]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/merge_requests/108
 
 ## v1.3.0 - 2025-03-12
 
