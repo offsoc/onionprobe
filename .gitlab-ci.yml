@@ -242,7 +242,7 @@ run_python:
     - !reference [.apt-init]
   script:
     - apt-get update
-    - apt-get install -y python3-pip
+    - apt-get install -y python3-pip tor
     - pip install --break-system-packages dist/onionprobe*.whl
     - pip show onionprobe
     - onionprobe -e http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion
