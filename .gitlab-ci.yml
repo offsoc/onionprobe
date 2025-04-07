@@ -219,6 +219,39 @@ configs:
 #    - main
 
 #
+# Run tests
+#
+
+run_source:
+  image: containers.torproject.org/tpo/tpa/base-images/debian:sid
+  stage: test
+  before_script:
+    - !reference [.apt-init]
+  script:
+    - scripts/provision-onionprobe
+    - ./onionprobe -e http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion
+
+run_sid:
+  image: containers.torproject.org/tpo/tpa/base-images/debian:sid
+  stage: test
+  needs:
+    - job: debian_sid
+      artifacts: true
+  before_script:
+    - !reference [.apt-init]
+  script:
+    # Install dependencies
+    - apt-get update
+    - apt-get install -y onionprobe
+    - apt-get remove onionprobe
+
+    # Install the built package
+    - dpkg -i dist/onionprobe_*.deb
+
+    # Test
+    - onionprobe -e http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion
+
+#
 # Prometheus
 # Thanks https://gitlab.torproject.org/tpo/tpa/prometheus-alerts
 #
