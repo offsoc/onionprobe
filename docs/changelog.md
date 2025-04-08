@@ -1,12 +1,18 @@
 # Onionprobe ChangeLog
 
-## v1.4.0 - unreleased
+## v1.4.0 - 2025-04-08
 
 ### Fixes
+
+* Filter out `SocketClosed` log messages from Stem ([tpo/onion-services/onionprobe!111][]).
+
+* Handle `ssl.match_hostname()` deprecation ([tpo/onion-services/onionprobe#107][]).
 
 * Fix `CryptographyDeprecationWarning` on TLS certificate handling
   ([tpo/onion-services/onionprobe#92][]).
 
+[tpo/onion-services/onionprobe!111]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/merge_requests/111
+[tpo/onion-services/onionprobe#107]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/107
 [tpo/onion-services/onionprobe#92]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/92
 
 ### Features

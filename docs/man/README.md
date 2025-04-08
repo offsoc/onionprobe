@@ -447,465 +447,496 @@ This is a sample configuration file that can be adapted:
 
             # The allowed HTTP status codes for this endpoint
             # Any code not in this list will set an unexpected status code metric
-            allowed_statuses: [ 200 ]
+            allowed_statuses:
+              - 200
       2019.www.torproject.org:
-        address: 'jqyzxhjk6psc6ul5jnfwloamhtyh7si74b4743k2qgpskwwxrzhsxmad.onion'
-        protocol: 'http'
-        port: 80
+        address: jqyzxhjk6psc6ul5jnfwloamhtyh7si74b4743k2qgpskwwxrzhsxmad.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
-      api.donate.torproject.org:
-        address: 'rbi3fpvpz4vlrx67scoqef2zxz7k4xyiludszg655favvkygjmhz6wyd.onion'
-        protocol: 'http'
+        - allowed_statuses:
+          - 200
+          path: /
         port: 80
+        protocol: http
+      alertmanager1.torproject.org:
+        address: sbgubiq7c3r7zp22gnl4pjfwisk2plbxwhbwcluwjegbxzwhq7a2ucyd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
+      alertmanager2.torproject.org:
+        address: uqduzmqiesrjqw2n7rc66h267mmbsxzacohrfhpoxm746wa46yh25jqd.onion
+        paths:
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       archive.torproject.org:
-        address: 'uy3qxvwzwoeztnellvvhxh7ju7kfvlsauka7avilcjg7domzxptbq7qd.onion'
-        protocol: 'http'
-        port: 80
+        address: uy3qxvwzwoeztnellvvhxh7ju7kfvlsauka7avilcjg7domzxptbq7qd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       aus1.torproject.org:
-        address: 'ot3ivcdxmalbsbponeeq5222hftpf3pqil24q3s5ejwo5t52l65qusid.onion'
-        protocol: 'http'
-        port: 80
+        address: ot3ivcdxmalbsbponeeq5222hftpf3pqil24q3s5ejwo5t52l65qusid.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       aus2.torproject.org:
-        address: 'b5t7emfr2rn3ixr4lvizpi3stnni4j4p6goxho7lldf4qg4hz5hvpqid.onion'
-        protocol: 'http'
-        port: 80
+        address: b5t7emfr2rn3ixr4lvizpi3stnni4j4p6goxho7lldf4qg4hz5hvpqid.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
-      blog-staging.torproject.org:
-        address: '6p4ky5a3wowiv7ww6vt7ikntcdjxkpk2lni5w4um3ddmqg3sx6nkreqd.onion'
-        protocol: 'http'
+        - allowed_statuses:
+          - 200
+          path: /
         port: 80
-        paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        protocol: http
       blog.torproject.org:
-        address: 'pzhdfe7jraknpj2qgu5cz2u3i4deuyfwmonvzu5i3nyw4t4bmg7o5pad.onion'
-        protocol: 'http'
-        port: 80
+        address: pzhdfe7jraknpj2qgu5cz2u3i4deuyfwmonvzu5i3nyw4t4bmg7o5pad.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       bridges.torproject.org:
-        address: 'yq5jjvr7drkjrelzhut7kgclfuro65jjlivyzfmxiq2kyv5lickrl4qd.onion'
-        protocol: 'http'
-        port: 80
+        address: yq5jjvr7drkjrelzhut7kgclfuro65jjlivyzfmxiq2kyv5lickrl4qd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       cloud.torproject.org:
-        address: 'ui3cpcohcoko6aydhuhlkwqqtvadhaflcc5zb7mwandqmcal7sbwzwqd.onion'
-        protocol: 'http'
-        port: 80
+        address: ui3cpcohcoko6aydhuhlkwqqtvadhaflcc5zb7mwandqmcal7sbwzwqd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       collector.torproject.org:
-        address: 'pgmrispjerzzf2tdzbfp624cg5vpbvdw2q5a3hvtsbsx25vnni767yad.onion'
-        protocol: 'http'
-        port: 80
+        address: pgmrispjerzzf2tdzbfp624cg5vpbvdw2q5a3hvtsbsx25vnni767yad.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       collector2.torproject.org:
-        address: '3srlmjzbyyzz62jvdfqwn5ldqmh6mwnqxre2zamxveb75uz2qrqkrkyd.onion'
-        protocol: 'http'
-        port: 80
+        address: urscdffm73o4y6hpp3r43bgmudq42hq2ibdpkld6a7hy3qa44qbvc2yd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       community.torproject.org:
-        address: 'xmrhfasfg5suueegrnc4gsgyi2tyclcy5oz7f5drnrodmdtob6t2ioyd.onion'
-        protocol: 'http'
-        port: 80
+        address: xmrhfasfg5suueegrnc4gsgyi2tyclcy5oz7f5drnrodmdtob6t2ioyd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       consensus-health.torproject.org:
-        address: 'tkskz5dkjel4xqyw5d5l3k52kgglotwn6vgb5wrl2oa5yi2szvywiyid.onion'
-        protocol: 'http'
-        port: 80
+        address: tkskz5dkjel4xqyw5d5l3k52kgglotwn6vgb5wrl2oa5yi2szvywiyid.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       crm.torproject.org:
-        address: '6ojylpznauimd2fga3m7g24vd7ebkzlemxdprxckevqpzs347ugmynqd.onion'
-        protocol: 'http'
-        port: 80
+        address: 6ojylpznauimd2fga3m7g24vd7ebkzlemxdprxckevqpzs347ugmynqd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 401 ]
+        - allowed_statuses:
+          - 401
+          path: /
+        port: 80
+        protocol: http
+      db.torproject.org:
+        address: epnxy4oscv3yh2fjwfrvctnjsmj5ta5uxdkq6k2ce7borqvcsk4qxhid.onion
+        paths:
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       deb.torproject.org:
-        address: 'apow7mjfryruh65chtdydfmqfpj5btws7nbocgtaovhvezgccyjazpqd.onion'
-        protocol: 'http'
-        port: 80
+        address: apow7mjfryruh65chtdydfmqfpj5btws7nbocgtaovhvezgccyjazpqd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       dev.crm.torproject.org:
-        address: 'eewp4iydzyu2a5d6bvqadadkozxdbhsdtmsoczu2joexfrjjsheaecad.onion'
-        protocol: 'http'
-        port: 80
+        address: eewp4iydzyu2a5d6bvqadadkozxdbhsdtmsoczu2joexfrjjsheaecad.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       dist.torproject.org:
-        address: 'scpalcwstkydpa3y7dbpkjs2dtr7zvtvdbyj3dqwkucfrwyixcl5ptqd.onion'
-        protocol: 'http'
-        port: 80
+        address: scpalcwstkydpa3y7dbpkjs2dtr7zvtvdbyj3dqwkucfrwyixcl5ptqd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
-      donate-api.torproject.org:
-        address: 'lkfkuhcx62yfvzuz5o3ju4divuf4bsh2bybwd3oierq47kyp2ig2gvid.onion'
-        protocol: 'http'
+        - allowed_statuses:
+          - 200
+          path: /
         port: 80
-        paths:
-          - path: /
-            allowed_statuses: [ 200 ]
-      donate.torproject.org:
-        address: 'yoaenchicimox2qdc47p36zm3cuclq7s7qxx6kvxqaxjodigfifljqqd.onion'
-        protocol: 'http'
-        port: 80
-        paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        protocol: http
       exonerator.torproject.org:
-        address: 'pm46i5h2lfewyx6l7pnicbxhts2sxzacvsbmqiemqaspredf2gm3dpad.onion'
-        protocol: 'http'
-        port: 80
+        address: pm46i5h2lfewyx6l7pnicbxhts2sxzacvsbmqiemqaspredf2gm3dpad.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       extra.torproject.org:
-        address: 'kkr72iohlfix5ipjg776eyhplnl2oiv5tz4h2y2bkhjix3quafvjd5ad.onion'
-        protocol: 'http'
-        port: 80
+        address: kkr72iohlfix5ipjg776eyhplnl2oiv5tz4h2y2bkhjix3quafvjd5ad.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
-      gettor.torproject.org:
-        address: 'ueghr2hzndecdntou33mhymbbxj7pir74nwzhqr6drhxpbz3j272p4id.onion'
-        protocol: 'http'
+        - allowed_statuses:
+          - 200
+          path: /
         port: 80
+        protocol: http
+      forum.torproject.org:
+        address: v236xhqtyullodhf26szyjepvkbv6iitrhjgrqj4avaoukebkk6n6syd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
-      git.torproject.org:
-        address: 'xtlfhaspqtkeeqxk6umggfbr3gyfznvf4jhrge2fujz53433i2fcs3id.onion'
-        protocol: 'http'
-        port: 80
-        paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 443
+        protocol: https
       gitlab.torproject.org:
-        address: 'eweiibe6tdjsdprb4px6rqrzzcsi22m4koia44kc5pcjr7nec2rlxyad.onion'
-        protocol: 'http'
-        port: 80
+        address: eweiibe6tdjsdprb4px6rqrzzcsi22m4koia44kc5pcjr7nec2rlxyad.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
-      gitweb.torproject.org:
-        address: 'gzgme7ov25seqjbphab4fkcph3jkobfwwpivt5kzbv3kqx2y2qttl4yd.onion'
-        protocol: 'http'
+        - allowed_statuses:
+          - 200
+          path: /
         port: 80
-        paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        protocol: http
       grafana1.torproject.org:
-        address: '7zjnw5lx2x27rwiocxkqdquo7fawj46mf2wiu2l7e6z6ng6nivmdxnad.onion'
-        protocol: 'http'
-        port: 80
+        address: 7zjnw5lx2x27rwiocxkqdquo7fawj46mf2wiu2l7e6z6ng6nivmdxnad.onion
         paths:
-          - path: /
-            allowed_statuses: [ 401 ]
+        - allowed_statuses:
+          - 401
+          path: /
+        port: 80
+        protocol: http
       grafana2.torproject.org:
-        address: 'f3vd6fyiccuppybkxiblgigej3pfvvqzjnhd3wyv7h4ee5asawf2fhqd.onion'
-        protocol: 'http'
-        port: 80
+        address: f3vd6fyiccuppybkxiblgigej3pfvvqzjnhd3wyv7h4ee5asawf2fhqd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 401 ]
+        - allowed_statuses:
+          - 401
+          path: /
+        port: 80
+        protocol: http
       ircbouncer.torproject.org:
-        address: 'moz5kotsnjony4oxccxfo4lwk3pvoxmdoljibhgoonzgzjs5oemtjmqd.onion'
-        protocol: 'http'
-        port: 80
+        address: moz5kotsnjony4oxccxfo4lwk3pvoxmdoljibhgoonzgzjs5oemtjmqd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
-      metabase.metrics.torproject.org:
-        address: 'gr5pseamigereei4c6654hafzhid5z2c3oqzn6cfnx7yfyelt47znhad.onion'
-        protocol: 'http'
+        - allowed_statuses:
+          - 200
+          path: /
         port: 80
+        protocol: http
+      karma1.torproject.org:
+        address: t5z367d2omuewjvrwqsdd2bixlh6dektuf2hhe2hc2tpvk4bosb4u4yd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
+      karma2.torproject.org:
+        address: h6necup44ztozsqs3my6g5pjljptqnm4auqrqcy6jdctoqvznmvh3qqd.onion
+        paths:
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
+      lists-01.torproject.org:
+        address: e6r6heg2ucmlm2po5yrxzf6k23ta5wwbt2adogjcyntlaiopytjz35yd.onion
+        paths:
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
+      metrics-api.torproject.org:
+        address: yc3galza3gejn3taziuhhgrwt4bdtwmom25zby7jphfwbeirvkmcdvqd.onion
+        paths:
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
+      metrics-db.torproject.org:
+        address: lk6lj36rfj32u2rjceujj3o7otgujm6fw5hyyxr6jko6pkfasb2z6eid.onion
+        paths:
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       metrics.torproject.org:
-        address: 'hctxrvjzfpvmzh2jllqhgvvkoepxb4kfzdjm6h7egcwlumggtktiftid.onion'
-        protocol: 'http'
-        port: 80
+        address: hctxrvjzfpvmzh2jllqhgvvkoepxb4kfzdjm6h7egcwlumggtktiftid.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       moat.torproject.org:
-        address: 'z7m7ogzdhu43nosvjtsuplfmuqa3ge5obahixydhmzdox6owwxfoxzid.onion'
-        protocol: 'http'
-        port: 80
+        address: z7m7ogzdhu43nosvjtsuplfmuqa3ge5obahixydhmzdox6owwxfoxzid.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
-      nagios.torproject.org:
-        address: 'w6vizvw4ckesva5fvlkrepynemxdq6pgo5sh4r76ec6msq5notkhqryd.onion'
-        protocol: 'http'
+        - allowed_statuses:
+          - 200
+          path: /
         port: 80
-        paths:
-          - path: /
-            allowed_statuses: [ 401 ]
+        protocol: http
       newsletter.torproject.org:
-        address: 'a4ygisnerpgtc5ayerl22pll6cls3oyj54qgpm7qrmb66xrxts6y3lyd.onion'
-        protocol: 'http'
-        port: 80
+        address: a4ygisnerpgtc5ayerl22pll6cls3oyj54qgpm7qrmb66xrxts6y3lyd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       nightlies.tbb.torproject.org:
-        address: 'umj4zbqdfcyevlkgqgpq6foxk3z75zzxsbgt5jqmfxofrbrjh3crbnad.onion'
-        protocol: 'http'
-        port: 80
+        address: umj4zbqdfcyevlkgqgpq6foxk3z75zzxsbgt5jqmfxofrbrjh3crbnad.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       nyx.torproject.org:
-        address: '3ewfgrt4gzfccp6bnquhqb266r3zepiqpnsk3falwygkegtluwuyevid.onion'
-        protocol: 'http'
-        port: 80
+        address: 3ewfgrt4gzfccp6bnquhqb266r3zepiqpnsk3falwygkegtluwuyevid.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       onion.torproject.org:
-        address: 'xao2lxsmia2edq2n5zxg6uahx6xox2t7bfjw6b5vdzsxi7ezmqob6qid.onion'
-        protocol: 'http'
-        port: 80
+        address: xao2lxsmia2edq2n5zxg6uahx6xox2t7bfjw6b5vdzsxi7ezmqob6qid.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
-      onionoo.torproject.org:
-        address: 'dud2sxm6feahhuwj4y4lzktduy7v3qpaqsfkggtj2ojmzathttkegoid.onion'
-        protocol: 'http'
+        - allowed_statuses:
+          - 200
+          path: /
         port: 80
+        protocol: http
+      onionservices.torproject.org:
+        address: ttevhjjsjxz6uqqcjkbig5cycd7n7xv7cmd6f5fcvrqaaa7f3bj36wad.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       openpgpkey.torproject.org:
-        address: '2yldcptk56shc7lwieozoglw3t5ghty7m6mf2faysvfnzccqavbu2mad.onion'
-        protocol: 'http'
-        port: 80
+        address: 2yldcptk56shc7lwieozoglw3t5ghty7m6mf2faysvfnzccqavbu2mad.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       people.torproject.org:
-        address: '5ecey6oe4rocdsfoigr4idu42cecm2j7zfogc3xc7kfn4uriehwrs6qd.onion'
-        protocol: 'http'
-        port: 80
+        address: 5ecey6oe4rocdsfoigr4idu42cecm2j7zfogc3xc7kfn4uriehwrs6qd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       prometheus1.torproject.org:
-        address: 'ydok5jiruh3ak6hcfdlm2g7iuraaxcomeckj2nucjsxif6qmrrda2byd.onion'
-        protocol: 'http'
-        port: 80
+        address: ydok5jiruh3ak6hcfdlm2g7iuraaxcomeckj2nucjsxif6qmrrda2byd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 401 ]
+        - allowed_statuses:
+          - 401
+          path: /
+        port: 80
+        protocol: http
       prometheus2.torproject.org:
-        address: 'vyo6yrqhl3by7d6n5t6hjkflaqbarjpqjnvapr5u5rafk4imnfrmcjyd.onion'
-        protocol: 'http'
-        port: 80
+        address: vyo6yrqhl3by7d6n5t6hjkflaqbarjpqjnvapr5u5rafk4imnfrmcjyd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 401 ]
+        - allowed_statuses:
+          - 401
+          path: /
+        port: 80
+        protocol: http
       rbm.torproject.org:
-        address: 'nkuz2tpok7ctwd5ueer5bytj3bm42vp7lgjcsnznal3stotg6vyaakyd.onion'
-        protocol: 'http'
-        port: 80
+        address: nkuz2tpok7ctwd5ueer5bytj3bm42vp7lgjcsnznal3stotg6vyaakyd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
+      rdsys-moat.torproject.org:
+        address: jcbdm4biw3aac57snk34brzc5fghbszrzde47idnlanj6kf6jmocdgqd.onion
+        paths:
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       research.torproject.org:
-        address: 'xhqthou6scpfnwjyzc3ekdgcbvj76ccgyjyxp6cgypxjlcuhnxiktnqd.onion'
-        protocol: 'http'
-        port: 80
+        address: xhqthou6scpfnwjyzc3ekdgcbvj76ccgyjyxp6cgypxjlcuhnxiktnqd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       review.torproject.net:
-        address: 'zhkhhhnppc5k6xju7n25rjba3wuip73jnodicxl65qdpchrwvvsilcyd.onion'
-        protocol: 'http'
-        port: 80
+        address: zhkhhhnppc5k6xju7n25rjba3wuip73jnodicxl65qdpchrwvvsilcyd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 401 ]
+        - allowed_statuses:
+          - 401
+          path: /
+        port: 80
+        protocol: http
       rpm.torproject.org:
-        address: '4ayyzfoh5qdrokqaejis3rdredhvf22n3migyxfudpkpunngfc7g4lqd.onion'
-        protocol: 'http'
-        port: 80
+        address: 4ayyzfoh5qdrokqaejis3rdredhvf22n3migyxfudpkpunngfc7g4lqd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       snowflake.torproject.org:
-        address: 'oljlphash3bpqtrvqpr5gwzrhroziw4mddidi5d2qa4qjejcbrmoypqd.onion'
-        protocol: 'http'
-        port: 80
+        address: oljlphash3bpqtrvqpr5gwzrhroziw4mddidi5d2qa4qjejcbrmoypqd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       spec.torproject.org:
-        address: 'i3xi5qxvbrngh3g6o7czwjfxwjzigook7zxzjmgwg5b7xnjcn5hzciad.onion'
-        protocol: 'http'
-        port: 80
+        address: i3xi5qxvbrngh3g6o7czwjfxwjzigook7zxzjmgwg5b7xnjcn5hzciad.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
-      staging-api.donate.torproject.org:
-        address: 'vorwws6g6mx23djlznmlqva4t5olulpnet6fxyiyytcu5dorp3fstdqd.onion'
-        protocol: 'http'
+        - allowed_statuses:
+          - 200
+          path: /
         port: 80
-        paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        protocol: http
       staging.crm.torproject.org:
-        address: 'pt34uujusar4arrvsqljndqlt7tck2d5cosaav5xni4nh7bmvshyp2yd.onion'
-        protocol: 'http'
-        port: 80
+        address: pt34uujusar4arrvsqljndqlt7tck2d5cosaav5xni4nh7bmvshyp2yd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
-      staging.donate-api.torproject.org:
-        address: '7niqsyixinnhxvh33zh5dqnplxnc2yd6ktvats3zmtbbpzcphpbsa6qd.onion'
-        protocol: 'http'
+        - allowed_statuses:
+          - 200
+          path: /
         port: 80
-        paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        protocol: http
       status.torproject.org:
-        address: 'eixoaclv7qvnmu5rolbdwba65xpdiditdoyp6edsre3fitad777jr3ad.onion'
-        protocol: 'http'
-        port: 80
+        address: eixoaclv7qvnmu5rolbdwba65xpdiditdoyp6edsre3fitad777jr3ad.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       stem.torproject.org:
-        address: 'mf34jlghauz5pxjcmdymdqbe5pva4v24logeys446tdrgd5lpsrocmqd.onion'
-        protocol: 'http'
-        port: 80
+        address: mf34jlghauz5pxjcmdymdqbe5pva4v24logeys446tdrgd5lpsrocmqd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       styleguide.torproject.org:
-        address: '7khzpw47s35pwo3lvtctwf2szvnq3kgglvzc22elx7of2awdzpovqmqd.onion'
-        protocol: 'http'
-        port: 80
+        address: 7khzpw47s35pwo3lvtctwf2szvnq3kgglvzc22elx7of2awdzpovqmqd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       submission.torproject.org:
-        address: 'givpjczyrb5jjseful3o5tn3tg7tidbu4gydl4sa5ekpcipivqaqnpad.onion'
-        protocol: 'http'
+        address: givpjczyrb5jjseful3o5tn3tg7tidbu4gydl4sa5ekpcipivqaqnpad.onion
+        paths:
+        - allowed_statuses:
+          - 200
+          path: /
         port: 80
-        paths:
-          - path: /
-            allowed_statuses: [ 200 ]
-      support-staging.torproject.org:
-        paths:
-          - path: /
-            allowed_statuses: [ 200 ]
-        address: 'mct6jqxfejsvkr3ynq7puibv6223ycv6j5cu7qzu6gscxy7qdtys22id.onion'
-        protocol: 'http'
-        port: 80
-        paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        protocol: http
       support.torproject.org:
-        address: 'rzuwtpc4wb3xdzrj3yeajsvm3fkq4vbeubm2tdxaqruzzzgs5dwemlad.onion'
-        protocol: 'http'
-        port: 80
+        address: rzuwtpc4wb3xdzrj3yeajsvm3fkq4vbeubm2tdxaqruzzzgs5dwemlad.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       survey.torproject.org:
-        address: 'eh5esdnd6fkbkapfc6nuyvkjgbtnzq2is72lmpwbdbxepd2z7zbgzsqd.onion'
-        protocol: 'http'
-        port: 80
+        address: eh5esdnd6fkbkapfc6nuyvkjgbtnzq2is72lmpwbdbxepd2z7zbgzsqd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       svn-archive.torproject.org:
-        address: 'b63iq6es4biaawfilwftlfkw6a6putogxh4iakei2ioppb7dsfucekyd.onion'
-        protocol: 'http'
-        port: 80
+        address: b63iq6es4biaawfilwftlfkw6a6putogxh4iakei2ioppb7dsfucekyd.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
+      tagtor.torproject.org:
+        address: lx75vwrdgdgzpnnewquw2kngajieq6lqbblawoufjkf6fyqexhu4iiad.onion
+        paths:
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       tb-manual.torproject.org:
-        address: 'dsbqrprgkqqifztta6h3w7i2htjhnq7d3qkh3c7gvc35e66rrcv66did.onion'
-        protocol: 'http'
-        port: 80
+        address: dsbqrprgkqqifztta6h3w7i2htjhnq7d3qkh3c7gvc35e66rrcv66did.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
-      test-api.donate.torproject.org:
-        address: 'wiofesr5qt2k7qrlljpk53isgedxi6ddw6z3o7iay2l7ne3ziyagxaid.onion'
-        protocol: 'http'
+        - allowed_statuses:
+          - 200
+          path: /
         port: 80
-        paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        protocol: http
       test-data.tbb.torproject.org:
-        address: 'umbk3kbgov4ekg264yulvbrpykfye7ohguqbds53qn547mdpt6o4qkad.onion'
-        protocol: 'http'
-        port: 80
+        address: umbk3kbgov4ekg264yulvbrpykfye7ohguqbds53qn547mdpt6o4qkad.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
       test.crm.torproject.org:
-        address: 'a4d52y2erv4eijii66cpnyqn7rsnnq3gmtrsdxzt2laoutvu4gz7fwid.onion'
-        protocol: 'http'
-        port: 80
+        address: a4d52y2erv4eijii66cpnyqn7rsnnq3gmtrsdxzt2laoutvu4gz7fwid.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
-      test.donate-api.torproject.org:
-        address: 'i4zhrn4md3ucd5dfgeo5lnqd3jy2z2kzp3lt4tdisvivzoqqtlrymkid.onion'
-        protocol: 'http'
+        - allowed_statuses:
+          - 200
+          path: /
         port: 80
-        paths:
-          - path: /
-            allowed_statuses: [ 200 ]
-      www-staging.torproject.org:
-        address: 'wosihptqvevjrjxqipafogjmwn22kqktgsibfmmnfxl7wb7sqq5xfrid.onion'
-        protocol: 'http'
-        port: 80
-        paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        protocol: http
       www.onion-router.net:
-        address: 'tttyx2vwp7ihml3vkhywwcizv6nbwrikpgeciy3qrow7l7muak2pnhad.onion'
-        protocol: 'http'
-        port: 80
+        address: tttyx2vwp7ihml3vkhywwcizv6nbwrikpgeciy3qrow7l7muak2pnhad.onion
         paths:
-          - path: /
-            allowed_statuses: [ 200 ]
+        - allowed_statuses:
+          - 200
+          path: /
+        port: 80
+        protocol: http
 
 
 ## EXIT STATUS

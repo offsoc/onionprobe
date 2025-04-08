@@ -143,7 +143,7 @@ services:
     #profiles: ["grafana", "all"]
 
   tor:
-    image: "onionprobe/tor:1.3.0"
+    image: "onionprobe/tor:1.4.0"
 
     build:
       context: .
@@ -164,7 +164,7 @@ services:
 
   # Service that periodically compiles an Onionprobe configuration
   configurator:
-    image: "onionprobe/onionprobe:1.3.0"
+    image: "onionprobe/onionprobe:1.4.0"
 
     build:
       context: .
@@ -189,7 +189,7 @@ services:
     #profiles: ["configurator", "all"]
 
   onionprobe:
-    image: "onionprobe/onionprobe:1.3.0"
+    image: "onionprobe/onionprobe:1.4.0"
 
     build:
       context: .
