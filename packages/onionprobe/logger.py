@@ -72,7 +72,6 @@ class OnionprobeLogger:
             # Workaround for https://github.com/torproject/stem/issues/112
             if level != 'debug':
                 stem_logger.propagate = False
-
             else:
                 stem_logger.addFilter(OnionprobeStemFilter)
 
