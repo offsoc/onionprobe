@@ -53,7 +53,7 @@ Build the Python package:
 Test this package in a fresh virtual machine. Example:
 
     sudo apt-get install -y python3-pip tor
-    pip install --break-system-packages dist/onionprobe-$VERSION.whl
+    pip install --break-system-packages dist/onionprobe-$VERSION-*.whl
     $HOME/.local/bin/onionprobe --version
     $HOME/.local/bin/onionprobe -e \
       http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion
@@ -78,8 +78,7 @@ virtual machine:
     $HOME/.local/bin/onionprobe -e \
       https://v236xhqtyullodhf26szyjepvkbv6iitrhjgrqj4avaoukebkk6n6syd.onion
 
-If the the package works as expected,
-upload it to PyPi:
+If the the package works as expected, upload it to PyPI:
 
     make upload-python-package
 
