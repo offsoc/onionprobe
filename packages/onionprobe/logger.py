@@ -29,6 +29,21 @@ except ImportError:
     print("Please install stem library first!")
     raise ImportError
 
+class OnionprobeStemFilter(logging.Filter):
+    """
+    Custom logging filter to make Stem less noisy.
+    """
+
+    def filter(self, record):
+        """
+        Skip annoying SocketClose messages.
+
+        Workaround for https://github.com/torproject/stem/issues/112
+        """
+
+        return not record.getMessage().startswith(
+                'Error while receiving a control message (SocketClosed): received exception')
+
 class OnionprobeLogger:
     """
     Onionprobe class with logging methods.
@@ -53,6 +68,12 @@ class OnionprobeLogger:
             stem_logger = stem.util.log.get_logger()
 
             stem_logger.setLevel(level)
+
+            # Workaround for https://github.com/torproject/stem/issues/112
+            if level != 'debug':
+                stem_logger.propagate = False
+            else:
+                stem_logger.addFilter(OnionprobeStemFilter)
 
         else:
             logging.error("Invalid log level %s" % (log_level))
