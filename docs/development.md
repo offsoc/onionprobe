@@ -50,10 +50,13 @@ Build the Python package:
 
     make build-python-package
 
-Test this package in a fresh virtual machine. Example:
+Install this package in a fresh virtual machine. Example:
 
     sudo apt-get install -y python3-pip tor
     pip install --break-system-packages dist/onionprobe-$VERSION-*.whl
+
+Then test it:
+
     $HOME/.local/bin/onionprobe --version
     $HOME/.local/bin/onionprobe -e \
       http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion
@@ -64,25 +67,30 @@ If the package worked, upload it to the [Test PyPI][] instance:
 
     make upload-python-test-package
 
-Try again the test package by fecthing it from [Test PyPI][], in another fresh
-virtual machine:
+Install again the test package, by fetching it from [Test PyPI][], and in
+another fresh virtual machine:
 
     sudo apt-get install -y python3-pip tor
     pip install -i https://pypi.org/simple/ \
                 --extra-index-url https://test.pypi.org/simple \
                 --break-system-packages \
                 onionprobe==$ONIONPROBE_VERSION
-    $HOME/.local/bin/onionprobe --version
-    $HOME/.local/bin/onionprobe -e \
-      http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion
-    $HOME/.local/bin/onionprobe -e \
-      https://v236xhqtyullodhf26szyjepvkbv6iitrhjgrqj4avaoukebkk6n6syd.onion
 
+Do the tests again in this new installation.
 If the the package works as expected, upload it to PyPI:
 
     make upload-python-package
 
+Finally, install the package one more time, but now fecthing it from [PyPI][],
+and in yet another fresh virtual machine:
+
+    sudo apt-get install -y python3-pip tor
+    pip install --break-system-packages onionprobe
+
+Do the tests once more, in this new installation.
+
 [Test PyPI]: https://test.pypi.org
+[PyPI]: https://pypi.org
 
 ### Announcement
 
