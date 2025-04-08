@@ -2,19 +2,6 @@
 
 ## v1.4.0 - 2025-04-08
 
-### Fixes
-
-* Filter out `SocketClosed` log messages from Stem ([tpo/onion-services/onionprobe!111][]).
-
-* Handle `ssl.match_hostname()` deprecation ([tpo/onion-services/onionprobe#107][]).
-
-* Fix `CryptographyDeprecationWarning` on TLS certificate handling
-  ([tpo/onion-services/onionprobe#92][]).
-
-[tpo/onion-services/onionprobe!111]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/merge_requests/111
-[tpo/onion-services/onionprobe#107]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/107
-[tpo/onion-services/onionprobe#92]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/92
-
 ### Features
 
 * Prometheus alerting improvements ([tpo/onion-services/onionprobe#102][]):
@@ -36,7 +23,31 @@
 [tpo/onion-services/onionprobe!107]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/merge_requests/107
 [tpo/onion-services/onionprobe!108]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/merge_requests/108
 
+### Fixes
+
+* Filter out `SocketClosed` log messages from Stem ([tpo/onion-services/onionprobe!111][]).
+
+* Handle `ssl.match_hostname()` deprecation ([tpo/onion-services/onionprobe#107][]).
+
+* Fix `CryptographyDeprecationWarning` on TLS certificate handling
+  ([tpo/onion-services/onionprobe#92][]).
+
+[tpo/onion-services/onionprobe!111]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/merge_requests/111
+[tpo/onion-services/onionprobe#107]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/107
+[tpo/onion-services/onionprobe#92]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/92
+
 ## v1.3.0 - 2025-03-12
+
+### Features
+
+* [Standalone monitoring node](standalone.md):
+  * Grafana dashboard got a new time series: number of missing Onion Service
+    descriptors in HSDirs.
+
+* Added tests for the Prometheus configuration
+  ([tpo/onion-services/onionprobe!90][]).
+
+[tpo/onion-services/onionprobe!90]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/merge_requests/90
 
 ### Fixes
 
@@ -58,17 +69,6 @@
 
 [Compose]: https://docs.docker.com/reference/compose-file/
 [@gus]: https://gitlab.torproject.org/gus
-
-### Features
-
-* [Standalone monitoring node](standalone.md):
-  * Grafana dashboard got a new time series: number of missing Onion Service
-    descriptors in HSDirs.
-
-* Added tests for the Prometheus configuration
-  ([tpo/onion-services/onionprobe!90][]).
-
-[tpo/onion-services/onionprobe!90]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/merge_requests/90
 
 ## v1.2.1 - 2024-11-27
 
@@ -220,6 +220,12 @@
 
 ## v1.1.2 - 2023-09-28
 
+### Features
+
+* Debug outer and inner layer descriptor contents.
+
+* Decrease Prometheus certificate expiration alerts to 7 days in advance.
+
 ### Fixes
 
 * Make the tor process quiet when generating hashed passwords (reported by
@@ -228,12 +234,6 @@
 * CI/CD: use rsync to copy slide artifacts, preserving the folder structure.
 
 * Minor documentation improvements.
-
-### Features
-
-* Debug outer and inner layer descriptor contents.
-
-* Decrease Prometheus certificate expiration alerts to 7 days in advance.
 
 ## v1.1.1 - 2023-04-04
 
@@ -252,16 +252,6 @@
   * Misc fixes.
 
 ## v1.1.0 - 2023-04-03
-
-### Fixes
-
-* Stick to a PostgreSQL docker image:
-  See https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/70
-
-* Command-line URL parsing:
-  https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/merge_requests/17
-
-* Display default values for most options on `onionprobe --help`.
 
 ### Features
 
@@ -370,6 +360,16 @@
 
 * CI/CD: added jobs to test building debian and python packages, as well as
   configurations and slides.
+
+### Fixes
+
+* Stick to a PostgreSQL docker image:
+  See https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/70
+
+* Command-line URL parsing:
+  https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/merge_requests/17
+
+* Display default values for most options on `onionprobe --help`.
 
 ## v1.0.0 - 2022-05-31
 
@@ -486,7 +486,7 @@ Main issue: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues
 
 Main issue: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/3
 
-### Enhancements
+### Features
 
 * [x] Python packaging: https://pypi.org/project/onionprobe.
 * [x] Support for `--endpoints` command line argument.
