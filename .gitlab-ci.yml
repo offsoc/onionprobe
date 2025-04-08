@@ -11,7 +11,7 @@ include:
 
 python:
   stage: build
-  image: containers.torproject.org/tpo/tpa/base-images/debian:stable
+  image: containers.torproject.org/tpo/tpa/base-images/debian:sid
   before_script:
     - !reference [.apt-init]
   script:
@@ -175,7 +175,7 @@ piuparts:
 #
 
 configs:
-  image: containers.torproject.org/tpo/tpa/base-images/debian:stable
+  image: containers.torproject.org/tpo/tpa/base-images/debian:sid
   stage: build
   before_script:
     - !reference [.apt-init]
@@ -199,7 +199,7 @@ configs:
 #
 
 #manpage:
-#  image: containers.torproject.org/tpo/tpa/base-images/debian:stable
+#  image: containers.torproject.org/tpo/tpa/base-images/debian:sid
 #  stage: build
 #  before_script:
 #    - !reference [.apt-init]
