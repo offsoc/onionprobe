@@ -223,8 +223,8 @@ configs:
 #
 
 .run_onionprobe:
-  - onionprobe -e http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion
-  - onionprobe -e https://v236xhqtyullodhf26szyjepvkbv6iitrhjgrqj4avaoukebkk6n6syd.onion
+  - onionprobe --log_level debug -e http://2gzyxa5ihm7nsggfxnu52rck2vv4rvmdlkiu3zzui5du4xyclen53wid.onion
+  - onionprobe --log_level debug -e https://v236xhqtyullodhf26szyjepvkbv6iitrhjgrqj4avaoukebkk6n6syd.onion
 
 run_source:
   image: containers.torproject.org/tpo/tpa/base-images/debian:sid
