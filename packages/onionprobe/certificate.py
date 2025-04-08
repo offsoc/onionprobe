@@ -224,6 +224,112 @@ class OnionprobeCertificate:
 
         return int(not_valid_after - now)
 
+    def match_certificate_hostname(self, info, address):
+        """
+        Since Python 3.12, ssl.match_hostname is not available anymore.
+
+        Details at
+
+          https://docs.python.org/3.12/library/ssl.html
+          https://docs.python.org/3.12/whatsnew/changelog.html#id202
+          https://github.com/python/cpython/issues/94199#issuecomment-1165682234
+          https://github.com/python/cpython/pull/94224
+          https://bugs.python.org/issue43880
+
+        We cannot just ignore this check, since we're using the following
+        on tls.py:
+
+          context.check_hostname = False
+          context.verify_mode    = ssl.CERT_NONE
+
+        We could try to detect existing implementations, in older systems.
+
+        And we could ship the old Python 3.11 implementation for newer
+        systems (by copying/adapting match_hostname() and _dnsname_match()
+        from ssl.py: https://github.com/python/cpython/blob/3.11/Lib/ssl.py
+
+        But that would require to redistribute around 100 lines of code
+        under a different license, which could be complicated.
+
+        Also, we don't need the full hostname matching logic as defined
+        by RFC 2818, RFC 5280 and RFC 6125. We can use something stricter
+        than that, for the case of .onion addresses (RFC 7686).
+
+        Therefore we roll or own implementation, inspired by the original
+        ssl.match_hostname().
+
+        :type  info: dict
+        :param info: Certificate information as returned by get_cert_info().
+
+        :type  address: str
+        :param address: An Onion Service address.
+
+        :rtype: str
+        :return: The matching hostname in the certificate
+                 Raises ssl.CertificateError otherwise.
+
+        """
+
+        # Unused approach: try to use the old deprecated ssl.match_hostname(),
+        # or go with a copied/adapted version shipped in Onionprobe's codebase.
+        #if 'match_hostname' in dir(ssl):
+        #    # Still available
+        #    # https://docs.python.org/3.11/library/ssl.html#ssl.match_hostname
+        #    ssl_match_hostname = ssl.match_hostname
+        #else:
+        #    # Use a built-in replacement for ssl.match_hostname, based on
+        #    # the implementation from Python 3.11.
+        #    #
+        #    # Check also
+        #    # https://github.com/brandon-rhodes/backports.ssl_match_hostname
+        #    from .ssl import match_hostname as match_hostname
+
+        # Helper function
+        #
+        # Check if a DNS value matches a given address.
+        # Returns the value on success, and False otherwise.
+        def match_hostname(value, address):
+            # Use lowercase matching
+            value   = value.lower()
+            address = address.lower()
+
+            if value == address:
+                return value
+
+            # Wildcard handling
+            if value[0:2] == '*.':
+                address_parts = address.partition('.')
+                value_parts   = value.partition('.')
+
+                if value_parts[2] == address_parts[2]:
+                    return value
+
+            return False
+
+        # Start by checking the Common Name
+        if 'subject' in info:
+            for item in info['subject']:
+                (field, value) = item[0]
+
+                if field == 'commonName':
+                    match = match_hostname(value, address)
+
+                    if match:
+                        return match
+
+        # Then check the subjectAltName (SAN)
+        if 'subjectAltName' in info:
+            for alt in info['subjectAltName']:
+                (field, value) = alt
+
+                if field == 'DNS':
+                    match = match_hostname(value, address)
+
+                    if match:
+                        return match
+
+        raise ssl.CertificateError
+
     def get_certificate(self, endpoint, config, tls):
         """
         Get the certificate information from a TLS connection.
@@ -266,39 +372,18 @@ class OnionprobeCertificate:
                     'port'    : config['port'],
                     }
 
-            # Since Python 3.12, ssl.match_hostname is not available anymore.
-            #
-            # Details at
-            #
-            #   https://docs.python.org/3.12/library/ssl.html
-            #   https://docs.python.org/3.12/whatsnew/changelog.html#id202
-            #   https://github.com/python/cpython/issues/94199#issuecomment-1165682234
-            #   https://github.com/python/cpython/pull/94224
-            #   https://bugs.python.org/issue43880
-            #
-            # We cannot just ignore this check, since we're using the following
-            # on tls.py:
-            #
-            #   context.check_hostname = False
-            #   context.verify_mode    = ssl.CERT_NONE
-            #
-            if 'match_hostname' in dir(ssl):
-                # Still available
-                # https://docs.python.org/3.11/library/ssl.html#ssl.match_hostname
-                ssl_match_hostname = ssl.match_hostname
-            else:
-                # Use a built-in replacement for ssl.match_hostname, based on
-                # the implementation from Python 3.11.
-                #
-                # Check also
-                # https://github.com/brandon-rhodes/backports.ssl_match_hostname
-                from .ssl import match_hostname as match_hostname
-
             try:
-                match = ssl_match_hostname(info, config['address'])
+                match = self.match_certificate_hostname(info, config['address'])
+
+                self.log('Found a matching hostname {} for {} in the certificate'.format(
+                    match,
+                    config['address']), 'debug')
 
             except ssl.CertificateError as e:
                 match_hostname = 0
+
+                self.log('No hostnames in the certificate matches {}'.format(
+                    config['address']), 'debug')
 
             self.info_metric('onion_service_certificate', self.get_cert_info(cert, 'flat'), labels)
 
