@@ -32,13 +32,13 @@ python:
 #
 
 debian_stable:
-  !reference [.debian-stable]
+  !reference [.debian_stable]
 
 debian_sid:
-  !reference [.debian-sid]
+  !reference [.debian_sid]
 
 ubuntu_lts:
-  !reference [.ubuntu-lts]
+  !reference [.ubuntu_lts]
 
 lintian:
   !reference [.lintian]
