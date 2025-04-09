@@ -31,8 +31,6 @@ include:
   - project: tpo/onion-services/ci-templates
     file: onion-services/release.yml
 
-# Variables
-
 #
 # Python
 #
