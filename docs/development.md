@@ -53,7 +53,7 @@ Build the Python package:
 Install this package in a fresh virtual machine. Example:
 
     sudo apt-get install -y python3-pip tor
-    pip install --break-system-packages dist/onionprobe-$VERSION-*.whl
+    pip install --break-system-packages dist/onionprobe-$ONIONPROBE_VERSION-*.whl
 
 Then test it:
 
