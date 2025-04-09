@@ -1,6 +1,6 @@
 ---
 #
-# CI configuration for Onionbalance
+# CI configuration for Onionprobe
 #
 
 #
@@ -9,16 +9,29 @@
 
 # Templates
 include:
+  # GitLab pages
   - local: '.gitlab-ci-pages.yml'
+
+  # Slide deck building
   - local: '.gitlab-ci-slides.yml'
+
+  # APT configuration
   - project: tpo/tpa/ci-templates
     file: scripts/apt.yml
+
+  # Debian packaging
   - project: tpo/onion-services/ci-templates
     file: onion-services/debian.yml
+
+  # Python packaging
   - project: tpo/onion-services/ci-templates
     file: onion-services/python.yml
+
+  # GitLab releases
   - project: tpo/onion-services/ci-templates
     file: onion-services/release.yml
+
+# Variables
 
 #
 # Python
@@ -32,13 +45,13 @@ python:
 #
 
 debian_stable:
-  !reference [.debian_stable]
+  !reference [.debian-stable]
 
 debian_sid:
-  !reference [.debian_sid]
+  !reference [.debian-sid]
 
 ubuntu_lts:
-  !reference [.ubuntu_lts]
+  !reference [.ubuntu-lts]
 
 lintian:
   !reference [.lintian]
