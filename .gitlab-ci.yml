@@ -230,6 +230,8 @@ configs:
 run_source:
   image: containers.torproject.org/tpo/tpa/base-images/debian:sid
   stage: test
+  # Retry twice, since Onionprobe might fail due to Tor bootrapping/network errors
+  retry: 2
   before_script:
     - !reference [.apt-init]
   script:
@@ -240,6 +242,8 @@ run_source:
 run_python:
   image: containers.torproject.org/tpo/tpa/base-images/debian:sid
   stage: test
+  # Retry twice, since Onionprobe might fail due to Tor bootrapping/network errors
+  retry: 2
   needs:
     - job: python
       artifacts: true
@@ -255,6 +259,8 @@ run_python:
 run_sid:
   image: containers.torproject.org/tpo/tpa/base-images/debian:sid
   stage: test
+  # Retry twice, since Onionprobe might fail due to Tor bootrapping/network errors
+  retry: 2
   needs:
     - job: debian_sid
       artifacts: true
