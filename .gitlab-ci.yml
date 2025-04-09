@@ -16,12 +16,13 @@ python:
     - !reference [.apt-init]
   script:
     - apt-get update
-    - apt-get install -y git
+    - apt-get install -y git twine
     - git submodule sync
     - git submodule update --init --recursive --depth 1
     - scripts/provision-packaging-python
     - mkdir -p dist
     - make build-python-package
+    - twine check dist/*
   artifacts:
     paths:
       - dist
