@@ -2,7 +2,7 @@
 
 Relevant folders and files in this repository:
 
-* `configs`: miscelaneous configurations.
+* `configs`: miscellaneous configurations.
 * `contrib`: folder reserved for storing contributed code and configuration.
 * `containers`: container configurations.
 * `debian`: debian packaging.
