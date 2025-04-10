@@ -184,3 +184,10 @@ promtool:
   script:
     - promtool check config configs/prometheus/prometheus.yml
     - promtool test rules configs/prometheus/prometheus-tests.yml
+
+#
+# Release
+#
+
+release:
+  !reference [.release-gitlab]
