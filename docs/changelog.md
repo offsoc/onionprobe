@@ -428,7 +428,7 @@
 
 ### Fixes
 
-* [x] Stem is unable to find cryptography module when runing from the pip package
+* [x] Stem is unable to find cryptography module when running from the pip package
       https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/43
 
 ## v0.3.2 - 2022-05-11

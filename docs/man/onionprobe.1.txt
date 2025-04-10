@@ -249,7 +249,7 @@ onion services endpoints and paths, optionally exporting to Prometheus.
       onion_service_descriptor:
             Onion Service descriptor information, including state and Hidden Service Directory (HSDir) used
       onion_service_tls:
-            Register miscelaneous TLS information for a given Onion Service, such as version and ciphers
+            Register miscellaneous TLS information for a given Onion Service, such as version and ciphers
       onion_service_certificate:
             Register miscellaneous TLS certificate information for a given Onion Service, such as version and fingerprints
       onion_service_probe_status:

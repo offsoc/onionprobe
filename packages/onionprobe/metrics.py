@@ -468,7 +468,7 @@ metrics = {
 
     'onion_service_tls': Info(
             'onion_service_tls',
-            'Register miscelaneous TLS information for a given Onion Service, ' + \
+            'Register miscellaneous TLS information for a given Onion Service, ' + \
                     'such as version and ciphers',
             ['name', 'address', 'port'],
         ),
