@@ -22,7 +22,18 @@
 import os
 import datetime
 import re
+
 from onionprobe.config import cmdline_parser, basepath
+
+manpages = {
+        'onionprobe': {
+            'parser'  : cmdline_parser(),
+            'template': os.path.join(basepath, 'docs', 'man', 'onionprobe.1.txt.tmpl'),
+            'output'  : os.path.join(basepath, 'docs', 'man', 'onionprobe.1.txt'),
+            'config'  : os.path.join(
+                basepath, 'configs', 'tor.yaml'),
+            },
+        }
 
 def remove_usage_prefix(text):
     """
@@ -62,29 +73,33 @@ def generate():
 
     """
 
-    # Set inputs and outputs
-    template   = os.path.join(basepath, 'docs', 'man', 'onionprobe.1.txt.tmpl')
-    output     = os.path.join(basepath, 'docs', 'man', 'onionprobe.1.txt')
-    config     = os.path.join(basepath, 'configs', 'tor.yaml')
-
     # Assume a 80 columm terminal to compile the usage and help texts
     os.environ["COLUMNS"] = "80"
 
-    # Initialize the command line parser
-    parser     = cmdline_parser()
+    # Iterate over all manual pages to be built
+    for man in manpages:
+        # Initialize the command line parser
+        parser = manpages[man]['parser']
 
-    # Compile template variables
-    usage      = remove_usage_prefix(parser.format_usage())
-    invocation = remove_usage_prefix(format_as_markdown_verbatim(parser.format_help()))
-    date       = datetime.datetime.now().strftime('%b %d, %Y')
+        # Compile template variables
+        usage      = remove_usage_prefix(parser.format_usage())
+        invocation = remove_usage_prefix(format_as_markdown_verbatim(parser.format_help()))
+        date       = datetime.datetime.now().strftime('%b %d, %Y')
+        config     = ''
 
-    with open(template, 'r') as template_file:
-        with open(config, 'r') as config_file:
-            with open(output, 'w') as output_file:
+        if manpages[man]['config'] != '':
+            with open(manpages[man]['config'], 'r') as config_file:
+                config = format_as_markdown_verbatim(config_file.read())
+
+        with open(manpages[man]['template'], 'r') as template_file:
+            with open(manpages[man]['output'], 'w') as output_file:
                 contents = template_file.read()
-                config   = format_as_markdown_verbatim(config_file.read())
 
-                output_file.write(contents.format(date=date, usage=usage, invocation=invocation, config=config))
+                output_file.write(contents.format(
+                    date=date,
+                    usage=usage,
+                    invocation=invocation,
+                    config=config))
 
 # Process from CLI
 if __name__ == "__main__":

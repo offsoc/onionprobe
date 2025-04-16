@@ -19,9 +19,9 @@ Update the version in some files, like:
     $EDITOR docker-compose.yml
     $EDITOR setup.cfg
 
-### Regenerate the manpage
+### Regenerate the manpages
 
-    make manpage
+    make manpages
 
 ### Register the changes
 
