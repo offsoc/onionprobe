@@ -126,8 +126,8 @@ mode](standalone.md).
 ## Running from source
 
 It's also possible to run it directly from the [Git repository][], useful if
-you want to run the [standalone mode](standalone.md), [hack on it](hacking.md)
-or prefer a local installation:
+you want to run the [standalone mode](standalone.md), hack on it or prefer a
+local installation:
 
     git clone https://gitlab.torproject.org/tpo/onion-services/onionprobe
     cd onionprobe
