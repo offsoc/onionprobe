@@ -5,7 +5,7 @@ onionprobe (1.5.0) UNRELEASED; urgency=medium
     done during development.
     Closes https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/93
 
- -- Silvio Rhatto <rhatto@riseup.net>  Wed, 16 Apr 2025 16:34:47 -0300
+ -- Silvio Rhatto <rhatto@torproject.org>  Wed, 16 Apr 2025 16:34:47 -0300
 
 onionprobe (1.4.0) unstable; urgency=medium
 
