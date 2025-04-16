@@ -48,11 +48,15 @@ vendoring:
 
 docs: compile-docs
 
-manpage:
-	@./packages/manpage.py
+manpages:
+	@./packages/manpages.py
 	@sed -e '1i\\# Onionprobe manual page' -e 's|^#|##|g' -e '/^%/d' docs/man/onionprobe.1.txt > docs/man/README.md
+	@pandoc -s -f markdown -w man docs/man/onionprobe.1.txt -o docs/man/onionprobe.1
+	@# Pipe output to sed to avoid http://lintian.debian.org/tags/hyphen-used-as-minus-sign.html
+	@# Fixed in http://johnmacfarlane.net/pandoc/releases.html#pandoc-1.10-2013-01-19
+	@#sed -i -e 's/--/\\-\\-/g' docs/man/onionprobe.1
 
-compile-docs: manpage
+compile-docs: manpages
 	@make onion-mkdocs-build
 
 #

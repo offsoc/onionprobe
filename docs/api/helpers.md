@@ -1,8 +1,8 @@
 # Helper scripts
 
-## Manpage generator
+## Manpages generator
 
-::: packages.manpage
+::: packages.manpages
     options:
       show_root_toc_entry: false
       heading_level: 3

@@ -1,6 +1,6 @@
 % ONIONPROBE(1) Onionprobe User Manual
 % Silvio Rhatto <rhatto@torproject.org>
-% Apr 08, 2025
+% Apr 16, 2025
 
 # NAME
 
@@ -75,8 +75,7 @@ onion services endpoints and paths, optionally exporting to Prometheus.
 
     options:
       -h, --help            show this help message and exit
-      -c CONFIG, --config CONFIG
-                            Read options from configuration file. All command line
+      -c, --config CONFIG   Read options from configuration file. All command line
                             parameters can be specified inside a YAML file.
                             Additional command line parameters override those set
                             in the configuration file.
@@ -95,7 +94,7 @@ onion services endpoints and paths, optionally exporting to Prometheus.
       --descriptor_timeout DESCRIPTOR_TIMEOUT
                             Timeout in seconds when retrieving an Onion Service
                             descriptor (default: 30)
-      -e [ONION-ADDRESS1 ...], --endpoints [ONION-ADDRESS1 ...]
+      -e, --endpoints [ONION-ADDRESS1 ...]
                             Add endpoints to the test list
       --get_certificate_info, --no-get_certificate_info
                             Whether to get certificate information when testing
@@ -966,7 +965,7 @@ Onionprobe currently has the following limitations:
 # SEE ALSO
 
 The *docs/* folder distributed with Onionprobe contains the full documentation,
-which should also be available at <https://tpo.pages.torproject.net/onion-services/onionprobe/>.
+which should also be available at <https://onionservices.torproject.org/apps/web/onionprobe/>.
 
 The Onionprobe source code and all documentation may be downloaded from
 <https://gitlab.torproject.org/tpo/onion-services/onionprobe>.

@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 #
-# Helper script to setup an environment where Onionprobe can run
+# Helper script to setup an environment for developing, testing and running
+# Onionprobe
 #
 
 # Parameters
@@ -8,7 +9,7 @@ DIRNAME="`dirname $0`"
 BASEPATH="$DIRNAME/.."
 REQUIREMENTS="ca-certificates apt-transport-https wget gnupg make"
 DEPENDENCIES="python3-prometheus-client python3-stem python3-cryptography python3-yaml python3-requests python3-socks"
-DEPENDENCIES="$DEPENDENCIES deb.torproject.org-keyring tor"
+DEPENDENCIES="$DEPENDENCIES deb.torproject.org-keyring tor pandoc"
 
 # Check for sudo
 if [ "`whoami`" != "root" ]; then
