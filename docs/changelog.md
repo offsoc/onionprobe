@@ -1,5 +1,14 @@
 # Onionprobe ChangeLog
 
+## v1.5.0 - unreleased
+
+### Fixes
+
+* Generating the manual page during development time
+  ([tpo/onion-services/onionprobe#93][]).
+
+[tpo/onion-services/onionprobe#93]: https://gitlab.torproject.org/tpo/onion-services/onionprobe/-/issues/93
+
 ## v1.4.0 - 2025-04-08
 
 ### Features
