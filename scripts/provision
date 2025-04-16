@@ -74,7 +74,6 @@ fi
 # Provision documentation requirements
 $BASEPATH/vendors/onion-mkdocs/scripts/onion-mkdocs-provision-build
 $BASEPATH/vendors/onion-tex-slim/scripts/onion-tex-slim-provision-build
-$SUDO apt-get install -y pandoc
 
 # Provision Python packaging requirements
 $DIRNAME/provision-packaging-python
