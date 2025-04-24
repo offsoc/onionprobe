@@ -21,7 +21,13 @@ Update the version in some files, like:
 
 ### Regenerate the manpages
 
+Build updated manual pages:
+
     make manpages
+
+Check:
+
+    man -l docs/man/onionprobe.1
 
 ### Register the changes
 
