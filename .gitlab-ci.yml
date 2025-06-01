@@ -179,7 +179,7 @@ promtool:
   stage: test
   image:
     #name: docker.io/prom/prometheus:v3.2.1
-    name: quay.io/prometheus/prometheus:v3.4.0
+    name: quay.io/prometheus/prometheus:v3.4.1
     entrypoint: [""]
   script:
     - promtool check config configs/prometheus/prometheus.yml
